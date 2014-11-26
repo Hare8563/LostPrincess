@@ -20,6 +20,16 @@ public class BowController : MonoBehaviour {
     [SerializeField]
     [Range(0, 10)]
     private float DestroyTime = 0;
+    /// <summary>
+    /// ヒットエフェクト
+    /// </summary>
+    GameObject HitEffect;
+
+    void Awake()
+    {
+        HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
+    }
+
 	// Use this for initialization
 	void Start () 
     {
@@ -72,4 +82,40 @@ public class BowController : MonoBehaviour {
     /// 目標物
     /// </summary>
     public static GameObject TargetObject { set; private get; }
+
+    /// <summary>
+    /// 何かに当たったら
+    /// </summary>
+    /// <param name="collider"></param>
+    void OnTriggerEnter(Collider collider)
+    {
+        //Debug.Log("Target -> " + Target.name);
+        //Debug.Log("Magic -> " + collider.name);
+        if (Target != null && Target.tag == collider.tag)
+        {
+            if (Target.tag == "Player")
+            {
+                Target.GetComponent<PlayerController>().Damage(0);
+            }
+            else if (Target.tag == "Boss")
+            {
+                Target.GetComponent<BossController>().Damage(0);
+            }
+            else if (Target.tag == "Enemy")
+            {
+                Target.GetComponent<EnemyScript>().Damage(0);
+            }
+            Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            if (collider.tag == "Enemy")
+            {
+                collider.GetComponent<EnemyScript>().Damage(5);
+                Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
+            }
+        }
+    }
 }

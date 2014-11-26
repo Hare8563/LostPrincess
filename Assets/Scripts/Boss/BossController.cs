@@ -232,6 +232,8 @@ public class BossController : MonoBehaviour {
         this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         //アニメーション切り替え
         AnimationController();
+
+        //Debug.Log(ToPlayerDistance);
 	}
 
     /// <summary>
@@ -242,6 +244,7 @@ public class BossController : MonoBehaviour {
         //生きていたら
         if (!this.deadFlag)
         {
+            //移動フラグ初期化
             isMove = false;
             //移動終了時間を指定
             if (!isEndMoveTime && !isAttack)
@@ -249,13 +252,17 @@ public class BossController : MonoBehaviour {
                 endMoveTime = Random.Range(240f, 420f);
                 isEndMoveTime = true;
                 AttackRatio = Random.Range(0f, 1f);
+                Debug.Log("Reset Move Time");
             }
 
             //移動時間をカウント
             MoveTime += Time.deltaTime * 60f;
 
             //移動終了時間に達したら攻撃に入る
-            if (MoveTime >= endMoveTime) { isAttack = true; }
+            if (MoveTime >= endMoveTime) 
+            {
+                isAttack = true;
+            }
 
             //Debug.Log("isAttack = " + isAttack);
             //攻撃中だったら
@@ -268,9 +275,6 @@ public class BossController : MonoBehaviour {
             else
             {
                 Move();
-                isAttackSword = false;
-                isShotMagic = false;
-                isShotArrow = false;
             }
         }
         //死んだら
@@ -316,7 +320,7 @@ public class BossController : MonoBehaviour {
         //プレイヤーに近づくフラグがたったら
         if (isAttackSwordRun)
         {
-            float Distance = 10.0f;
+            float Distance = 15.0f;
             //一定距離近づいたら剣振りフラグを立てる
             if (ToPlayerDistance <= Distance)
             {
@@ -374,6 +378,7 @@ public class BossController : MonoBehaviour {
             AnctionRand = Random.Range(0, 5);
             RandomRand = Random.Range(180, 300);
             RandCount = 0;
+            Debug.Log("Next Move");
         }
 
         //行動選択
@@ -394,8 +399,8 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void SmallForwardRound()
     {
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.forward) * NormalSpeed * Method.GameTime();
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.left) * NormalSpeed * Method.GameTime();
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
     }
 
     /// <summary>
@@ -403,8 +408,8 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void RargeForwardRound()
     {
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.forward) * NormalSpeed * Method.GameTime();
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.right) * (NormalSpeed + 2) * Method.GameTime();
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.right).normalized * (NormalSpeed + 2);
 
     }
 
@@ -413,8 +418,8 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void SmallBackRound()
     {
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.back) * NormalSpeed * Method.GameTime();
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.right) * NormalSpeed * Method.GameTime();
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.back).normalized * NormalSpeed ;
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
 
     }
 
@@ -423,8 +428,8 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void RargeBackRound()
     {
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.back) * NormalSpeed * Method.GameTime();
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.left) * (NormalSpeed + 2) * Method.GameTime();
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.left).normalized * (NormalSpeed + 2);
     }
 
     /// <summary>
@@ -434,15 +439,15 @@ public class BossController : MonoBehaviour {
     {
         //Debug.Log("StopNow");
         isAttack = true;
-        //立ち止まるがプレイヤーが近づくと逃げる
-        if (ToPlayerDistance < ToPlayerDistance_Min)
-        {
-            AnctionRand = Random.Range(2, 4);
-        }
+        ////立ち止まるがプレイヤーが近づくと逃げる
+        //if (ToPlayerDistance < ToPlayerDistance_Min)
+        //{
+        //    AnctionRand = Random.Range(2, 4);
+        //}
     }
 
     /// <summary>
-    /// 回避する
+    /// 下がる
     /// </summary>
     void Avoid()
     {
@@ -454,16 +459,16 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void LeaveOrNear()
     {
-        //近づき過ぎたら離れる
-        if (ToPlayerDistance < ToPlayerDistance_Min)
-        {
-            AnctionRand = Random.Range(2, 4);
-        }
-        //遠過ぎたら近づく
-        else if (ToPlayerDistance > ToPlayerDistance_Max)
-        {
-            AnctionRand = Random.Range(0, 2);
-        }
+        ////近づき過ぎたら離れる
+        //if (ToPlayerDistance_Min > ToPlayerDistance)
+        //{
+        //    AnctionRand = Random.Range(2, 3);
+        //}
+        ////遠過ぎたら近づく
+        //else if (ToPlayerDistance > ToPlayerDistance_Max)
+        //{
+        //    AnctionRand = Random.Range(0, 1);
+        //}
     }
 
     /// <summary>
@@ -492,24 +497,25 @@ public class BossController : MonoBehaviour {
         //走りモーションの時
         else if (currentBaseState.nameHash == runState)
         {
-            //isAttack = false;
+            
         }
         //剣モーションの時
         else if (currentBaseState.nameHash == swordState)
         {
-            //Idleに戻す為フラグを折る
             isAttackSword = false;
             isAttackSwordRun = false;
+            isAttack = false;
         }
         //魔法モーション(_01)の時
         else if (currentBaseState.nameHash == magic_01State)
         {
             isOneShotMagic = false;
+            isShotMagic = false;
+            isAttack = false;
         }
         //魔法モーション(_02)の時
         else if (currentBaseState.nameHash == magic_02State)
         {
-            isShotMagic = false;
             if (!isOneShotMagic)//!isShotMagic)
             {
                 isOneShotMagic = true;
@@ -520,11 +526,12 @@ public class BossController : MonoBehaviour {
         else if (currentBaseState.nameHash == arrow_01State)
         {
             isOneShotArrow = false;
+            isShotArrow = false;
+            isAttack = false;
         }
         //弓モーション(_02)の時
         else if (currentBaseState.nameHash == arrow_02State)
         {
-            isShotArrow = false;
             if (!isOneShotArrow)
             {
                 isOneShotArrow = true;

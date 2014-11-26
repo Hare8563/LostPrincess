@@ -24,6 +24,16 @@ public class MagicController : MonoBehaviour {
     [SerializeField]
     [Range(0,10)]
     private float DestroyTime = 0;
+    /// <summary>
+    /// ヒットエフェクト
+    /// </summary>
+    GameObject HitEffect;
+
+    void Awake()
+    {
+        HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
+    }
+
 	void Start () 
     {
         Destroy(this.gameObject, DestroyTime);
@@ -64,19 +74,19 @@ public class MagicController : MonoBehaviour {
             //this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(GameObject.FindGameObjectWithTag("Player").transform.position - this.transform.position), 0.01f);
             //this.transform.position += transform.forward * 0.2f;
 
-            //接触
-            if (Distance < 4.0f)
-            {
-                if (Target.tag == "Player")
-                {
-                    Target.GetComponent<PlayerController>().Damage(5);
-                }
-                else if (Target.tag == "Boss")
-                {
-                    Target.GetComponent<BossController>().Damage(5);
-                }
-                Destroy(this.gameObject);
-            }
+            ////接触
+            //if (Distance < 4.0f)
+            //{
+            //    if (Target.tag == "Player")
+            //    {
+            //        Target.GetComponent<PlayerController>().Damage(5);
+            //    }
+            //    else if (Target.tag == "Boss")
+            //    {
+            //        Target.GetComponent<BossController>().Damage(5);
+            //    }
+            //    Destroy(this.gameObject);
+            //}
         }
         else
         {
@@ -88,4 +98,40 @@ public class MagicController : MonoBehaviour {
     /// 目標物
     /// </summary>
     public static GameObject TargetObject { set; private get; }
+
+    /// <summary>
+    /// 何かに当たったら
+    /// </summary>
+    /// <param name="collider"></param>
+    void OnTriggerEnter(Collider collider)
+    {
+        //Debug.Log("Target -> " + Target.name);
+        //Debug.Log("Magic -> " + collider.name);
+        if (Target != null && Target.tag == collider.tag)
+        {
+            if (Target.tag == "Player")
+            {
+                Target.GetComponent<PlayerController>().Damage(0);
+            }
+            else if (Target.tag == "Boss")
+            {
+                Target.GetComponent<BossController>().Damage(10);
+            }
+            else if (Target.tag == "Enemy")
+            {
+                Target.GetComponent<EnemyScript>().Damage(0);
+            }
+            Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            if (collider.tag == "Enemy")
+            {
+                collider.GetComponent<EnemyScript>().Damage(5);
+                Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
+            }
+        }
+    }
 }

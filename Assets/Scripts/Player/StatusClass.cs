@@ -34,27 +34,27 @@ namespace StatusClass{
         /// <param name="Hp"></param>
         /// <param name="Mp"></param>
 		public Status(int Lev, int Exp, int Hp, int Mp){
-			LEV = Lev;
-			EXP = Exp;
-			HP = Hp;
-			MP = Mp;
-			BOW_POW = (int)(10.0f * Mathf.Log10((float)Lev)) + alpha;
-			Sword_Power=(int)(20.0f * Mathf.Log10((float)Lev)) + alpha;
-			Magic_Power = (int)(20.0f * Mathf.Log10 ((float)Lev)) + alpha;
-		}
+            LEV = Lev;
+            EXP = Exp;
+            HP = Hp;
+            MP = Mp;
+            BOW_POW = (int)(1.0f * Mathf.Log10((float)Lev)) + alpha;
+            Sword_Power = (int)(2.0f * Mathf.Log10((float)Lev)) + alpha;
+            Magic_Power = (int)(2.0f * Mathf.Log10((float)Lev)) + alpha;
+        }
 		
         /// <summary>
         /// レベルアップ
         /// </summary>
 		public void LevUp(){
-			System.Random rand = new System.Random ();
-			alpha = rand.Next (0, 5);
-			this.LEV++;
-			this.EXP = 0;
-			this.Sword_Power = (int)(20.0f * Mathf.Log10((float)this.LEV)) + alpha;
-			this.Magic_Power = (int)(20.0f * Mathf.Log10 ((float)this.LEV)) + alpha;
-			this.BOW_POW = (int)(10.0f * Mathf.Log10 ((float)this.LEV))+ alpha;
-			this.ExpLimit = 5 * LEV + 5;
-		}
+            System.Random rand = new System.Random();
+            alpha = rand.Next(0, 5);
+            this.LEV++;
+            this.EXP = 0;
+            this.Sword_Power = (int)(2.0f * Mathf.Log10((float)this.LEV)) + alpha;
+            this.Magic_Power = (int)(2.0f * Mathf.Log10((float)this.LEV)) + alpha;
+            this.BOW_POW = (int)(1.0f * Mathf.Log10((float)this.LEV)) + alpha;
+            this.ExpLimit = 5 * LEV + 5;
+        }
 	}
 }

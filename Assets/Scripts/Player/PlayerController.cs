@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     /// 道中スピード
     /// </summary>
     [SerializeField]
-    [Range(0,100)]
+    [Range(0, 100)]
     private float RoadSpeed = 0;
     /// <summary>
     /// 通常移動スピード
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
     /// 死亡フラグ
     /// </summary>
     private bool deadFlag = false;
-		private GameObject prefab;
+    private GameObject prefab;
     void Awake()
     {
         TargetObject = GameObject.FindGameObjectWithTag("Boss");
@@ -135,10 +135,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Move()
     {
+        float inputH = Input.GetAxis("Horizontal");
+        float inputV = Input.GetAxis("Vertical");
         isMove = false;
         //ボス戦だったら
         if (isBossBattle)
         {
+            if (inputH != 0.0f || inputV != 0.0f)
+            {
+                isMove = true;
+            }
             //敵方向を向く
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - this.transform.transform.position), 0.07f);
             this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
@@ -147,33 +153,30 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 isMove = true;
-				//rigidbody.AddForce (Vector3.forward * NormalSpeed * Method.GameTime ());
-                this.transform.Translate(Vector3.forward * NormalSpeed * Method.GameTime());
+                rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
             }
             //後ろ
             else if (Input.GetKey(KeyCode.S))
             {
                 isMove = true;
-                this.transform.Translate(Vector3.back * NormalSpeed * Method.GameTime());
+                rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
             }
             //左
             if (Input.GetKey(KeyCode.A))
             {
                 isMove = true;
-                this.transform.Translate(Vector3.left * NormalSpeed * Method.GameTime());
+                rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
             }
             //右
             else if (Input.GetKey(KeyCode.D))
             {
                 isMove = true;
-                this.transform.Translate(Vector3.right * NormalSpeed * Method.GameTime());
+                rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
             }
         }
         //道中だったら
         else
         {
-            float inputH = Input.GetAxis("Horizontal");
-            float inputV = Input.GetAxis("Vertical");
             if (inputH != 0.0f || inputV != 0.0f)
             {
                 isMove = true;
@@ -184,8 +187,8 @@ public class PlayerController : MonoBehaviour
             if (!inputVec.Equals(Vector3.zero))
             {
                 this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(inputVec), 0.1f);
-				rigidbody.AddForce (inputVec * RoadSpeed * 10.0f, ForceMode.VelocityChange); 
-			   //this.transform.Translate(Vector3.forward * RoadSpeed);
+                rigidbody.AddForce(inputVec * RoadSpeed * 10.0f, ForceMode.VelocityChange);
+                //this.transform.Translate(Vector3.forward * RoadSpeed);
             }
         }
     }
@@ -230,7 +233,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isAttackSword", isAttackSword);
         animator.SetBool("isShotMagic", isShotMagic);
         animator.SetBool("isShotArrow", isShotArrow);
-				animator.SetBool ("DeadFlag", deadFlag);
+        animator.SetBool("DeadFlag", deadFlag);
 
         //Debug.Log(animator.GetBool("isAttackSword"));
 
@@ -245,13 +248,13 @@ public class PlayerController : MonoBehaviour
         //走りモーションの時
         else if (currentBaseState.nameHash == runState)
         {
-            
+
         }
         //剣モーションの時
         else if (currentBaseState.nameHash == swordState)
         {
 
-		}
+        }
         //魔法モーション(_01)の時
         else if (currentBaseState.nameHash == magic_01State)
         {
@@ -284,33 +287,44 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 何かに当たったら
+    /// </summary>
+    /// <param name="collision"></param>
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.collider.name);
+        //Debug.Log(collision.collider.name);
         if (collision.collider.name == "toBossEventWall")
         {
             Application.LoadLevel("Boss");
         }
     }
-		bool flag = false;
-		float attackTime=0.0f;
+    bool flag = false;
+    float attackTime = 0.0f;
 
-	void OnTriggerStay(Collider collider){
-		currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-			var currentTime = Time.time;
-			if (collider.gameObject.CompareTag ("Enemy") && Input.GetKeyDown(KeyCode.J)) {
-			
-					attackTime = currentTime;
-					flag = true;
-			}
-			if (currentTime - attackTime > 0.3f && flag == true) {
-					Debug.Log ("Called: "+collider.gameObject.name);
-					var enemy = collider.gameObject.GetComponent<EnemyScript> ();
-					enemy.Damage (this.status.Sword_Power);
-					flag = false;
-					attackTime = 0.0f;
-			}
-	}
+    /// <summary>
+    /// 何かに当たり続けたら
+    /// </summary>
+    /// <param name="collider"></param>
+    void OnTriggerStay(Collider collider)
+    {
+        currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
+        var currentTime = Time.time;
+        if (collider.gameObject.CompareTag("Enemy") && Input.GetKeyDown(KeyCode.J))
+        {
+
+            attackTime = currentTime;
+            flag = true;
+        }
+        if (currentTime - attackTime > 0.3f && flag == true)
+        {
+            Debug.Log("Called: " + collider.gameObject.name);
+            var enemy = collider.gameObject.GetComponent<EnemyScript>();
+            enemy.Damage(this.status.Sword_Power);
+            flag = false;
+            attackTime = 0.0f;
+        }
+    }
 
     /// <summary>
     /// 外部から経験値取得を呼び出す関数
@@ -329,8 +343,8 @@ public class PlayerController : MonoBehaviour
     /// <param name="val">ダメージ値</param>
     public void Damage(int val)
     {
-				AudioSource audio = GetComponent<AudioSource> ();
-				audio.Play ();
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
         this.status.HP -= val;
         if (this.status.HP <= 0)
             this.deadFlag = true;
@@ -341,11 +355,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void OnGUI()
     {
-	    GUIStyle guistyle = new GUIStyle ();
-				guistyle.fontSize = 32;
-				guistyle.normal.textColor = Color.red;
-				GUI.Label (new Rect (0, 250, 200, 50), @"LEV: "+this.status.LEV.ToString (), guistyle);
-				GUI.Label(new Rect(0, 300, 200, 50), @"HP: "+this.status.HP.ToString(), guistyle);
-				GUI.Label (new Rect (0, 350, 200, 50), @"EXP: "+this.status.EXP.ToString (), guistyle);
+        GUIStyle guistyle = new GUIStyle();
+        guistyle.fontSize = 32;
+        guistyle.normal.textColor = Color.red;
+        GUI.Label(new Rect(0, 250, 200, 50), @"LEV: " + this.status.LEV.ToString(), guistyle);
+        GUI.Label(new Rect(0, 300, 200, 50), @"HP: " + this.status.HP.ToString(), guistyle);
+        GUI.Label(new Rect(0, 350, 200, 50), @"EXP: " + this.status.EXP.ToString(), guistyle);
     }
 }
