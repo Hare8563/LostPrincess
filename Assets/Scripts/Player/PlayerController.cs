@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     /// 道中スピード
     /// </summary>
     [SerializeField]
-    [Range(0, 100)]
+    [Range(0,100)]
     private float RoadSpeed = 0;
     /// <summary>
     /// 通常移動スピード
@@ -97,40 +97,13 @@ public class PlayerController : MonoBehaviour
     /// 死亡フラグ
     /// </summary>
     private bool deadFlag = false;
-    /// <summary>
-    /// ダメージを負ったか
-    /// </summary>
-    private bool isDamage = false;
-    /// <summary>
-    /// 死んだか
-    /// </summary>
-    private bool isDead = false;
-    /// <summary>
-    /// イベントコントローラー
-    /// </summary>
-    private GameObject eventController;
-    /// <summary>
-    /// 一枚絵
-    /// </summary>
-    private GUITexture OnePicture;
-    /// <summary>
-    /// 一枚絵を表示するか
-    /// </summary>
-    private bool PictureFlag = false;
-
-    private GameObject prefab;
+		private GameObject prefab;
     void Awake()
     {
         TargetObject = GameObject.FindGameObjectWithTag("Boss");
         MagicBallObject = Resources.Load("Prefab/MagicBall") as GameObject;
         ArrowObject = Resources.Load("Prefab/Arrow") as GameObject;
         animator = this.gameObject.GetComponent<Animator>();
-        eventController = GameObject.Find("EventManager");
-        if (GameObject.Find("OnePicture") != null)
-        {
-            OnePicture = GameObject.Find("OnePicture").guiTexture;
-            OnePicture.enabled = false;
-        }
     }
 
     // Use this for initialization
@@ -143,38 +116,18 @@ public class PlayerController : MonoBehaviour
     {
         //アニメーション管理
         AnimationController();
-        if (PictureFlag)
-        {
-            //フラッシュみたいにホワイト・イン
-            eventController.GetComponent<EventController>().WhiteIn(0.8f);
-            OnePicture.enabled = true;
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                Application.LoadLevel("Boss");
-            }
-        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //生きていたら
-        if (!this.deadFlag)
+        //移動
+        if (!isAttack)
         {
-            //移動
-            if (!isAttack)
-            {
-                Move();
-            }
-            //攻撃
-            Attack();
+            Move();
         }
-        //死んでいたら
-        else
-        {
-            isDead = true;
-            //Application.LoadLevel("Title");
-        }
+        //攻撃
+        Attack();
     }
 
     /// <summary>
@@ -194,6 +147,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 isMove = true;
+				//rigidbody.AddForce (Vector3.forward * NormalSpeed * Method.GameTime ());
                 this.transform.Translate(Vector3.forward * NormalSpeed * Method.GameTime());
             }
             //後ろ
@@ -230,7 +184,8 @@ public class PlayerController : MonoBehaviour
             if (!inputVec.Equals(Vector3.zero))
             {
                 this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(inputVec), 0.1f);
-                this.transform.Translate(Vector3.forward * RoadSpeed);
+				rigidbody.AddForce (inputVec * RoadSpeed * 10.0f, ForceMode.VelocityChange); 
+			   //this.transform.Translate(Vector3.forward * RoadSpeed);
             }
         }
     }
@@ -275,8 +230,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isAttackSword", isAttackSword);
         animator.SetBool("isShotMagic", isShotMagic);
         animator.SetBool("isShotArrow", isShotArrow);
-        animator.SetBool("isDamage", isDamage);
-        animator.SetBool("isDead", isDead);
+				animator.SetBool ("DeadFlag", deadFlag);
 
         //Debug.Log(animator.GetBool("isAttackSword"));
 
@@ -291,13 +245,13 @@ public class PlayerController : MonoBehaviour
         //走りモーションの時
         else if (currentBaseState.nameHash == runState)
         {
-
+            
         }
         //剣モーションの時
         else if (currentBaseState.nameHash == swordState)
         {
 
-        }
+		}
         //魔法モーション(_01)の時
         else if (currentBaseState.nameHash == magic_01State)
         {
@@ -332,32 +286,31 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(collision.collider.name);
+        Debug.Log(collision.collider.name);
         if (collision.collider.name == "toBossEventWall")
         {
-            PictureFlag = true;
+            Application.LoadLevel("Boss");
         }
     }
-    bool flag = false;
-    float attackTime = 0.0f;
+		bool flag = false;
+		float attackTime=0.0f;
 
-    //void OnTriggerStay(Collider collider)
-    //{
-    //    currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-    //    var currentTime = Time.time;
-    //    if (collider.gameObject.CompareTag("Enemy") && Input.GetKeyDown(KeyCode.J))
-    //    {
-    //        attackTime = currentTime;
-    //        flag = true;
-    //    }
-    //    if (currentTime - attackTime > 0.7f && flag == true)
-    //    {
-    //        var enemy = collider.gameObject.GetComponent<EnemyScript>();
-    //        enemy.Damage(this.status.Sword_Power);
-    //        flag = false;
-    //        attackTime = 0.0f;
-    //    }
-    //}
+	void OnTriggerStay(Collider collider){
+		currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
+			var currentTime = Time.time;
+			if (collider.gameObject.CompareTag ("Enemy") && Input.GetKeyDown(KeyCode.J)) {
+			
+					attackTime = currentTime;
+					flag = true;
+			}
+			if (currentTime - attackTime > 0.3f && flag == true) {
+					Debug.Log ("Called: "+collider.gameObject.name);
+					var enemy = collider.gameObject.GetComponent<EnemyScript> ();
+					enemy.Damage (this.status.Sword_Power);
+					flag = false;
+					attackTime = 0.0f;
+			}
+	}
 
     /// <summary>
     /// 外部から経験値取得を呼び出す関数
@@ -376,9 +329,8 @@ public class PlayerController : MonoBehaviour
     /// <param name="val">ダメージ値</param>
     public void Damage(int val)
     {
-        //AudioSource audio = GetComponent<AudioSource> ();
-        //audio.Play ();
-        isDamage = true;
+				AudioSource audio = GetComponent<AudioSource> ();
+				audio.Play ();
         this.status.HP -= val;
         if (this.status.HP <= 0)
             this.deadFlag = true;
@@ -389,6 +341,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void OnGUI()
     {
-        GUI.Label(new Rect(0, 300, 200, 50), this.status.HP.ToString());
+	    GUIStyle guistyle = new GUIStyle ();
+				guistyle.fontSize = 32;
+				guistyle.normal.textColor = Color.red;
+				GUI.Label (new Rect (0, 250, 200, 50), @"LEV: "+this.status.LEV.ToString (), guistyle);
+				GUI.Label(new Rect(0, 300, 200, 50), @"HP: "+this.status.HP.ToString(), guistyle);
+				GUI.Label (new Rect (0, 350, 200, 50), @"EXP: "+this.status.EXP.ToString (), guistyle);
     }
 }

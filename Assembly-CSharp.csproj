@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{F8003A19-A4CE-9725-76B1-2E7FF063C8DB}</ProjectGuid>
+	<ProjectGuid>{F274060D-7F40-837F-148D-19692BF44F0E}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\CharController.cs" />
      <Compile Include="Assets\Controller.cs" />
-     <Compile Include="Assets\EnemyScript.cs" />
      <Compile Include="Assets\FT_FreeSample\Script\Button.cs" />
      <Compile Include="Assets\Free_Rocks\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
      <Compile Include="Assets\Mao.cs" />
@@ -57,6 +56,7 @@
      <Compile Include="Assets\Scripts\Boss\MagicController.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
      <Compile Include="Assets\Scripts\Ending\Ending.cs" />
+     <Compile Include="Assets\Scripts\Enemy\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\Event\EventController.cs" />
      <Compile Include="Assets\Scripts\InputForm.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
@@ -148,9 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{C33EDF7A-5D0F-0E92-2B79-BD7D3B83DD52}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{756E4349-BA89-1C29-4BE4-C49E9307EAFD}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
-      <Project>{EADF0C02-F641-1616-7B37-208A9DD4EA0F}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
+      <Project>{8631E370-1483-BF96-9657-31F2DE844F0C}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -394,8 +394,8 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void SmallForwardRound()
     {
-        this.transform.Translate(forward * NormalSpeed);
-        this.transform.Translate(left * NormalSpeed);
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.forward) * NormalSpeed * Method.GameTime();
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.left) * NormalSpeed * Method.GameTime();
     }
 
     /// <summary>
@@ -403,8 +403,9 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void RargeForwardRound()
     {
-        this.transform.Translate(forward * (NormalSpeed - 0.02f));
-        this.transform.Translate(right * NormalSpeed);
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.forward) * NormalSpeed * Method.GameTime();
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.right) * (NormalSpeed + 2) * Method.GameTime();
+
     }
 
     /// <summary>
@@ -412,8 +413,9 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void SmallBackRound()
     {
-        this.transform.Translate(back * NormalSpeed);
-        this.transform.Translate(right * NormalSpeed);
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.back) * NormalSpeed * Method.GameTime();
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.right) * NormalSpeed * Method.GameTime();
+
     }
 
     /// <summary>
@@ -421,8 +423,8 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void RargeBackRound()
     {
-        this.transform.Translate(back * (NormalSpeed - 0.02f));
-        this.transform.Translate(left * NormalSpeed);
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.back) * NormalSpeed * Method.GameTime();
+        rigidbody.velocity = this.transform.TransformDirection(Vector3.left) * (NormalSpeed + 2) * Method.GameTime();
     }
 
     /// <summary>
