@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: a4b1a2ebb3609474aa15b48ececb6358
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: all
+    100002: arm_L
+    100004: arm_R
+    100006: asi1
+    100008: asi2
+    100010: body
+    100012: body1
+    100014: cap
+    100016: face
+    100018: hand_L
+    100020: hand_R
+    100022: head
+    100024: honn
+    100026: hoon
+    100028: //RootNode
+    100030: pasted__all
+    100032: pasted__body
+    100034: pasted__body 1
+    100036: pasted__L_soulder
+    100038: pasted__R_soulder1
+    100040: pasted__shoulder_sphere
+    100042: pasted__shoulder_sphere 1
+    100044: pasted__shoulder_sphere1
+    100046: pasted__shoulder_sphere1 1
+    100048: pSphere1
+    100050: pSphere4
+    400000: all
+    400002: arm_L
+    400004: arm_R
+    400006: asi1
+    400008: asi2
+    400010: body
+    400012: body1
+    400014: cap
+    400016: face
+    400018: hand_L
+    400020: hand_R
+    400022: head
+    400024: honn
+    400026: hoon
+    400028: //RootNode
+    400030: pasted__all
+    400032: pasted__body
+    400034: pasted__body 1
+    400036: pasted__L_soulder
+    400038: pasted__R_soulder1
+    400040: pasted__shoulder_sphere
+    400042: pasted__shoulder_sphere 1
+    400044: pasted__shoulder_sphere1
+    400046: pasted__shoulder_sphere1 1
+    400048: pSphere1
+    400050: pSphere4
+    2300000: asi1
+    2300002: asi2
+    2300004: cap
+    2300006: face
+    2300008: hand_L
+    2300010: hand_R
+    2300012: honn
+    2300014: hoon
+    2300016: pasted__body 1
+    2300018: pasted__L_soulder
+    2300020: pasted__R_soulder1
+    2300022: pasted__shoulder_sphere
+    2300024: pasted__shoulder_sphere 1
+    2300026: pasted__shoulder_sphere1
+    2300028: pasted__shoulder_sphere1 1
+    2300030: pSphere1
+    2300032: pSphere4
+    3300000: asi1
+    3300002: asi2
+    3300004: cap
+    3300006: face
+    3300008: hand_L
+    3300010: hand_R
+    3300012: honn
+    3300014: hoon
+    3300016: pasted__body 1
+    3300018: pasted__L_soulder
+    3300020: pasted__R_soulder1
+    3300022: pasted__shoulder_sphere
+    3300024: pasted__shoulder_sphere 1
+    3300026: pasted__shoulder_sphere1
+    3300028: pasted__shoulder_sphere1 1
+    3300030: pSphere1
+    3300032: pSphere4
+    4300000: cap
+    4300002: face
+    4300004: hoon
+    4300006: honn
+    4300008: pasted__body
+    4300010: pasted__R_soulder1
+    4300012: pasted__shoulder_sphere
+    4300014: pasted__shoulder_sphere1
+    4300016: pasted__L_soulder
+    4300018: pasted__shoulder_sphere
+    4300020: pasted__shoulder_sphere1
+    4300022: pSphere1
+    4300024: hand_L
+    4300026: pSphere4
+    4300028: hand_R
+    4300030: asi1
+    4300032: asi2
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
