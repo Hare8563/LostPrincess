@@ -268,6 +268,7 @@ public class PlayerController : MonoBehaviour
                 isOneShotMagic = true;
                 if (isBossBattle) Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
                 else Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+                MagicController.EnemyDamage = this.status.Magic_Power;
             }
         }
         //弓モーション(_01)の時
@@ -283,6 +284,7 @@ public class PlayerController : MonoBehaviour
                 isOneShotArrow = true;
                 if (isBossBattle) Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
                 else Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+                BowController.EnemyDamage = this.status.BOW_POW;
             }
         }
     }

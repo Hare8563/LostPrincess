@@ -159,6 +159,7 @@ public class BossController : MonoBehaviour {
     static int magic_02State = Animator.StringToHash("Base Layer.Magic_02");
     static int arrow_01State = Animator.StringToHash("Base Layer.Arrow_01");
     static int arrow_02State = Animator.StringToHash("Base Layer.Arrow_02");
+    static int damageState = Animator.StringToHash("Base Layer.Damage");
 
     /// <summary>
     /// Statusクラス
@@ -281,7 +282,7 @@ public class BossController : MonoBehaviour {
         else
         {
             isDead = true;
-            eventController.GetComponent<EventController>().WhiteOut("Ending", 0.5f);
+            //eventController.GetComponent<EventController>().WhiteOut("Ending", 0.5f);
             //Application.LoadLevel("Title");
         }
     }
@@ -520,6 +521,7 @@ public class BossController : MonoBehaviour {
             {
                 isOneShotMagic = true;
                 Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
+                MagicController.PlayerDamage = this.status.Magic_Power;
             }
         }
         //弓モーション(_01)の時
@@ -536,7 +538,13 @@ public class BossController : MonoBehaviour {
             {
                 isOneShotArrow = true;
                 Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
+                BowController.PlayerDamage = this.status.BOW_POW;
             }
+        }
+        //ダメージモーションの時
+        else if(currentBaseState.nameHash == damageState)
+        {
+            isDamage = false;
         }
     }
 

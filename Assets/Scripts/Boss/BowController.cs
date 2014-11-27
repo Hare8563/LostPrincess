@@ -95,15 +95,15 @@ public class BowController : MonoBehaviour {
         {
             if (Target.tag == "Player")
             {
-                Target.GetComponent<PlayerController>().Damage(0);
+                Target.GetComponent<PlayerController>().Damage(PlayerDamage);
             }
             else if (Target.tag == "Boss")
             {
-                Target.GetComponent<BossController>().Damage(0);
+                Target.GetComponent<BossController>().Damage(EnemyDamage);
             }
             else if (Target.tag == "Enemy")
             {
-                Target.GetComponent<EnemyScript>().Damage(0);
+                Target.GetComponent<EnemyScript>().Damage(EnemyDamage);
             }
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
@@ -112,10 +112,20 @@ public class BowController : MonoBehaviour {
         {
             if (collider.tag == "Enemy")
             {
-                collider.GetComponent<EnemyScript>().Damage(5);
+                collider.GetComponent<EnemyScript>().Damage(EnemyDamage);
                 Instantiate(HitEffect, this.transform.position, this.transform.rotation);
                 Destroy(this.gameObject);
             }
         }
     }
+
+    /// <summary>
+    /// 敵に与えるダメージ
+    /// </summary>
+    public static int EnemyDamage { set; get; }
+
+    /// <summary>
+    /// プレイヤーに与えるダメージ
+    /// </summary>
+    public static int PlayerDamage { set; get; }
 }
