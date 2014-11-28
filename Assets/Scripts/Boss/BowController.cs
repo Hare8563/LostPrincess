@@ -100,6 +100,7 @@ public class BowController : MonoBehaviour {
             else if (Target.tag == "Boss")
             {
                 Target.GetComponent<BossController>().Damage(EnemyDamage);
+                //Debug.Log(EnemyDamage);
             }
             else if (Target.tag == "Enemy")
             {

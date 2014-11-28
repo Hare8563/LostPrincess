@@ -26,7 +26,7 @@ public class EnemyScript : MonoBehaviour
     /// </summary>
     void Start()
     {
-        player = GameObject.Find(@"HERO_MOTION04");
+        player = GameObject.Find(@"Yusha2");
         status = new Status(1, 0, 10, 5);
     }
 
@@ -41,34 +41,41 @@ public class EnemyScript : MonoBehaviour
         float MinDis = 8.0f;
         //二点間の距離
         twoPointDistance = Vector3.Distance(this.transform.position, player.transform.position);
+		var distance = this.transform.position - player.transform.position;
+
+
         //Debug.Log (Mathf.Sqrt(val));
         //プレイヤーが近づいてきたら自分も近づく
         if (twoPointDistance <= MaxDis && twoPointDistance > MinDis)
         {
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(player.transform.position - this.transform.position), 1.0f);
-            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
-            transform.Translate(Vector3.forward * 0.2f);
-            running = true;
+			this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (player.transform.position - this.transform.position), 1.0f);
+			this.transform.rotation = new Quaternion (0, this.transform.rotation.y, 0, this.transform.rotation.w);
+
+			Vector3 enemyVector = distance.normalized;
+			this.rigidbody.AddForce (-5.0f*enemyVector, ForceMode.VelocityChange);
+			//transform.Translate (Vector3.forward* 0.2f);
+			running = true;
         }
         //目の前に来たら攻撃
         if (twoPointDistance <= MinDis)
         {
-            running = false;
-            swordAttack = true;
-            var col = rigidbody.GetComponents<BoxCollider>();
-            col[1].center = new Vector3(0.0f, 0.4f, 0.0f);
-            col[1].size = new Vector3(0.32f, 0.26f, 0.33f);
+			running = false;
+			swordAttack = true;
         }
         //HPが0になったら経験値を取得
         if (this.status.HP <= 0)
         {
-            player.GetComponent<PlayerController>().GetExp(3);
-            Destroy(this.gameObject);
+						StartCoroutine(@"Coroutine");
+						Destroy(this.gameObject);
         }
-        GetComponent<Animator>().SetBool(@"isAttack", swordAttack);
-        GetComponent<Animator>().SetBool(@"isMove", running);
+        GetComponent<Animator>().SetBool(@"IsAttack", swordAttack);
+        GetComponent<Animator>().SetBool(@"IsRunning", running);
     }
 
+	IEnumerator Coroutine(){
+			player.GetComponent<PlayerController> ().GetExp (3);
+			yield return null;
+	}
     /// <summary>
     /// 外部参照ダメージ処理
     /// </summary>
@@ -84,16 +91,16 @@ public class EnemyScript : MonoBehaviour
     /// 何かに触れたら
     /// </summary>
     /// <param name="collider"></param>
-    public void OnTriggerEnter(Collider collider)
+    public void OnTriggerStay(Collider col)
     {
-        if (collider.gameObject.tag == "Player")
-        {
-            var data = collider.GetComponent<PlayerController>();
-            data.Damage(1);
-            var col = rigidbody.GetComponents<BoxCollider>();
-            col[1].center = new Vector3(0.0f, 0.0f, 0.0f);
-            col[1].size = new Vector3(0.0f, 0.0f, 0.0f);
-        }
+		var anim = GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0);
+		if (col.gameObject.CompareTag (@"Player") && anim.IsName ("Base Layer.swordB")) {
+				Debug.Log (this.status.Sword_Power);
+				player.GetComponent<PlayerController>().Damage (this.status.Sword_Power);
+				Vector3 vector = player.transform.position - this.transform.position;
+
+				player.rigidbody.AddForce (vector.normalized * 2.0f, ForceMode.VelocityChange);
+		}
     }
 
     /// <summary>

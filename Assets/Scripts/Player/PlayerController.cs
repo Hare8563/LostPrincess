@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using StatusClass;
+using SkillClass;
 
 public class PlayerController : MonoBehaviour
 {
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour
     static int runState = Animator.StringToHash("Base Layer.Run");
     static int swordRunState = Animator.StringToHash("Base Layer.Sword_Run");
     static int swordState = Animator.StringToHash("Base Layer.Sword");
+	static int swordState2 = Animator.StringToHash ("Base Layer.Sword_02");
     static int magic_01State = Animator.StringToHash("Base Layer.Magic_01");
     static int magic_02State = Animator.StringToHash("Base Layer.Magic_02");
     static int arrow_01State = Animator.StringToHash("Base Layer.Arrow_01");
@@ -97,6 +99,12 @@ public class PlayerController : MonoBehaviour
     /// 死亡フラグ
     /// </summary>
     private bool deadFlag = false;
+	
+	/// <summary>
+	/// スキルクラス
+	/// </summary>
+	private Skill skill;
+
     private GameObject prefab;
     void Awake()
     {
@@ -198,6 +206,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Attack()
     {
+		skill = new Skill (ShotPoint.transform.position, this.transform.rotation, "Boss");
         //剣
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -253,8 +262,13 @@ public class PlayerController : MonoBehaviour
         //剣モーションの時
         else if (currentBaseState.nameHash == swordState)
         {
-
+					
         }
+		//剣モーション02の時
+		else if (currentBaseState.nameHash == swordState2)
+		{
+				skill.SwordSlash();
+		}
         //魔法モーション(_01)の時
         else if (currentBaseState.nameHash == magic_01State)
         {
@@ -269,6 +283,7 @@ public class PlayerController : MonoBehaviour
                 if (isBossBattle) Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
                 else Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
                 MagicController.EnemyDamage = this.status.Magic_Power;
+				skill.Meteo ();
             }
         }
         //弓モーション(_01)の時
@@ -285,6 +300,7 @@ public class PlayerController : MonoBehaviour
                 if (isBossBattle) Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
                 else Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
                 BowController.EnemyDamage = this.status.BOW_POW;
+				skill.SpreadArrow ();
             }
         }
     }
@@ -301,9 +317,6 @@ public class PlayerController : MonoBehaviour
             Application.LoadLevel("Boss");
         }
     }
-    bool flag = false;
-    float attackTime = 0.0f;
-
     /// <summary>
     /// 何かに当たり続けたら
     /// </summary>
@@ -311,20 +324,11 @@ public class PlayerController : MonoBehaviour
     void OnTriggerStay(Collider collider)
     {
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        var currentTime = Time.time;
-        if (collider.gameObject.CompareTag("Enemy") && Input.GetKeyDown(KeyCode.J))
+        
+		if (collider.gameObject.CompareTag("Enemy") && currentBaseState.nameHash == swordState2)
         {
-
-            attackTime = currentTime;
-            flag = true;
-        }
-        if (currentTime - attackTime > 0.3f && flag == true)
-        {
-            Debug.Log("Called: " + collider.gameObject.name);
-            var enemy = collider.gameObject.GetComponent<EnemyScript>();
-            enemy.Damage(this.status.Sword_Power);
-            flag = false;
-            attackTime = 0.0f;
+			var enemy = collider.gameObject.GetComponent<EnemyScript>();
+			enemy.Damage(this.status.Sword_Power);
         }
     }
 

@@ -253,7 +253,7 @@ public class BossController : MonoBehaviour {
                 endMoveTime = Random.Range(240f, 420f);
                 isEndMoveTime = true;
                 AttackRatio = Random.Range(0f, 1f);
-                Debug.Log("Reset Move Time");
+                //Debug.Log("Reset Move Time");
             }
 
             //移動時間をカウント
@@ -282,7 +282,7 @@ public class BossController : MonoBehaviour {
         else
         {
             isDead = true;
-            //eventController.GetComponent<EventController>().WhiteOut("Ending", 0.5f);
+            eventController.GetComponent<EventController>().WhiteOut("Ending", 0.5f);
             //Application.LoadLevel("Title");
         }
     }
@@ -379,7 +379,7 @@ public class BossController : MonoBehaviour {
             AnctionRand = Random.Range(0, 5);
             RandomRand = Random.Range(180, 300);
             RandCount = 0;
-            Debug.Log("Next Move");
+            //Debug.Log("Next Move");
         }
 
         //行動選択
