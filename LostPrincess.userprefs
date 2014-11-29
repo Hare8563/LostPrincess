@@ -1,15 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Skill\Meteo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/toBossStage.cs">
     <Files>
-      <File FileName="Assets\Scripts\Skill\Skill.cs" Line="71" Column="58" />
-      <File FileName="Assets\Scripts\Player\PlayerController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\StatusClass.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Boss\BossController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Skill\SwordSlash.cs" Line="9" Column="16" />
-      <File FileName="Assets\Scripts\Boss\BowController.cs" Line="116" Column="60" />
-      <File FileName="Assets\Scripts\Skill\SpreadArrow.cs" Line="8" Column="16" />
-      <File FileName="Assets\Scripts\Skill\Meteo.cs" Line="29" Column="33" />
+      <File FileName="Assets/Scripts/Title/TitleCharaController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Title/TitleController.cs" Line="29" Column="58" />
+      <File FileName="Assets/Scripts/Title/CameraSlide.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Event/EventController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/Method.cs" Line="1" Column="1" />
+      <File FileName="Assets/toBossStage.cs" Line="17" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
