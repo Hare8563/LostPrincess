@@ -14,13 +14,28 @@ public class Method : MonoBehaviour
         return time;
     }
 
+	/// <summary>
+	/// 値を低速で滑らかに変化させる
+	/// </summary>
+	/// <param name="from">開始地点</param>
+	/// <param name="to">目標地点</param>
+	/// <param name="speed">変化速度</param>
+	public static void SmoothChange(ref float from, float to, float speed)
+	{
+		if (from > to) from -= speed * GameTime();
+		if (from < to) from += speed * GameTime();
+		//if ((int)from == (int)to) from = to;
+		//Debug.Log(gap);
+		//return from;
+	}
+
     /// <summary>
-    /// 値を滑らかに変化させる
+    /// 値を可変速で滑らかに変化させる
     /// </summary>
     /// <param name="from">開始地点</param>
     /// <param name="to">目標地点</param>
     /// <param name="speed">変化速度</param>
-    public static void SmoothChange(ref float from, float to, float speed)
+    public static void SmoothChangeEx(ref float from, float to, float speed)
     {
         float gap = Mathf.Abs(from - to);
         if (from > to) from -= speed * GameTime() * gap;

@@ -321,7 +321,7 @@ public class BossController : MonoBehaviour {
         //プレイヤーに近づくフラグがたったら
         if (isAttackSwordRun)
         {
-            float Distance = 15.0f;
+            float Distance = 20.0f;
             //一定距離近づいたら剣振りフラグを立てる
             if (ToPlayerDistance <= Distance)
             {

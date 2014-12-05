@@ -27,11 +27,22 @@ public class MagicController : MonoBehaviour {
     /// <summary>
     /// ヒットエフェクト
     /// </summary>
-    GameObject HitEffect;
+    private GameObject HitEffect;
+	/// <summary>
+	/// ライトオブジェクト
+	/// </summary>
+	private Light LightObject;
+	/// <summary>
+	/// 光の光量
+	/// </summary>
+	[SerializeField]
+	[Range(0,10)]
+	private float LightIntensity;
 
     void Awake()
     {
         HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
+		LightObject = this.transform.FindChild("Point light").light;
     }
 
 	void Start () 
@@ -41,6 +52,7 @@ public class MagicController : MonoBehaviour {
         {
             Target = TargetObject;
         }
+		LightObject.intensity = LightIntensity;
         //Debug.Log("Emmit");
 	}
 	
@@ -93,6 +105,8 @@ public class MagicController : MonoBehaviour {
             transform.Translate(Vector3.forward * Speed);
         }
 
+		//ライト光量を明滅
+		LightObject.intensity = LightIntensity + Random.Range(-0.5f,0.6f);
         //Debug.Log(EnemyDamage);
 	}
 
@@ -122,6 +136,10 @@ public class MagicController : MonoBehaviour {
             else if (Target.tag == "Enemy")
             {
                 Target.GetComponent<EnemyScript>().Damage(EnemyDamage);
+            }
+            else if (Target.tag == "Hime")
+            {
+                Target.GetComponent<RastBossController>().Damage(EnemyDamage);
             }
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
