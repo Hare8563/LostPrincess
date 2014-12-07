@@ -81,6 +81,7 @@
      <Compile Include="Assets\Scripts\Title\TitleController.cs" />
      <Compile Include="Assets\SwordEffectOperator.cs" />
      <Compile Include="Assets\bgmController.cs" />
+     <Compile Include="Assets\buttonController.cs" />
      <Compile Include="Assets\collision.cs" />
      <Compile Include="Assets\move.cs" />
      <Compile Include="Assets\stageScript.cs" />

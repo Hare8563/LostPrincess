@@ -8,7 +8,7 @@ public class SwordEffectOperator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-				player = GameObject.Find (@"Yusha2");
+				player = GameObject.Find (@"HERO_MOTION07");
 	}
 	
 	// Update is called once per frame
