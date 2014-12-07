@@ -26,7 +26,7 @@ public class EnemyScript : MonoBehaviour
     /// </summary>
     void Start()
     {
-        player = GameObject.Find(@"Yusha2");
+        player = GameObject.Find(@"HERO_MOTION07");
         status = new Status(1, 0, 10, 5);
     }
 
