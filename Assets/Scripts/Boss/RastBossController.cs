@@ -116,7 +116,7 @@ public class RastBossController : MonoBehaviour
     }
 
     /// <summary>
-    /// スキル・ハイラッシュ攻撃パターン
+    /// ノーマルスキル・ハイラッシュ攻撃パターン
     /// </summary>
     void HighRash()
     {
@@ -127,7 +127,7 @@ public class RastBossController : MonoBehaviour
     }
 
     /// <summary>
-    /// スキル・ビッグメテオ攻撃パターン
+    /// ノーマルスキル・ビッグメテオ攻撃パターン
     /// </summary>
     void BigMeteo()
     {
@@ -160,7 +160,7 @@ public class RastBossController : MonoBehaviour
     }
 
     /// <summary>
-    /// スキル・フォトンレーザー攻撃パターン
+    /// ノーマルスキル・フォトンレーザー攻撃パターン
     /// </summary>
     void PhotonLaser()
     {
@@ -182,6 +182,36 @@ public class RastBossController : MonoBehaviour
     }
 
     /// <summary>
+    /// バーサクスキル・ハイトルネード攻撃パターン
+    /// </summary>
+    void HighTornado()
+    {
+        isDashEffect = false;
+        himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+        himeSkill.HighTornado();
+    }
+
+    /// <summary>
+    /// バーサクスキル・ビッグマイン攻撃パターン
+    /// </summary>
+    void BigMine()
+    {
+        isDashEffect = false;
+        himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+        himeSkill.BigMine();
+    }
+
+    /// <summary>
+    /// バーサクスキル・オメガレーザー攻撃パターン
+    /// </summary>
+    void OmegaBeam()
+    {
+        isDashEffect = false;
+        himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+        himeSkill.OmegaLaser();
+    }
+
+    /// <summary>
     /// アニメーション管理
     /// </summary>
     void AnimationController()
@@ -195,7 +225,9 @@ public class RastBossController : MonoBehaviour
         {
             //BigMeteo();
             //PhotonLaser();
-            HighRash();
+            //HighRash();
+
+            HighTornado();
         }
     }
 

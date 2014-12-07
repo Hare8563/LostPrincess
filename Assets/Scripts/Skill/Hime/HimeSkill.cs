@@ -22,7 +22,7 @@ namespace HimeSkillClass
 		/// </summary>
 		private GameObject TargetObject;
 		/// <summary>
-		/// ターゲットに対するローテーション
+		/// ターゲットに対する回転
 		/// </summary>
 		private Quaternion toTargetRotation;
 
@@ -43,6 +43,22 @@ namespace HimeSkillClass
         /// ボムを投下するタイミング
         /// </summary>
         private static float BombTiming = 0;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードで回転する角度
+        /// </summary>
+        private static float TornadoAngle = 0;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードで回転する速度
+        /// </summary>
+        private static float TornadoSpeed = 0;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードをキープする時間
+        /// </summary>
+        private static float TornadoKeepTime = 0;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードの速度を減速するか
+        /// </summary>
+        private static bool isSpeedDown = false;
 		
 
 		/// <summary>
@@ -161,10 +177,51 @@ namespace HimeSkillClass
 		/// <summary>
 		/// バーサクスキル・ハイトルネード
 		/// </summary>
-		public void HighTornado()
-		{
-			
-		}
+        public void HighTornado()
+        {
+            float MaxTornadoSpeed = 40.0f;
+            float MinTornadoSpeed = 0.0f;
+            float AddTakeAngleSpeed = 0.1f;
+            //徐々に加速
+            if (!isSpeedDown)
+            {
+                if (TornadoSpeed < MaxTornadoSpeed)
+                {
+                    TornadoSpeed += Method.GameTime() * AddTakeAngleSpeed;
+                }
+                //最大まで加速したら
+                else
+                {
+                    TornadoSpeed = MaxTornadoSpeed;
+                    TornadoKeepTime += Method.GameTime();
+                    //5秒キープしたら
+                    if (TornadoKeepTime >= 180)
+                    {
+                        //減速フラグ
+                        isSpeedDown = true;
+                        TornadoKeepTime = 0;
+                    }
+                }
+            }
+            //徐々に減速
+            else
+            {
+                if (TornadoSpeed > MinTornadoSpeed)
+                {
+                    TornadoSpeed -= Method.GameTime() * AddTakeAngleSpeed;
+                }
+                //最小まで減速したら
+                else
+                {
+                    TornadoSpeed = MinTornadoSpeed;
+                }
+            }
+            //Debug.Log(isSpeedDown);
+            //Debug.Log(TornadoAngle);
+            //if (TornadoAngle > 360) { TornadoAngle = 0; }
+            //回転角度反映
+            EmmitObject.transform.eulerAngles = new Vector3(0, EmmitObject.transform.eulerAngles.y + TornadoSpeed, 0);
+        }
 		
 		/// <summary>
 		/// バーサクスキル・ビッグマイン
