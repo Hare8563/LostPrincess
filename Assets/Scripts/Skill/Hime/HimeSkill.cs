@@ -5,6 +5,10 @@ namespace HimeSkillClass
 {
 	public class HimeSkill : MonoBehaviour {
 
+        /// <summary>
+        /// リソース読み込みを行ったか
+        /// </summary>
+        private static bool isAwake = false;
 		/// <summary>
 		/// インスタンス生成位置
 		/// </summary>
@@ -20,7 +24,7 @@ namespace HimeSkillClass
 		/// <summary>
 		/// ターゲットオブジェクト
 		/// </summary>
-		private GameObject TargetObject;
+		private static GameObject TargetObject;
 		/// <summary>
 		/// ターゲットに対する回転
 		/// </summary>
@@ -29,39 +33,72 @@ namespace HimeSkillClass
         /// <summary>
         /// ノーマルスキル・ハイラッシュのボムオブジェクト
         /// </summary>
-        private GameObject BombObject;
+        private static GameObject BombObject;
 		/// <summary>
 		/// ノーマルスキル・ビッグメテオのオブジェクト
 		/// </summary>
-		private GameObject BigMeteoObject;
+		private static GameObject BigMeteoObject;
         /// <summary>
         /// ノーマルスキル・フォトンレーザーのオブジェクト
         /// </summary>
-        private GameObject PhotonLazerObject;
+        private static GameObject PhotonLazerObject;
 
         /// <summary>
         /// ボムを投下するタイミング
         /// </summary>
         private static float BombTiming = 0;
+
+        #region バーサクスキル・ハイトルネードの変数定義
         /// <summary>
         /// バーサクスキル・ハイトルネードで回転する角度
         /// </summary>
-        private static float TornadoAngle = 0;
+        private static float Tornado_Angle = 0;
         /// <summary>
         /// バーサクスキル・ハイトルネードで回転する速度
         /// </summary>
-        private static float TornadoSpeed = 0;
+        private static float Tornado_Speed = 0;
         /// <summary>
         /// バーサクスキル・ハイトルネードをキープする時間
         /// </summary>
-        private static float TornadoKeepTime = 0;
+        private static float Tornado_KeepTime = 0;
         /// <summary>
         /// バーサクスキル・ハイトルネードの速度を減速するか
         /// </summary>
-        private static bool isSpeedDown = false;
-		
+        private static bool Tornado_isSpeedDown = false;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードのエフェクトを生成したかどうか
+        /// </summary>
+        private static bool Tornado_isEffect = false;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードのエフェクトオブジェクト
+        /// </summary>
+        private static GameObject Tornado_EffectObject;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードの最大速度
+        /// </summary>
+        private static float Tornado_MaxSpeed = 40.0f;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードの最小速度
+        /// </summary>
+        private static float Tornado_MinSpeed = 0.0f;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードの加算回転角度
+        /// </summary>
+        private static float Tornado_AddTakeAngleSpeed = 0.1f;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードのエフェクトオブジェクトの子オブジェクト
+        /// </summary>
+        private static GameObject Tornado_EffectChildObject;
+        /// <summary>
+        /// バーサクスキル・ハイトルネードのパーティクルを生成する数
+        /// </summary>
+        private static float Tornado_EmmitCount = 0;
+        #endregion
 
-		/// <summary>
+        #region バーサクスキル・ビッグマインの変数定義
+        #endregion
+
+        /// <summary>
 		/// スキルのコンストラクタ
 		/// </summary>
 		/// <param name="_EmmitPosition">生成位置</param>
@@ -70,8 +107,12 @@ namespace HimeSkillClass
 		{
 			EmmitPosition = _EmmitPosition;
 			EmmitRotation = _EmmitRotation;
-			Awake();
-			Start();
+            if (!isAwake)
+            {
+                //Debug.Log("Awake");
+                Awake();
+            }
+            Start();
 		}
 
 		/// <summary>
@@ -85,22 +126,30 @@ namespace HimeSkillClass
 			EmmitPosition = _EmmitPosition;
 			EmmitRotation = _EmmitRotation;
 			EmmitObject = _EmmitObject;
-			Awake();
-			Start();
+            if (!isAwake)
+            {
+                //Debug.Log("Awake");
+                Awake();
+            }
+            Start();
 		}
 
 		void Awake()
 		{
-			TargetObject = GameObject.FindGameObjectWithTag("Player");
-			BigMeteoObject = Resources.Load("Prefab/BigMeteoBall") as GameObject;
-            PhotonLazerObject = Resources.Load("Prefab/PhotonLazerEmmiter") as GameObject;
+            isAwake = true;
+            Tornado_EffectObject = Resources.Load("Prefab/TornadoEffect") as GameObject;
+            TargetObject = GameObject.FindGameObjectWithTag("Player");
             BombObject = Resources.Load("Prefab/Bomb") as GameObject;
+            BigMeteoObject = Resources.Load("Prefab/BigMeteoBall") as GameObject;
+            PhotonLazerObject = Resources.Load("Prefab/PhotonLazerEmmiter") as GameObject;
 		}
 
 		// Use this for initialization
-		void Start () {
-			toTargetRotation = Quaternion.LookRotation(TargetObject.transform.position - EmmitPosition);
-		}
+        void Start()
+        {
+            //Debug.Log("Start");
+            toTargetRotation = Quaternion.LookRotation(TargetObject.transform.position - EmmitPosition);
+        }
 		
 		// Update is called once per frame
 		void Update () {
@@ -179,48 +228,93 @@ namespace HimeSkillClass
 		/// </summary>
         public void HighTornado()
         {
-            float MaxTornadoSpeed = 40.0f;
-            float MinTornadoSpeed = 0.0f;
-            float AddTakeAngleSpeed = 0.1f;
             //徐々に加速
-            if (!isSpeedDown)
+            if (!Tornado_isSpeedDown)
             {
-                if (TornadoSpeed < MaxTornadoSpeed)
+                //最大速度まで加速
+                if (Tornado_Speed < Tornado_MaxSpeed)
                 {
-                    TornadoSpeed += Method.GameTime() * AddTakeAngleSpeed;
+                    Tornado_Speed += Method.GameTime() * Tornado_AddTakeAngleSpeed;
+					//回転速度が最大速度の1/3以上になったら
+                    if (Tornado_Speed >= Tornado_MaxSpeed / 3)
+					{
+						//トルネードエフェクトの生成
+                        if (!Tornado_isEffect)
+						{
+                            //Debug.Log("Tornado_EffectChildObject");
+                            Tornado_isEffect = true;
+							Tornado_EffectChildObject = (GameObject)Instantiate(Tornado_EffectObject, EmmitObject.transform.position - new Vector3(0,10 ,0), EmmitObject.transform.rotation);
+						}
+					}
                 }
                 //最大まで加速したら
                 else
                 {
-                    TornadoSpeed = MaxTornadoSpeed;
-                    TornadoKeepTime += Method.GameTime();
+                    Tornado_Speed = Tornado_MaxSpeed;
+                    Tornado_KeepTime += Method.GameTime();
+
                     //5秒キープしたら
-                    if (TornadoKeepTime >= 180)
+                    if (Tornado_KeepTime >= 300)
                     {
                         //減速フラグ
-                        isSpeedDown = true;
-                        TornadoKeepTime = 0;
+                        Tornado_isSpeedDown = true;
+                        Tornado_KeepTime = 0;
+                    }
+                }
+
+                //エフェクトを生成していたら
+                if (Tornado_EffectObject != null && Tornado_EffectChildObject != null)
+                {
+                    if (Tornado_EmmitCount < 400) Tornado_EmmitCount += Method.GameTime() * 2;
+                    //トルネードエフェクトに含まれる全ての子オブジェクトを取得
+                    foreach (Transform child in Tornado_EffectChildObject.transform)
+                    {
+                        if (child.name != "WindZone")
+                        {
+                            //パーティクル個数を変更
+                            child.particleSystem.emissionRate = Tornado_EmmitCount;
+                        }
                     }
                 }
             }
             //徐々に減速
             else
             {
-                if (TornadoSpeed > MinTornadoSpeed)
+                if (Tornado_Speed > Tornado_MinSpeed)
                 {
-                    TornadoSpeed -= Method.GameTime() * AddTakeAngleSpeed;
+                    Tornado_Speed -= Method.GameTime() * Tornado_AddTakeAngleSpeed;
+					//回転速度が最大速度の2/3以下になったら
+                    if (Tornado_Speed <= Tornado_MaxSpeed * 2 / 3)
+					{
+                        if (Tornado_EmmitCount > 0) Tornado_EmmitCount -= Method.GameTime() * 2;
+						//トルネードエフェクトに含まれる全ての子オブジェクトを取得
+						foreach(Transform child in Tornado_EffectChildObject.transform)
+						{
+                            if (child.name != "WindZone")
+                            {
+                                //パーティクル個数を変更
+                                child.particleSystem.emissionRate = Tornado_EmmitCount;
+                            }
+						}
+					}
                 }
                 //最小まで減速したら
                 else
                 {
-                    TornadoSpeed = MinTornadoSpeed;
+                    Tornado_Speed = Tornado_MinSpeed;
+                    Destroy(Tornado_EffectChildObject);
+                    Tornado_isEffect = false;
                 }
             }
-            //Debug.Log(isSpeedDown);
-            //Debug.Log(TornadoAngle);
-            //if (TornadoAngle > 360) { TornadoAngle = 0; }
+
+            //プレイヤーを引き寄せる
+            if (Tornado_Speed > 10)
+            {
+                Vector3 forceVec = (EmmitObject.transform.position - new Vector3(0, 20, 0)) - TargetObject.transform.position;
+                TargetObject.rigidbody.AddForce(forceVec * 0.14f, ForceMode.VelocityChange);
+            }
             //回転角度反映
-            EmmitObject.transform.eulerAngles = new Vector3(0, EmmitObject.transform.eulerAngles.y + TornadoSpeed, 0);
+            EmmitObject.transform.eulerAngles = new Vector3(0, EmmitObject.transform.eulerAngles.y + Tornado_Speed, 0);
         }
 		
 		/// <summary>
@@ -228,7 +322,16 @@ namespace HimeSkillClass
 		/// </summary>
 		public void BigMine()
 		{
-			
+			//目標地点算出
+			float dis = Random.Range (0f, 15f);
+			float angle = Random.Range (0f, 360f) * Mathf.PI / 180;
+			float x = dis * Mathf.Cos(angle);
+			float z = dis * Mathf.Sin(angle);
+			float Speed = 100f;
+			//目標地点の方向を向く
+			EmmitObject.transform.LookAt (new Vector3 (x, 20, z));
+			//前進
+			EmmitObject.rigidbody.AddForce(EmmitObject.transform.TransformDirection(Vector3.forward) * Speed, ForceMode.VelocityChange);
 		}
 
 		/// <summary>

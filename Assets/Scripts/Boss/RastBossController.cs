@@ -197,7 +197,7 @@ public class RastBossController : MonoBehaviour
     void BigMine()
     {
         isDashEffect = false;
-        himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+        //himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
         himeSkill.BigMine();
     }
 
@@ -228,6 +228,10 @@ public class RastBossController : MonoBehaviour
             //HighRash();
 
             HighTornado();
+        }
+        else
+        {
+            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
         }
     }
 
