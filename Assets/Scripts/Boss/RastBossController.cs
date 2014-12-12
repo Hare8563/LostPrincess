@@ -44,8 +44,6 @@ public class RastBossController : MonoBehaviour
     /// <summary>
     /// エフェクトサイズと光量の変化スピード
     /// </summary>
-    [SerializeField]
-    [Range(0, 2.0f)]
     private float EffectChangeSpeed = 0.5f;
     /// <summary>
     /// HimeSkillクラス
@@ -83,6 +81,17 @@ public class RastBossController : MonoBehaviour
     static int flyState = Animator.StringToHash("Base Layer.Fly");
     static int attack_01State = Animator.StringToHash("Base Layer.Attack_01");
     static int attack_02State = Animator.StringToHash("Base Layer.Attack_02");
+
+    //デバッグ用
+    //ノーマルスキル
+    public bool useBigMeteo = false;
+    public bool usePhotonLaser = false;
+    public bool useHighRash = false;
+
+    //バーサクスキル
+    public bool useHighTornado = false;
+    public bool useBigMine = false;
+    public bool useOmegaBeam = false;
 
     void Awake()
     {
@@ -154,7 +163,6 @@ public class RastBossController : MonoBehaviour
             BigMeteoTiming = BigMeteoTiming == 0 ? 1 : 0;
         }
         //プレイヤーの方向を向く
-        //敵方向を向く
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
         this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
     }
@@ -209,6 +217,9 @@ public class RastBossController : MonoBehaviour
         isDashEffect = false;
         himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
         himeSkill.OmegaLaser();
+        //プレイヤーの方向を向く
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
+        this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
     }
 
     /// <summary>
@@ -223,11 +234,15 @@ public class RastBossController : MonoBehaviour
         //攻撃態勢だったら
         if (currentBaseState.nameHash == attack_02State)
         {
-            //BigMeteo();
-            //PhotonLaser();
-            //HighRash();
+            //ノーマルスキル
+            if (useBigMeteo) BigMeteo();
+            else if (usePhotonLaser) PhotonLaser();
+            else if (useHighRash) HighRash();
 
-            HighTornado();
+            //バーサクスキル
+            else if (useHighTornado) HighTornado();
+            else if (useBigMine) BigMine();
+            else if (useOmegaBeam) OmegaBeam();
         }
         else
         {

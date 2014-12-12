@@ -68,7 +68,7 @@ namespace HimeSkillClass
         /// <summary>
         /// バーサクスキル・ハイトルネードのエフェクトを生成したかどうか
         /// </summary>
-        private static bool Tornado_isEffect = false;
+        private static bool Tornado_isCreate = false;
         /// <summary>
         /// バーサクスキル・ハイトルネードのエフェクトオブジェクト
         /// </summary>
@@ -96,6 +96,29 @@ namespace HimeSkillClass
         #endregion
 
         #region バーサクスキル・ビッグマインの変数定義
+        /// <summary>
+        /// オブジェクト生成のタイミング
+        /// </summary>
+        private static float BigMine_Timing = 0;
+        /// <summary>
+        /// ビッグマインブジェクト
+        /// </summary>
+        private static GameObject BigMineObject;
+        #endregion
+
+        #region バーサクスキル・オメガビーム
+        /// <summary>
+        /// オメガビームエフェクトを生成したかどうか
+        /// </summary>
+        private static bool OmegaBeam_isCreate = false;
+        /// <summary>
+        /// オメガビームオブジェクト
+        /// </summary>
+        private static GameObject OmegaBeamObject;
+        /// <summary>
+        /// オメガビーム発生位置オブジェクト
+        /// </summary>
+        private static GameObject OmegaBeamEmmitObject;
         #endregion
 
         /// <summary>
@@ -142,6 +165,9 @@ namespace HimeSkillClass
             BombObject = Resources.Load("Prefab/Bomb") as GameObject;
             BigMeteoObject = Resources.Load("Prefab/BigMeteoBall") as GameObject;
             PhotonLazerObject = Resources.Load("Prefab/PhotonLazerEmmiter") as GameObject;
+            BigMineObject = Resources.Load("Prefab/BigMine") as GameObject;
+            OmegaBeamObject = Resources.Load("Prefab/OmegaBeam") as GameObject;
+            OmegaBeamEmmitObject = GameObject.Find("OmegaBeamEmmit");
 		}
 
 		// Use this for initialization
@@ -239,10 +265,10 @@ namespace HimeSkillClass
                     if (Tornado_Speed >= Tornado_MaxSpeed / 3)
 					{
 						//トルネードエフェクトの生成
-                        if (!Tornado_isEffect)
+                        if (!Tornado_isCreate)
 						{
                             //Debug.Log("Tornado_EffectChildObject");
-                            Tornado_isEffect = true;
+                            Tornado_isCreate = true;
 							Tornado_EffectChildObject = (GameObject)Instantiate(Tornado_EffectObject, EmmitObject.transform.position - new Vector3(0,10 ,0), EmmitObject.transform.rotation);
 						}
 					}
@@ -303,7 +329,7 @@ namespace HimeSkillClass
                 {
                     Tornado_Speed = Tornado_MinSpeed;
                     Destroy(Tornado_EffectChildObject);
-                    Tornado_isEffect = false;
+                    Tornado_isCreate = false;
                 }
             }
 
@@ -322,16 +348,12 @@ namespace HimeSkillClass
 		/// </summary>
 		public void BigMine()
 		{
-			//目標地点算出
-			float dis = Random.Range (0f, 15f);
-			float angle = Random.Range (0f, 360f) * Mathf.PI / 180;
-			float x = dis * Mathf.Cos(angle);
-			float z = dis * Mathf.Sin(angle);
-			float Speed = 100f;
-			//目標地点の方向を向く
-			EmmitObject.transform.LookAt (new Vector3 (x, 20, z));
-			//前進
-			EmmitObject.rigidbody.AddForce(EmmitObject.transform.TransformDirection(Vector3.forward) * Speed, ForceMode.VelocityChange);
+            BigMine_Timing += Method.GameTime();
+            if (BigMine_Timing > 90)
+            {
+                BigMine_Timing = 0;
+                Instantiate(BigMineObject, TargetObject.transform.position + new Vector3(0, 10, 0), TargetObject.transform.rotation);
+            }
 		}
 
 		/// <summary>
@@ -339,8 +361,12 @@ namespace HimeSkillClass
 		/// </summary>
 		public void OmegaLaser()
 		{
-			
-		}
+            if (!OmegaBeam_isCreate)
+            {
+                OmegaBeam_isCreate = true;
+                Instantiate(OmegaBeamObject, OmegaBeamEmmitObject.transform.position, OmegaBeamEmmitObject.transform.rotation);
+            }   
+        }
 
 		/// <summary>
 		/// 何かに触れたら
