@@ -46,10 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\GUITextureResize.cs" />
-     <Compile Include="Assets\Plugins\GameObjectExtensions.cs" />
-     <Compile Include="Assets\Plugins\GetObjecter.cs" />
-     <Compile Include="Assets\Plugins\Method.cs" />
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\BlurEffect.cs" />
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\ColorCorrectionEffect.cs" />
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\ContrastStretchEffect.cs" />

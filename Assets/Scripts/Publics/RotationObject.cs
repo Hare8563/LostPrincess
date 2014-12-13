@@ -11,9 +11,10 @@ public class RotationObject : MonoBehaviour {
     public bool RoteZ = false;
     public float Speed = 0;
     private float rote = 0;
+    private Quaternion rotation = new Quaternion();
 	// Use this for initialization
 	void Start () {
-	
+        rotation = this.transform.rotation;
 	}
 	
 	// Update is called once per frame
