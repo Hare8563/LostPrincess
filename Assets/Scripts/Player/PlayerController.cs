@@ -2,6 +2,8 @@
 using System.Collections;
 using StatusClass;
 using SkillClass;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -95,6 +97,8 @@ public class PlayerController : MonoBehaviour
     static int magic_02State = Animator.StringToHash("Base Layer.Magic_02");
     static int arrow_01State = Animator.StringToHash("Base Layer.Arrow_01");
     static int arrow_02State = Animator.StringToHash("Base Layer.Arrow_02");
+	static int LvUpState = Animator.StringToHash("Base Layer.Take 0001");
+	static int DamageState = Animator.StringToHash("Base Layer.Damage");
     /// <summary>
     /// Statusクラス
     /// </summary>
@@ -103,7 +107,14 @@ public class PlayerController : MonoBehaviour
     /// 死亡フラグ
     /// </summary>
     private bool deadFlag = false;
-	
+	/// <summary>
+	/// ダメージを受けたかの判定
+	/// </summary>
+	private bool isDamage = false;
+	/// <summary>
+	/// LvUPのためのフラグ
+	/// </summary>
+	private bool LvUp = false;
 	/// <summary>
 	/// スキルクラス
 	/// </summary>
@@ -149,6 +160,7 @@ public class PlayerController : MonoBehaviour
 		Weapon_Sword.renderer.enabled = false;
 		Weapon_Rod.renderer.enabled = false;
 		Weapon_Bow.renderer.enabled = false;
+		
     }
 
     void Update()
@@ -160,13 +172,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //移動
-        if (!isAttack)
-        {
-            Move();
-        }
-        //攻撃
-        Attack();
+
+		//移動
+		if (!isAttack) {
+				Move ();
+		}
+		//攻撃
+		Attack ();
+		
     }
 
     /// <summary>
@@ -178,6 +191,7 @@ public class PlayerController : MonoBehaviour
         float inputV = Input.GetAxis("Vertical");
         animator.SetFloat("Horizontal", inputH);
         isMove = false;
+
         //ボス戦だったら
         if (isBossBattle)
         {
@@ -217,10 +231,9 @@ public class PlayerController : MonoBehaviour
         //道中だったら
         else
         {
-            if (inputH != 0.0f || inputV != 0.0f)
-            {
-                isMove = true;
-            }
+			if (inputH != 0.0f || inputV != 0.0f) {
+					isMove = true;
+			} 
             //進行方向取得
             Vector3 inputVec = new Vector3(inputH, 0.0f, inputV).normalized;
             //キャラ回転
@@ -239,26 +252,26 @@ public class PlayerController : MonoBehaviour
     void Attack()
     {
 		skill = new Skill (ShotPoint.transform.position, this.transform.rotation, "Boss");
-        //剣
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            isAttack = true;
-            isAttackSword = true;
-        }
-        //魔法
-        else if (Input.GetKeyDown(KeyCode.I))
-        {
-            isAttack = true;
-            isShotMagic = true;
-            MagicController.TargetObject = TargetObject;
-        }
-        //弓
-        else if (Input.GetKeyDown(KeyCode.O))
-        {
-            isAttack = true;
-            isShotArrow = true;
-            BowController.TargetObject = TargetObject;
-        }
+		currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
+	 	if (currentBaseState.nameHash != LvUpState || currentBaseState.nameHash != DamageState) {
+				//剣
+				if (Input.GetKeyDown (KeyCode.J)) {
+						isAttack = true;
+						isAttackSword = true;
+				}
+			//魔法
+			else if (Input.GetKeyDown (KeyCode.I)) {
+						isAttack = true;
+						isShotMagic = true;
+						MagicController.TargetObject = TargetObject;
+				}
+			//弓
+			else if (Input.GetKeyDown (KeyCode.O)) {
+						isAttack = true;
+						isShotArrow = true;
+						BowController.TargetObject = TargetObject;
+				}
+		}
     }
 
     /// <summary>
@@ -275,8 +288,18 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isShotMagic", isShotMagic);
         animator.SetBool("isShotArrow", isShotArrow);
         animator.SetBool("DeadFlag", deadFlag);
+		animator.SetBool ("isDamage", isDamage);
+		animator.SetBool ("isLvUp", LvUp);
+		Text HP = GameObject.Find ("HP").GetComponent<Text> ();
+		Text MP = GameObject.Find ("MP").GetComponent<Text> ();
+		Text Lv = GameObject.Find ("Lv").GetComponent<Text> ();
 
+		HP.text = this.status.HP.ToString();
+		MP.text = this.status.MP.ToString ();
+		Lv.text = this.status.LEV.ToString ();
+		
         //Debug.Log(animator.GetBool("isAttackSword"));
+		
 
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
@@ -286,6 +309,10 @@ public class PlayerController : MonoBehaviour
             isAttackSword = false;
             isShotMagic = false;
             isShotArrow = false;
+			//ダメージフラグを初期化
+			isDamage = false;
+			//LvUpフラグを初期化
+			LvUp = false;
 			//武器表示を初期化
 			Weapon_Sword.renderer.enabled = false;
 			Weapon_Rod.renderer.enabled = false;
@@ -395,8 +422,12 @@ public class PlayerController : MonoBehaviour
     public void GetExp(int exp)
     {
         this.status.EXP += exp;
-        if (this.status.EXP >= this.status.ExpLimit)
-            status.LevUp();
+				if (this.status.EXP >= this.status.ExpLimit) {
+						status.LevUp ();
+						LvUp = true;
+						isMove = false;
+						isAttack = false;
+				}
     }
 
     /// <summary>
@@ -408,20 +439,24 @@ public class PlayerController : MonoBehaviour
         AudioSource audio = GetComponent<AudioSource>();
         audio.Play();
         this.status.HP -= val;
-        if (this.status.HP <= 0)
-            this.deadFlag = true;
+
+				if (this.status.HP <= 0 && deadFlag == false)
+						this.deadFlag = true;
+				else {
+						this.isDamage = true;
+				}
     }
 
     /// <summary>
     /// GUIを表示
     /// </summary>
-    void OnGUI()
-    {
-        GUIStyle guistyle = new GUIStyle();
-        guistyle.fontSize = 32;
-        guistyle.normal.textColor = Color.red;
-        GUI.Label(new Rect(0, 250, 200, 50), @"LEV: " + this.status.LEV.ToString(), guistyle);
-        GUI.Label(new Rect(0, 300, 200, 50), @"HP: " + this.status.HP.ToString(), guistyle);
-        GUI.Label(new Rect(0, 350, 200, 50), @"EXP: " + this.status.EXP.ToString(), guistyle);
-    }
+//    void OnGUI()
+//    {
+//        GUIStyle guistyle = new GUIStyle();
+//        guistyle.fontSize = 32;
+//        guistyle.normal.textColor = Color.red;
+//        GUI.Label(new Rect(0, 250, 200, 50), @"LEV: " + this.status.LEV.ToString(), guistyle);
+//        GUI.Label(new Rect(0, 300, 200, 50), @"HP: " + this.status.HP.ToString(), guistyle);
+//        GUI.Label(new Rect(0, 350, 200, 50), @"EXP: " + this.status.EXP.ToString(), guistyle);
+//    }
 }
