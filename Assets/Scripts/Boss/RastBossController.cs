@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿//#define skillDebug
+
+using UnityEngine;
 using System.Collections;
 using HimeSkillClass;
 using StatusClass;
 
 public class RastBossController : MonoBehaviour
 {
+    #region 変数定義
     /// <summary>
     /// ステータスクラス
     /// </summary>
@@ -82,7 +85,84 @@ public class RastBossController : MonoBehaviour
     static int attack_01State = Animator.StringToHash("Base Layer.Attack_01");
     static int attack_02State = Animator.StringToHash("Base Layer.Attack_02");
 
-    //デバッグ用
+    /// <summary>
+    /// 移動するタイミング
+    /// </summary>
+    private float moveTiming = 0;
+    /// <summary>
+    /// その場に待機した時間
+    /// </summary>
+    private float nowStayTime = 0;
+    /// <summary>
+    /// 次に向かうべき座標
+    /// </summary>
+    private Vector3 nextPosition;
+    /// <summary>
+    /// 現在いる座標
+    /// </summary>
+    private Vector3 nowPosition;
+    /// <summary>
+    /// 次の攻撃までの時間
+    /// </summary>
+    private float nextAttackTime = 0;
+    /// <summary>
+    /// 次の攻撃に移るまでに経過した時間
+    /// </summary>
+    private float nowStayAttackTime = 0;
+    /// <summary>
+    /// スキルを使用している時間
+    /// </summary>
+    private float usingSkillTime = 0;
+    /// <summary>
+    /// ハイラッシュ使用時間
+    /// </summary>
+    private const float useHighRashTime = 1800;
+    /// <summary>
+    /// ビッグメテオ使用時間
+    /// </summary>
+    private const float useBigMeteoTime = 615;
+    /// <summary>
+    /// フォトンレーザー使用時間
+    /// </summary>
+    private const float usePhotonLaserTime = 300;
+    /// <summary>
+    /// ハイトルネード使用時間
+    /// </summary>
+    private const float useHighTornadoTime = 1200;
+    /// <summary>
+    /// ビッグマイン使用時間
+    /// </summary>
+    private const float useBigMineTime = 900;
+    /// <summary>
+    /// オメガビーム使用時間
+    /// </summary>
+    private const float useOmegaBeamTime = 600;
+    /// <summary>
+    /// 使用するノーマルスキルをランダムに決める
+    /// </summary>
+    private int randomUse_NormalSkill = 0;
+    /// <summary>
+    /// 使用するバーサクスキルをランダムに決める
+    /// </summary>
+    private int randomUse_BerserkSkill = 0;
+    /// <summary>
+    /// バーサク状態か
+    /// </summary>
+    private bool isBerserk = false;
+	/// <summary>
+	/// ダウン状態か
+	/// </summary>
+	private bool isDown = false;
+	/// <summary>
+	/// ダウンしている時間
+	/// </summary>
+	private float DownTime = 0;
+	/// <summary>
+	/// 下に落ちているか
+	/// </summary>
+	private bool isGround = false;
+
+#if skillDebug
     //ノーマルスキル
     public bool useBigMeteo = false;
     public bool usePhotonLaser = false;
@@ -92,7 +172,12 @@ public class RastBossController : MonoBehaviour
     public bool useHighTornado = false;
     public bool useBigMine = false;
     public bool useOmegaBeam = false;
+#endif
+    #endregion
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
     void Awake()
     {
         animator = this.gameObject.GetComponent<Animator>();
@@ -101,7 +186,9 @@ public class RastBossController : MonoBehaviour
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Use this for initialization
+    /// <summary>
+    /// 初期化
+    /// </summary>
     void Start()
     {
         status = new Status(10, 0, 100, 100);
@@ -114,25 +201,156 @@ public class RastBossController : MonoBehaviour
             i.light.intensity = nowLightIntensity;
         }
         DashEffect.SetActive(isDashEffect);
+        nextPosition = nowPosition = this.transform.position;
+        nextAttackTime = Random.Range(240f, 360f);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// 更新
+    /// </summary>
     void Update()
     {
-        AttackFlag = true;
+        //isBerserk = false;
+        Move();
+		Down();
         AnimationController();
         DashEffect.SetActive(isDashEffect);
     }
 
     /// <summary>
+    /// 移動処理
+    /// </summary>
+    void Move()
+    {
+		if(!isDown)
+		{
+			//非攻撃状態
+	        if (!AttackFlag)
+	        {
+	            //移動可能範囲
+	            float canAreaMoveDistance = 70;
+	            float Speed = 0.05f;
+	            //ランダム時間毎に移動する
+	            nowStayTime += Method.GameTime();
+	            if (nowStayTime > moveTiming)
+	            {
+	                nowStayTime = 0;
+	                moveTiming = Random.Range(0f, 120f);
+	                float AngleRand_X = Random.Range(0, 360 * Mathf.PI / 180);
+	                float AngleRand_Z = Random.Range(0, 360 * Mathf.PI / 180);
+	                nextPosition.x = Mathf.Cos(AngleRand_X) * canAreaMoveDistance;
+	                nextPosition.z = Mathf.Cos(AngleRand_Z) * canAreaMoveDistance;
+	            }
+	            //現在座標値を滑らかに目標座標値へ遷移
+	            Method.SmoothChangeEx(ref nowPosition.x, nextPosition.x, Speed);
+	            Method.SmoothChangeEx(ref nowPosition.z, nextPosition.z, Speed);
+	            //座標値反映
+	            this.transform.position = nowPosition;
+	            //プレイヤーの方向を向く
+	            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
+	            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+	            //攻撃する時間になったら
+	            nowStayAttackTime += Method.GameTime();
+	            if (nowStayAttackTime > nextAttackTime)
+	            {
+	                nowStayAttackTime = 0;
+	                nextAttackTime = Random.Range(240f, 360f);
+	                randomUse_NormalSkill = Random.Range(0, 3);
+	                randomUse_BerserkSkill = Random.Range(0, 3);
+	                AttackFlag = true;
+	            }
+	        }
+			//攻撃状態
+	        else
+	        {
+				nowStayTime = 0;
+				//バーサク状態だったら中心に移動する
+	            if (isBerserk)
+	            {
+	                float Speed = 0.05f;
+	                //現在座標値を滑らかに目標座標値へ遷移
+	                Method.SmoothChangeEx(ref nowPosition.x, 0, Speed);
+	                Method.SmoothChangeEx(ref nowPosition.z, 0, Speed);
+	                //座標値反映
+	                this.transform.position = nowPosition;
+	            }
+	        }
+		}
+    }
+
+	/// <summary>
+	/// ダウン状態
+	/// </summary>
+	void Down()
+	{
+		if(isDown)
+		{
+			//エフェクト関連初期化
+			isDashEffect = false;
+			AttackPoints[0].particleSystem.startSize = nowEffectSize = EfectSize_Min;
+			AttackPoints[0].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
+			AttackPoints[1].particleSystem.startSize = nowEffectSize = EfectSize_Min;
+			AttackPoints[1].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
+			//ダウン時間経過
+			DownTime += Method.GameTime();
+			//10秒間ダウン
+			if(DownTime > 600)
+			{
+				//上昇
+				if(this.transform.position.y < 20f)
+				{
+					this.rigidbody.AddForce(this.transform.TransformDirection(Vector3.up).normalized * 1, ForceMode.VelocityChange);
+				}
+				else
+				{
+					isDown = false;
+					//バーサクモードに切り替え
+					isBerserk = true;
+				}
+			}
+			//下に落ちる
+			else if(!isGround)
+			{
+				this.rigidbody.AddForce(this.transform.TransformDirection(Vector3.down).normalized * 5, ForceMode.VelocityChange);
+			}
+		}
+		else
+		{
+			DownTime = 0;
+		}
+	}
+
+    #region 全スキル処理
+    /// <summary>
     /// ノーマルスキル・ハイラッシュ攻撃パターン
     /// </summary>
     void HighRash()
     {
-        //スキル発動
-        isDashEffect = true;
-        himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
-        himeSkill.HighRash();
+		float maxScale = 50f;
+		float maxDis = 600f;
+        if (AttackFlag)
+        {       
+            //スキル発動
+            isDashEffect = true;
+            //中心からの距離
+            float dis = Vector3.Distance(Vector3.zero + new Vector3(0, 20, 0), this.transform.position);
+            //距離が遠いほど小さく、近いほど大きくする
+            float flowScale = maxScale * (dis / maxDis);
+            Vector3 flowScaleVector = new Vector3(maxScale, maxScale, maxScale) - new Vector3(flowScale, flowScale, flowScale);
+            this.transform.localScale = flowScaleVector;
+            //スキル使用
+            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+            himeSkill.HighRash();
+        }
+        //一定時間経つと通常移動に戻る
+        usingSkillTime += Method.GameTime();
+        if (usingSkillTime > useHighRashTime)
+        {
+			this.transform.localScale = new Vector3(maxScale, maxScale, maxScale);
+            isDashEffect = false;
+            usingSkillTime = 0;
+            AttackFlag = false;
+        }
     }
 
     /// <summary>
@@ -143,28 +361,37 @@ public class RastBossController : MonoBehaviour
         isDashEffect = false;
         //移動
         //TODO:移動処理（必要なら）
-
-        //攻撃エフェクトサイズ等更新
-        Method.SmoothChange(ref nowEffectSize, EffectSize_Max, EffectChangeSpeed);
-        Method.SmoothChange(ref nowLightIntensity, EfectLightIntensity_Max, EffectChangeSpeed);
-        //値を反映
-        AttackPoints[BigMeteoTiming].particleSystem.startSize = nowEffectSize;
-        AttackPoints[BigMeteoTiming].light.intensity = nowLightIntensity;
-        //エフェクトサイズが最大になったら
-        if (AttackPoints[BigMeteoTiming].particleSystem.startSize > EffectSize_Max)
+        if (AttackFlag)
         {
-            //エフェクト関連初期化
-            AttackPoints[BigMeteoTiming].particleSystem.startSize = nowEffectSize = EfectSize_Min;
-            AttackPoints[BigMeteoTiming].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
-            //スキル発動
-            himeSkill = new HimeSkill(AttackPoints[BigMeteoTiming].transform.position, AttackPoints[BigMeteoTiming].transform.rotation);
-            himeSkill.BigMeteo();
-            //メテオ出現箇所を入れ替える
-            BigMeteoTiming = BigMeteoTiming == 0 ? 1 : 0;
+            //攻撃エフェクトサイズ等更新
+            Method.SmoothChange(ref nowEffectSize, EffectSize_Max, EffectChangeSpeed);
+            Method.SmoothChange(ref nowLightIntensity, EfectLightIntensity_Max, EffectChangeSpeed);
+            //値を反映
+            AttackPoints[BigMeteoTiming].particleSystem.startSize = nowEffectSize;
+            AttackPoints[BigMeteoTiming].light.intensity = nowLightIntensity;
+            //エフェクトサイズが最大になったら
+            if (AttackPoints[BigMeteoTiming].particleSystem.startSize > EffectSize_Max)
+            {
+                //エフェクト関連初期化
+                AttackPoints[BigMeteoTiming].particleSystem.startSize = nowEffectSize = EfectSize_Min;
+                AttackPoints[BigMeteoTiming].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
+                //スキル発動
+                himeSkill = new HimeSkill(AttackPoints[BigMeteoTiming].transform.position, AttackPoints[BigMeteoTiming].transform.rotation);
+                himeSkill.BigMeteo();
+                //メテオ出現箇所を入れ替える
+                BigMeteoTiming = BigMeteoTiming == 0 ? 1 : 0;
+            }
+            //プレイヤーの方向を向く
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
+            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         }
-        //プレイヤーの方向を向く
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
-        this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        //一定時間経つと通常移動に戻る
+        usingSkillTime += Method.GameTime();
+        if (usingSkillTime > useBigMeteoTime)
+        {
+            usingSkillTime = 0;
+            AttackFlag = false;
+        }
     }
 
     /// <summary>
@@ -176,16 +403,28 @@ public class RastBossController : MonoBehaviour
         //チャージ行動（？）
         //TODO:チャージ行動処理
 
-        //両羽から照射
-        if (PhotonLaserNum < 12)
+        if (AttackFlag)
         {
-            foreach (GameObject i in AttackPoints)
+            //両羽から照射
+            if (PhotonLaserNum < 12)
             {
-                //スキル発動
-                himeSkill = new HimeSkill(i.transform.position, i.transform.rotation, i);
-                himeSkill.PhotonLaser();
-                PhotonLaserNum++;
+                foreach (GameObject i in AttackPoints)
+                {
+                    Debug.Log("Photon");
+                    //スキル発動
+                    himeSkill = new HimeSkill(i.transform.position, i.transform.rotation, i);
+                    himeSkill.PhotonLaser();
+                    PhotonLaserNum++;
+                }
             }
+        }
+        //一定時間経つと通常移動に戻る
+        usingSkillTime += Method.GameTime();
+        if (usingSkillTime > usePhotonLaserTime)
+        {
+            PhotonLaserNum = 0;
+            usingSkillTime = 0;
+            AttackFlag = false;
         }
     }
 
@@ -194,9 +433,21 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void HighTornado()
     {
-        isDashEffect = false;
-        himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
-        himeSkill.HighTornado();
+        if (AttackFlag)
+        {
+            //Debug.Log("ハイトルネード");
+            isDashEffect = false;
+            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+            himeSkill.HighTornado();
+        }
+        //一定時間経つと通常移動に戻る
+        usingSkillTime += Method.GameTime();
+        if (usingSkillTime > useHighTornadoTime)
+        {
+			isBerserk = false;
+            usingSkillTime = 0;
+            AttackFlag = false;
+        }
     }
 
     /// <summary>
@@ -204,23 +455,48 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void BigMine()
     {
-        isDashEffect = false;
-        //himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
-        himeSkill.BigMine();
+        if (AttackFlag)
+        {
+            //Debug.Log("ビッグマイン");
+            isDashEffect = false;
+            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+            himeSkill.BigMine();
+        }
+        //一定時間経つと通常移動に戻る
+        usingSkillTime += Method.GameTime();
+        if (usingSkillTime > useBigMineTime)
+        {
+			isBerserk = false;
+            usingSkillTime = 0;
+            AttackFlag = false;
+        }
     }
 
     /// <summary>
-    /// バーサクスキル・オメガレーザー攻撃パターン
+    /// バーサクスキル・オメガビーム攻撃パターン
     /// </summary>
     void OmegaBeam()
     {
-        isDashEffect = false;
-        himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
-        himeSkill.OmegaLaser();
-        //プレイヤーの方向を向く
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
-        this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        if (AttackFlag)
+        {
+            //Debug.Log("オメガビーム");
+            isDashEffect = false;
+            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+            himeSkill.OmegaLaser();
+            //プレイヤーの方向を向く
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
+            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        }
+        //一定時間経つと通常移動に戻る
+        usingSkillTime += Method.GameTime();
+        if (usingSkillTime > useOmegaBeamTime)
+        {
+			isBerserk = false;
+            usingSkillTime = 0;
+            AttackFlag = false;
+        }
     }
+    #endregion
 
     /// <summary>
     /// アニメーション管理
@@ -231,24 +507,88 @@ public class RastBossController : MonoBehaviour
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
         animator.SetBool("AttackFlag", AttackFlag);
 
-        //攻撃態勢だったら
-        if (currentBaseState.nameHash == attack_02State)
-        {
-            //ノーマルスキル
-            if (useBigMeteo) BigMeteo();
-            else if (usePhotonLaser) PhotonLaser();
-            else if (useHighRash) HighRash();
+		if(!isDown)
+		{
+	        //攻撃態勢だったら
+	        if (currentBaseState.nameHash == attack_02State)
+	        {
+#if skillDebug
+	            //ノーマルスキル
+	            if (useBigMeteo) BigMeteo();
+	            else if (usePhotonLaser) PhotonLaser();
+	            else if (useHighRash) HighRash();
 
-            //バーサクスキル
-            else if (useHighTornado) HighTornado();
-            else if (useBigMine) BigMine();
-            else if (useOmegaBeam) OmegaBeam();
-        }
-        else
-        {
-            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
-        }
+	            //バーサクスキル
+	            else if (useHighTornado) HighTornado();
+	            else if (useBigMine) BigMine();
+	            else if (useOmegaBeam) OmegaBeam();
+#else
+	            //バーサク状態か
+	            if (!isBerserk)
+	            {
+	                //ノーマルスキル
+	                switch (randomUse_NormalSkill)
+	                {
+	                    case 0:
+	                        BigMeteo();
+	                        break;
+	                    case 1:
+	                        PhotonLaser();
+	                        break;
+	                    case 2:
+	                        HighRash();
+	                        break;
+	                }
+	            }
+	            else
+	            {
+	                //バーサクスキル
+	                switch (randomUse_BerserkSkill)
+	                {
+	                    case 0:
+	                        HighTornado();
+	                        break;
+	                    case 1:
+	                        BigMine();
+	                        break;
+	                    case 2:
+	                        OmegaBeam();
+	                        break;
+	                }
+	            }
+	#endif
+	        }
+	        else
+	        {
+	            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
+	        }
+		}
     }
+
+	void OnTriggerEnter(Collider collider)
+	{
+		//Debug.Log(collider.name);
+		if(collider.name == "Floor")
+		{
+			isGround = true;
+		}
+	}
+
+	void OnTriggerExit(Collider collider)
+	{
+		isGround = false;
+	}
+
+	/// <summary>
+	/// GUI表示
+	/// </summary>
+	void OnGUI()
+	{
+		GUIStyle guistyle = new GUIStyle();
+		guistyle.fontSize = 64;
+		guistyle.normal.textColor = Color.red;
+		GUI.Label( new Rect(Screen.width/2f, 0, 200, 200), "姫HP:" + this.status.HP , guistyle );
+	}
 
     /// <summary>
     /// 外部参照ダメージ処理
@@ -258,6 +598,7 @@ public class RastBossController : MonoBehaviour
     {
         //AudioSource audio = this.GetComponent<AudioSource>();
         //audio.Play();
+		if(!isBerserk)isDown = true;
         this.status.HP -= val;
     }
 }

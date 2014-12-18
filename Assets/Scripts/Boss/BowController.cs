@@ -106,6 +106,10 @@ public class BowController : MonoBehaviour {
             {
                 Target.GetComponent<EnemyScript>().Damage(EnemyDamage);
             }
+			else if (Target.tag == "Hime")
+			{
+				Target.GetComponent<RastBossController>().Damage(EnemyDamage);
+			}
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
         }

@@ -189,15 +189,8 @@ namespace HimeSkillClass
 		{
             float Speed = 30.0f;
             float maxDis = 600f;
-            float maxScale = 50f;
-            //中心からの距離
-            float dis = Vector3.Distance(Vector3.zero + new Vector3(0, 20, 0), EmmitObject.transform.position);
             //前進
             EmmitObject.rigidbody.AddForce(EmmitObject.transform.TransformDirection(Vector3.forward) * Speed, ForceMode.VelocityChange);
-            //距離が遠いほど小さく、近いほど大きくする
-            float flowScale = maxScale * (dis / maxDis);
-            Vector3 flowScaleVector = new Vector3(maxScale, maxScale, maxScale) - new Vector3(flowScale, flowScale, flowScale);
-            EmmitObject.transform.localScale = flowScaleVector;
             //サイズが最小になったら
             if (EmmitObject.transform.localScale.x < 0 ||
                 EmmitObject.transform.localScale.y < 0 ||
@@ -217,14 +210,17 @@ namespace HimeSkillClass
             RaycastHit hit;
             if (Physics.Raycast(EmmitObject.transform.position, down, out hit, 50))
             {
-                //Debug.Log(BombTiming);
-                BombTiming += Method.GameTime();
-                if (BombTiming > 15)
+                if (hit.collider.name == "Floor")
                 {
-                    BombTiming = 0;
-                    GameObject bomb = (GameObject)Instantiate(BombObject, EmmitObject.transform.position + EmmitObject.transform.TransformDirection(Vector3.back * 5.0f), EmmitObject.transform.rotation);
-                    //float random = 5.0f;
-                    //bomb.rigidbody.AddForce(new Vector3(Random.Range(-random, random), 0, Random.Range(-random, random)),ForceMode.Impulse);
+                    //Debug.Log(BombTiming);
+                    BombTiming += Method.GameTime();
+                    if (BombTiming > 10)
+                    {
+                        BombTiming = 0;
+                        GameObject bomb = (GameObject)Instantiate(BombObject, EmmitObject.transform.position + EmmitObject.transform.TransformDirection(Vector3.back * 10.0f), EmmitObject.transform.rotation);
+                        //float random = 5.0f;
+                        //bomb.rigidbody.AddForce(new Vector3(Random.Range(-random, random), 0, Random.Range(-random, random)),ForceMode.Impulse);
+                    }
                 }
             }
             
@@ -254,6 +250,7 @@ namespace HimeSkillClass
 		/// </summary>
         public void HighTornado()
         {
+			OmegaBeam_isCreate = false;
             //徐々に加速
             if (!Tornado_isSpeedDown)
             {
@@ -327,6 +324,7 @@ namespace HimeSkillClass
                 //最小まで減速したら
                 else
                 {
+                    Tornado_isSpeedDown = false;
                     Tornado_Speed = Tornado_MinSpeed;
                     Destroy(Tornado_EffectChildObject);
                     Tornado_isCreate = false;
@@ -348,6 +346,7 @@ namespace HimeSkillClass
 		/// </summary>
 		public void BigMine()
 		{
+			OmegaBeam_isCreate = false;
             BigMine_Timing += Method.GameTime();
             if (BigMine_Timing > 90)
             {

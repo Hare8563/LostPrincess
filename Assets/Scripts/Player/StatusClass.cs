@@ -12,6 +12,7 @@ namespace StatusClass{
 		public int BOW_POW;
 		public int Sword_Power;
 		public int Magic_Power;
+		public string NAME;
 		
         /// <summary>
         /// デフォルトコンストラクタ
@@ -24,15 +25,16 @@ namespace StatusClass{
 			BOW_POW = 3;
 			Sword_Power=10;
 			Magic_Power = 8;
+			NAME = "NONAME";
 		}
 
         /// <summary>
         /// ステータス指定コンストラクタ
         /// </summary>
-        /// <param name="Lev"></param>
-        /// <param name="Exp"></param>
-        /// <param name="Hp"></param>
-        /// <param name="Mp"></param>
+        /// <param name="Lev">レベル</param>
+        /// <param name="Exp">取得経験値</param>
+        /// <param name="Hp">ヒットポイント</param>
+        /// <param name="Mp">マジックポイント</param>
 		public Status(int Lev, int Exp, int Hp, int Mp){
             LEV = Lev;
             EXP = Exp;
@@ -41,7 +43,26 @@ namespace StatusClass{
             BOW_POW = (int)(1.0f * Mathf.Log10((float)Lev)) + alpha;
             Sword_Power = (int)(2.0f * Mathf.Log10((float)Lev)) + alpha;
             Magic_Power = (int)(2.0f * Mathf.Log10((float)Lev)) + alpha;
+			NAME = "NONAME";
         }
+
+		/// <summary>
+		/// ステータス+名前指定コンストラクタ
+		/// </summary>
+		/// <param name="Lev">レベル</param>
+		/// <param name="Exp">取得経験値</param>
+		/// <param name="Hp">ヒットポイント</param>
+		/// <param name="Mp">マジックポイント</param>
+		public Status(int Lev, int Exp, int Hp, int Mp, string Name){
+			LEV = Lev;
+			EXP = Exp;
+			HP = Hp;
+			MP = Mp;
+			BOW_POW = (int)(1.0f * Mathf.Log10((float)Lev)) + alpha;
+			Sword_Power = (int)(2.0f * Mathf.Log10((float)Lev)) + alpha;
+			Magic_Power = (int)(2.0f * Mathf.Log10((float)Lev)) + alpha;
+			NAME = Name;
+		}
 		
         /// <summary>
         /// レベルアップ

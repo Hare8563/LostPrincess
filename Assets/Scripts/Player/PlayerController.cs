@@ -2,9 +2,14 @@
 using System.Collections;
 using StatusClass;
 using SkillClass;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+	/// <summary>
+	/// uGUIキャンバス
+	/// </summary>
+	public GameObject canvas;
     /// <summary>
     /// ボス戦かどうか
     /// </summary>
@@ -121,8 +126,19 @@ public class PlayerController : MonoBehaviour
 	/// 武器/弓
 	/// </summary>
 	private GameObject Weapon_Bow;
+    /// <summary>
+    /// 新しい座標
+    /// </summary>
+    private Vector3 newPos;
+    /// <summary>
+    /// 古い座標
+    /// </summary>
+    private Vector3 oldPos;
 
-    private GameObject prefab;
+	/// <summary>
+	/// ヒットエフェクト
+	/// </summary>
+	private GameObject HitEffect;
     void Awake()
     {
         if (GameObject.FindGameObjectWithTag("Boss") != null)
@@ -140,12 +156,16 @@ public class PlayerController : MonoBehaviour
 		Weapon_Sword = GameObject.FindGameObjectWithTag("Weapon_Sword");
 		Weapon_Rod = GameObject.FindGameObjectWithTag("Weapon_Rod");
 		Weapon_Bow = GameObject.FindGameObjectWithTag("Weapon_Bow");
+
+		HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
+
+		canvas = GameObject.Find("Canvas");
     }
 
     // Use this for initialization
     void Start()
     {
-        status = new Status(1, 0, 100, 100);
+        status = new Status(100, 0, 100, 100, "勇者やで");
 		Weapon_Sword.renderer.enabled = false;
 		Weapon_Rod.renderer.enabled = false;
 		Weapon_Bow.renderer.enabled = false;
@@ -155,6 +175,8 @@ public class PlayerController : MonoBehaviour
     {
         //アニメーション管理
         AnimationController();
+		//GUI管理
+		StatusGUIController ();
     }
 
     // Update is called once per frame
@@ -193,25 +215,33 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 isMove = true;
-                rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
+                //rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
+				rigidbody.velocity = transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
             }
             //後ろ
             else if (Input.GetKey(KeyCode.S))
             {
                 isMove = true;
-                rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
+                //rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
+				rigidbody.velocity = transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
             }
+			else
+			{
+				rigidbody.velocity = Vector3.zero;
+			}
             //左
             if (Input.GetKey(KeyCode.A))
             {
                 isMove = true;
-                rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
+                //rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
+				rigidbody.velocity = transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
             }
             //右
             else if (Input.GetKey(KeyCode.D))
             {
                 isMove = true;
-                rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
+                //rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
+				rigidbody.velocity = transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
             }
         }
         //道中だったら
@@ -361,6 +391,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+	/// <summary>
+	/// ステータスウィンドウGUI
+	/// </summary>
+	void StatusGUIController()
+	{
+		foreach(Transform child in canvas.transform)
+		{
+			//Debug.Log(child.name);
+			if(child.name == "NAME")
+			{
+				child.gameObject.GetComponent<Text>().text = this.status.NAME;
+			}
+			else if(child.name == "HP")
+			{
+				child.gameObject.GetComponent<Text>().text = this.status.HP.ToString();
+			}
+			else if(child.name == "MP")
+			{
+				child.gameObject.GetComponent<Text>().text = this.status.MP.ToString();
+			}
+			else if(child.name == "LV")
+			{
+				child.gameObject.GetComponent<Text>().text = this.status.LEV.ToString();
+			}
+		}
+	}
+
     /// <summary>
     /// 何かに当たったら
     /// </summary>
@@ -386,6 +443,12 @@ public class PlayerController : MonoBehaviour
 			var enemy = collider.gameObject.GetComponent<EnemyScript>();
 			enemy.Damage(this.status.Sword_Power);
         }
+		else if (collider.gameObject.CompareTag("Hime") && currentBaseState.nameHash == sword_02State)
+		{
+			Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+			var hime = collider.gameObject.GetComponent<RastBossController>();
+			hime.Damage(this.status.Sword_Power);
+		}
     }
 
     /// <summary>
@@ -413,15 +476,24 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// プレイヤーの移動差分を返す
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 getVectorDistance()
+    {
+        return oldPos - newPos;
+    }
+
+    /// <summary>
     /// GUIを表示
     /// </summary>
     void OnGUI()
     {
-        GUIStyle guistyle = new GUIStyle();
-        guistyle.fontSize = 32;
-        guistyle.normal.textColor = Color.red;
-        GUI.Label(new Rect(0, 250, 200, 50), @"LEV: " + this.status.LEV.ToString(), guistyle);
-        GUI.Label(new Rect(0, 300, 200, 50), @"HP: " + this.status.HP.ToString(), guistyle);
-        GUI.Label(new Rect(0, 350, 200, 50), @"EXP: " + this.status.EXP.ToString(), guistyle);
+        //GUIStyle guistyle = new GUIStyle();
+        //guistyle.fontSize = 32;
+        //guistyle.normal.textColor = Color.red;
+        //GUI.Label(new Rect(0, 250, 200, 50), @"LEV: " + this.status.LEV.ToString(), guistyle);
+        //GUI.Label(new Rect(0, 300, 200, 50), @"HP: " + this.status.HP.ToString(), guistyle);
+        //GUI.Label(new Rect(0, 350, 200, 50), @"EXP: " + this.status.EXP.ToString(), guistyle);
     }
 }
