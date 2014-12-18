@@ -33,7 +33,7 @@ public class BigMeteo : MonoBehaviour {
         FuturePos = PlayerObject.transform.position + PlayerObject.GetComponent<PlayerController>().getVectorDistance() * 50;
         toTargetDistance = Vector3.Distance(FuturePos, this.transform.position);
         HitDistanceTime = toTargetDistance / Speed;
-        Debug.Log(HitDistanceTime);
+        //Debug.Log(HitDistanceTime);
     }
 
 	// Use this for initialization
