@@ -161,6 +161,10 @@ public class RastBossController : MonoBehaviour
 	/// 下に落ちているか
 	/// </summary>
 	private bool isGround = false;
+	/// <summary>
+	/// 死亡しているか
+	/// </summary>
+	private bool isDead = false;
 
 #if skillDebug
     //ノーマルスキル
@@ -215,6 +219,9 @@ public class RastBossController : MonoBehaviour
 		Down();
         AnimationController();
         DashEffect.SetActive(isDashEffect);
+		if (isDead) {
+			Application.LoadLevel("Title");
+		}
     }
 
     /// <summary>
@@ -406,11 +413,11 @@ public class RastBossController : MonoBehaviour
         if (AttackFlag)
         {
             //両羽から照射
-            if (PhotonLaserNum < 12)
+            if (PhotonLaserNum < 50)
             {
                 foreach (GameObject i in AttackPoints)
                 {
-                    Debug.Log("Photon");
+                    //Debug.Log("Photon");
                     //スキル発動
                     himeSkill = new HimeSkill(i.transform.position, i.transform.rotation, i);
                     himeSkill.PhotonLaser();
@@ -599,6 +606,10 @@ public class RastBossController : MonoBehaviour
         //AudioSource audio = this.GetComponent<AudioSource>();
         //audio.Play();
 		if(!isBerserk)isDown = true;
-        this.status.HP -= val;
+		this.status.HP -= val;
+		if (this.status.HP < 0) {
+			this.status.HP = 0;
+			isDead = true;
+		}
     }
 }

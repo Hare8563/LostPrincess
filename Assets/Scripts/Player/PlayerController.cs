@@ -147,6 +147,10 @@ public class PlayerController : MonoBehaviour
 	/// ヒットエフェクト
 	/// </summary>
 	private GameObject HitEffect;
+	/// <summary>
+	/// 歩行エフェクト
+	/// </summary>
+	private GameObject RunSmokeEffect;
 
     void Awake()
     {
@@ -169,12 +173,14 @@ public class PlayerController : MonoBehaviour
 		HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
 
 		canvas = GameObject.Find("Canvas");
+
+		RunSmokeEffect = Resources.Load ("Prefab/RunSmoke") as GameObject;
     }
 
     // Use this for initialization
     void Start()
     {
-        status = new Status(100, 0, 100, 100, "勇者やで");
+        status = new Status(100, 0, 100, 100, "勇者ー！");
 		Weapon_Sword.renderer.enabled = false;
 		Weapon_Rod.renderer.enabled = false;
 		Weapon_Bow.renderer.enabled = false;
@@ -194,11 +200,19 @@ public class PlayerController : MonoBehaviour
         //移動
         if (!isAttack)
         {
+			oldPos = this.transform.position;
             Move();
         }
         //攻撃
         Attack();
     }
+
+	void LateUpdate()
+	{
+		newPos = this.transform.position;
+		//Debug.Log (newPos - oldPos);
+		//Debug.Log ("newPos = " + newPos + "\noldPos = " + oldPos);
+	}
 
     /// <summary>
     /// 移動
@@ -444,6 +458,15 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// アニメーションイベント(歩行SE)
+	/// </summary>
+	void RunSeTiming()
+	{
+		//Debug.Log("Se Play");
+		Instantiate (RunSmokeEffect, this.transform.position, this.transform.rotation);
+	}
+
     /// <summary>
     /// 何かに当たったら
     /// </summary>
@@ -502,8 +525,13 @@ public class PlayerController : MonoBehaviour
         AudioSource audio = GetComponent<AudioSource>();
         audio.Play();
         this.status.HP -= val;
-        if (this.status.HP <= 0 && deadFlag == false)
-            this.deadFlag = true;
+		if (this.status.HP < 0) {
+			this.status.HP = 0;		
+		}
+        if (this.status.HP < 0 && deadFlag == false) 
+		{
+			this.deadFlag = true;
+		}
         else
         {
             this.isDamage = true;
@@ -516,6 +544,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     public Vector3 getVectorDistance()
     {
-        return oldPos - newPos;
+		//Debug.Log (oldPos - newPos);
+        return newPos - oldPos;
     }
 }

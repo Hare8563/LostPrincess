@@ -55,6 +55,7 @@
      <Compile Include="Assets\Mao.cs" />
      <Compile Include="Assets\Scripts\Boss\BossController.cs" />
      <Compile Include="Assets\Scripts\Boss\BowController.cs" />
+     <Compile Include="Assets\Scripts\Boss\CollisionOnly.cs" />
      <Compile Include="Assets\Scripts\Boss\MagicController.cs" />
      <Compile Include="Assets\Scripts\Boss\RastBossController.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
@@ -78,6 +79,7 @@
      <Compile Include="Assets\Scripts\Skill\Hime\HimeSkill.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\OmegaBeam.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\PhotonLazer.cs" />
+     <Compile Include="Assets\Scripts\Skill\Hime\TornadoEffect.cs" />
      <Compile Include="Assets\Scripts\Skill\PlayerAndBoss\Cursor.cs" />
      <Compile Include="Assets\Scripts\Skill\PlayerAndBoss\Meteo.cs" />
      <Compile Include="Assets\Scripts\Skill\PlayerAndBoss\Skill.cs" />

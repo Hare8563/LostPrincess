@@ -5,7 +5,7 @@ using System.Collections;
 /// ただ単にオブジェクトを破棄したいときに使う
 /// </summary>
 public class ObjectDestroy : MonoBehaviour {
-    public float time = 5.0f;
+    public float time = 0.0f;
 
 	// Use this for initialization
 	void Start () 

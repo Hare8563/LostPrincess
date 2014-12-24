@@ -39,7 +39,8 @@ public class BigMeteo : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Destroy(this.gameObject, 2.0f);
-        this.transform.LookAt(FuturePos);
+        //this.transform.LookAt(FuturePos);
+		this.transform.LookAt(PlayerObject.transform.position);
 	}
 	
 	// Update is called once per frame
@@ -50,6 +51,15 @@ public class BigMeteo : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-        this.transform.Translate(Vector3.forward * HitDistanceTime * Method.GameTime());
+		this.transform.Translate(Vector3.forward * Speed * Method.GameTime());
+	}
+
+	void OnTriggerEnter(Collider collider)
+	{
+		//Debug.Log (collider.tag);
+		if (collider.tag == "Player") {
+			PlayerObject.GetComponent<PlayerController>().Damage(5);
+			Destroy(this.gameObject);
+		}
 	}
 }
