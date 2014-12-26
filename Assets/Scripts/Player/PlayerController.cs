@@ -238,33 +238,29 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 isMove = true;
-                //rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
-				rigidbody.velocity = transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
+                rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
+				//rigidbody.velocity = transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
             }
             //後ろ
             else if (Input.GetKey(KeyCode.S))
             {
                 isMove = true;
-                //rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
-				rigidbody.velocity = transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
+                rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
+				//rigidbody.velocity = transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
             }
-			else
-			{
-				rigidbody.velocity = Vector3.zero;
-			}
             //左
             if (Input.GetKey(KeyCode.A))
             {
                 isMove = true;
-                //rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
-				rigidbody.velocity = transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
+                rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
+				//rigidbody.velocity = transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
             }
             //右
             else if (Input.GetKey(KeyCode.D))
             {
                 isMove = true;
-                //rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
-				rigidbody.velocity = transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
+                rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
+				//rigidbody.velocity = transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
             }
         }
         //道中だったら

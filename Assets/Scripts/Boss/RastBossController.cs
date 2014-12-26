@@ -549,19 +549,24 @@ public class RastBossController : MonoBehaviour
 	            }
 	            else
 	            {
-	                //バーサクスキル
-	                switch (randomUse_BerserkSkill)
-	                {
-	                    case 0:
-	                        HighTornado();
-	                        break;
-	                    case 1:
-	                        BigMine();
-	                        break;
-	                    case 2:
-	                        OmegaBeam();
-	                        break;
-	                }
+                    float dis = Vector2.Distance(this.transform.position, new Vector2(0, 0));
+                    //Debug.Log(dis);
+                    if (dis <= 10)
+                    {
+                        //バーサクスキル
+                        switch (randomUse_BerserkSkill)
+                        {
+                            case 0:
+                                HighTornado();
+                                break;
+                            case 1:
+                                BigMine();
+                                break;
+                            case 2:
+                                OmegaBeam();
+                                break;
+                        }
+                    }
 	            }
 	#endif
 	        }
