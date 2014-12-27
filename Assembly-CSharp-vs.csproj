@@ -53,7 +53,6 @@
      <Compile Include="Assets\FT_FreeSample\Script\Button.cs" />
      <Compile Include="Assets\Free_Rocks\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
      <Compile Include="Assets\Mao.cs" />
-     <Compile Include="Assets\PlayerPrefsEx.cs" />
      <Compile Include="Assets\Scripts\Boss\BossController.cs" />
      <Compile Include="Assets\Scripts\Boss\BowController.cs" />
      <Compile Include="Assets\Scripts\Boss\CollisionOnly.cs" />
@@ -74,6 +73,7 @@
      <Compile Include="Assets\Scripts\Publics\ObjectDestroy.cs" />
      <Compile Include="Assets\Scripts\Publics\ParticleCollisionController.cs" />
      <Compile Include="Assets\Scripts\Publics\RotationObject.cs" />
+     <Compile Include="Assets\Scripts\Save\PlayerPrefsEx.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\BigMeteo.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\BigMine.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\Bomb.cs" />

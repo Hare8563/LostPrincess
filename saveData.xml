@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>HP</key>
-  <integer>100</integer>
+  <integer>70</integer>
   <key>EXP</key>
   <integer>6</integer>
   <key>LEV</key>

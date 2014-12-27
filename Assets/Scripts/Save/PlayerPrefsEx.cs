@@ -11,13 +11,11 @@ using System;
 using System.Xml;
 using System.Collections.Generic;
 
-
 namespace AssemblyCSharp
 {
     public class PlayerPrefsEx
     {
         Dictionary<string, int> status;
-
 
         /// <summary>
         /// コンストラクタ

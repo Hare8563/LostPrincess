@@ -16,7 +16,7 @@ public class toBossStage : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collider){
-        if(collider.name == "HERO_MOTION07"){
+        if(collider.tag == "Player"){
             var TargetModel = collider.gameObject.GetComponent<PlayerController>();
             PlayerPrefsEx prefs = new PlayerPrefsEx();
 
