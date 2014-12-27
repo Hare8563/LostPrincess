@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Xml;
+using AssemblyCSharp;
 
 public class toBossStage : MonoBehaviour {
 
@@ -14,6 +16,20 @@ public class toBossStage : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider collider){
-		Application.LoadLevel (@"Boss");
+        if(collider.name == "HERO_MOTION07"){
+            var TargetModel = collider.gameObject.GetComponent<PlayerController>();
+            PlayerPrefsEx prefs = new PlayerPrefsEx();
+
+            prefs.SetInt("HP", TargetModel.status.HP);
+            prefs.SetInt("EXP", TargetModel.status.EXP);
+            prefs.SetInt("LEV", TargetModel.status.LEV);
+            prefs.SetInt("Sword", TargetModel.status.Sword_Power);
+            prefs.SetInt("Bow", TargetModel.status.BOW_POW);
+            prefs.SetInt("Magic", TargetModel.status.Magic_Power);
+            prefs.SetInt("MP", TargetModel.status.MP);
+            prefs.Save(System.Environment.CurrentDirectory + "/saveData.xml");
+
+		    Application.LoadLevel (@"Boss");
+        }
 	}
 }
