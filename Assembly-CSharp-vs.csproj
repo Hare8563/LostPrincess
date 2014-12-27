@@ -46,34 +46,44 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CharController.cs" />
-     <Compile Include="Assets\Controller.cs" />
      <Compile Include="Assets\Elementals\Scripts\OrbitCamera.cs" />
      <Compile Include="Assets\Elementals\Scripts\TestParticles.cs" />
      <Compile Include="Assets\FT_FreeSample\Script\Button.cs" />
      <Compile Include="Assets\Free_Rocks\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\Mao.cs" />
+=======
+>>>>>>> 9de51ff6df177dc66ea1afe695e6f252538c72ef
      <Compile Include="Assets\Scripts\Boss\BossController.cs" />
      <Compile Include="Assets\Scripts\Boss\BowController.cs" />
      <Compile Include="Assets\Scripts\Boss\CollisionOnly.cs" />
      <Compile Include="Assets\Scripts\Boss\MagicController.cs" />
      <Compile Include="Assets\Scripts\Boss\RastBossController.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
+     <Compile Include="Assets\Scripts\CharController.cs" />
+     <Compile Include="Assets\Scripts\Controller.cs" />
      <Compile Include="Assets\Scripts\Ending\Ending.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\Event\EventController.cs" />
-     <Compile Include="Assets\Scripts\InputForm.cs" />
+     <Compile Include="Assets\Scripts\Mao.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\StatusClass.cs" />
      <Compile Include="Assets\Scripts\PlayerName.cs" />
      <Compile Include="Assets\Scripts\Publics\GUITextureResize.cs" />
      <Compile Include="Assets\Scripts\Publics\GameObjectExtensions.cs" />
      <Compile Include="Assets\Scripts\Publics\GetObjecter.cs" />
+     <Compile Include="Assets\Scripts\Publics\InputForm.cs" />
      <Compile Include="Assets\Scripts\Publics\Method.cs" />
      <Compile Include="Assets\Scripts\Publics\ObjectDestroy.cs" />
      <Compile Include="Assets\Scripts\Publics\ParticleCollisionController.cs" />
+     <Compile Include="Assets\Scripts\Publics\PlayerPrefsEx.cs" />
      <Compile Include="Assets\Scripts\Publics\RotationObject.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\Scripts\Save\PlayerPrefsEx.cs" />
+=======
+     <Compile Include="Assets\Scripts\Publics\stageScript.cs" />
+     <Compile Include="Assets\Scripts\Publics\toBossStage.cs" />
+>>>>>>> 9de51ff6df177dc66ea1afe695e6f252538c72ef
      <Compile Include="Assets\Scripts\Skill\Hime\BigMeteo.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\BigMine.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\Bomb.cs" />
@@ -87,16 +97,14 @@
      <Compile Include="Assets\Scripts\Skill\PlayerAndBoss\Skill.cs" />
      <Compile Include="Assets\Scripts\Skill\PlayerAndBoss\SpreadArrow.cs" />
      <Compile Include="Assets\Scripts\Skill\PlayerAndBoss\SwordSlash.cs" />
+     <Compile Include="Assets\Scripts\SwordEffectOperator.cs" />
      <Compile Include="Assets\Scripts\Title\CameraSlide.cs" />
      <Compile Include="Assets\Scripts\Title\TitleCharaController.cs" />
      <Compile Include="Assets\Scripts\Title\TitleController.cs" />
-     <Compile Include="Assets\SwordEffectOperator.cs" />
-     <Compile Include="Assets\bgmController.cs" />
-     <Compile Include="Assets\buttonController.cs" />
-     <Compile Include="Assets\collision.cs" />
-     <Compile Include="Assets\move.cs" />
-     <Compile Include="Assets\stageScript.cs" />
-     <Compile Include="Assets\toBossStage.cs" />
+     <Compile Include="Assets\Scripts\bgmController.cs" />
+     <Compile Include="Assets\Scripts\buttonController.cs" />
+     <Compile Include="Assets\Scripts\collision.cs" />
+     <Compile Include="Assets\Scripts\move.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
