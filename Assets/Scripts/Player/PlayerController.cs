@@ -330,14 +330,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("DeadFlag", deadFlag);
 		animator.SetBool ("isDamage", isDamage);
 		animator.SetBool ("isLvUp", LvUp);
-//		Text HP = GameObject.Find ("HP").GetComponent<Text> ();
-//		Text MP = GameObject.Find ("MP").GetComponent<Text> ();
-//		Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
-//
-//		HP.text = this.status.HP.ToString();
-//		MP.text = this.status.MP.ToString ();
-//		Lv.text = this.status.LEV.ToString ();
-//		
+		Text HP = GameObject.Find ("HP").GetComponent<Text> ();
+		Text MP = GameObject.Find ("MP").GetComponent<Text> ();
+		Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
+
+		HP.text = this.status.HP.ToString();
+		MP.text = this.status.MP.ToString ();
+		Lv.text = this.status.LEV.ToString ();
+		
         //Debug.Log(animator.GetBool("isAttackSword"));
 		
 
