@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        status = new Status(100, 0, 100, 100, "勇者ー！");
+        status = new Status(1, 0, 100, 100, "勇者ー！");
 		Weapon_Sword.renderer.enabled = false;
 		Weapon_Rod.renderer.enabled = false;
 		Weapon_Bow.renderer.enabled = false;
@@ -330,14 +330,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("DeadFlag", deadFlag);
 		animator.SetBool ("isDamage", isDamage);
 		animator.SetBool ("isLvUp", LvUp);
-		Text HP = GameObject.Find ("HP").GetComponent<Text> ();
-		Text MP = GameObject.Find ("MP").GetComponent<Text> ();
-		Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
-
-		HP.text = this.status.HP.ToString();
-		MP.text = this.status.MP.ToString ();
-		Lv.text = this.status.LEV.ToString ();
-		
+//		Text HP = GameObject.Find ("HP").GetComponent<Text> ();
+//		Text MP = GameObject.Find ("MP").GetComponent<Text> ();
+//		Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
+//
+//		HP.text = this.status.HP.ToString();
+//		MP.text = this.status.MP.ToString ();
+//		Lv.text = this.status.LEV.ToString ();
+//		
         //Debug.Log(animator.GetBool("isAttackSword"));
 		
 
