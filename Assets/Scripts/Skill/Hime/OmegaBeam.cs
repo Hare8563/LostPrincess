@@ -7,6 +7,10 @@ public class OmegaBeam : MonoBehaviour {
     /// プレイヤーオブジェクト
     /// </summary>
     private GameObject PlayerObject;
+	/// <summary>
+	/// ダメージを受けるタイミング
+	/// </summary>
+	private int DamageTiming = 0;
 
     void Awake()
     {
@@ -31,7 +35,13 @@ public class OmegaBeam : MonoBehaviour {
     {
         if (collider.tag == "Player")
         {
-            Debug.Log("Beam Hit");
+            //Debug.Log("Beam Hit");
+			DamageTiming++;
+			if(DamageTiming % 10 == 0)
+			{
+				DamageTiming = 0;
+				PlayerObject.GetComponent<PlayerController>().Damage(5);
+			}
         }
     }
 }

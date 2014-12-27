@@ -19,6 +19,15 @@ public class BigMine : MonoBehaviour {
     /// 縮小するフラグ
     /// </summary>
     private bool SmallingFlag = false;
+	/// <summary>
+	/// プレイヤーがふれている時間
+	/// </summary>
+	private float TatchCount = 0;
+
+	void Awake()
+	{
+
+	}
 
 	// Use this for initialization
 	void Start () {

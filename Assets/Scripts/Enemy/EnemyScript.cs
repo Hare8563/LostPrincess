@@ -65,8 +65,8 @@ public class EnemyScript : MonoBehaviour
         //HPが0になったら経験値を取得
         if (this.status.HP <= 0)
         {
-						StartCoroutine(@"Coroutine");
-						Destroy(this.gameObject);
+			StartCoroutine(@"Coroutine");
+			Destroy(this.gameObject);
         }
         GetComponent<Animator>().SetBool(@"IsAttack", swordAttack);
         GetComponent<Animator>().SetBool(@"IsRunning", running);

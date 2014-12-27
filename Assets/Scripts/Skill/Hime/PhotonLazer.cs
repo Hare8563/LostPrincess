@@ -31,16 +31,21 @@ public class PhotonLazer : MonoBehaviour
     /// 死ぬまでの時間
     /// </summary>
     float DestroyTime = 0;
+	/// <summary>
+	/// プレイヤーオブジェクト
+	/// </summary>
+	private GameObject PlayerObject;
 
     void Awake()
     {
         LazerHitEffect = Resources.Load("Prefab/LazerHitEffect") as GameObject;
+		PlayerObject = GameObject.FindGameObjectWithTag ("Player");
     }
 
     // Use this for initialization
     void Start()
     {
-        float rote = 30;    //初期角度
+        float rote = 60;    //初期角度
         float Range = 0.3f; //角度変化の速度
         //Destroy(this.gameObject, 3.0f);
         xr = Random.Range(-rote, rote) * Mathf.PI / 180;
@@ -56,7 +61,7 @@ public class PhotonLazer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //指定方向のオブジェクトに当たったらエフェクト生成
+        //指定方向のオブジェクトになにか当たったらエフェクト生成
         Vector3 down = this.transform.TransformDirection(Vector3.down);
         //RaycastHit hit;
         //if (Physics.Raycast(transform.position, down, out hit, Mathf.Infinity))
@@ -67,6 +72,10 @@ public class PhotonLazer : MonoBehaviour
         {
             if (hits[i].collider.tag != "Hime")
             {
+				if(hits[i].collider.tag == "Player")
+				{
+					PlayerObject.GetComponent<PlayerController>().Damage(1);
+				}
                 //Debug.Log(hit.collider.name);
                 lineRendererEndPoint = hits[i].point;
                 //Debug.Log(hitEffect);
