@@ -10,37 +10,19 @@ public class BigMeteo : MonoBehaviour {
 	[Range(0,5)]
 	private float Speed = 0;
     /// <summary>
-    /// プレヤーオブジェクト
+    /// ターゲットオブジェクト
     /// </summary>
-    private GameObject PlayerObject;
-
-    /// <summary>
-    /// ターゲットが次にいるであろう座標に弾が当たるまでの時間
-    /// </summary>
-    private float HitDistanceTime;
-    /// <summary>
-    /// ターゲットが次にいるであろう座標
-    /// </summary>
-    private Vector3 FuturePos;
-    /// <summary>
-    /// ターゲットとの距離
-    /// </summary>
-    private float toTargetDistance;
+    private GameObject TargetObject;
 
     void Awake()
     {
-        PlayerObject = GameObject.FindGameObjectWithTag("Player");
-        FuturePos = PlayerObject.transform.position + PlayerObject.GetComponent<PlayerController>().getVectorDistance() * 50;
-        toTargetDistance = Vector3.Distance(FuturePos, this.transform.position);
-        HitDistanceTime = toTargetDistance / Speed;
-        //Debug.Log(HitDistanceTime);
+        TargetObject = GameObject.FindGameObjectWithTag("Player");
     }
 
 	// Use this for initialization
 	void Start () {
 		Destroy(this.gameObject, 2.0f);
-        //this.transform.LookAt(FuturePos);
-		this.transform.LookAt(PlayerObject.transform.position);
+		this.transform.LookAt(TargetObject.transform.position);
 	}
 	
 	// Update is called once per frame
@@ -58,8 +40,16 @@ public class BigMeteo : MonoBehaviour {
 	{
 		//Debug.Log (collider.tag);
 		if (collider.tag == "Player") {
-			PlayerObject.GetComponent<PlayerController>().Damage(5);
+			TargetObject.GetComponent<PlayerController>().Damage(5);
 			Destroy(this.gameObject);
 		}
 	}
+
+    /// <summary>
+    /// ターゲットを切り替える
+    /// </summary>
+    public void SetTarget(GameObject target)
+    {
+        TargetObject = target;
+    }
 }

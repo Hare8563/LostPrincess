@@ -79,6 +79,7 @@
      <Compile Include="Assets\Scripts\Skill\Hime\HimeSkill.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\OmegaBeam.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\PhotonLazer.cs" />
+     <Compile Include="Assets\Scripts\Skill\Hime\ShieldController.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\TornadoEffect.cs" />
      <Compile Include="Assets\Scripts\Skill\PlayerAndBoss\Cursor.cs" />
      <Compile Include="Assets\Scripts\Skill\PlayerAndBoss\Meteo.cs" />

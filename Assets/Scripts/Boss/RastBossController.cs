@@ -165,6 +165,14 @@ public class RastBossController : MonoBehaviour
 	/// 死亡しているか
 	/// </summary>
 	private bool isDead = false;
+    /// <summary>
+    /// シールドオブジェクト
+    /// </summary>
+    private GameObject ShieldObject;
+    /// <summary>
+    /// シールドを展開するかどうか
+    /// </summary>
+    private bool isShield = false;
 
 #if skillDebug
     //ノーマルスキル
@@ -188,6 +196,7 @@ public class RastBossController : MonoBehaviour
         AttackPoints = GameObject.FindGameObjectsWithTag("Hime_AttackPoint");
         DashEffect = this.transform.FindChild("DashEffect").gameObject;
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        ShieldObject = GameObject.Find("Shield");
     }
 
     /// <summary>
@@ -207,6 +216,7 @@ public class RastBossController : MonoBehaviour
         DashEffect.SetActive(isDashEffect);
         nextPosition = nowPosition = this.transform.position;
         nextAttackTime = Random.Range(240f, 360f);
+        ShieldObject.SetActive(isShield);
     }
 
     /// <summary>
@@ -219,6 +229,7 @@ public class RastBossController : MonoBehaviour
 		Down();
         AnimationController();
         DashEffect.SetActive(isDashEffect);
+        ShieldObject.SetActive(isShield);
 		if (isDead) {
 			Application.LoadLevel("Title");
 		}
@@ -229,60 +240,65 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void Move()
     {
-		if(!isDown)
-		{
-			//非攻撃状態
-	        if (!AttackFlag)
-	        {
-	            //移動可能範囲
-	            float canAreaMoveDistance = 70;
-	            float Speed = 0.05f;
-	            //ランダム時間毎に移動する
-	            nowStayTime += Method.GameTime();
-	            if (nowStayTime > moveTiming)
-	            {
-	                nowStayTime = 0;
-	                moveTiming = Random.Range(0f, 120f);
-	                float AngleRand_X = Random.Range(0, 360 * Mathf.PI / 180);
-	                float AngleRand_Z = Random.Range(0, 360 * Mathf.PI / 180);
-	                nextPosition.x = Mathf.Cos(AngleRand_X) * canAreaMoveDistance;
-	                nextPosition.z = Mathf.Cos(AngleRand_Z) * canAreaMoveDistance;
-	            }
-	            //現在座標値を滑らかに目標座標値へ遷移
-	            Method.SmoothChangeEx(ref nowPosition.x, nextPosition.x, Speed);
-	            Method.SmoothChangeEx(ref nowPosition.z, nextPosition.z, Speed);
-	            //座標値反映
-	            this.transform.position = nowPosition;
-	            //プレイヤーの方向を向く
-	            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
-	            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
-	            //攻撃する時間になったら
-	            nowStayAttackTime += Method.GameTime();
-	            if (nowStayAttackTime > nextAttackTime)
-	            {
-	                nowStayAttackTime = 0;
-	                nextAttackTime = Random.Range(240f, 360f);
-	                randomUse_NormalSkill = Random.Range(0, 3);
-	                randomUse_BerserkSkill = Random.Range(0, 3);
-	                AttackFlag = true;
-	            }
-	        }
-			//攻撃状態
-	        else
-	        {
-				nowStayTime = 0;
-				//バーサク状態だったら中心に移動する
-	            if (isBerserk)
-	            {
-	                float Speed = 0.05f;
-	                //現在座標値を滑らかに目標座標値へ遷移
-	                Method.SmoothChangeEx(ref nowPosition.x, 0, Speed);
-	                Method.SmoothChangeEx(ref nowPosition.z, 0, Speed);
-	                //座標値反映
-	                this.transform.position = nowPosition;
-	            }
-	        }
-		}
+        if (!isDown)
+        {
+            //非攻撃状態
+            if (!AttackFlag)
+            {
+                //移動可能範囲
+                float canAreaMoveDistance = 70;
+                float Speed = 0.05f;
+                //ランダム時間毎に移動する
+                nowStayTime += Method.GameTime();
+                if (nowStayTime > moveTiming)
+                {
+                    nowStayTime = 0;
+                    moveTiming = Random.Range(0f, 120f);
+                    float AngleRand_X = Random.Range(0, 360 * Mathf.PI / 180);
+                    float AngleRand_Z = Random.Range(0, 360 * Mathf.PI / 180);
+                    nextPosition.x = Mathf.Cos(AngleRand_X) * canAreaMoveDistance;
+                    nextPosition.z = Mathf.Cos(AngleRand_Z) * canAreaMoveDistance;
+                }
+                //現在座標値を滑らかに目標座標値へ遷移
+                Method.SmoothChangeEx(ref nowPosition.x, nextPosition.x, Speed);
+                Method.SmoothChangeEx(ref nowPosition.z, nextPosition.z, Speed);
+                //座標値反映
+                this.transform.position = nowPosition;
+                //プレイヤーの方向を向く
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
+                this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+                //攻撃する時間になったら
+                nowStayAttackTime += Method.GameTime();
+                if (nowStayAttackTime > nextAttackTime)
+                {
+                    nowStayAttackTime = 0;
+                    nextAttackTime = Random.Range(240f, 360f);
+                    randomUse_NormalSkill = Random.Range(0, 3);
+                    randomUse_BerserkSkill = Random.Range(0, 3);
+                    AttackFlag = true;
+                }
+            }
+            //攻撃状態
+            else
+            {
+                nowStayTime = 0;
+                //バーサク状態だったら中心に移動する
+                if (isBerserk)
+                {
+                    float Speed = 0.05f;
+                    //現在座標値を滑らかに目標座標値へ遷移
+                    Method.SmoothChangeEx(ref nowPosition.x, 0, Speed);
+                    Method.SmoothChangeEx(ref nowPosition.z, 0, Speed);
+                    //座標値反映
+                    this.transform.position = nowPosition;
+                }
+            }
+            isShield = true;
+        }
+        else
+        {
+            isShield = false;
+        }
     }
 
 	/// <summary>

@@ -455,7 +455,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	/// <summary>
-	/// アニメーションイベント(歩行SE)
+	/// アニメーションイベント
 	/// </summary>
 	void RunSeTiming()
 	{
