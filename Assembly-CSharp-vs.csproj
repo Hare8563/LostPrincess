@@ -53,6 +53,7 @@
      <Compile Include="Assets\FT_FreeSample\Script\Button.cs" />
      <Compile Include="Assets\Free_Rocks\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
      <Compile Include="Assets\Mao.cs" />
+     <Compile Include="Assets\PlayerPrefsEx.cs" />
      <Compile Include="Assets\Scripts\Boss\BossController.cs" />
      <Compile Include="Assets\Scripts\Boss\BowController.cs" />
      <Compile Include="Assets\Scripts\Boss\CollisionOnly.cs" />
@@ -191,5 +192,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
+  <ProjectExtensions xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><MonoDevelop><Properties><Policies><TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" /><CSharpFormattingPolicy IndentSwitchBody="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="DoNotCare" ArrayInitializerWrapping="DoNotChange" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" SpacesBeforeBrackets="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" /></Policies></Properties></MonoDevelop></ProjectExtensions>
+
 </Project>

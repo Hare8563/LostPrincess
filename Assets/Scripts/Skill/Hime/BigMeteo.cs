@@ -16,7 +16,15 @@ public class BigMeteo : MonoBehaviour {
 
     void Awake()
     {
+<<<<<<< HEAD
         TargetObject = GameObject.FindGameObjectWithTag("Player");
+=======
+        PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        FuturePos = PlayerObject.transform.position + PlayerObject.GetComponent<PlayerController>().getVectorDistance() * 50;
+        toTargetDistance = Vector3.Distance(FuturePos, this.transform.position);
+        HitDistanceTime = toTargetDistance / Speed;
+        Debug.Log(HitDistanceTime);
+>>>>>>> 33cf050060cbfdc1e5eea16656a7b41305108be1
     }
 
 	// Use this for initialization

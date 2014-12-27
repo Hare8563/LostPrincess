@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        status = new Status(100, 0, 100, 100, "勇者ー！");
+        status = new Status(1, 0, 100, 100, "勇者ー！");
 		Weapon_Sword.renderer.enabled = false;
 		Weapon_Rod.renderer.enabled = false;
 		Weapon_Bow.renderer.enabled = false;
