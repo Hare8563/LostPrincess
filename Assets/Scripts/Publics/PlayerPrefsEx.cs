@@ -50,13 +50,14 @@ namespace AssemblyCSharp
         /// <param name="path">セーブする場所</param>
         public void Save(string path)
         {
+            //ドキュメントのインスタンス生成
             XmlDocument document = new XmlDocument();
-
+            //XML宣言/親宣言 + 追加
             XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "UTF-8", null);
             XmlElement root = document.CreateElement("root");
             document.AppendChild(declaration);
             document.AppendChild(root);
-
+            //要素（子）追加
             foreach(var val in status)
             {
              XmlElement KVKey = document.CreateElement("key");
@@ -67,7 +68,7 @@ namespace AssemblyCSharp
              root.AppendChild(KVKey);
              root.AppendChild(KVValue);
             }
-
+            //ファイル出力
             document.Save(path);
         }
 
