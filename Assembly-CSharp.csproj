@@ -50,6 +50,7 @@
      <Compile Include="Assets\Elementals\Scripts\TestParticles.cs" />
      <Compile Include="Assets\FT_FreeSample\Script\Button.cs" />
      <Compile Include="Assets\Free_Rocks\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Ambient\Lightningcontroller.cs" />
      <Compile Include="Assets\Scripts\Boss\BossController.cs" />
      <Compile Include="Assets\Scripts\Boss\BowController.cs" />
      <Compile Include="Assets\Scripts\Boss\CollisionOnly.cs" />
