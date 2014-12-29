@@ -10,19 +10,29 @@ public class BigMeteo : MonoBehaviour {
     [Range(0, 5)]
     private float Speed = 0;
     /// <summary>
-    /// ターゲットオブジェクト
+    /// プレイヤーオブジェクト
     /// </summary>
-    private GameObject TargetObject;
+    private GameObject PlayerObject;
+    /// <summary>
+    /// 敵オブジェクト
+    /// </summary>
+    private GameObject EnemyObject;
+    /// <summary>
+    /// 反射させられたか
+    /// </summary>
+    private bool isReflect = false;
 
     void Awake()
     {
-        TargetObject = GameObject.FindGameObjectWithTag("Player");
+        PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        EnemyObject = GameObject.FindGameObjectWithTag("Hime");
     }
 
 	// Use this for initialization
 	void Start () {
-		Destroy(this.gameObject, 2.0f);
-		this.transform.LookAt(TargetObject.transform.position);
+		Destroy(this.gameObject, 5.0f);
+		this.transform.LookAt(PlayerObject.transform.position);
+        isReflect = false;
 	}
 	
 	// Update is called once per frame
@@ -39,17 +49,20 @@ public class BigMeteo : MonoBehaviour {
 	void OnTriggerEnter(Collider collider)
 	{
 		//Debug.Log (collider.tag);
-		if (collider.tag == "Player") {
-			TargetObject.GetComponent<PlayerController>().Damage(5);
+        if (collider.tag == "Weapon_Sword")
+        {
+            isReflect = true;
+            this.transform.LookAt(EnemyObject.transform.position);
+        }
+        else if (collider.tag == "Player" && !isReflect)
+        {
+			PlayerObject.GetComponent<PlayerController>().Damage(5);
 			Destroy(this.gameObject);
-		}
+        }
+        else if (collider.tag == "Hime" && isReflect)
+        {
+            EnemyObject.GetComponent<RastBossController>().Damage(5);
+            Destroy(this.gameObject);
+        }
 	}
-
-    /// <summary>
-    /// ターゲットを切り替える
-    /// </summary>
-    public void SetTarget(GameObject target)
-    {
-        TargetObject = target;
-    }
 }

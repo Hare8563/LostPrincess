@@ -23,6 +23,10 @@ public class ShieldController : MonoBehaviour {
     /// アルファ値
     /// </summary>
     private float a = 0;
+    /// <summary>
+    /// 衝突する対象の名前
+    /// </summary>
+    private string toCollisionName;
 
     void Awake()
     {
@@ -33,6 +37,7 @@ public class ShieldController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
+        toCollisionName = "";
         foreach (Transform child in this.transform)
         {
             child.gameObject.gameObject.renderer.material.SetColor("_TintColor", new Color(1, 1, 1, 0));
@@ -52,22 +57,36 @@ public class ShieldController : MonoBehaviour {
         {
             child.gameObject.gameObject.renderer.material.SetColor("_TintColor", new Color(a, a, a, a));
         }
+        Debug.Log(toCollisionName);
 	}
 
     /// <summary>
     /// シールドが見る方向をセット
     /// </summary>
     /// <param name="lookPos"></param>
-    public void SetLookPosition(Vector3 lookPos)
+    public void setLookPosition(Vector3 lookPos)
     {
         a = 1;
         this.transform.LookAt(lookPos - this.transform.position);
         LookFlag = true;
     }
 
+    /// <summary>
+    /// シールド通過許可対象を設定する
+    /// </summary>
+    /// <param name="name">許可するオブジェクトの名前</param>
+    public void setToShieldCollision(string name)
+    {
+        toCollisionName = name + "(Clone)";
+    }
+
+    /// <summary>
+    /// 何かに当たったら
+    /// </summary>
+    /// <param name="collider"></param>
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag != "Hime" && collider.tag != "Player")
+        if (collider.name != toCollisionName)
         {
             a = 1;
             this.transform.LookAt(collider.gameObject.transform.position);

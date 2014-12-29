@@ -173,6 +173,10 @@ public class RastBossController : MonoBehaviour
     /// シールドを展開するかどうか
     /// </summary>
     private bool isShield = false;
+    /// <summary>
+    /// シールドコントローラー
+    /// </summary>
+    private ShieldController shieldController;
 
 #if skillDebug
     //ノーマルスキル
@@ -532,6 +536,7 @@ public class RastBossController : MonoBehaviour
 
 		if(!isDown)
 		{
+            shieldController = ShieldObject.GetComponent<ShieldController>();
 	        //攻撃態勢だったら
 	        if (currentBaseState.nameHash == attack_02State)
 	        {
@@ -553,12 +558,15 @@ public class RastBossController : MonoBehaviour
 	                switch (randomUse_NormalSkill)
 	                {
 	                    case 0:
+                            shieldController.setToShieldCollision("");
 	                        BigMeteo();
 	                        break;
 	                    case 1:
+                            shieldController.setToShieldCollision("Arrow");
 	                        PhotonLaser();
 	                        break;
 	                    case 2:
+                            shieldController.setToShieldCollision("MagicBall");
 	                        HighRash();
 	                        break;
 	                }
@@ -573,12 +581,15 @@ public class RastBossController : MonoBehaviour
                         switch (randomUse_BerserkSkill)
                         {
                             case 0:
+                                shieldController.setToShieldCollision("");
                                 HighTornado();
                                 break;
                             case 1:
+                                shieldController.setToShieldCollision("");
                                 BigMine();
                                 break;
                             case 2:
+                                shieldController.setToShieldCollision("");
                                 OmegaBeam();
                                 break;
                         }
@@ -588,6 +599,7 @@ public class RastBossController : MonoBehaviour
 	        }
 	        else
 	        {
+                shieldController.setToShieldCollision("");
 	            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
 	        }
 		}
