@@ -11,20 +11,20 @@ using System;
 using System.Xml;
 using System.Collections.Generic;
 
-
 namespace AssemblyCSharp
 {
     public class PlayerPrefsEx
     {
-        Dictionary<string, int> status;
-
+        Dictionary<string, int> status_int;
+        Dictionary<string, string> status_string;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public PlayerPrefsEx()
         {
-            status = new Dictionary<string, int>();
+            status_int = new Dictionary<string, int>();
+            status_string = new Dictionary<string, string>();
         }
 
         /// <summary>
@@ -34,13 +34,30 @@ namespace AssemblyCSharp
         /// <param name="val">保存する値</param>
         public void SetInt(string key, int val)
         {
-            if (status.ContainsKey(key))
+            if (status_int.ContainsKey(key))
             {
-                status[key] = val;
+                status_int[key] = val;
             }
             else
             {
-                status.Add(key, val);
+                status_int.Add(key, val);
+            }
+        }
+
+        /// <summary>
+        /// String型の値を保持する
+        /// </summary>
+        /// <param name="key">Keyの値</param>
+        /// <param name="val">保存する値</param>
+        public void SetString(string key, string val)
+        {
+            if (status_string.ContainsKey(key))
+            {
+                status_string[key] = val;
+            }
+            else
+            {
+                status_string.Add(key, val);
             }
         }
 
@@ -57,8 +74,19 @@ namespace AssemblyCSharp
             XmlElement root = document.CreateElement("root");
             document.AppendChild(declaration);
             document.AppendChild(root);
-            //要素（子）追加
-            foreach(var val in status)
+            //要素（子）追加（string）
+            foreach (var val in status_string)
+            {
+                XmlElement KVKey = document.CreateElement("key");
+                KVKey.InnerText = val.Key;
+                XmlElement KVValue = document.CreateElement("string");
+                KVValue.InnerText = val.Value.ToString();
+
+                root.AppendChild(KVKey);
+                root.AppendChild(KVValue);
+            }
+            //要素（子）追加（int）
+            foreach(var val in status_int)
             {
              XmlElement KVKey = document.CreateElement("key");
                 KVKey.InnerText = val.Key;
@@ -68,6 +96,7 @@ namespace AssemblyCSharp
              root.AppendChild(KVKey);
              root.AppendChild(KVValue);
             }
+            
             //ファイル出力
             document.Save(path);
         }
@@ -89,26 +118,47 @@ namespace AssemblyCSharp
                 }
                 else if (elem.Name == "integer")
                 {
-                    if (status.ContainsKey(KVKey))
+                    if (status_int.ContainsKey(KVKey))
                     {
-                        status[KVKey] = int.Parse(elem.InnerText);
+                        status_int[KVKey] = int.Parse(elem.InnerText);
                     }
                     else
                     {
-                        status.Add(KVKey, int.Parse(elem.InnerText));
+                        status_int.Add(KVKey, int.Parse(elem.InnerText));
+                    }
+                }
+                else if (elem.Name == "string")
+                {
+                    if (status_int.ContainsKey(KVKey))
+                    {
+                        status_string[KVKey] = elem.InnerText;
+                    }
+                    else
+                    {
+                        status_string.Add(KVKey, elem.InnerText);
                     }
                 }
             }
         }
 
         /// <summary>
-        /// Keyとなる値から値を取得する
+        /// Keyとなる値からint値を取得する
         /// </summary>
         /// <returns>The int.</returns>
         /// <param name="key">Keyとなる値</param>
         public int GetInt(string key)
         {
-            return status[key];
+            return status_int[key];
+        }
+
+        /// <summary>
+        /// Keyとなる値からstring値を取得する
+        /// </summary>
+        /// <returns>The int.</returns>
+        /// <param name="key">Keyとなる値</param>
+        public string GetString(string key)
+        {
+            return status_string[key];
         }
     }
 }

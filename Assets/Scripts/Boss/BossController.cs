@@ -214,7 +214,7 @@ public class BossController : MonoBehaviour {
         AnctionRand = Random.Range(0, 3);
         RandomRand = Random.Range(180, 300);
 
-        status = new Status(1, 0, 100, 100);
+        status = new Status(1, 0, 50, 100);
 	}
 	
 	/// <summary>

@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\Publics\ParticleCollisionController.cs" />
      <Compile Include="Assets\Scripts\Publics\PlayerPrefsEx.cs" />
      <Compile Include="Assets\Scripts\Publics\RotationObject.cs" />
+     <Compile Include="Assets\Scripts\Publics\StatusManager.cs" />
      <Compile Include="Assets\Scripts\Publics\stageScript.cs" />
      <Compile Include="Assets\Scripts\Publics\toBossStage.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\BigMeteo.cs" />
