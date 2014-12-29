@@ -57,7 +57,7 @@ public class ShieldController : MonoBehaviour {
         {
             child.gameObject.gameObject.renderer.material.SetColor("_TintColor", new Color(a, a, a, a));
         }
-        Debug.Log(toCollisionName);
+        //Debug.Log(toCollisionName);
 	}
 
     /// <summary>

@@ -110,10 +110,6 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     private float nowStayAttackTime = 0;
     /// <summary>
-    /// スキルを使用している時間
-    /// </summary>
-    private float usingSkillTime = 0;
-    /// <summary>
     /// ハイラッシュ使用時間
     /// </summary>
     private const float useHighRashTime = 1800;
@@ -177,6 +173,10 @@ public class RastBossController : MonoBehaviour
     /// シールドコントローラー
     /// </summary>
     private ShieldController shieldController;
+    /// <summary>
+    /// スキルを使用した時間
+    /// </summary>
+    private float usingSkillTime = 0;
 
 #if skillDebug
     //ノーマルスキル
@@ -347,7 +347,7 @@ public class RastBossController : MonoBehaviour
 		}
 	}
 
-    #region 全スキル処理
+    #region ノーマルスキル
     /// <summary>
     /// ノーマルスキル・ハイラッシュ攻撃パターン
     /// </summary>
@@ -417,6 +417,11 @@ public class RastBossController : MonoBehaviour
         if (usingSkillTime > useBigMeteoTime)
         {
             usingSkillTime = 0;
+            //エフェクト関連初期化
+            AttackPoints[0].particleSystem.startSize = nowEffectSize = EfectSize_Min;
+            AttackPoints[0].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
+            AttackPoints[1].particleSystem.startSize = nowEffectSize = EfectSize_Min;
+            AttackPoints[1].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
             AttackFlag = false;
         }
     }
@@ -454,7 +459,9 @@ public class RastBossController : MonoBehaviour
             AttackFlag = false;
         }
     }
+#endregion
 
+    #region バーサクスキル
     /// <summary>
     /// バーサクスキル・ハイトルネード攻撃パターン
     /// </summary>
@@ -467,12 +474,10 @@ public class RastBossController : MonoBehaviour
             himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
             himeSkill.HighTornado();
         }
-        //一定時間経つと通常移動に戻る
-        usingSkillTime += Method.GameTime();
-        if (usingSkillTime > useHighTornadoTime)
+        //スキルが終了していたら
+        if (himeSkill.getEndSkill())
         {
 			isBerserk = false;
-            usingSkillTime = 0;
             AttackFlag = false;
         }
     }
@@ -489,12 +494,10 @@ public class RastBossController : MonoBehaviour
             himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
             himeSkill.BigMine();
         }
-        //一定時間経つと通常移動に戻る
-        usingSkillTime += Method.GameTime();
-        if (usingSkillTime > useBigMineTime)
+        //スキルが終了していたら
+        if (himeSkill.getEndSkill())
         {
 			isBerserk = false;
-            usingSkillTime = 0;
             AttackFlag = false;
         }
     }
@@ -514,12 +517,10 @@ public class RastBossController : MonoBehaviour
             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.07f);
             this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         }
-        //一定時間経つと通常移動に戻る
-        usingSkillTime += Method.GameTime();
-        if (usingSkillTime > useOmegaBeamTime)
+        //スキルが終了していたら
+        if (himeSkill.getEndSkill())
         {
 			isBerserk = false;
-            usingSkillTime = 0;
             AttackFlag = false;
         }
     }

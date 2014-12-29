@@ -44,6 +44,16 @@ namespace HimeSkillClass
         private static GameObject PhotonLazerObject;
 
         /// <summary>
+        /// 姫オブジェクト
+        /// </summary>
+        private GameObject HimeObject;
+
+        /// <summary>
+        /// スキルが終了したか
+        /// </summary>
+        private bool isEndSkill = false;
+
+        /// <summary>
         /// ボムを投下するタイミング
         /// </summary>
         private static float BombTiming = 0;
@@ -104,6 +114,10 @@ namespace HimeSkillClass
         /// ビッグマインブジェクト
         /// </summary>
         private static GameObject BigMineObject;
+        /// <summary>
+        /// ビッグマインを出た個数
+        /// </summary>
+        private static int BigMine_CreateCount = 0;
         #endregion
 
         #region バーサクスキル・オメガビーム
@@ -119,6 +133,10 @@ namespace HimeSkillClass
         /// オメガビーム発生位置オブジェクト
         /// </summary>
         private static GameObject OmegaBeamEmmitObject;
+        /// <summary>
+        /// オメガビームのクローン
+        /// </summary>
+        private static GameObject OmegaBeamClone;
         #endregion
 
         /// <summary>
@@ -168,6 +186,7 @@ namespace HimeSkillClass
             BigMineObject = Resources.Load("Prefab/BigMine") as GameObject;
             OmegaBeamObject = Resources.Load("Prefab/OmegaBeam") as GameObject;
             OmegaBeamEmmitObject = GameObject.Find("OmegaBeamEmmit");
+            HimeObject = GameObject.FindGameObjectWithTag("Hime");
 		}
 
 		// Use this for initialization
@@ -182,7 +201,8 @@ namespace HimeSkillClass
 
 		}
 
-		/// <summary>
+        #region ノーマル
+        /// <summary>
 		/// ノーマルスキル・ハイラッシュ
 		/// </summary>
 		public void HighRash()
@@ -244,8 +264,10 @@ namespace HimeSkillClass
 			//GameObject emptyGameObject = new GameObject("Empty Game Object");
             Instantiate(PhotonLazerObject, EmmitPosition, toTargetRotation);
 		}
+        #endregion
 
-		/// <summary>
+        #region バーサク
+        /// <summary>
 		/// バーサクスキル・ハイトルネード
 		/// </summary>
         public void HighTornado()
@@ -254,6 +276,7 @@ namespace HimeSkillClass
             //徐々に加速
             if (!Tornado_isSpeedDown)
             {
+                isEndSkill = false;
                 //最大速度まで加速
                 if (Tornado_Speed < Tornado_MaxSpeed)
                 {
@@ -326,8 +349,9 @@ namespace HimeSkillClass
                 {
                     Tornado_isSpeedDown = false;
                     Tornado_Speed = Tornado_MinSpeed;
-                    Destroy(Tornado_EffectChildObject);
                     Tornado_isCreate = false;
+                    isEndSkill = true;
+                    Destroy(Tornado_EffectChildObject);
                 }
             }
 
@@ -352,30 +376,48 @@ namespace HimeSkillClass
             {
                 BigMine_Timing = 0;
                 Instantiate(BigMineObject, TargetObject.transform.position + new Vector3(0, 10, 0), TargetObject.transform.rotation);
+                BigMine_CreateCount++;
+            }
+            if (BigMine_CreateCount > 10)
+            {
+                isEndSkill = true;
+            }
+            else
+            {
+                isEndSkill = false;
             }
 		}
 
 		/// <summary>
-		/// バーサクスキル・オメガレーザー
+		/// バーサクスキル・オメガビーム
 		/// </summary>
 		public void OmegaLaser()
 		{
             if (!OmegaBeam_isCreate)
             {
+                isEndSkill = false;
                 OmegaBeam_isCreate = true;
-                Instantiate(OmegaBeamObject, OmegaBeamEmmitObject.transform.position, OmegaBeamEmmitObject.transform.rotation);
-            }   
+                OmegaBeamClone = (GameObject)Instantiate(OmegaBeamObject, OmegaBeamEmmitObject.transform.position, OmegaBeamEmmitObject.transform.rotation);
+            }
+            //if (OmegaBeamClone != null)
+            //{
+            //    Debug.Log(OmegaBeamClone.GetComponent<OmegaBeam>().getEndOmegaBeam());
+            //}
+            if (OmegaBeamClone != null && OmegaBeamClone.GetComponent<OmegaBeam>().getEndOmegaBeam())
+            {
+                OmegaBeam_isCreate = false;
+                isEndSkill = true;
+                Destroy(OmegaBeamClone);
+            }
         }
+        #endregion
 
-		/// <summary>
-		/// 何かに触れたら
-		/// </summary>
-		//void OnTrrigerEnter(Cllider collider)
-		//{
-		//	if (collider.tag == "Player") 
-		//	{
-		//		TargetObject.GetComponent<PlayerController>().Damage(5);
-		//	}
-		//}
+        /// <summary>
+        /// スキルが終わったかどうかを知らせる
+        /// </summary>
+        public bool getEndSkill()
+        {
+            return isEndSkill;
+        }
 	}
 }
