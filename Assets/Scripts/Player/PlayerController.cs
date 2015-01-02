@@ -33,10 +33,6 @@ public class PlayerController : MonoBehaviour
     [Range(0, 100)]
     private float AttackSpeed = 0;
     /// <summary>
-    /// 攻撃中かどうか
-    /// </summary>
-    private bool isAttack = false;
-    /// <summary>
     /// 魔法ボール
     /// </summary>
     private GameObject MagicBallObject;
@@ -195,7 +191,9 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //移動
-        if (!isAttack)
+        if (!isAttackSword &&
+            !isShotMagic &&
+            !isShotArrow )
         {
 			oldPos = this.transform.position;
             Move();
@@ -291,20 +289,17 @@ public class PlayerController : MonoBehaviour
             //剣
             if (Input.GetKeyDown(KeyCode.J))
             {
-                isAttack = true;
                 isAttackSword = true;
             }
             //魔法
             else if (Input.GetKeyDown(KeyCode.I))
             {
-                isAttack = true;
                 isShotMagic = true;
                 MagicController.TargetObject = TargetObject;
             }
             //弓
             else if (Input.GetKeyDown(KeyCode.O))
             {
-                isAttack = true;
                 isShotArrow = true;
                 BowController.TargetObject = TargetObject;
             }
@@ -318,15 +313,6 @@ public class PlayerController : MonoBehaviour
     {
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        animator.SetBool("isMove", isMove);
-        animator.SetBool("isAttack", isAttack);
-        //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
-        animator.SetBool("isAttackSword", isAttackSword);
-        animator.SetBool("isShotMagic", isShotMagic);
-        animator.SetBool("isShotArrow", isShotArrow);
-        animator.SetBool("DeadFlag", deadFlag);
-		animator.SetBool ("isDamage", isDamage);
-        animator.SetBool ("isLvUp", LvUp);
         //Text HP = GameObject.Find ("HP").GetComponent<Text> ();
         //Text MP = GameObject.Find ("MP").GetComponent<Text> ();
         //Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
@@ -342,7 +328,6 @@ public class PlayerController : MonoBehaviour
         if (currentBaseState.nameHash == idleState)
         {
 			//攻撃フラグを初期化
-            isAttack = false;
             isAttackSword = false;
             isShotMagic = false;
             isShotArrow = false;
@@ -423,6 +408,14 @@ public class PlayerController : MonoBehaviour
 				//skill.SpreadArrow ();
             }
         }
+        animator.SetBool("isMove", isMove);
+        //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
+        animator.SetBool("isAttackSword", isAttackSword);
+        animator.SetBool("isShotMagic", isShotMagic);
+        animator.SetBool("isShotArrow", isShotArrow);
+        animator.SetBool("DeadFlag", deadFlag);
+        animator.SetBool("isDamage", isDamage);
+        animator.SetBool("isLvUp", LvUp);
     }
 
 	/// <summary>
@@ -480,7 +473,10 @@ public class PlayerController : MonoBehaviour
             status.LevUp();
             LvUp = true;
             isMove = false;
-            isAttack = false;
+            //攻撃フラグを初期化
+            isAttackSword = false;
+            isShotMagic = false;
+            isShotArrow = false;
         }
     }
 

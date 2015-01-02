@@ -193,7 +193,7 @@ namespace HimeSkillClass
         void Start()
         {
             //Debug.Log("Start");
-            toTargetRotation = Quaternion.LookRotation(TargetObject.transform.position - EmmitPosition);
+            //toTargetRotation = Quaternion.LookRotation(TargetObject.transform.position - EmmitPosition);
         }
 		
 		// Update is called once per frame
@@ -253,7 +253,8 @@ namespace HimeSkillClass
 		public void BigMeteo()
 		{
 			//Debug.Log(BigMeteoObject);
-			Instantiate(BigMeteoObject, EmmitPosition, toTargetRotation);
+            //toTargetRotation = Quaternion.LookRotation(TargetObject.transform.position - EmmitPosition);
+			Instantiate(BigMeteoObject, EmmitPosition, new Quaternion());
 		}
 
 		/// <summary>
@@ -262,7 +263,7 @@ namespace HimeSkillClass
 		public void PhotonLaser()
 		{
 			//GameObject emptyGameObject = new GameObject("Empty Game Object");
-            Instantiate(PhotonLazerObject, EmmitPosition, toTargetRotation);
+            Instantiate(PhotonLazerObject, EmmitPosition, new Quaternion());
 		}
         #endregion
 
