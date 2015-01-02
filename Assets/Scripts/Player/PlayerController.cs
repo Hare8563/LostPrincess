@@ -327,10 +327,6 @@ public class PlayerController : MonoBehaviour
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
         {
-			//攻撃フラグを初期化
-            isAttackSword = false;
-            isShotMagic = false;
-            isShotArrow = false;
 			//ダメージフラグを初期化
 			isDamage = false;
 			//LvUpフラグを初期化
@@ -356,6 +352,8 @@ public class PlayerController : MonoBehaviour
 			Weapon_Sword.renderer.enabled = true;
 			Weapon_Rod.renderer.enabled = false;
 			Weapon_Bow.renderer.enabled = false;
+            //攻撃フラグを初期化
+            isAttackSword = false;
         }
 		//剣モーション02の時
 		else if (currentBaseState.nameHash == sword_02State)
@@ -374,6 +372,9 @@ public class PlayerController : MonoBehaviour
 			Weapon_Sword.renderer.enabled = false;
 			Weapon_Rod.renderer.enabled = true;
 			Weapon_Bow.renderer.enabled = false;
+            //攻撃フラグを初期化
+            isShotMagic = false;
+
         }
         //魔法モーション(_02)の時
         else if (currentBaseState.nameHash == magic_02State)
@@ -395,6 +396,8 @@ public class PlayerController : MonoBehaviour
 			Weapon_Sword.renderer.enabled = false;
 			Weapon_Rod.renderer.enabled = false;
 			Weapon_Bow.renderer.enabled = true;
+            //攻撃フラグを初期化
+            isShotArrow = false;
         }
         //弓モーション(_02)の時
         else if (currentBaseState.nameHash == arrow_02State)
