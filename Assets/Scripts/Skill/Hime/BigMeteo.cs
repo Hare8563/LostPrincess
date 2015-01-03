@@ -6,41 +6,33 @@ public class BigMeteo : MonoBehaviour {
 	/// <summary>
 	/// 移動スピード
 	/// </summary>
-	[SerializeField]
-	[Range(0,5)]
-	private float Speed = 0;
+    [SerializeField]
+    [Range(0, 5)]
+    private float Speed = 0;
     /// <summary>
-    /// プレヤーオブジェクト
+    /// プレイヤーオブジェクト
     /// </summary>
     private GameObject PlayerObject;
-
     /// <summary>
-    /// ターゲットが次にいるであろう座標に弾が当たるまでの時間
+    /// 敵オブジェクト
     /// </summary>
-    private float HitDistanceTime;
+    private GameObject EnemyObject;
     /// <summary>
-    /// ターゲットが次にいるであろう座標
+    /// 反射させられたか
     /// </summary>
-    private Vector3 FuturePos;
-    /// <summary>
-    /// ターゲットとの距離
-    /// </summary>
-    private float toTargetDistance;
+    private bool isReflect = false;
 
     void Awake()
     {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
-        FuturePos = PlayerObject.transform.position + PlayerObject.GetComponent<PlayerController>().getVectorDistance() * 50;
-        toTargetDistance = Vector3.Distance(FuturePos, this.transform.position);
-        HitDistanceTime = toTargetDistance / Speed;
-        Debug.Log(HitDistanceTime);
+        EnemyObject = GameObject.FindGameObjectWithTag("Hime");
     }
 
 	// Use this for initialization
 	void Start () {
-		Destroy(this.gameObject, 2.0f);
-        //this.transform.LookAt(FuturePos);
+		Destroy(this.gameObject, 5.0f);
 		this.transform.LookAt(PlayerObject.transform.position);
+        isReflect = false;
 	}
 	
 	// Update is called once per frame
@@ -57,9 +49,20 @@ public class BigMeteo : MonoBehaviour {
 	void OnTriggerEnter(Collider collider)
 	{
 		//Debug.Log (collider.tag);
-		if (collider.tag == "Player") {
+        if (collider.tag == "Weapon_Sword")
+        {
+            isReflect = true;
+            this.transform.LookAt(EnemyObject.transform.position);
+        }
+        else if (collider.tag == "Player" && !isReflect)
+        {
 			PlayerObject.GetComponent<PlayerController>().Damage(5);
 			Destroy(this.gameObject);
-		}
+        }
+        else if (collider.tag == "Hime" && isReflect)
+        {
+            EnemyObject.GetComponent<RastBossController>().Damage(5);
+            Destroy(this.gameObject);
+        }
 	}
 }

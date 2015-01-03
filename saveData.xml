@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
+  <key>NAME</key>
+  <string>勇者</string>
   <key>HP</key>
-  <integer>100</integer>
-  <key>EXP</key>
-  <integer>6</integer>
-  <key>LEV</key>
-  <integer>2</integer>
-  <key>Sword</key>
-  <integer>3</integer>
-  <key>Bow</key>
-  <integer>3</integer>
-  <key>Magic</key>
-  <integer>3</integer>
+  <integer>48</integer>
   <key>MP</key>
-  <integer>100</integer>
+  <integer>50</integer>
+  <key>LV</key>
+  <integer>3</integer>
+  <key>EXP</key>
+  <integer>12</integer>
+  <key>Sword</key>
+  <integer>2</integer>
+  <key>Bow</key>
+  <integer>2</integer>
+  <key>Magic</key>
+  <integer>2</integer>
 </root>

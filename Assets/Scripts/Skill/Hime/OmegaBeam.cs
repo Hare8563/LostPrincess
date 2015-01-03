@@ -11,6 +11,14 @@ public class OmegaBeam : MonoBehaviour {
 	/// ダメージを受けるタイミング
 	/// </summary>
 	private int DamageTiming = 0;
+    /// <summary>
+    /// スキルが終了したか
+    /// </summary>
+    private bool isEnd = false;
+    /// <summary>
+    /// 経過時間
+    /// </summary>
+    private float secondTime = 0;
 
     void Awake()
     {
@@ -20,7 +28,7 @@ public class OmegaBeam : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-        Destroy(this.gameObject, 10);
+        
 	}
 	
 	// Update is called once per frame
@@ -28,8 +36,14 @@ public class OmegaBeam : MonoBehaviour {
     {
         //プレイヤーの方向を向く
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - this.transform.transform.position), 0.035f);
-        this.transform.rotation = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z, this.transform.rotation.w);
-	}
+        //this.transform.rotation = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z, this.transform.rotation.w);
+        secondTime += Method.GameTime();
+        if (secondTime > 600)
+        {
+            secondTime = 0;
+            isEnd = true;
+        }
+    }
 
     void OnTriggerStay(Collider collider)
     {
@@ -43,5 +57,14 @@ public class OmegaBeam : MonoBehaviour {
 				PlayerObject.GetComponent<PlayerController>().Damage(5);
 			}
         }
+    }
+
+    /// <summary>
+    /// オメガビームスキルが終了したかどうかを返す
+    /// </summary>
+    /// <returns></returns>
+    public bool getEndOmegaBeam()
+    {
+        return isEnd;
     }
 }

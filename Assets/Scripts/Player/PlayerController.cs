@@ -2,14 +2,9 @@
 using System.Collections;
 using StatusClass;
 using SkillClass;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-	/// <summary>
-	/// uGUIキャンバス
-	/// </summary>
-	public GameObject canvas;
     /// <summary>
     /// ボス戦かどうか
     /// </summary>
@@ -37,10 +32,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Range(0, 100)]
     private float AttackSpeed = 0;
-    /// <summary>
-    /// 攻撃中かどうか
-    /// </summary>
-    private bool isAttack = false;
     /// <summary>
     /// 魔法ボール
     /// </summary>
@@ -172,15 +163,19 @@ public class PlayerController : MonoBehaviour
 
 		HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
 
-		canvas = GameObject.Find("Canvas");
-
 		RunSmokeEffect = Resources.Load ("Prefab/RunSmoke") as GameObject;
     }
 
     // Use this for initialization
     void Start()
     {
-        status = new Status(1, 0, 100, 100, "勇者ー！");
+        StatusManager statusManager = new StatusManager();
+        status = new Status(
+            statusManager.getLoadStatus().LV,
+            statusManager.getLoadStatus().EXP,
+            statusManager.getLoadStatus().HP,
+            statusManager.getLoadStatus().MP,
+            statusManager.getLoadStatus().NAME);
 		Weapon_Sword.renderer.enabled = false;
 		Weapon_Rod.renderer.enabled = false;
 		Weapon_Bow.renderer.enabled = false;
@@ -190,15 +185,15 @@ public class PlayerController : MonoBehaviour
     {
         //アニメーション管理
         AnimationController();
-		//GUI管理
-		StatusGUIController ();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //移動
-        if (!isAttack)
+        if (!isAttackSword &&
+            !isShotMagic &&
+            !isShotArrow )
         {
 			oldPos = this.transform.position;
             Move();
@@ -294,20 +289,17 @@ public class PlayerController : MonoBehaviour
             //剣
             if (Input.GetKeyDown(KeyCode.J))
             {
-                isAttack = true;
                 isAttackSword = true;
             }
             //魔法
             else if (Input.GetKeyDown(KeyCode.I))
             {
-                isAttack = true;
                 isShotMagic = true;
                 MagicController.TargetObject = TargetObject;
             }
             //弓
             else if (Input.GetKeyDown(KeyCode.O))
             {
-                isAttack = true;
                 isShotArrow = true;
                 BowController.TargetObject = TargetObject;
             }
@@ -321,22 +313,13 @@ public class PlayerController : MonoBehaviour
     {
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        animator.SetBool("isMove", isMove);
-        animator.SetBool("isAttack", isAttack);
-        //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
-        animator.SetBool("isAttackSword", isAttackSword);
-        animator.SetBool("isShotMagic", isShotMagic);
-        animator.SetBool("isShotArrow", isShotArrow);
-        animator.SetBool("DeadFlag", deadFlag);
-		animator.SetBool ("isDamage", isDamage);
-		animator.SetBool ("isLvUp", LvUp);
-		Text HP = GameObject.Find ("HP").GetComponent<Text> ();
-		Text MP = GameObject.Find ("MP").GetComponent<Text> ();
-		Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
+        //Text HP = GameObject.Find ("HP").GetComponent<Text> ();
+        //Text MP = GameObject.Find ("MP").GetComponent<Text> ();
+        //Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
 
-		HP.text = this.status.HP.ToString();
-		MP.text = this.status.MP.ToString ();
-		Lv.text = this.status.LEV.ToString ();
+        //HP.text = this.status.HP.ToString();
+        //MP.text = this.status.MP.ToString ();
+        //Lv.text = this.status.LEV.ToString ();
 		
         //Debug.Log(animator.GetBool("isAttackSword"));
 		
@@ -345,7 +328,6 @@ public class PlayerController : MonoBehaviour
         if (currentBaseState.nameHash == idleState)
         {
 			//攻撃フラグを初期化
-            isAttack = false;
             isAttackSword = false;
             isShotMagic = false;
             isShotArrow = false;
@@ -426,36 +408,18 @@ public class PlayerController : MonoBehaviour
 				//skill.SpreadArrow ();
             }
         }
+        animator.SetBool("isMove", isMove);
+        //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
+        animator.SetBool("isAttackSword", isAttackSword);
+        animator.SetBool("isShotMagic", isShotMagic);
+        animator.SetBool("isShotArrow", isShotArrow);
+        animator.SetBool("DeadFlag", deadFlag);
+        animator.SetBool("isDamage", isDamage);
+        animator.SetBool("isLvUp", LvUp);
     }
-	/// <summary>
-	/// ステータスウィンドウGUI
-	/// </summary>
-	void StatusGUIController()
-	{
-		foreach(Transform child in canvas.transform)
-		{
-			//Debug.Log(child.name);
-			if(child.name == "NAME")
-			{
-				child.gameObject.GetComponent<Text>().text = this.status.NAME;
-			}
-			else if(child.name == "HP")
-			{
-				child.gameObject.GetComponent<Text>().text = this.status.HP.ToString();
-			}
-			else if(child.name == "MP")
-			{
-				child.gameObject.GetComponent<Text>().text = this.status.MP.ToString();
-			}
-			else if(child.name == "LV")
-			{
-				child.gameObject.GetComponent<Text>().text = this.status.LEV.ToString();
-			}
-		}
-	}
 
 	/// <summary>
-	/// アニメーションイベント(歩行SE)
+	/// アニメーションイベント
 	/// </summary>
 	void RunSeTiming()
 	{
@@ -475,6 +439,7 @@ public class PlayerController : MonoBehaviour
             Application.LoadLevel("Boss");
         }
     }
+
     /// <summary>
     /// 何かに当たり続けたら
     /// </summary>
@@ -508,7 +473,10 @@ public class PlayerController : MonoBehaviour
             status.LevUp();
             LvUp = true;
             isMove = false;
-            isAttack = false;
+            //攻撃フラグを初期化
+            isAttackSword = false;
+            isShotMagic = false;
+            isShotArrow = false;
         }
     }
 
@@ -542,5 +510,14 @@ public class PlayerController : MonoBehaviour
     {
 		//Debug.Log (oldPos - newPos);
         return newPos - oldPos;
+    }
+
+    /// <summary>
+    /// プレイヤーのステータス値を得る
+    /// </summary>
+    /// <returns></returns>
+    public Status getPlayerStatus()
+    {
+        return status;
     }
 }
