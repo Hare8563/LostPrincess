@@ -4,8 +4,10 @@ using System.Collections;
 public class buttonController : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start () 
+    {
+        Screen.lockCursor = false;
+        Screen.showCursor = true;
 	}
 	
 	// Update is called once per frame
