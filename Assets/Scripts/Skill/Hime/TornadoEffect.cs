@@ -25,7 +25,7 @@ public class TornadoEffect : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float dis = Vector3.Distance (PlayerObject.transform.position, this.transform.position);
-		if (dis < 30) {
+		if (dis < 60) {
 			DamageTiming++;
 			if(DamageTiming % 30 == 0)
 			{

@@ -32,8 +32,14 @@ public class CameraController : MonoBehaviour {
     /// X軸最大可動域
     /// </summary>
     [SerializeField]
-    [Range(0,89)]
+    [Range(0,180)]
     private float maxRage_X;
+    /// <summary>
+    /// X軸最小可動域
+    /// </summary>
+    [SerializeField]
+    [Range(-180, 0)]
+    private float minRage_X;
     /// <summary>
     /// 回転速度
     /// </summary>
@@ -49,6 +55,8 @@ public class CameraController : MonoBehaviour {
 	void Start () 
     {
         distance = this.transform.position - target.transform.position;
+        Screen.lockCursor = true;
+        Screen.showCursor = false;
 	}
 	
 	void Update () 
@@ -62,7 +70,18 @@ public class CameraController : MonoBehaviour {
         rotation.y = this.transform.localEulerAngles.y;
         rotation.x += -mouseY * speed;   //上下回転
         rotation.y += mouseX * speed;  //左右回転
+        if (rotation.x > 180) rotation.x -= 360;
+        Debug.Log(rotation.x);
+        if (rotation.x > maxRage_X)
+        {
+            rotation.x = maxRage_X;
+        }
+        if (rotation.x < minRage_X)
+        {
+            rotation.x = minRage_X;
+        }
         this.transform.localEulerAngles = new Vector3(rotation.x, rotation.y, 0);
+        ChangeCursor();
 	}
 
     /// <summary>
@@ -75,5 +94,17 @@ public class CameraController : MonoBehaviour {
         Vector3 cameraDirection = transform.TransformDirection(direction);
         cameraDirection = new Vector3(cameraDirection.x, 0, cameraDirection.z);
         return cameraDirection;
+    }
+
+    /// <summary>
+    /// マウス表示/非表示切り替え
+    /// </summary>
+    void ChangeCursor()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Screen.lockCursor = !Screen.lockCursor;
+            Screen.showCursor = !Screen.showCursor;
+        }
     }
 }

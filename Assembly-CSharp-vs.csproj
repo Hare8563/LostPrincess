@@ -62,6 +62,8 @@
      <Compile Include="Assets\Scripts\Ending\Ending.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\Event\EventController.cs" />
+     <Compile Include="Assets\Scripts\Manager\StatusManager.cs" />
+     <Compile Include="Assets\Scripts\Manager\WeaponIconManager.cs" />
      <Compile Include="Assets\Scripts\Mao.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\StatusClass.cs" />
@@ -75,7 +77,6 @@
      <Compile Include="Assets\Scripts\Publics\ParticleCollisionController.cs" />
      <Compile Include="Assets\Scripts\Publics\PlayerPrefsEx.cs" />
      <Compile Include="Assets\Scripts\Publics\RotationObject.cs" />
-     <Compile Include="Assets\Scripts\Publics\StatusManager.cs" />
      <Compile Include="Assets\Scripts\Publics\stageScript.cs" />
      <Compile Include="Assets\Scripts\Publics\toBossStage.cs" />
      <Compile Include="Assets\Scripts\Skill\Hime\BigMeteo.cs" />

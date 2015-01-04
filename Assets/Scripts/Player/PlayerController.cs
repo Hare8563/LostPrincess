@@ -266,49 +266,49 @@ public class PlayerController : MonoBehaviour
         float inputV = Input.GetAxis("Vertical");
         animator.SetFloat("Horizontal", inputH);
         isMove = false;
-        //ボス戦だったら
-        if (isBossBattle)
-        {
-            if (inputH != 0.0f || inputV != 0.0f)
-            {
-                isMove = true;
-            }
-            //敵方向を向く
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - this.transform.transform.position), 0.07f);
-            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        ////ボス戦だったら
+        //if (isBossBattle)
+        //{
+        //    if (inputH != 0.0f || inputV != 0.0f)
+        //    {
+        //        isMove = true;
+        //    }
+        //    //敵方向を向く
+        //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - this.transform.transform.position), 0.07f);
+        //    this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
 
-            //前
-            if (Input.GetKey(KeyCode.W))
-            {
-                isMove = true;
-                rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
-				//rigidbody.velocity = transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
-            }
-            //後ろ
-            else if (Input.GetKey(KeyCode.S))
-            {
-                isMove = true;
-                rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
-				//rigidbody.velocity = transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
-            }
-            //左
-            if (Input.GetKey(KeyCode.A))
-            {
-                isMove = true;
-                rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
-				//rigidbody.velocity = transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
-            }
-            //右
-            else if (Input.GetKey(KeyCode.D))
-            {
-                isMove = true;
-                rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
-				//rigidbody.velocity = transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
-            }
-        }
-        //道中だったら
-        else
-        {
+        //    //前
+        //    if (Input.GetKey(KeyCode.W))
+        //    {
+        //        isMove = true;
+        //        rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
+        //        //rigidbody.velocity = transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
+        //    }
+        //    //後ろ
+        //    else if (Input.GetKey(KeyCode.S))
+        //    {
+        //        isMove = true;
+        //        rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
+        //        //rigidbody.velocity = transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
+        //    }
+        //    //左
+        //    if (Input.GetKey(KeyCode.A))
+        //    {
+        //        isMove = true;
+        //        rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
+        //        //rigidbody.velocity = transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
+        //    }
+        //    //右
+        //    else if (Input.GetKey(KeyCode.D))
+        //    {
+        //        isMove = true;
+        //        rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
+        //        //rigidbody.velocity = transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
+        //    }
+        //}
+        ////道中だったら
+        //else
+        //{
             //if (inputH != 0.0f || inputV != 0.0f)
             //{
             //    isMove = true;
@@ -358,7 +358,7 @@ public class PlayerController : MonoBehaviour
             }
             
             //rigidbody.AddForce(direction * NormalSpeed, ForceMode.VelocityChange);
-        }
+        //}
     }
 
     /// <summary>
@@ -666,5 +666,14 @@ public class PlayerController : MonoBehaviour
     public Status getPlayerStatus()
     {
         return status;
+    }
+
+    /// <summary>
+    /// 現在使用中の武器を得る
+    /// </summary>
+    /// <returns></returns>
+    public int getNowWeapon()
+    {
+        return nowWeapon;
     }
 }
