@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
 	private GameObject RunSmokeEffect;
 
     void Awake()
-    {
+	{
         if (GameObject.FindGameObjectWithTag("Boss") != null)
         {
             TargetObject = GameObject.FindGameObjectWithTag("Boss");
