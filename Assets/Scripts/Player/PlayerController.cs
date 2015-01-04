@@ -6,6 +6,10 @@ using SkillClass;
 public class PlayerController : MonoBehaviour
 {
     /// <summary>
+    /// メインカメラ
+    /// </summary>
+    private GameObject mainCamera;
+    /// <summary>
     /// ボス戦かどうか
     /// </summary>
     [SerializeField]
@@ -142,6 +146,44 @@ public class PlayerController : MonoBehaviour
 	/// 歩行エフェクト
 	/// </summary>
 	private GameObject RunSmokeEffect;
+    /// <summary>
+    /// マウスボタンの列挙体
+    /// </summary>
+    private enum MouseButtonEnum
+    {
+        RIGHT_BUTTON = 0,
+        LEFT_BUTTON,
+        CENTER_BUTTON,
+    }
+    /// <summary>
+    /// マウスボタンの構造体
+    /// </summary>
+    private struct MouseButtonStruct
+    {
+        public bool right;
+        public bool left;
+        public bool center;
+        public bool rightDown;
+        public bool leftDown;
+        public bool centerDown;
+    }
+    /// <summary>
+    /// マウスボタン
+    /// </summary>
+    private MouseButtonStruct mouseButton;
+    /// <summary>
+    /// 武器の列挙体
+    /// </summary>
+    private enum WeaponEnum
+    {
+        SWORD = 0,
+        MAGIC,
+        BOW,
+    }
+    /// <summary>
+    /// 現在選択中の武器
+    /// </summary>
+    private int nowWeapon = 0;
 
     void Awake()
     {
@@ -164,6 +206,8 @@ public class PlayerController : MonoBehaviour
 		HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
 
 		RunSmokeEffect = Resources.Load ("Prefab/RunSmoke") as GameObject;
+
+        mainCamera = GameObject.Find("MainCamera");
     }
 
     // Use this for initialization
@@ -183,6 +227,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //マウスイベント
+        MouseEvent();
+        //武器切り替え
+        WeaponChange();
         //アニメーション管理
         AnimationController();
     }
@@ -261,19 +309,55 @@ public class PlayerController : MonoBehaviour
         //道中だったら
         else
         {
-            if (inputH != 0.0f || inputV != 0.0f)
+            //if (inputH != 0.0f || inputV != 0.0f)
+            //{
+            //    isMove = true;
+            //}
+            ////進行方向取得
+            //Vector3 inputVec = new Vector3(inputH, 0.0f, inputV).normalized;
+            ////キャラ回転
+            //if (!inputVec.Equals(Vector3.zero))
+            //{
+            //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(inputVec), 0.2f);
+            //    rigidbody.AddForce(inputVec * RoadSpeed * 10.0f, ForceMode.VelocityChange);
+            //    //this.transform.Translate(Vector3.forward * RoadSpeed);
+            //}
+
+            Vector3 forward = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.forward).normalized;
+            Vector3 back = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.back).normalized;
+            Vector3 right = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.right).normalized;
+            Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
+            float rotSpeed = 0.2f;
+            //前
+            if (Input.GetKey(KeyCode.W))
             {
                 isMove = true;
+                rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
             }
-            //進行方向取得
-            Vector3 inputVec = new Vector3(inputH, 0.0f, inputV).normalized;
-            //キャラ回転
-            if (!inputVec.Equals(Vector3.zero))
+            //後ろ
+            else if (Input.GetKey(KeyCode.S))
             {
-                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(inputVec), 0.1f);
-                rigidbody.AddForce(inputVec * RoadSpeed * 10.0f, ForceMode.VelocityChange);
-                //this.transform.Translate(Vector3.forward * RoadSpeed);
+                isMove = true;
+                rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
             }
+            //左
+            if (Input.GetKey(KeyCode.A))
+            {
+                isMove = true;
+                rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
+            }
+            //右
+            else if (Input.GetKey(KeyCode.D))
+            {
+                isMove = true;
+                rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
+            }
+            
+            //rigidbody.AddForce(direction * NormalSpeed, ForceMode.VelocityChange);
         }
     }
 
@@ -284,25 +368,38 @@ public class PlayerController : MonoBehaviour
     {
         skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        if (currentBaseState.nameHash != LvUpState || currentBaseState.nameHash != DamageState)
+        if ((currentBaseState.nameHash != LvUpState || 
+            currentBaseState.nameHash != DamageState) &&
+            mouseButton.right)
         {
-            //剣
-            if (Input.GetKeyDown(KeyCode.J))
+            switch (nowWeapon)
             {
-                isAttackSword = true;
+                case (int)WeaponEnum.SWORD:
+                    isAttackSword = true;
+                    break;
+                case (int)WeaponEnum.MAGIC:
+                    isShotMagic = true;
+                    break;
+                case (int)WeaponEnum.BOW:
+                    isShotArrow = true;
+                    break;
             }
-            //魔法
-            else if (Input.GetKeyDown(KeyCode.I))
-            {
-                isShotMagic = true;
-                MagicController.TargetObject = TargetObject;
-            }
-            //弓
-            else if (Input.GetKeyDown(KeyCode.O))
-            {
-                isShotArrow = true;
-                BowController.TargetObject = TargetObject;
-            }
+
+            ////剣
+            //if (Input.GetKeyDown(KeyCode.J))
+            //{
+            //    isAttackSword = true;
+            //}
+            ////魔法
+            //else if (Input.GetKeyDown(KeyCode.I))
+            //{
+            //    isShotMagic = true;
+            //}
+            ////弓
+            //else if (Input.GetKeyDown(KeyCode.O))
+            //{
+            //    isShotArrow = true;
+            //}
         }
     }
 
@@ -382,8 +479,15 @@ public class PlayerController : MonoBehaviour
             if (!isOneShotMagic)
             {
                 isOneShotMagic = true;
-                if (isBossBattle) Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
-                else Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+                if (isBossBattle)
+                {
+                    GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+                    magic.GetComponent<MagicController>().setTargetObject(TargetObject);
+                }
+                else
+                {
+                    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+                }
                 MagicController.EnemyDamage = this.status.Magic_Power;
 				//skill.Meteo ();
             }
@@ -405,8 +509,15 @@ public class PlayerController : MonoBehaviour
             if (!isOneShotArrow)
             {
                 isOneShotArrow = true;
-                if (isBossBattle) Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
-                else Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+                if (isBossBattle)
+                {
+                    GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+                    arrow.GetComponent<BowController>().setTargetObject(TargetObject);
+                }
+                else
+                {
+                    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+                }
                 BowController.EnemyDamage = this.status.BOW_POW;
 				//skill.SpreadArrow ();
             }
@@ -429,6 +540,39 @@ public class PlayerController : MonoBehaviour
 		//Debug.Log("Se Play");
 		Instantiate (RunSmokeEffect, this.transform.position, this.transform.rotation);
 	}
+
+    /// <summary>
+    /// マウスイベント
+    /// </summary>
+    void MouseEvent()
+    {
+        mouseButton.right = Input.GetMouseButton((int)MouseButtonEnum.RIGHT_BUTTON);
+        mouseButton.left = Input.GetMouseButton((int)MouseButtonEnum.LEFT_BUTTON);
+        mouseButton.center = Input.GetMouseButton((int)MouseButtonEnum.CENTER_BUTTON);
+        mouseButton.rightDown = Input.GetMouseButtonDown((int)MouseButtonEnum.RIGHT_BUTTON);
+        mouseButton.leftDown = Input.GetMouseButtonDown((int)MouseButtonEnum.LEFT_BUTTON);
+        mouseButton.centerDown = Input.GetMouseButtonDown((int)MouseButtonEnum.CENTER_BUTTON);
+    }
+
+    /// <summary>
+    /// 武器切り替え
+    /// </summary>
+    void WeaponChange()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            nowWeapon = (int)WeaponEnum.SWORD;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            nowWeapon = (int)WeaponEnum.MAGIC;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            nowWeapon = (int)WeaponEnum.BOW;
+        }
+        //Debug.Log(nowWeapon);
+    }
 
     /// <summary>
     /// 何かに当たったら

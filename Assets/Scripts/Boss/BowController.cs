@@ -24,6 +24,10 @@ public class BowController : MonoBehaviour {
     /// ヒットエフェクト
     /// </summary>
     GameObject HitEffect;
+    /// <summary>
+    /// ターゲットオブジェクト
+    /// </summary>
+    private GameObject TargetObject;
 
     void Awake()
     {
@@ -81,7 +85,20 @@ public class BowController : MonoBehaviour {
     /// <summary>
     /// 目標物
     /// </summary>
-    public static GameObject TargetObject { set; private get; }
+    public void setTargetObject(GameObject target)
+    {
+        TargetObject = target;
+    }
+
+    /// <summary>
+    /// 敵に与えるダメージ
+    /// </summary>
+    public static int EnemyDamage { set; get; }
+
+    /// <summary>
+    /// プレイヤーに与えるダメージ
+    /// </summary>
+    public static int PlayerDamage { set; get; }
 
     /// <summary>
     /// 何かに当たったら
@@ -106,10 +123,10 @@ public class BowController : MonoBehaviour {
             {
                 Target.GetComponent<EnemyScript>().Damage(EnemyDamage);
             }
-			else if (Target.tag == "Hime")
-			{
-				Target.GetComponent<RastBossController>().Damage(EnemyDamage);
-			}
+            else if (Target.tag == "Hime")
+            {
+                Target.GetComponent<RastBossController>().Damage(EnemyDamage);
+            }
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
         }
@@ -123,14 +140,4 @@ public class BowController : MonoBehaviour {
             }
         }
     }
-
-    /// <summary>
-    /// 敵に与えるダメージ
-    /// </summary>
-    public static int EnemyDamage { set; get; }
-
-    /// <summary>
-    /// プレイヤーに与えるダメージ
-    /// </summary>
-    public static int PlayerDamage { set; get; }
 }
