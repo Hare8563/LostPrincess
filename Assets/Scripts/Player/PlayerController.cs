@@ -2,14 +2,13 @@
 using System.Collections;
 using StatusClass;
 using SkillClass;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-	/// <summary>
-	/// uGUIキャンバス
-	/// </summary>
-	public GameObject canvas;
+    /// <summary>
+    /// メインカメラ
+    /// </summary>
+    private GameObject mainCamera;
     /// <summary>
     /// ボス戦かどうか
     /// </summary>
@@ -37,10 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Range(0, 100)]
     private float AttackSpeed = 0;
-    /// <summary>
-    /// 攻撃中かどうか
-    /// </summary>
-    private bool isAttack = false;
     /// <summary>
     /// 魔法ボール
     /// </summary>
@@ -151,6 +146,44 @@ public class PlayerController : MonoBehaviour
 	/// 歩行エフェクト
 	/// </summary>
 	private GameObject RunSmokeEffect;
+    /// <summary>
+    /// マウスボタンの列挙体
+    /// </summary>
+    private enum MouseButtonEnum
+    {
+        RIGHT_BUTTON = 0,
+        LEFT_BUTTON,
+        CENTER_BUTTON,
+    }
+    /// <summary>
+    /// マウスボタンの構造体
+    /// </summary>
+    private struct MouseButtonStruct
+    {
+        public bool right;
+        public bool left;
+        public bool center;
+        public bool rightDown;
+        public bool leftDown;
+        public bool centerDown;
+    }
+    /// <summary>
+    /// マウスボタン
+    /// </summary>
+    private MouseButtonStruct mouseButton;
+    /// <summary>
+    /// 武器の列挙体
+    /// </summary>
+    private enum WeaponEnum
+    {
+        SWORD = 0,
+        MAGIC,
+        BOW,
+    }
+    /// <summary>
+    /// 現在選択中の武器
+    /// </summary>
+    private int nowWeapon = 0;
 
     void Awake()
 	{
@@ -172,15 +205,21 @@ public class PlayerController : MonoBehaviour
 
 		HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
 
-		canvas = GameObject.Find("Canvas");
-
 		RunSmokeEffect = Resources.Load ("Prefab/RunSmoke") as GameObject;
+
+        mainCamera = GameObject.Find("MainCamera");
     }
 
     // Use this for initialization
     void Start()
     {
-        status = new Status(100, 0, 100, 100, "勇者ー！");
+        StatusManager statusManager = new StatusManager();
+        status = new Status(
+            statusManager.getLoadStatus().LV,
+            statusManager.getLoadStatus().EXP,
+            statusManager.getLoadStatus().HP,
+            statusManager.getLoadStatus().MP,
+            statusManager.getLoadStatus().NAME);
 		Weapon_Sword.renderer.enabled = false;
 		Weapon_Rod.renderer.enabled = false;
 		Weapon_Bow.renderer.enabled = false;
@@ -188,17 +227,21 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //マウスイベント
+        MouseEvent();
+        //武器切り替え
+        WeaponChange();
         //アニメーション管理
         AnimationController();
-		//GUI管理
-		StatusGUIController ();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //移動
-        if (!isAttack)
+        if (!isAttackSword &&
+            !isShotMagic &&
+            !isShotArrow )
         {
 			oldPos = this.transform.position;
             Move();
@@ -223,67 +266,99 @@ public class PlayerController : MonoBehaviour
         float inputV = Input.GetAxis("Vertical");
         animator.SetFloat("Horizontal", inputH);
         isMove = false;
-        //ボス戦だったら
-        if (isBossBattle)
-        {
-            if (inputH != 0.0f || inputV != 0.0f)
-            {
-                isMove = true;
-            }
-            //敵方向を向く
-            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - this.transform.transform.position), 0.07f);
-            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        ////ボス戦だったら
+        //if (isBossBattle)
+        //{
+        //    if (inputH != 0.0f || inputV != 0.0f)
+        //    {
+        //        isMove = true;
+        //    }
+        //    //敵方向を向く
+        //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - this.transform.transform.position), 0.07f);
+        //    this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
 
+        //    //前
+        //    if (Input.GetKey(KeyCode.W))
+        //    {
+        //        isMove = true;
+        //        rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
+        //        //rigidbody.velocity = transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
+        //    }
+        //    //後ろ
+        //    else if (Input.GetKey(KeyCode.S))
+        //    {
+        //        isMove = true;
+        //        rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
+        //        //rigidbody.velocity = transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
+        //    }
+        //    //左
+        //    if (Input.GetKey(KeyCode.A))
+        //    {
+        //        isMove = true;
+        //        rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
+        //        //rigidbody.velocity = transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
+        //    }
+        //    //右
+        //    else if (Input.GetKey(KeyCode.D))
+        //    {
+        //        isMove = true;
+        //        rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
+        //        //rigidbody.velocity = transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
+        //    }
+        //}
+        ////道中だったら
+        //else
+        //{
+            //if (inputH != 0.0f || inputV != 0.0f)
+            //{
+            //    isMove = true;
+            //}
+            ////進行方向取得
+            //Vector3 inputVec = new Vector3(inputH, 0.0f, inputV).normalized;
+            ////キャラ回転
+            //if (!inputVec.Equals(Vector3.zero))
+            //{
+            //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(inputVec), 0.2f);
+            //    rigidbody.AddForce(inputVec * RoadSpeed * 10.0f, ForceMode.VelocityChange);
+            //    //this.transform.Translate(Vector3.forward * RoadSpeed);
+            //}
+
+            Vector3 forward = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.forward).normalized;
+            Vector3 back = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.back).normalized;
+            Vector3 right = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.right).normalized;
+            Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
+            float rotSpeed = 0.2f;
             //前
             if (Input.GetKey(KeyCode.W))
             {
                 isMove = true;
-                //rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
-				rigidbody.velocity = transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
+                rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
             }
             //後ろ
             else if (Input.GetKey(KeyCode.S))
             {
                 isMove = true;
-                //rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
-				rigidbody.velocity = transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
+                rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
             }
-			else
-			{
-				rigidbody.velocity = Vector3.zero;
-			}
             //左
             if (Input.GetKey(KeyCode.A))
             {
                 isMove = true;
-                //rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
-				rigidbody.velocity = transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
+                rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
             }
             //右
             else if (Input.GetKey(KeyCode.D))
             {
                 isMove = true;
-                //rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
-				rigidbody.velocity = transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
+                rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
             }
-        }
-        //道中だったら
-        else
-        {
-            if (inputH != 0.0f || inputV != 0.0f)
-            {
-                isMove = true;
-            }
-            //進行方向取得
-            Vector3 inputVec = new Vector3(inputH, 0.0f, inputV).normalized;
-            //キャラ回転
-            if (!inputVec.Equals(Vector3.zero))
-            {
-                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(inputVec), 0.1f);
-                rigidbody.AddForce(inputVec * RoadSpeed * 10.0f, ForceMode.VelocityChange);
-                //this.transform.Translate(Vector3.forward * RoadSpeed);
-            }
-        }
+            
+            //rigidbody.AddForce(direction * NormalSpeed, ForceMode.VelocityChange);
+        //}
     }
 
     /// <summary>
@@ -293,28 +368,38 @@ public class PlayerController : MonoBehaviour
     {
         skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        if (currentBaseState.nameHash != LvUpState || currentBaseState.nameHash != DamageState)
+        if ((currentBaseState.nameHash != LvUpState || 
+            currentBaseState.nameHash != DamageState) &&
+            mouseButton.right)
         {
-            //剣
-            if (Input.GetKeyDown(KeyCode.J))
+            switch (nowWeapon)
             {
-                isAttack = true;
-                isAttackSword = true;
+                case (int)WeaponEnum.SWORD:
+                    isAttackSword = true;
+                    break;
+                case (int)WeaponEnum.MAGIC:
+                    isShotMagic = true;
+                    break;
+                case (int)WeaponEnum.BOW:
+                    isShotArrow = true;
+                    break;
             }
-            //魔法
-            else if (Input.GetKeyDown(KeyCode.I))
-            {
-                isAttack = true;
-                isShotMagic = true;
-                MagicController.TargetObject = TargetObject;
-            }
-            //弓
-            else if (Input.GetKeyDown(KeyCode.O))
-            {
-                isAttack = true;
-                isShotArrow = true;
-                BowController.TargetObject = TargetObject;
-            }
+
+            ////剣
+            //if (Input.GetKeyDown(KeyCode.J))
+            //{
+            //    isAttackSword = true;
+            //}
+            ////魔法
+            //else if (Input.GetKeyDown(KeyCode.I))
+            //{
+            //    isShotMagic = true;
+            //}
+            ////弓
+            //else if (Input.GetKeyDown(KeyCode.O))
+            //{
+            //    isShotArrow = true;
+            //}
         }
     }
 
@@ -325,22 +410,13 @@ public class PlayerController : MonoBehaviour
     {
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        animator.SetBool("isMove", isMove);
-        animator.SetBool("isAttack", isAttack);
-        //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
-        animator.SetBool("isAttackSword", isAttackSword);
-        animator.SetBool("isShotMagic", isShotMagic);
-        animator.SetBool("isShotArrow", isShotArrow);
-        animator.SetBool("DeadFlag", deadFlag);
-		animator.SetBool ("isDamage", isDamage);
-		animator.SetBool ("isLvUp", LvUp);
-		Text HP = GameObject.Find ("HP").GetComponent<Text> ();
-		Text MP = GameObject.Find ("MP").GetComponent<Text> ();
-		Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
+        //Text HP = GameObject.Find ("HP").GetComponent<Text> ();
+        //Text MP = GameObject.Find ("MP").GetComponent<Text> ();
+        //Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
 
-		HP.text = this.status.HP.ToString();
-		MP.text = this.status.MP.ToString ();
-		Lv.text = this.status.LEV.ToString ();
+        //HP.text = this.status.HP.ToString();
+        //MP.text = this.status.MP.ToString ();
+        //Lv.text = this.status.LEV.ToString ();
 		
         //Debug.Log(animator.GetBool("isAttackSword"));
 		
@@ -348,11 +424,6 @@ public class PlayerController : MonoBehaviour
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
         {
-			//攻撃フラグを初期化
-            isAttack = false;
-            isAttackSword = false;
-            isShotMagic = false;
-            isShotArrow = false;
 			//ダメージフラグを初期化
 			isDamage = false;
 			//LvUpフラグを初期化
@@ -378,6 +449,8 @@ public class PlayerController : MonoBehaviour
 			Weapon_Sword.renderer.enabled = true;
 			Weapon_Rod.renderer.enabled = false;
 			Weapon_Bow.renderer.enabled = false;
+            //攻撃フラグを初期化
+            isAttackSword = false;
         }
 		//剣モーション02の時
 		else if (currentBaseState.nameHash == sword_02State)
@@ -396,6 +469,9 @@ public class PlayerController : MonoBehaviour
 			Weapon_Sword.renderer.enabled = false;
 			Weapon_Rod.renderer.enabled = true;
 			Weapon_Bow.renderer.enabled = false;
+            //攻撃フラグを初期化
+            isShotMagic = false;
+
         }
         //魔法モーション(_02)の時
         else if (currentBaseState.nameHash == magic_02State)
@@ -403,8 +479,15 @@ public class PlayerController : MonoBehaviour
             if (!isOneShotMagic)
             {
                 isOneShotMagic = true;
-                if (isBossBattle) Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
-                else Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+                if (isBossBattle)
+                {
+                    GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+                    magic.GetComponent<MagicController>().setTargetObject(TargetObject);
+                }
+                else
+                {
+                    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+                }
                 MagicController.EnemyDamage = this.status.Magic_Power;
 				//skill.Meteo ();
             }
@@ -417,6 +500,8 @@ public class PlayerController : MonoBehaviour
 			Weapon_Sword.renderer.enabled = false;
 			Weapon_Rod.renderer.enabled = false;
 			Weapon_Bow.renderer.enabled = true;
+            //攻撃フラグを初期化
+            isShotArrow = false;
         }
         //弓モーション(_02)の時
         else if (currentBaseState.nameHash == arrow_02State)
@@ -424,48 +509,70 @@ public class PlayerController : MonoBehaviour
             if (!isOneShotArrow)
             {
                 isOneShotArrow = true;
-                if (isBossBattle) Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
-                else Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+                if (isBossBattle)
+                {
+                    GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+                    arrow.GetComponent<BowController>().setTargetObject(TargetObject);
+                }
+                else
+                {
+                    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+                }
                 BowController.EnemyDamage = this.status.BOW_POW;
 				//skill.SpreadArrow ();
             }
         }
+        animator.SetBool("isMove", isMove);
+        //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
+        animator.SetBool("isAttackSword", isAttackSword);
+        animator.SetBool("isShotMagic", isShotMagic);
+        animator.SetBool("isShotArrow", isShotArrow);
+        animator.SetBool("DeadFlag", deadFlag);
+        animator.SetBool("isDamage", isDamage);
+        animator.SetBool("isLvUp", LvUp);
     }
-	/// <summary>
-	/// ステータスウィンドウGUI
-	/// </summary>
-	void StatusGUIController()
-	{
-		foreach(Transform child in canvas.transform)
-		{
-			//Debug.Log(child.name);
-			if(child.name == "NAME")
-			{
-				child.gameObject.GetComponent<Text>().text = this.status.NAME;
-			}
-			else if(child.name == "HP")
-			{
-				child.gameObject.GetComponent<Text>().text = this.status.HP.ToString();
-			}
-			else if(child.name == "MP")
-			{
-				child.gameObject.GetComponent<Text>().text = this.status.MP.ToString();
-			}
-			else if(child.name == "LV")
-			{
-				child.gameObject.GetComponent<Text>().text = this.status.LEV.ToString();
-			}
-		}
-	}
 
 	/// <summary>
-	/// アニメーションイベント(歩行SE)
+	/// アニメーションイベント
 	/// </summary>
 	void RunSeTiming()
 	{
 		//Debug.Log("Se Play");
 		Instantiate (RunSmokeEffect, this.transform.position, this.transform.rotation);
 	}
+
+    /// <summary>
+    /// マウスイベント
+    /// </summary>
+    void MouseEvent()
+    {
+        mouseButton.right = Input.GetMouseButton((int)MouseButtonEnum.RIGHT_BUTTON);
+        mouseButton.left = Input.GetMouseButton((int)MouseButtonEnum.LEFT_BUTTON);
+        mouseButton.center = Input.GetMouseButton((int)MouseButtonEnum.CENTER_BUTTON);
+        mouseButton.rightDown = Input.GetMouseButtonDown((int)MouseButtonEnum.RIGHT_BUTTON);
+        mouseButton.leftDown = Input.GetMouseButtonDown((int)MouseButtonEnum.LEFT_BUTTON);
+        mouseButton.centerDown = Input.GetMouseButtonDown((int)MouseButtonEnum.CENTER_BUTTON);
+    }
+
+    /// <summary>
+    /// 武器切り替え
+    /// </summary>
+    void WeaponChange()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            nowWeapon = (int)WeaponEnum.SWORD;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            nowWeapon = (int)WeaponEnum.MAGIC;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            nowWeapon = (int)WeaponEnum.BOW;
+        }
+        //Debug.Log(nowWeapon);
+    }
 
     /// <summary>
     /// 何かに当たったら
@@ -479,6 +586,7 @@ public class PlayerController : MonoBehaviour
             Application.LoadLevel("Boss");
         }
     }
+
     /// <summary>
     /// 何かに当たり続けたら
     /// </summary>
@@ -512,7 +620,10 @@ public class PlayerController : MonoBehaviour
             status.LevUp();
             LvUp = true;
             isMove = false;
-            isAttack = false;
+            //攻撃フラグを初期化
+            isAttackSword = false;
+            isShotMagic = false;
+            isShotArrow = false;
         }
     }
 
@@ -546,5 +657,23 @@ public class PlayerController : MonoBehaviour
     {
 		//Debug.Log (oldPos - newPos);
         return newPos - oldPos;
+    }
+
+    /// <summary>
+    /// プレイヤーのステータス値を得る
+    /// </summary>
+    /// <returns></returns>
+    public Status getPlayerStatus()
+    {
+        return status;
+    }
+
+    /// <summary>
+    /// 現在使用中の武器を得る
+    /// </summary>
+    /// <returns></returns>
+    public int getNowWeapon()
+    {
+        return nowWeapon;
     }
 }

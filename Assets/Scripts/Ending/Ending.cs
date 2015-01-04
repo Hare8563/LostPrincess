@@ -24,7 +24,7 @@ public class Ending : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            Application.LoadLevel("Title");
+            Application.LoadLevel("RastBoss");
         }
         //ホワイトイン
         EventManager.GetComponent<EventController>().WhiteIn(0.2f);

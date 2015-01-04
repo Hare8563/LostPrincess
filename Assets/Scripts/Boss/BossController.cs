@@ -214,7 +214,7 @@ public class BossController : MonoBehaviour {
         AnctionRand = Random.Range(0, 3);
         RandomRand = Random.Range(180, 300);
 
-        status = new Status(1, 0, 10, 10);
+        status = new Status(1, 0, 50, 100);
 	}
 	
 	/// <summary>
@@ -348,7 +348,6 @@ public class BossController : MonoBehaviour {
         {
             isShotMagic = true;
             //MagicBallObject.GetComponent<MagicController>().TargetObject = TargetObject;
-            MagicController.TargetObject = TargetObject;
         }
     }
 
@@ -362,7 +361,6 @@ public class BossController : MonoBehaviour {
         {
             isShotArrow = true;
             //ArrowObject.GetComponent<BowController>().TargetObject = TargetObject;
-            BowController.TargetObject = TargetObject;
         }
     }
 
@@ -520,7 +518,8 @@ public class BossController : MonoBehaviour {
             if (!isOneShotMagic)//!isShotMagic)
             {
                 isOneShotMagic = true;
-                Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
+                GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+                magic.GetComponent<MagicController>().setTargetObject(TargetObject);
                 MagicController.PlayerDamage = this.status.Magic_Power;
             }
         }
@@ -537,12 +536,12 @@ public class BossController : MonoBehaviour {
             if (!isOneShotArrow)
             {
                 isOneShotArrow = true;
-                Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position));
-                BowController.PlayerDamage = this.status.BOW_POW;
+                GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+                arrow.GetComponent<BowController>().setTargetObject(TargetObject); BowController.PlayerDamage = this.status.BOW_POW;
             }
         }
         //ダメージモーションの時
-        else if(currentBaseState.nameHash == damageState)
+        else if (currentBaseState.nameHash == damageState)
         {
             isDamage = false;
         }

@@ -1,9 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player/PlayerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/buttonController.cs">
     <Files>
-      <File FileName="../UnityProject/CVSample/Assets/CVCam.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="386" Column="14" />
+      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="502" Column="10" />
+      <File FileName="Assets/Scripts/Enemy/EnemyScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Player/StatusClass.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/buttonController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
