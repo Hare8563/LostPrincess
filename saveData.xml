@@ -3,17 +3,17 @@
   <key>NAME</key>
   <string>勇者</string>
   <key>HP</key>
-  <integer>24</integer>
+  <integer>0</integer>
   <key>MP</key>
   <integer>50</integer>
   <key>LV</key>
-  <integer>5</integer>
+  <integer>6</integer>
   <key>EXP</key>
   <integer>15</integer>
   <key>Sword</key>
-  <integer>1</integer>
+  <integer>3</integer>
   <key>Bow</key>
-  <integer>0</integer>
+  <integer>2</integer>
   <key>Magic</key>
-  <integer>1</integer>
+  <integer>3</integer>
 </root>
