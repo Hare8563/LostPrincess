@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
     private int nowWeapon = 0;
 
     void Awake()
-    {
+	{
         if (GameObject.FindGameObjectWithTag("Boss") != null)
         {
             TargetObject = GameObject.FindGameObjectWithTag("Boss");
