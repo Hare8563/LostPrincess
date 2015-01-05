@@ -27,14 +27,22 @@ public class StatusManager : MonoBehaviour {
         public int MAGIC;
     };
     /// <summary>
-    /// ステータスの構造体変数
+    /// プレイヤーステータスの構造体変数
     /// </summary>
-    private StatusStruct statusStruct;
+    private StatusStruct PlayerStatus;
+    /// <summary>
+    /// 姫ステータスの構造体変数
+    /// </summary>
+    private StatusStruct HimeStatus;
 
     /// <summary>
     /// プレイヤーオブジェクト
     /// </summary>
     private GameObject PlayerObject;
+    /// <summary>
+    /// 姫オブジェクト
+    /// </summary>
+    private GameObject HimeObject;
     
     /// <summary>
     /// 読み込み
@@ -43,6 +51,7 @@ public class StatusManager : MonoBehaviour {
     {
         canvas = GameObject.Find("Canvas");
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        HimeObject = GameObject.FindGameObjectWithTag("Hime");
     }
 
 	/// <summary>
@@ -70,20 +79,29 @@ public class StatusManager : MonoBehaviour {
         //Debug.Log(System.Environment.CurrentDirectory);
         prefs = new PlayerPrefsEx();
         prefs.Load(System.Environment.CurrentDirectory + "/saveData.xml");
-        statusStruct.NAME = prefs.GetString("NAME");// Debug.Log("NAME = " + statusStruct.NAME);
-        statusStruct.HP = prefs.GetInt("HP"); //Debug.Log("HP = " + statusStruct.HP);
-        statusStruct.MP = prefs.GetInt("MP"); //Debug.Log("MP = " + statusStruct.MP);
-        statusStruct.LV = prefs.GetInt("LV"); //Debug.Log("LV = " + statusStruct.LV);
-        statusStruct.EXP = prefs.GetInt("EXP"); //Debug.Log("EXP = " + statusStruct.EXP);
-        statusStruct.SWORD = prefs.GetInt("Sword"); //Debug.Log("SWORD = " + statusStruct.SWORD);
-        statusStruct.BOW = prefs.GetInt("Bow"); //Debug.Log("BOW = " + statusStruct.BOW);
-        statusStruct.MAGIC = prefs.GetInt("Magic"); //Debug.Log("MAGIC = " + statusStruct.MAGIC);
+        PlayerStatus.NAME = prefs.GetString("NAME");// Debug.Log("NAME = " + statusStruct.NAME);
+        PlayerStatus.HP = prefs.GetInt("HP"); //Debug.Log("HP = " + statusStruct.HP);
+        PlayerStatus.MP = prefs.GetInt("MP"); //Debug.Log("MP = " + statusStruct.MP);
+        PlayerStatus.LV = prefs.GetInt("LV"); //Debug.Log("LV = " + statusStruct.LV);
+        PlayerStatus.EXP = prefs.GetInt("EXP"); //Debug.Log("EXP = " + statusStruct.EXP);
+        PlayerStatus.SWORD = prefs.GetInt("Sword"); //Debug.Log("SWORD = " + statusStruct.SWORD);
+        PlayerStatus.BOW = prefs.GetInt("Bow"); //Debug.Log("BOW = " + statusStruct.BOW);
+        PlayerStatus.MAGIC = prefs.GetInt("Magic"); //Debug.Log("MAGIC = " + statusStruct.MAGIC);
     }
 
     /// <summary>
-    /// ステータスウィンドウGUI
+    /// ステータスGUI管理
     /// </summary>
     void StatusGUIController()
+    {
+        PlayerStatusControll();
+        HimeStatusControll();
+    }
+
+    /// <summary>
+    /// プレイヤーステータスGUI管理
+    /// </summary>
+    private void PlayerStatusControll()
     {
         PlayerController playerController = PlayerObject.GetComponent<PlayerController>();
         foreach (Transform child in canvas.transform)
@@ -91,19 +109,35 @@ public class StatusManager : MonoBehaviour {
             //Debug.Log(child.name);
             if (child.name == "NAME")
             {
-                child.gameObject.GetComponent<Text>().text = playerController.getPlayerStatus().NAME;//statusStruct.NAME;
+                child.gameObject.GetComponent<Text>().text = playerController.getStatus().NAME;//statusStruct.NAME;
             }
             else if (child.name == "HP")
             {
-                child.gameObject.GetComponent<Text>().text = playerController.getPlayerStatus().HP.ToString();//statusStruct.HP.ToString();
+                child.gameObject.GetComponent<Text>().text = playerController.getStatus().HP.ToString();//statusStruct.HP.ToString();
             }
             else if (child.name == "MP")
             {
-                child.gameObject.GetComponent<Text>().text = playerController.getPlayerStatus().MP.ToString();//statusStruct.MP.ToString();
+                child.gameObject.GetComponent<Text>().text = playerController.getStatus().MP.ToString();//statusStruct.MP.ToString();
             }
             else if (child.name == "LV")
             {
-                child.gameObject.GetComponent<Text>().text = playerController.getPlayerStatus().LEV.ToString();//statusStruct.LV.ToString();
+                child.gameObject.GetComponent<Text>().text = playerController.getStatus().LEV.ToString();//statusStruct.LV.ToString();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 姫ステータス管理
+    /// </summary>
+    private void HimeStatusControll()
+    {
+        RastBossController himeController = HimeObject.GetComponent<RastBossController>();
+        foreach (Transform child in canvas.transform)
+        {
+            //HP反映
+            if (child.name == "HimeHP_Bar")
+            {
+                child.gameObject.GetComponent<Image>().rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, himeController.getNowHP());
             }
         }
     }
@@ -115,6 +149,6 @@ public class StatusManager : MonoBehaviour {
     public StatusStruct getLoadStatus()
     {
         Load();
-        return statusStruct;
+        return PlayerStatus;
     }
 }

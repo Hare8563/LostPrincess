@@ -77,8 +77,8 @@ public class WeaponIconManager : MonoBehaviour {
 
     void Create(GameObject icon)
     {
-        float scaleSpeed = 1.005f;
-        float colorSpeed = 0.02f;
+        float scaleSpeed = 1.01f;
+        float colorSpeed = 0.035f;
         if (WeaponIconObject == null)
         {
             WeaponIconObject = Instantiate(icon, icon.transform.position, icon.transform.rotation) as GameObject;

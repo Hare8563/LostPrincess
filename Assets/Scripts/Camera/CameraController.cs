@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour {
         rotation.x += -mouseY * speed;   //上下回転
         rotation.y += mouseX * speed;  //左右回転
         if (rotation.x > 180) rotation.x -= 360;
-        Debug.Log(rotation.x);
+        //Debug.Log(rotation.x);
         if (rotation.x > maxRage_X)
         {
             rotation.x = maxRage_X;

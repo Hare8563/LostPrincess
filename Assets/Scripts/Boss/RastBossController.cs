@@ -177,6 +177,10 @@ public class RastBossController : MonoBehaviour
     /// スキルを使用した時間
     /// </summary>
     private float usingSkillTime = 0;
+    /// <summary>
+    /// HPバーオブジェクト
+    /// </summary>
+    private GameObject HpBarObject;
 
 #if skillDebug
     //ノーマルスキル
@@ -625,11 +629,20 @@ public class RastBossController : MonoBehaviour
 	/// </summary>
 	void OnGUI()
 	{
-		GUIStyle guistyle = new GUIStyle();
-		guistyle.fontSize = 64;
-		guistyle.normal.textColor = Color.red;
-		GUI.Label( new Rect(Screen.width/2f, 0, 200, 200), "姫HP:" + this.status.HP , guistyle );
+        //GUIStyle guistyle = new GUIStyle();
+        //guistyle.fontSize = 64;
+        //guistyle.normal.textColor = Color.red;
+        //GUI.Label( new Rect(Screen.width/2f, 0, 200, 200), "姫HP:" + this.status.HP , guistyle );
 	}
+
+    /// <summary>
+    /// 姫の現在のHPを得る
+    /// </summary>
+    /// <returns></returns>
+    public int getNowHP()
+    {
+        return this.status.HP;
+    }
 
     /// <summary>
     /// 外部参照ダメージ処理

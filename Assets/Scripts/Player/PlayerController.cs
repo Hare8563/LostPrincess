@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
             statusManager.getLoadStatus().HP,
             statusManager.getLoadStatus().MP,
             statusManager.getLoadStatus().NAME);
-		Weapon_Sword.renderer.enabled = false;
+		Weapon_Sword.renderer.enabled = true;
 		Weapon_Rod.renderer.enabled = false;
 		Weapon_Bow.renderer.enabled = false;
     }
@@ -427,28 +427,17 @@ public class PlayerController : MonoBehaviour
 			//ダメージフラグを初期化
 			isDamage = false;
 			//LvUpフラグを初期化
-			LvUp = false;
-			//武器表示を初期化
-			Weapon_Sword.renderer.enabled = false;
-			Weapon_Rod.renderer.enabled = false;
-			Weapon_Bow.renderer.enabled = false;
+            LvUp = false;
         }
         //走りモーションの時
         else if (currentBaseState.nameHash == runState)
         {
-			//武器表示を初期化
-			Weapon_Sword.renderer.enabled = false;
-			Weapon_Rod.renderer.enabled = false;
-			Weapon_Bow.renderer.enabled = false;
+			
         }
         //剣モーションの時
         else if (currentBaseState.nameHash == sword_01State)
         {
             isOneShotSword = false;
-			//武器表示を設定
-			Weapon_Sword.renderer.enabled = true;
-			Weapon_Rod.renderer.enabled = false;
-			Weapon_Bow.renderer.enabled = false;
             //攻撃フラグを初期化
             isAttackSword = false;
         }
@@ -465,10 +454,6 @@ public class PlayerController : MonoBehaviour
         else if (currentBaseState.nameHash == magic_01State)
         {
             isOneShotMagic = false;
-			//武器表示を設定
-			Weapon_Sword.renderer.enabled = false;
-			Weapon_Rod.renderer.enabled = true;
-			Weapon_Bow.renderer.enabled = false;
             //攻撃フラグを初期化
             isShotMagic = false;
 
@@ -496,10 +481,6 @@ public class PlayerController : MonoBehaviour
         else if (currentBaseState.nameHash == arrow_01State)
         {
             isOneShotArrow = false;
-			//武器表示を設定
-			Weapon_Sword.renderer.enabled = false;
-			Weapon_Rod.renderer.enabled = false;
-			Weapon_Bow.renderer.enabled = true;
             //攻撃フラグを初期化
             isShotArrow = false;
         }
@@ -562,14 +543,26 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             nowWeapon = (int)WeaponEnum.SWORD;
+            //武器表示を設定
+            Weapon_Sword.renderer.enabled = true;
+            Weapon_Rod.renderer.enabled = false;
+            Weapon_Bow.renderer.enabled = false;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             nowWeapon = (int)WeaponEnum.MAGIC;
+            //武器表示を設定
+            Weapon_Sword.renderer.enabled = false;
+            Weapon_Rod.renderer.enabled = true;
+            Weapon_Bow.renderer.enabled = false;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             nowWeapon = (int)WeaponEnum.BOW;
+            //武器表示を設定
+            Weapon_Sword.renderer.enabled = false;
+            Weapon_Rod.renderer.enabled = false;
+            Weapon_Bow.renderer.enabled = true;
         }
         //Debug.Log(nowWeapon);
     }
@@ -663,7 +656,7 @@ public class PlayerController : MonoBehaviour
     /// プレイヤーのステータス値を得る
     /// </summary>
     /// <returns></returns>
-    public Status getPlayerStatus()
+    public Status getStatus()
     {
         return status;
     }
