@@ -43,6 +43,10 @@ public class StatusManager : MonoBehaviour {
     /// 姫オブジェクト
     /// </summary>
     private GameObject HimeObject;
+    /// <summary>
+    /// 姫戦かどうか
+    /// </summary>
+    public bool isHimeBattle = false;
     
     /// <summary>
     /// 読み込み
@@ -51,7 +55,7 @@ public class StatusManager : MonoBehaviour {
     {
         canvas = GameObject.Find("Canvas");
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
-        HimeObject = GameObject.FindGameObjectWithTag("Hime");
+        if (isHimeBattle) HimeObject = GameObject.FindGameObjectWithTag("Hime");
     }
 
 	/// <summary>
@@ -95,7 +99,7 @@ public class StatusManager : MonoBehaviour {
     void StatusGUIController()
     {
         PlayerStatusControll();
-        HimeStatusControll();
+        if (isHimeBattle) HimeStatusControll();
     }
 
     /// <summary>

@@ -91,7 +91,7 @@ public class CameraController : MonoBehaviour {
     /// <returns>カメラの方向</returns>
     public Vector3 getCameraDirection(Vector3 direction)
     {
-        Vector3 cameraDirection = transform.TransformDirection(direction);
+        Vector3 cameraDirection = Camera.main.transform.TransformDirection(direction);
         cameraDirection = new Vector3(cameraDirection.x, 0, cameraDirection.z);
         return cameraDirection;
     }

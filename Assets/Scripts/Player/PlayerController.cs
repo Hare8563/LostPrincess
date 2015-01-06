@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
 		RunSmokeEffect = Resources.Load ("Prefab/RunSmoke") as GameObject;
 
-        mainCamera = GameObject.Find("MainCamera");
+        mainCamera = GameObject.Find("CameraControllPoint");
     }
 
     // Use this for initialization
@@ -327,6 +327,7 @@ public class PlayerController : MonoBehaviour
             Vector3 back = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.back).normalized;
             Vector3 right = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.right).normalized;
             Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
+            Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
             float rotSpeed = 0.2f;
             //前
             if (Input.GetKey(KeyCode.W))
@@ -356,7 +357,8 @@ public class PlayerController : MonoBehaviour
                 rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
             }
-            
+            //常に下方向に力をかける
+            rigidbody.AddForce(Vector3.down * 5, ForceMode.VelocityChange);
             //rigidbody.AddForce(direction * NormalSpeed, ForceMode.VelocityChange);
         //}
     }
