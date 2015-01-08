@@ -390,6 +390,8 @@ public class BossController : MonoBehaviour {
             default: Stopping(); break;
         }
         LeaveOrNear();
+        //常に下方向に力をかける
+        rigidbody.AddForce(Vector3.down * 10f, ForceMode.VelocityChange);
         //Debug.Log("MoveNow");
     }
 
