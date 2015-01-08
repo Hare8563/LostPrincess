@@ -601,7 +601,18 @@ public class PlayerController : MonoBehaviour
             Weapon_Rod.renderer.enabled = false;
             Weapon_Bow.renderer.enabled = true;
         }
-        //Debug.Log(nowWeapon);
+				else if (Input.GetMouseButtonDown (1)) 
+		{
+						if (nowWeapon == 2)
+						{
+								nowWeapon = (int)WeaponEnum.SWORD;
+						} 
+						else 
+						{
+								nowWeapon++;
+						}
+		}
+//        //Debug.Log(nowWeapon);
     }
 
     /// <summary>
