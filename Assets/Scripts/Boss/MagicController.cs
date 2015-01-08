@@ -38,6 +38,10 @@ public class MagicController : MonoBehaviour {
 	[SerializeField]
 	[Range(0,10)]
 	private float LightIntensity;
+    /// <summary>
+    /// ターゲットオブジェクト
+    /// </summary>
+    private GameObject TargetObject;
 
     void Awake()
     {
@@ -113,7 +117,20 @@ public class MagicController : MonoBehaviour {
     /// <summary>
     /// 目標物
     /// </summary>
-    public static GameObject TargetObject { set; private get; }
+    public void setTargetObject(GameObject tagret)
+    {
+        TargetObject = tagret;
+    }
+
+    /// <summary>
+    /// 敵に与えるダメージ
+    /// </summary>
+    public static int EnemyDamage { set; get; }
+
+    /// <summary>
+    /// プレイヤーに与えるダメージ
+    /// </summary>
+    public static int PlayerDamage { set; get; }
 
     /// <summary>
     /// 何かに当たったら
@@ -154,14 +171,4 @@ public class MagicController : MonoBehaviour {
             }
         }
     }
-
-    /// <summary>
-    /// 敵に与えるダメージ
-    /// </summary>
-    public static int EnemyDamage { set; get; }
-
-    /// <summary>
-    /// プレイヤーに与えるダメージ
-    /// </summary>
-    public static int PlayerDamage { set; get; }
 }
