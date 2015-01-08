@@ -571,7 +571,18 @@ public class PlayerController : MonoBehaviour
         {
             nowWeapon = (int)WeaponEnum.BOW;
         }
-        //Debug.Log(nowWeapon);
+				else if (Input.GetMouseButtonDown (1)) 
+		{
+						if (nowWeapon == 2)
+						{
+								nowWeapon = (int)WeaponEnum.SWORD;
+						} 
+						else 
+						{
+								nowWeapon++;
+						}
+		}
+//        //Debug.Log(nowWeapon);
     }
 
     /// <summary>
