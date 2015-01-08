@@ -151,8 +151,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private enum MouseButtonEnum
     {
-        RIGHT_BUTTON = 0,
-        LEFT_BUTTON,
+        LEFT_BUTTON = 0,
+        RIGHT_BUTTON,
         CENTER_BUTTON,
     }
     /// <summary>
@@ -203,6 +203,10 @@ public class PlayerController : MonoBehaviour
     /// 現在当たり続けているオブジェクト接触点の法線
     /// </summary>
     private Vector3 nowCollissionStayNormalVec = Vector3.up;
+    /// <summary>
+    /// ジャンプ可能か
+    /// </summary>
+    private bool canJump = false;
 
     void Awake()
     {
@@ -252,6 +256,7 @@ public class PlayerController : MonoBehaviour
         WeaponChange();
         //アニメーション管理
         AnimationController();
+        //ボタンイベント
         ButtonEvent();
     }
 
@@ -293,28 +298,28 @@ public class PlayerController : MonoBehaviour
         Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
         float rotSpeed = 0.2f;
         //前
-        if (Input.GetKey(KeyCode.W))
+        if (isMoveButton.forwerd)
         {
             isMove = true;
             rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
         }
         //後ろ
-        else if (Input.GetKey(KeyCode.S))
+        else if (isMoveButton.back)
         {
             isMove = true;
             rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
         }
         //左
-        if (Input.GetKey(KeyCode.A))
+        if (isMoveButton.left)
         {
             isMove = true;
             rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
         }
         //右
-        else if (Input.GetKey(KeyCode.D))
+        else if (isMoveButton.right)
         {
             isMove = true;
             rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
@@ -322,7 +327,7 @@ public class PlayerController : MonoBehaviour
         }
         
         //ジャンプ
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isMoveButton.jump && canJump)
         {
             float Power = 150f;
             //法線に上方向ベクトル加算
@@ -330,6 +335,7 @@ public class PlayerController : MonoBehaviour
             rigidbody.AddForce(nowCollissionStayNormalVec.normalized * Power, ForceMode.VelocityChange);
             //ベクトル初期化
             nowCollissionStayNormalVec = Vector3.up;
+            canJump = false;
         }
 
         //常に下方向に力をかける
@@ -345,7 +351,7 @@ public class PlayerController : MonoBehaviour
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
         if ((currentBaseState.nameHash != LvUpState ||
             currentBaseState.nameHash != DamageState) &&
-            mouseButton.right)
+            mouseButton.left)
         {
             switch (nowWeapon)
             {
@@ -534,6 +540,14 @@ public class PlayerController : MonoBehaviour
             isMoveButton.left = false;
             isMoveButton.jump = false;
         }
+        else
+        {
+            isMoveButton.forwerd = false;
+            isMoveButton.back = false;
+            isMoveButton.right = false;
+            isMoveButton.left = false;
+            isMoveButton.jump = false;
+        }
         //左
         if (Input.GetKey(KeyCode.A))
         {
@@ -601,18 +615,19 @@ public class PlayerController : MonoBehaviour
             Weapon_Rod.renderer.enabled = false;
             Weapon_Bow.renderer.enabled = true;
         }
-				else if (Input.GetMouseButtonDown (1)) 
+        else if (mouseButton.rightDown) //Input.GetMouseButtonDown (1)
 		{
-						if (nowWeapon == 2)
-						{
-								nowWeapon = (int)WeaponEnum.SWORD;
-						} 
-						else 
-						{
-								nowWeapon++;
-						}
+            //if (nowWeapon == 2)
+            //{
+            //    nowWeapon = (int)WeaponEnum.SWORD;
+            //}
+            //else
+            //{
+            //    nowWeapon++;
+            //}
+            Method.Selecting(ref nowWeapon, 3, "up");
+
 		}
-//        //Debug.Log(nowWeapon);
     }
 
     /// <summary>
@@ -659,7 +674,8 @@ public class PlayerController : MonoBehaviour
         foreach (ContactPoint contact in collision.contacts)
         {
             // 接触点の法線取得
-            nowCollissionStayNormalVec = contact.normal; 
+            nowCollissionStayNormalVec = contact.normal;
+            canJump = true;
         }
     }
 

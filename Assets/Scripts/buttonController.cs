@@ -16,8 +16,8 @@ public class buttonController : MonoBehaviour {
 	}
 
 	public void ButtonClick(){
-				Application.LoadLevelAdditive ("InputFormScene");
-				//Application.LoadLevel (@"stage");
+		Application.LoadLevelAdditive ("InputFormScene");
+		//Application.LoadLevel (@"stage");
 	}
 
 	public void ExitButtonClick(){
