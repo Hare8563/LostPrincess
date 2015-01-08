@@ -88,15 +88,11 @@ public class PlayerController : MonoBehaviour
     //各アニメーションへのステート
     static int idleState = Animator.StringToHash("Base Layer.Idle");
     static int runState = Animator.StringToHash("Base Layer.Run");
-    static int swordRunState = Animator.StringToHash("Base Layer.Sword_Run");
-    static int sword_01State = Animator.StringToHash("Base Layer.Sword");
-	static int sword_02State = Animator.StringToHash ("Base Layer.Sword_02");
-    static int magic_01State = Animator.StringToHash("Base Layer.Magic_01");
-    static int magic_02State = Animator.StringToHash("Base Layer.Magic_02");
-    static int arrow_01State = Animator.StringToHash("Base Layer.Arrow_01");
-    static int arrow_02State = Animator.StringToHash("Base Layer.Arrow_02");
-	static int LvUpState = Animator.StringToHash("Base Layer.Take 0001");
-	static int DamageState = Animator.StringToHash("Base Layer.Damage");
+    static int swordState = Animator.StringToHash("Base Layer.Sword");
+    static int magicState = Animator.StringToHash("Base Layer.Magic");
+    static int arrowState = Animator.StringToHash("Base Layer.Arrow");
+    static int DamageState = Animator.StringToHash("Base Layer.Damage");
+    static int DeadState = Animator.StringToHash("Base Layer.Dead_01");
     /// <summary>
     /// Statusクラス
     /// </summary>
@@ -105,54 +101,50 @@ public class PlayerController : MonoBehaviour
     /// 死亡フラグ
     /// </summary>
     private bool deadFlag = false;
-	/// <summary>
-	/// ダメージを受けたかの判定
-	/// </summary>
-	private bool isDamage = false;
-	/// <summary>
-	/// LvUPのためのフラグ
-	/// </summary>
-	private bool LvUp = false;
-	/// <summary>
-	/// スキルクラス
-	/// </summary>
-	private Skill skill;
+    /// <summary>
+    /// 死亡フラグを建てたかどうか
+    /// </summary>
+    private bool isDeadFlag = false;
+    /// <summary>
+    /// ダメージを受けたかの判定
+    /// </summary>
+    private bool isDamage = false;
+    /// <summary>
+    /// LvUPのためのフラグ
+    /// </summary>
+    private bool LvUp = false;
+    /// <summary>
+    /// スキルクラス
+    /// </summary>
+    private Skill skill;
 
-	/// <summary>
-	/// 武器/剣
-	/// </summary>
-	private GameObject Weapon_Sword;
-	/// <summary>
-	/// 武器/杖
-	/// </summary>
-	private GameObject Weapon_Rod;
-	/// <summary>
-	/// 武器/弓
-	/// </summary>
-	private GameObject Weapon_Bow;
     /// <summary>
-    /// 新しい座標
+    /// 武器/剣
     /// </summary>
-    private Vector3 newPos;
+    private GameObject Weapon_Sword;
     /// <summary>
-    /// 古い座標
+    /// 武器/杖
     /// </summary>
-    private Vector3 oldPos;
-	/// <summary>
-	/// ヒットエフェクト
-	/// </summary>
-	private GameObject HitEffect;
-	/// <summary>
-	/// 歩行エフェクト
-	/// </summary>
-	private GameObject RunSmokeEffect;
+    private GameObject Weapon_Rod;
+    /// <summary>
+    /// 武器/弓
+    /// </summary>
+    private GameObject Weapon_Bow;
+    /// <summary>
+    /// ヒットエフェクト
+    /// </summary>
+    private GameObject HitEffect;
+    /// <summary>
+    /// 歩行エフェクト
+    /// </summary>
+    private GameObject RunSmokeEffect;
     /// <summary>
     /// マウスボタンの列挙体
     /// </summary>
     private enum MouseButtonEnum
     {
-        RIGHT_BUTTON = 0,
-        LEFT_BUTTON,
+        LEFT_BUTTON = 0,
+        RIGHT_BUTTON,
         CENTER_BUTTON,
     }
     /// <summary>
@@ -181,13 +173,61 @@ public class PlayerController : MonoBehaviour
         BOW,
     }
     /// <summary>
+    /// 移動ボタンの構造体
+    /// </summary>
+    private struct IsMoveButton
+    {
+        public bool forwerd;
+        public bool back;
+        public bool right;
+        public bool left;
+        public bool jump;
+    }
+    /// <summary>
+    /// 移動ボタンが押されているか
+    /// </summary>
+    private IsMoveButton isMoveButton;
+    /// <summary>
     /// 現在選択中の武器
     /// </summary>
     private int nowWeapon = 0;
-
-    void Awake()
+    /// <summary>
+    /// 現在当たり続けているオブジェクト接触点の法線
+    /// </summary>
+    private Vector3 nowCollissionStayNormalVec = Vector3.up;
+    /// <summary>
+    /// ジャンプ可能か
+    /// </summary>
+    private bool canJump = false;
+    /// <summary>
+    /// マネージャーオブジェクト
+    /// </summary>
+    private GameObject manager;
+    /// <summary>
+    /// 剣振り効果音
+    /// </summary>
+    public AudioClip SwordSe;
+    /// <summary>
+    /// 魔法効果音
+    /// </summary>
+    public AudioClip MagicSe;
+    /// <summary>
+    /// 弓効果音
+    /// </summary>
+	public AudioClip BowSe;
+	/// <summary>
+	/// 魔法オブジェクトインスタンス
+	/// </summary>
+	private GameObject magicInstance;
+	/// <summary>
+	/// 弓オブジェクトインスタンス
+	/// </summary>
+	private GameObject arrowInstance;
+	
+	
+	void Awake()
 	{
-        if (GameObject.FindGameObjectWithTag("Boss") != null)
+		if (GameObject.FindGameObjectWithTag("Boss") != null)
         {
             TargetObject = GameObject.FindGameObjectWithTag("Boss");
         }
@@ -199,15 +239,17 @@ public class PlayerController : MonoBehaviour
         ArrowObject = Resources.Load("Prefab/Arrow") as GameObject;
         animator = this.gameObject.GetComponent<Animator>();
 
-		Weapon_Sword = GameObject.FindGameObjectWithTag("Weapon_Sword");
-		Weapon_Rod = GameObject.FindGameObjectWithTag("Weapon_Rod");
-		Weapon_Bow = GameObject.FindGameObjectWithTag("Weapon_Bow");
+        Weapon_Sword = GameObject.FindGameObjectWithTag("Weapon_Sword");
+        Weapon_Rod = GameObject.FindGameObjectWithTag("Weapon_Rod");
+        Weapon_Bow = GameObject.FindGameObjectWithTag("Weapon_Bow");
 
-		HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
+        HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
 
-		RunSmokeEffect = Resources.Load ("Prefab/RunSmoke") as GameObject;
+        RunSmokeEffect = Resources.Load("Prefab/RunSmoke") as GameObject;
 
-        mainCamera = GameObject.Find("MainCamera");
+        mainCamera = GameObject.Find("CameraControllPoint");
+
+        manager = GameObject.Find("Manager");
     }
 
     // Use this for initialization
@@ -220,9 +262,9 @@ public class PlayerController : MonoBehaviour
             statusManager.getLoadStatus().HP,
             statusManager.getLoadStatus().MP,
             statusManager.getLoadStatus().NAME);
-		Weapon_Sword.renderer.enabled = false;
-		Weapon_Rod.renderer.enabled = false;
-		Weapon_Bow.renderer.enabled = false;
+        Weapon_Sword.renderer.enabled = true;
+        Weapon_Rod.renderer.enabled = false;
+        Weapon_Bow.renderer.enabled = false;
     }
 
     void Update()
@@ -232,133 +274,84 @@ public class PlayerController : MonoBehaviour
         //武器切り替え
         WeaponChange();
         //アニメーション管理
-        AnimationController();
+        AnimationCheck();
+        //ボタンイベント
+        ButtonEvent();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //移動
-        if (!isAttackSword &&
-            !isShotMagic &&
-            !isShotArrow )
-        {
-			oldPos = this.transform.position;
-            Move();
-        }
+        Move();
         //攻撃
         Attack();
     }
-
-	void LateUpdate()
-	{
-		newPos = this.transform.position;
-		//Debug.Log (newPos - oldPos);
-		//Debug.Log ("newPos = " + newPos + "\noldPos = " + oldPos);
-	}
 
     /// <summary>
     /// 移動
     /// </summary>
     void Move()
     {
-        float inputH = Input.GetAxis("Horizontal");
-        float inputV = Input.GetAxis("Vertical");
-        animator.SetFloat("Horizontal", inputH);
-        isMove = false;
-        ////ボス戦だったら
-        //if (isBossBattle)
-        //{
-        //    if (inputH != 0.0f || inputV != 0.0f)
-        //    {
-        //        isMove = true;
-        //    }
-        //    //敵方向を向く
-        //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - this.transform.transform.position), 0.07f);
-        //    this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
-
-        //    //前
-        //    if (Input.GetKey(KeyCode.W))
-        //    {
-        //        isMove = true;
-        //        rigidbody.AddForce(transform.TransformDirection(Vector3.forward).normalized * NormalSpeed, ForceMode.VelocityChange);
-        //        //rigidbody.velocity = transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
-        //    }
-        //    //後ろ
-        //    else if (Input.GetKey(KeyCode.S))
-        //    {
-        //        isMove = true;
-        //        rigidbody.AddForce(transform.TransformDirection(Vector3.back).normalized * NormalSpeed, ForceMode.VelocityChange);
-        //        //rigidbody.velocity = transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
-        //    }
-        //    //左
-        //    if (Input.GetKey(KeyCode.A))
-        //    {
-        //        isMove = true;
-        //        rigidbody.AddForce(transform.TransformDirection(Vector3.left).normalized * NormalSpeed, ForceMode.VelocityChange);
-        //        //rigidbody.velocity = transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
-        //    }
-        //    //右
-        //    else if (Input.GetKey(KeyCode.D))
-        //    {
-        //        isMove = true;
-        //        rigidbody.AddForce(transform.TransformDirection(Vector3.right).normalized * NormalSpeed, ForceMode.VelocityChange);
-        //        //rigidbody.velocity = transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
-        //    }
-        //}
-        ////道中だったら
-        //else
-        //{
-            //if (inputH != 0.0f || inputV != 0.0f)
-            //{
-            //    isMove = true;
-            //}
-            ////進行方向取得
-            //Vector3 inputVec = new Vector3(inputH, 0.0f, inputV).normalized;
-            ////キャラ回転
-            //if (!inputVec.Equals(Vector3.zero))
-            //{
-            //    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(inputVec), 0.2f);
-            //    rigidbody.AddForce(inputVec * RoadSpeed * 10.0f, ForceMode.VelocityChange);
-            //    //this.transform.Translate(Vector3.forward * RoadSpeed);
-            //}
-
+        if (!isDeadFlag &&
+            !isAttackSword &&
+            !isShotMagic &&
+            !isShotArrow)
+        {
+            float inputH = Input.GetAxis("Horizontal");
+            float inputV = Input.GetAxis("Vertical");
+            animator.SetFloat("Horizontal", inputH);
+            isMove = false;
             Vector3 forward = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.forward).normalized;
             Vector3 back = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.back).normalized;
             Vector3 right = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.right).normalized;
             Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
+            Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
             float rotSpeed = 0.2f;
             //前
-            if (Input.GetKey(KeyCode.W))
+            if (isMoveButton.forwerd)
             {
                 isMove = true;
                 rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
             }
             //後ろ
-            else if (Input.GetKey(KeyCode.S))
+            else if (isMoveButton.back)
             {
                 isMove = true;
                 rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
             }
             //左
-            if (Input.GetKey(KeyCode.A))
+            if (isMoveButton.left)
             {
                 isMove = true;
                 rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
             }
             //右
-            else if (Input.GetKey(KeyCode.D))
+            else if (isMoveButton.right)
             {
                 isMove = true;
                 rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
             }
-            
-            //rigidbody.AddForce(direction * NormalSpeed, ForceMode.VelocityChange);
-        //}
+
+            //ジャンプ
+            if (isMoveButton.jump && canJump)
+            {
+                float Power = 150f;
+                //法線に上方向ベクトル加算
+                nowCollissionStayNormalVec += Vector3.up;
+                rigidbody.AddForce(nowCollissionStayNormalVec.normalized * Power, ForceMode.VelocityChange);
+                //ベクトル初期化
+                nowCollissionStayNormalVec = Vector3.up;
+                canJump = false;
+            }
+
+            //常に下方向に力をかける
+            rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
+        }
     }
 
     /// <summary>
@@ -366,11 +359,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Attack()
     {
-        skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
+        //skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        if ((currentBaseState.nameHash != LvUpState || 
-            currentBaseState.nameHash != DamageState) &&
-            mouseButton.right)
+        if (currentBaseState.nameHash != DamageState &&
+            mouseButton.left)
         {
             switch (nowWeapon)
             {
@@ -384,162 +376,121 @@ public class PlayerController : MonoBehaviour
                     isShotArrow = true;
                     break;
             }
-
-            ////剣
-            //if (Input.GetKeyDown(KeyCode.J))
-            //{
-            //    isAttackSword = true;
-            //}
-            ////魔法
-            //else if (Input.GetKeyDown(KeyCode.I))
-            //{
-            //    isShotMagic = true;
-            //}
-            ////弓
-            //else if (Input.GetKeyDown(KeyCode.O))
-            //{
-            //    isShotArrow = true;
-            //}
         }
     }
 
     /// <summary>
     /// アニメーション管理
     /// </summary>
-    void AnimationController()
+    void AnimationCheck()
     {
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        //Text HP = GameObject.Find ("HP").GetComponent<Text> ();
-        //Text MP = GameObject.Find ("MP").GetComponent<Text> ();
-        //Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
-
-        //HP.text = this.status.HP.ToString();
-        //MP.text = this.status.MP.ToString ();
-        //Lv.text = this.status.LEV.ToString ();
-		
-        //Debug.Log(animator.GetBool("isAttackSword"));
-		
 
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
         {
-			//ダメージフラグを初期化
-			isDamage = false;
-			//LvUpフラグを初期化
-			LvUp = false;
-			//武器表示を初期化
-			Weapon_Sword.renderer.enabled = false;
-			Weapon_Rod.renderer.enabled = false;
-			Weapon_Bow.renderer.enabled = false;
+            //LvUpフラグを初期化
+            LvUp = false;
         }
         //走りモーションの時
         else if (currentBaseState.nameHash == runState)
         {
-			//武器表示を初期化
-			Weapon_Sword.renderer.enabled = false;
-			Weapon_Rod.renderer.enabled = false;
-			Weapon_Bow.renderer.enabled = false;
+
         }
         //剣モーションの時
-        else if (currentBaseState.nameHash == sword_01State)
+        else if (currentBaseState.nameHash == swordState)
         {
-            isOneShotSword = false;
-			//武器表示を設定
-			Weapon_Sword.renderer.enabled = true;
-			Weapon_Rod.renderer.enabled = false;
-			Weapon_Bow.renderer.enabled = false;
             //攻撃フラグを初期化
             isAttackSword = false;
         }
-		//剣モーション02の時
-		else if (currentBaseState.nameHash == sword_02State)
-		{
-            if (!isOneShotSword)
-            {
-                isOneShotSword = true;
-                //skill.SwordSlash();
-            }
-		}
-        //魔法モーション(_01)の時
-        else if (currentBaseState.nameHash == magic_01State)
+        //魔法モーションの時
+        else if (currentBaseState.nameHash == magicState)
         {
-            isOneShotMagic = false;
-			//武器表示を設定
-			Weapon_Sword.renderer.enabled = false;
-			Weapon_Rod.renderer.enabled = true;
-			Weapon_Bow.renderer.enabled = false;
             //攻撃フラグを初期化
             isShotMagic = false;
-
         }
-        //魔法モーション(_02)の時
-        else if (currentBaseState.nameHash == magic_02State)
+        //弓モーションの時
+        else if (currentBaseState.nameHash == arrowState)
         {
-            if (!isOneShotMagic)
-            {
-                isOneShotMagic = true;
-                if (isBossBattle)
-                {
-                    GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                    magic.GetComponent<MagicController>().setTargetObject(TargetObject);
-                }
-                else
-                {
-                    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
-                }
-                MagicController.EnemyDamage = this.status.Magic_Power;
-				//skill.Meteo ();
-            }
-        }
-        //弓モーション(_01)の時
-        else if (currentBaseState.nameHash == arrow_01State)
-        {
-            isOneShotArrow = false;
-			//武器表示を設定
-			Weapon_Sword.renderer.enabled = false;
-			Weapon_Rod.renderer.enabled = false;
-			Weapon_Bow.renderer.enabled = true;
             //攻撃フラグを初期化
             isShotArrow = false;
         }
-        //弓モーション(_02)の時
-        else if (currentBaseState.nameHash == arrow_02State)
+        //ダメージモーションの時
+        if (currentBaseState.nameHash == DamageState)
         {
-            if (!isOneShotArrow)
-            {
-                isOneShotArrow = true;
-                if (isBossBattle)
-                {
-                    GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                    arrow.GetComponent<BowController>().setTargetObject(TargetObject);
-                }
-                else
-                {
-                    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
-                }
-                BowController.EnemyDamage = this.status.BOW_POW;
-				//skill.SpreadArrow ();
-            }
+            //ダメージフラグを初期化
+            isDamage = false;
+        }
+        //死亡モーションの時
+        if (currentBaseState.nameHash == DeadState)
+        {
+            deadFlag = false;
         }
         animator.SetBool("isMove", isMove);
-        //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
         animator.SetBool("isAttackSword", isAttackSword);
         animator.SetBool("isShotMagic", isShotMagic);
         animator.SetBool("isShotArrow", isShotArrow);
         animator.SetBool("DeadFlag", deadFlag);
         animator.SetBool("isDamage", isDamage);
-        animator.SetBool("isLvUp", LvUp);
     }
 
-	/// <summary>
-	/// アニメーションイベント
-	/// </summary>
-	void RunSeTiming()
-	{
-		//Debug.Log("Se Play");
-		Instantiate (RunSmokeEffect, this.transform.position, this.transform.rotation);
-	}
+    /// <summary>
+    /// 走りイベント
+    /// </summary>
+    void RunSeTiming()
+    {
+        //Debug.Log("Se Play");
+        Instantiate(RunSmokeEffect, this.transform.position, this.transform.rotation);
+    }
+
+    /// <summary>
+    /// 剣攻撃イベント
+    /// </summary>
+    void SwordAttackEvent()
+    {
+		audio.PlayOneShot(SwordSe);
+    }
+
+    /// <summary>
+    /// 魔法攻撃イベント
+    /// </summary>
+    void MagicAttackEvent()
+    {
+		audio.PlayOneShot(MagicSe);
+		isOneShotMagic = true;
+		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+		{
+			magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+			magicInstance.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+		}
+		else
+		{
+			Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+		}
+		MagicController.EnemyDamage = this.status.Magic_Power;
+
+    }
+
+    /// <summary>
+    /// 弓攻撃イベント
+    /// </summary>
+    void BowAttackEvent()
+    {
+		audio.PlayOneShot(BowSe);
+		isOneShotArrow = true;
+		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+		{
+			arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+			arrowInstance.GetComponent<BowController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+		}
+		else
+		{
+			Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+		}
+		BowController.EnemyDamage = this.status.BOW_POW;
+
+    }
 
     /// <summary>
     /// マウスイベント
@@ -555,27 +506,114 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// ボタンイベント
+    /// </summary>
+    void ButtonEvent()
+    {
+        bool anyKey = Input.anyKey;
+        //前
+        if (Input.GetKey(KeyCode.W))
+        {
+            isMoveButton.forwerd = true;
+            isMoveButton.back = false;
+            isMoveButton.right = false;
+            isMoveButton.left = false;
+            isMoveButton.jump = false;
+        }
+        //後ろ
+        else if (Input.GetKey(KeyCode.S))
+        {
+            isMoveButton.forwerd = false;
+            isMoveButton.back = true;
+            isMoveButton.right = false;
+            isMoveButton.left = false;
+            isMoveButton.jump = false;
+        }
+        else
+        {
+            isMoveButton.forwerd = false;
+            isMoveButton.back = false;
+            isMoveButton.right = false;
+            isMoveButton.left = false;
+            isMoveButton.jump = false;
+        }
+        //左
+        if (Input.GetKey(KeyCode.A))
+        {
+            isMoveButton.forwerd = false;
+            isMoveButton.back = false;
+            isMoveButton.right = false;
+            isMoveButton.left = true;
+            isMoveButton.jump = false;
+        }
+        //右
+        else if (Input.GetKey(KeyCode.D))
+        {
+            isMoveButton.forwerd = false;
+            isMoveButton.back = false;
+            isMoveButton.right = true;
+            isMoveButton.left = false;
+            isMoveButton.jump = false;
+        }
+        
+        //ジャンプ
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isMoveButton.forwerd = false;
+            isMoveButton.back = false;
+            isMoveButton.right = false;
+            isMoveButton.left = false;
+            isMoveButton.jump = true;
+        }
+
+        //for (int key = 0; key < 429; key++)
+        //{
+        //    if (Input.GetKey((KeyCode)key))
+        //    {
+        //        Debug.Log((KeyCode)key);
+        //    }
+        //}
+    }
+
+    /// <summary>
     /// 武器切り替え
     /// </summary>
     void WeaponChange()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            nowWeapon = (int)WeaponEnum.SWORD;
+		if (Input.GetKeyDown(KeyCode.Alpha1) || nowWeapon == 0)
+		{
+			nowWeapon = (int)WeaponEnum.SWORD;
+            //武器表示を設定
+            Weapon_Sword.renderer.enabled = true;
+            Weapon_Rod.renderer.enabled = false;
+            Weapon_Bow.renderer.enabled = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            nowWeapon = (int)WeaponEnum.MAGIC;
+		if (Input.GetKeyDown(KeyCode.Alpha2) || nowWeapon == 1)
+		{
+			nowWeapon = (int)WeaponEnum.MAGIC;
+            //武器表示を設定
+            Weapon_Sword.renderer.enabled = false;
+            Weapon_Rod.renderer.enabled = true;
+            Weapon_Bow.renderer.enabled = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            nowWeapon = (int)WeaponEnum.BOW;
+		if (Input.GetKeyDown(KeyCode.Alpha3) || nowWeapon == 2)
+		{
+			nowWeapon = (int)WeaponEnum.BOW;
+            //武器表示を設定
+            Weapon_Sword.renderer.enabled = false;
+            Weapon_Rod.renderer.enabled = false;
+            Weapon_Bow.renderer.enabled = true;
         }
+        if (mouseButton.rightDown) //Input.GetMouseButtonDown (1)
+		{
+            Method.Selecting(ref nowWeapon, 3, "up");
+
+		}
         //Debug.Log(nowWeapon);
     }
 
     /// <summary>
-    /// 何かに当たったら
+    /// 何かに当たったら（コリジョン）
     /// </summary>
     /// <param name="collision"></param>
     void OnCollisionEnter(Collision collision)
@@ -588,24 +626,39 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 何かに当たり続けたら
+    /// 何かに当たり続けたら(トリガー)
     /// </summary>
     /// <param name="collider"></param>
     void OnTriggerStay(Collider collider)
     {
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        
-		if (collider.gameObject.CompareTag("Enemy") && currentBaseState.nameHash == sword_02State)
+
+        if (collider.gameObject.CompareTag("Enemy") && currentBaseState.nameHash == swordState)
         {
-			var enemy = collider.gameObject.GetComponent<EnemyScript>();
-			enemy.Damage(this.status.Sword_Power);
+            var status = collider.gameObject.GetComponent<EnemyStatusManager>();
+            status.Damage(this.status.Sword_Power);
         }
-		else if (collider.gameObject.CompareTag("Hime") && currentBaseState.nameHash == sword_02State)
-		{
-			Instantiate(HitEffect, this.transform.position, this.transform.rotation);
-			var hime = collider.gameObject.GetComponent<RastBossController>();
-			hime.Damage(this.status.Sword_Power);
-		}
+        else if (collider.gameObject.CompareTag("Hime") && currentBaseState.nameHash == swordState)
+        {
+            Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+            var hime = collider.gameObject.GetComponent<RastBossController>();
+            hime.GetComponent<EnemyStatusManager>().Damage(this.status.Sword_Power);
+        }
+    }
+
+    /// <summary>
+    /// 何かに当たり続けたら（コリジョン）
+    /// </summary>
+    /// <param name="collision"></param>
+    void OnCollisionStay(Collision collision)
+    {
+        // 接触点の情報を取得
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            // 接触点の法線取得
+            nowCollissionStayNormalVec = contact.normal;
+            canJump = true;
+        }
     }
 
     /// <summary>
@@ -636,34 +689,28 @@ public class PlayerController : MonoBehaviour
         AudioSource audio = GetComponent<AudioSource>();
         audio.Play();
         this.status.HP -= val;
-		if (this.status.HP < 0) {
-			this.status.HP = 0;		
-		}
-        if (this.status.HP < 0 && deadFlag == false) 
-		{
-			this.deadFlag = true;
-		}
-        else
+        if (this.status.HP < 0)
+        {
+            this.status.HP = 0;
+        }
+        //HPが無くなったら死亡フラグを立てる
+        if (this.status.HP <= 0 && !isDeadFlag)
+        {
+            this.deadFlag = true;
+            isDeadFlag = true;
+        }
+        //HPが残っていたらダメージフラグ
+        else if (deadFlag != false)
         {
             this.isDamage = true;
         }
     }
 
     /// <summary>
-    /// プレイヤーの移動差分を返す
-    /// </summary>
-    /// <returns></returns>
-    public Vector3 getVectorDistance()
-    {
-		//Debug.Log (oldPos - newPos);
-        return newPos - oldPos;
-    }
-
-    /// <summary>
     /// プレイヤーのステータス値を得る
     /// </summary>
     /// <returns></returns>
-    public Status getPlayerStatus()
+    public Status getStatus()
     {
         return status;
     }

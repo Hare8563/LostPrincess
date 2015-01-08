@@ -11,7 +11,7 @@ public class WeaponIconManager : MonoBehaviour {
     /// <summary>
     /// uGUIキャンバス
     /// </summary>
-    public GameObject canvas;
+    private GameObject canvas;
     /// <summary>
     /// 武器アイコンの構造体
     /// </summary>
@@ -77,8 +77,8 @@ public class WeaponIconManager : MonoBehaviour {
 
     void Create(GameObject icon)
     {
-        float scaleSpeed = 1.005f;
-        float colorSpeed = 0.02f;
+        float scaleSpeed = 1.01f;
+        float colorSpeed = 0.035f;
         if (WeaponIconObject == null)
         {
             WeaponIconObject = Instantiate(icon, icon.transform.position, icon.transform.rotation) as GameObject;

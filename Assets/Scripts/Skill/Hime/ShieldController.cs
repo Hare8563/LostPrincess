@@ -27,6 +27,10 @@ public class ShieldController : MonoBehaviour {
     /// 衝突する対象の名前
     /// </summary>
     private string toCollisionName;
+    /// <summary>
+    /// 防御効果音
+    /// </summary>
+    public AudioClip ShieldSe;
 
     void Awake()
     {
@@ -53,6 +57,7 @@ public class ShieldController : MonoBehaviour {
         {
             a -= 0.03f;
         }
+        //色反映
         foreach (Transform child in this.transform)
         {
             child.gameObject.gameObject.renderer.material.SetColor("_TintColor", new Color(a, a, a, a));
@@ -90,6 +95,7 @@ public class ShieldController : MonoBehaviour {
         {
             a = 1;
             this.transform.LookAt(collider.gameObject.transform.position);
+            audio.PlayOneShot(ShieldSe);
             Destroy(collider.gameObject);
         }
     }

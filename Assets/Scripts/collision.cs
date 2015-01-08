@@ -20,7 +20,7 @@ public class collision : MonoBehaviour {
 		}
 
 		IEnumerator Coroutine(){
-				var enemy = this.collider.gameObject.GetComponent<EnemyScript> ();
+                var enemy = this.collider.gameObject.GetComponent<EnemyStatusManager>();
 				var player = GameObject.FindGameObjectWithTag (@"Player").gameObject.GetComponent<PlayerController> ();
 				enemy.Damage (player.status.Sword_Power);
 				yield return null;

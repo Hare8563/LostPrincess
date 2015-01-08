@@ -76,7 +76,7 @@ public class TitleController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            Application.LoadLevel(name);
+            LoadingController.NextScene(name);
         }
     }
 }
