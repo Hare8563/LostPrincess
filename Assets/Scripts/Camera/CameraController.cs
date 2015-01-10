@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour {
     /// <summary>
     /// ターゲットオブジェクトとの距離
     /// </summary>
-    [SerializeField]
     private Vector3 distance;
     /// <summary>
     /// マウスのスクリーン座標

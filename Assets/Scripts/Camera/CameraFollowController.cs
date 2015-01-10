@@ -18,16 +18,17 @@ public class CameraFollowController : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        //プレイヤーからカメラへのベクトル
+        //プレイヤーの頭上からカメラへのベクトル
         Vector3 toVec = this.transform.position - this.transform.parent.gameObject.transform.position;
-        //プレイヤーとカメラとの距離
+		//プレイヤーの頭上とカメラとの距離
         float dis = Vector3.Distance(this.transform.position, this.transform.parent.transform.position);
         //Debug.DrawRay(this.transform.parent.transform.position);
         //カメラとプレイヤーとの間に障害物が存在したら
         if (Physics.Raycast(this.transform.parent.transform.position, toVec, out hit, dis, layerMask))
         {
             //ポリゴン埋まりを防ぐために少しプレイヤー方向へカメラを戻す
-            Camera.main.transform.position = hit.point - toVec.normalized * 1.5f;
+			float backDis = 0.3f;
+			Camera.main.transform.position = hit.point - toVec.normalized * backDis;
         }
         else
         {

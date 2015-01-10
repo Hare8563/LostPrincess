@@ -271,6 +271,7 @@ public class BossController : MonoBehaviour {
             {
                 MoveTime = 0;
                 isEndMoveTime = false;
+                AttackRatio = 0.9f;
                 CheckAttack(AttackRatio);
             }
             else

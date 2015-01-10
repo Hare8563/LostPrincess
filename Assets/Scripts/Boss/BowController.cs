@@ -52,35 +52,26 @@ public class BowController : MonoBehaviour {
         
 	}
 
-    void FixedUpdate()
-    {
-        if (!isSetRot)
-        {
-            //ターゲットが存在していたら
-            if (Target != null)
-            {
-                isSetRot = true;
-                Vector3 TargetCenter = Target.transform.position + new Vector3(0, 4.0f, 0);
-                this.transform.rotation = Quaternion.LookRotation(TargetCenter - this.transform.position);
-                // ターゲットとの距離
-                float Distance = Vector3.Distance(TargetCenter, this.transform.position);
-                //接触
-                if (Distance < 4.0f)
-                {
-                    if (Target.tag == "Player")
-                    {
-                        Target.GetComponent<PlayerController>().Damage(5);
-                    }
-                    else if (Target.tag == "Boss")
-                    {
-                        Target.GetComponent<BossController>().Damage(5);
-                    }
-                    Destroy(this.gameObject);
-                }
-            }
-        }
-        transform.Translate(Vector3.forward * Speed);
-    }
+	void FixedUpdate()
+	{
+		//まだ打ってなかったら
+		if (!isSetRot)
+		{
+			//ターゲットが存在していたら
+			if (Target != null)
+			{
+				isSetRot = true;
+                //Debug.Log(this.transform.position);
+				Vector3 TargetCenter = Method.FutureDeviation(Target, Speed, this.transform.position) + new Vector3(0, 4.0f, 0);// Target.transform.position + new Vector3(0, 4.0f, 0);
+				this.transform.rotation = Quaternion.LookRotation(TargetCenter - this.transform.position);
+                //this.transform.LookAt(TargetCenter - this.transform.position);
+				//Debug.Log(TargetCenter);
+				// ターゲットとの距離
+				float Distance = Vector3.Distance(TargetCenter, this.transform.position);
+			}
+		}
+		transform.Translate(Vector3.forward * Speed);
+	}
 
     /// <summary>
     /// 目標物

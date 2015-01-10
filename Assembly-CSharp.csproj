@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\Ending\Ending.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\Event\EventController.cs" />
+     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
      <Compile Include="Assets\Scripts\Manager\StatusManager.cs" />
      <Compile Include="Assets\Scripts\Manager\WeaponIconManager.cs" />
      <Compile Include="Assets\Scripts\Mao.cs" />
@@ -148,6 +149,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrectionCurvesSimple.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowEffectDownsample.shader" />
+     <None Include="Assets\Shader\CameraDistanceAlpha.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\CreaseApply.shader" />
      <None Include="Assets\ProCore\Prototype\Shader\UnlitColor.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ChromaticAberrationShader.shader" />

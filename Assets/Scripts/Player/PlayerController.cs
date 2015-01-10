@@ -724,7 +724,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// プレイヤーの移動差分を返す
     /// </summary>
-    /// <returns></returns>
+    /// <returns>移動距離</returns>
     public Vector3 getVectorDistance()
     {
         //Debug.Log (oldPos - newPos);
