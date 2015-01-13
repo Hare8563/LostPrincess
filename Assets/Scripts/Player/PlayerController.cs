@@ -273,12 +273,6 @@ public class PlayerController : MonoBehaviour
         Attack();
     }
 
-    void LateUpdate()
-    {
-        //Debug.Log (newPos - oldPos);
-        //Debug.Log ("newPos = " + newPos + "\noldPos = " + oldPos);
-    }
-
     /// <summary>
     /// 移動
     /// </summary>
@@ -362,22 +356,6 @@ public class PlayerController : MonoBehaviour
                     isShotArrow = true;
                     break;
             }
-
-            ////剣
-            //if (Input.GetKeyDown(KeyCode.J))
-            //{
-            //    isAttackSword = true;
-            //}
-            ////魔法
-            //else if (Input.GetKeyDown(KeyCode.I))
-            //{
-            //    isShotMagic = true;
-            //}
-            ////弓
-            //else if (Input.GetKeyDown(KeyCode.O))
-            //{
-            //    isShotArrow = true;
-            //}
         }
     }
 
@@ -388,16 +366,6 @@ public class PlayerController : MonoBehaviour
     {
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        //Text HP = GameObject.Find ("HP").GetComponent<Text> ();
-        //Text MP = GameObject.Find ("MP").GetComponent<Text> ();
-        //Text Lv = GameObject.Find ("LV").GetComponent<Text> ();
-
-        //HP.text = this.status.HP.ToString();
-        //MP.text = this.status.MP.ToString ();
-        //Lv.text = this.status.LEV.ToString ();
-
-        //Debug.Log(animator.GetBool("isAttackSword"));
-
 
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
@@ -452,8 +420,15 @@ public class PlayerController : MonoBehaviour
                 //    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
                 //}
 
-                GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-                magic.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+                if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+                {
+                    GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+                    magic.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+                }
+                else
+                {
+                    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+                }
                 MagicController.EnemyDamage = this.status.Magic_Power;
                 //skill.Meteo ();
             }
@@ -481,8 +456,15 @@ public class PlayerController : MonoBehaviour
                 //{
                 //    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
                 //}
-                GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-                arrow.GetComponent<BowController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+                if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+                {
+                    GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+                    arrow.GetComponent<BowController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+                }
+                else
+                {
+                    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+                }
                 BowController.EnemyDamage = this.status.BOW_POW;
                 //skill.SpreadArrow ();
             }
@@ -656,14 +638,14 @@ public class PlayerController : MonoBehaviour
 
         if (collider.gameObject.CompareTag("Enemy") && currentBaseState.nameHash == sword_02State)
         {
-            var enemy = collider.gameObject.GetComponent<EnemyScript>();
-            enemy.Damage(this.status.Sword_Power);
+            var status = collider.gameObject.GetComponent<EnemyStatusManager>();
+            status.Damage(this.status.Sword_Power);
         }
         else if (collider.gameObject.CompareTag("Hime") && currentBaseState.nameHash == sword_02State)
         {
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             var hime = collider.gameObject.GetComponent<RastBossController>();
-            hime.Damage(this.status.Sword_Power);
+            hime.GetComponent<EnemyStatusManager>().Damage(this.status.Sword_Power);
         }
     }
 

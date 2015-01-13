@@ -2,6 +2,7 @@
 using System.Collections;
 using StatusClass;
 
+[RequireComponent(typeof(EnemyStatusManager))]
 public class EnemyScript : MonoBehaviour
 {
     /// <summary>
@@ -27,7 +28,8 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find(@"HERO_MOTION07");
-        status = new Status(1, 0, 10, 5);
+
+        status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
     }
 
     /// <summary>
@@ -63,7 +65,7 @@ public class EnemyScript : MonoBehaviour
 			swordAttack = true;
         }
         //HPが0になったら経験値を取得
-        if (this.status.HP <= 0)
+        if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
         {
 			StartCoroutine(@"Coroutine");
 			Destroy(this.gameObject);
@@ -76,16 +78,16 @@ public class EnemyScript : MonoBehaviour
 			player.GetComponent<PlayerController> ().GetExp (3);
 			yield return null;
 	}
-    /// <summary>
-    /// 外部参照ダメージ処理
-    /// </summary>
-    /// <param name="val"></param>
-    public void Damage(int val)
-    {
-        AudioSource audio = this.GetComponent<AudioSource>();
-        audio.Play();
-        this.status.HP -= val;
-    }
+    ///// <summary>
+    ///// 外部参照ダメージ処理
+    ///// </summary>
+    ///// <param name="val"></param>
+    //public void Damage(int val)
+    //{
+    //    AudioSource audio = this.GetComponent<AudioSource>();
+    //    audio.Play();
+    //    this.status.HP -= val;
+    //}
 
     /// <summary>
     /// 何かに触れたら
@@ -103,14 +105,14 @@ public class EnemyScript : MonoBehaviour
 		}
     }
 
-    /// <summary>
-    /// GUI表示
-    /// </summary>
-    void OnGUI()
-    {
-        if (twoPointDistance <= 30.0f)
-        {
-            GUI.Label(new Rect(100, 300, 200, 50), this.status.HP.ToString());
-        }
-    }
+    ///// <summary>
+    ///// GUI表示
+    ///// </summary>
+    //void OnGUI()
+    //{
+    //    if (twoPointDistance <= 30.0f)
+    //    {
+    //        GUI.Label(new Rect(100, 300, 200, 50), this.status.HP.ToString());
+    //    }
+    //}
 }

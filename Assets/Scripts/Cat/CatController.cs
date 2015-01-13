@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CatCoontroller : MonoBehaviour {
+public class CatController : MonoBehaviour {
 
     /// <summary>
     /// プレイヤーオブジェクト
@@ -30,6 +30,10 @@ public class CatCoontroller : MonoBehaviour {
         //プレイヤー方向を向く
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(PlayerObject.transform.position - transform.transform.position), 0.07f);
         this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        if (this.GetComponent<EnemyStatusManager>().getIsDead())
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     void FixedUpdate()

@@ -2,6 +2,7 @@
 using System.Collections;
 using StatusClass;
 
+[RequireComponent(typeof(EnemyStatusManager))]
 public class BossController : MonoBehaviour {
     /// <summary>
     /// 敵として振る舞うか
@@ -174,10 +175,6 @@ public class BossController : MonoBehaviour {
     /// </summary>
     private bool isDamage = false;
     /// <summary>
-    /// 死んだか
-    /// </summary>
-    private bool isDead = false;
-    /// <summary>
     /// イベントコントローラー
     /// </summary>
     private GameObject eventController;
@@ -214,7 +211,7 @@ public class BossController : MonoBehaviour {
         AnctionRand = Random.Range(0, 3);
         RandomRand = Random.Range(180, 300);
 
-        status = new Status(1, 0, 50, 100);
+        status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
 	}
 	
 	/// <summary>
@@ -243,7 +240,7 @@ public class BossController : MonoBehaviour {
     void FixedUpdate()
     {
         //生きていたら
-        if (!this.deadFlag)
+        if (!this.GetComponent<EnemyStatusManager>().getIsDead())
         {
             //移動フラグ初期化
             isMove = false;
@@ -295,7 +292,6 @@ public class BossController : MonoBehaviour {
         //死んだら
         else
         {
-            isDead = true;
             eventController.GetComponent<EventController>().WhiteOut("Ending", 0.5f);
             //Application.LoadLevel("Title");
         }
@@ -504,7 +500,7 @@ public class BossController : MonoBehaviour {
         animator.SetBool("isShotMagic", isShotMagic);
         animator.SetBool("isShotArrow", isShotArrow);
         animator.SetBool("isDamage", isDamage);
-        animator.SetBool("isDead", isDead);
+        animator.SetBool("isDead", this.gameObject.GetComponent<EnemyStatusManager>().getIsDead());
 
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
@@ -567,19 +563,5 @@ public class BossController : MonoBehaviour {
         {
             isDamage = false;
         }
-    }
-
-    /// <summary>
-    /// 外部からダメージを呼び出す関数
-    /// </summary>
-    /// <param name="val">ダメージ値</param>
-    public void Damage(int val)
-    {
-        //AudioSource audio = GetComponent<AudioSource> ();
-        //audio.Play ();
-        isDamage = true;
-        this.status.HP -= val;
-        if (this.status.HP <= 0)
-            this.deadFlag = true;
     }
 }

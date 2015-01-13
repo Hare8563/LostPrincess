@@ -67,14 +67,7 @@ public class BowController : MonoBehaviour {
 				isSetRot = true;
                 //Debug.Log(this.transform.position);
 				Vector3 TargetCenter = new Vector3();
-                if (isAim)
-                {
-                    TargetCenter = Method.FutureDeviation(Target, Speed, this.transform.position) + new Vector3(0, 4.0f, 0);// Target.transform.position + new Vector3(0, 4.0f, 0);
-                }
-                else
-                {
-                    TargetCenter = Target.transform.position + new Vector3(0, 4.0f, 0);
-                }
+                TargetCenter = Method.FutureDeviation(Target, Speed, this.transform.position) + new Vector3(0, 4.0f, 0);// Target.transform.position + new Vector3(0, 4.0f, 0);
                 this.transform.rotation = Quaternion.LookRotation(TargetCenter - this.transform.position);
                 //this.transform.LookAt(TargetCenter - this.transform.position);
 				//Debug.Log(TargetCenter);
@@ -123,18 +116,11 @@ public class BowController : MonoBehaviour {
             {
                 Target.GetComponent<PlayerController>().Damage(PlayerDamage);
             }
-            else if (Target.tag == "Boss")
+            else if (Target.tag == "Boss" ||
+                Target.tag == "Enemy" ||
+                Target.tag == "Hime")
             {
-                Target.GetComponent<BossController>().Damage(EnemyDamage);
-                //Debug.Log(EnemyDamage);
-            }
-            else if (Target.tag == "Enemy")
-            {
-                Target.GetComponent<EnemyScript>().Damage(EnemyDamage);
-            }
-            else if (Target.tag == "Hime")
-            {
-                Target.GetComponent<RastBossController>().Damage(EnemyDamage);
+                Target.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
             }
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
@@ -143,7 +129,7 @@ public class BowController : MonoBehaviour {
         {
             if (collider.tag == "Enemy")
             {
-                collider.GetComponent<EnemyScript>().Damage(EnemyDamage);
+                collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
                 Instantiate(HitEffect, this.transform.position, this.transform.rotation);
                 Destroy(this.gameObject);
             }

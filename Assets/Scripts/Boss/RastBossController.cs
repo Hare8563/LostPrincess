@@ -181,6 +181,10 @@ public class RastBossController : MonoBehaviour
     /// HPバーオブジェクト
     /// </summary>
     private GameObject HpBarObject;
+    /// <summary>
+    /// HPが半分以下になったか
+    /// </summary>
+    private bool isHarf = false;
 
 #if skillDebug
     //ノーマルスキル
@@ -238,7 +242,8 @@ public class RastBossController : MonoBehaviour
         AnimationController();
         DashEffect.SetActive(isDashEffect);
         ShieldObject.SetActive(isShield);
-		if (isDead) {
+        if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
+        {
 			Application.LoadLevel("Title");
 		}
     }
@@ -248,6 +253,12 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void Move()
     {
+        //HPが半分以下だったら
+        if (!isHarf && this.GetComponent<EnemyStatusManager>().getStatus().HP <= 50)
+        {
+            isHarf = true;
+            if(!isBerserk)isDown = true;
+        }
         if (!isDown)
         {
             //非攻撃状態
@@ -261,7 +272,8 @@ public class RastBossController : MonoBehaviour
                 if (nowStayTime > moveTiming)
                 {
                     nowStayTime = 0;
-                    moveTiming = Random.Range(0f, 120f);
+                    if (!isHarf) moveTiming = Random.Range(0f, 120f);
+                    else moveTiming = Random.Range(0f, 60f);
                     float AngleRand_X = Random.Range(0, 360 * Mathf.PI / 180);
                     float AngleRand_Z = Random.Range(0, 360 * Mathf.PI / 180);
                     nextPosition.x = Mathf.Cos(AngleRand_X) * canAreaMoveDistance;
@@ -324,8 +336,8 @@ public class RastBossController : MonoBehaviour
 			AttackPoints[1].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
 			//ダウン時間経過
 			DownTime += Method.GameTime();
-			//10秒間ダウン
-			if(DownTime > 600)
+			//5秒間ダウン
+			if(DownTime > 300)
 			{
 				//上昇
 				if(this.transform.position.y < 20f)
@@ -381,6 +393,11 @@ public class RastBossController : MonoBehaviour
             isDashEffect = false;
             usingSkillTime = 0;
             AttackFlag = false;
+            //HP半分以下だったらバーサクモードへ
+            if (isHarf)
+            {
+                isBerserk = !isBerserk;
+            }
         }
     }
 
@@ -427,6 +444,12 @@ public class RastBossController : MonoBehaviour
             AttackPoints[1].particleSystem.startSize = nowEffectSize = EfectSize_Min;
             AttackPoints[1].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
             AttackFlag = false;
+
+            //HP半分以下だったらバーサクモードへ
+            if (isHarf)
+            {
+                isBerserk = !isBerserk;
+            }
         }
     }
 
@@ -461,6 +484,11 @@ public class RastBossController : MonoBehaviour
             PhotonLaserNum = 0;
             usingSkillTime = 0;
             AttackFlag = false;
+            //HP半分以下だったらバーサクモードへ
+            if (isHarf)
+            {
+                isBerserk = !isBerserk;
+            }
         }
     }
 #endregion
@@ -574,7 +602,7 @@ public class RastBossController : MonoBehaviour
                             shieldController.setToShieldCollision("MagicBall");
 	                        HighRash();
 	                        break;
-	                }
+                    }
 	            }
 	            else
 	            {
@@ -641,22 +669,6 @@ public class RastBossController : MonoBehaviour
     /// <returns></returns>
     public int getNowHP()
     {
-        return this.status.HP;
-    }
-
-    /// <summary>
-    /// 外部参照ダメージ処理
-    /// </summary>
-    /// <param name="val"></param>
-    public void Damage(int val)
-    {
-        //AudioSource audio = this.GetComponent<AudioSource>();
-        //audio.Play();
-		if(!isBerserk)isDown = true;
-		this.status.HP -= val;
-		if (this.status.HP < 0) {
-			this.status.HP = 0;
-			isDead = true;
-		}
+        return this.GetComponent<EnemyStatusManager>().getStatus().HP;
     }
 }

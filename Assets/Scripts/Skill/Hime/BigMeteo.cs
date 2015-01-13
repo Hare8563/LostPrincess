@@ -62,7 +62,7 @@ public class BigMeteo : MonoBehaviour {
         }
         else if (collider.tag == "Hime" && isReflect)
         {
-            EnemyObject.GetComponent<RastBossController>().Damage(5);
+            EnemyObject.GetComponent<EnemyStatusManager>().Damage(5);
             Destroy(this.gameObject);
         }
 	}

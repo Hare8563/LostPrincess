@@ -131,6 +131,8 @@ public class AimCursorManager : MonoBehaviour {
                     else
                     {
                         child.GetComponent<Image>().enabled = false;
+                        //ターゲットを外す
+                        LockOnObject = null;
                     }
                     //Debug.Log(child.GetComponent<Image>().enabled);
                     child.GetComponent<Image>().rectTransform.transform.position = new Vector3(WtoV.x * Screen.width, WtoV.y * Screen.height, 0);
