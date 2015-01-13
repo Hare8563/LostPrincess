@@ -31,6 +31,7 @@ public class BigMeteo : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Destroy(this.gameObject, 5.0f);
+        //this.transform.LookAt(Method.FutureDeviation(PlayerObject, Speed, this.transform.position));
 		this.transform.LookAt(PlayerObject.transform.position);
         isReflect = false;
 	}

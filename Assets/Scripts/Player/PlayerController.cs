@@ -131,14 +131,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private GameObject Weapon_Bow;
     /// <summary>
-    /// 新しい座標
-    /// </summary>
-    private Vector3 newPos;
-    /// <summary>
-    /// 古い座標
-    /// </summary>
-    private Vector3 oldPos;
-    /// <summary>
     /// ヒットエフェクト
     /// </summary>
     private GameObject HitEffect;
@@ -207,6 +199,11 @@ public class PlayerController : MonoBehaviour
     /// ジャンプ可能か
     /// </summary>
     private bool canJump = false;
+    /// <summary>
+    /// マネージャーオブジェクト
+    /// </summary>
+    private GameObject manager;
+
 
     void Awake()
     {
@@ -231,6 +228,8 @@ public class PlayerController : MonoBehaviour
         RunSmokeEffect = Resources.Load("Prefab/RunSmoke") as GameObject;
 
         mainCamera = GameObject.Find("CameraControllPoint");
+
+        manager = GameObject.Find("Manager");
     }
 
     // Use this for initialization
@@ -268,7 +267,6 @@ public class PlayerController : MonoBehaviour
             !isShotMagic &&
             !isShotArrow)
         {
-            oldPos = this.transform.position;
             Move();
         }
         //攻撃
@@ -277,7 +275,6 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        newPos = this.transform.position;
         //Debug.Log (newPos - oldPos);
         //Debug.Log ("newPos = " + newPos + "\noldPos = " + oldPos);
     }
@@ -445,15 +442,18 @@ public class PlayerController : MonoBehaviour
             if (!isOneShotMagic)
             {
                 isOneShotMagic = true;
-                if (isBossBattle)
-                {
-                    GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                    magic.GetComponent<MagicController>().setTargetObject(TargetObject);
-                }
-                else
-                {
-                    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
-                }
+                //if (isBossBattle)
+                //{
+                //    GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+                //    magic.GetComponent<MagicController>().setTargetObject(TargetObject);
+                //}
+                //else
+                //{
+                //    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+                //}
+
+                GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+                magic.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
                 MagicController.EnemyDamage = this.status.Magic_Power;
                 //skill.Meteo ();
             }
@@ -471,15 +471,18 @@ public class PlayerController : MonoBehaviour
             if (!isOneShotArrow)
             {
                 isOneShotArrow = true;
-                if (isBossBattle)
-                {
-                    GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                    arrow.GetComponent<BowController>().setTargetObject(TargetObject);
-                }
-                else
-                {
-                    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
-                }
+                //if (isBossBattle)
+                //{
+                //    GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+                //    arrow.GetComponent<BowController>().setTargetObject(TargetObject);
+                //    arrow.GetComponent<BowController>().setIsAutoAim(true);
+                //}
+                //else
+                //{
+                //    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+                //}
+                GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+                arrow.GetComponent<BowController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
                 BowController.EnemyDamage = this.status.BOW_POW;
                 //skill.SpreadArrow ();
             }
@@ -719,16 +722,6 @@ public class PlayerController : MonoBehaviour
         {
             this.isDamage = true;
         }
-    }
-
-    /// <summary>
-    /// プレイヤーの移動差分を返す
-    /// </summary>
-    /// <returns>移動距離</returns>
-    public Vector3 getVectorDistance()
-    {
-        //Debug.Log (oldPos - newPos);
-        return newPos - oldPos;
     }
 
     /// <summary>

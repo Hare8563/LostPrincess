@@ -11,7 +11,7 @@ public class WeaponIconManager : MonoBehaviour {
     /// <summary>
     /// uGUIキャンバス
     /// </summary>
-    public GameObject canvas;
+    private GameObject canvas;
     /// <summary>
     /// 武器アイコンの構造体
     /// </summary>

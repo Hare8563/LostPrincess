@@ -138,6 +138,11 @@ public class MagicController : MonoBehaviour {
     /// <param name="collider"></param>
     void OnTriggerEnter(Collider collider)
     {
+        if (collider.tag == "Stage")
+        {
+            Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+            Destroy(this.gameObject);
+        }
         //Debug.Log("Target -> " + Target.name);
         //Debug.Log("Magic -> " + collider.name);
         if (Target != null && Target.tag == collider.tag)

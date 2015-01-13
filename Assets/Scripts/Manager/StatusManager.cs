@@ -7,7 +7,7 @@ public class StatusManager : MonoBehaviour {
     /// <summary>
     /// uGUIキャンバス
     /// </summary>
-    public GameObject canvas;
+    private GameObject canvas;
     /// <summary>
     /// セーブ/ロードを行うクラス
     /// </summary>
