@@ -31,6 +31,7 @@ public class BigMeteo : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Destroy(this.gameObject, 5.0f);
+        //this.transform.LookAt(Method.FutureDeviation(PlayerObject, Speed, this.transform.position));
 		this.transform.LookAt(PlayerObject.transform.position);
         isReflect = false;
 	}
@@ -61,7 +62,7 @@ public class BigMeteo : MonoBehaviour {
         }
         else if (collider.tag == "Hime" && isReflect)
         {
-            EnemyObject.GetComponent<RastBossController>().Damage(5);
+            EnemyObject.GetComponent<EnemyStatusManager>().Damage(5);
             Destroy(this.gameObject);
         }
 	}

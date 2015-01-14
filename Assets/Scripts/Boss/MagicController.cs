@@ -138,6 +138,11 @@ public class MagicController : MonoBehaviour {
     /// <param name="collider"></param>
     void OnTriggerEnter(Collider collider)
     {
+        if (collider.tag == "Stage")
+        {
+            Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+            Destroy(this.gameObject);
+        }
         //Debug.Log("Target -> " + Target.name);
         //Debug.Log("Magic -> " + collider.name);
         if (Target != null && Target.tag == collider.tag)
@@ -146,17 +151,11 @@ public class MagicController : MonoBehaviour {
             {
                 Target.GetComponent<PlayerController>().Damage(PlayerDamage);
             }
-            else if (Target.tag == "Boss")
+            else if (Target.tag == "Boss" ||
+                Target.tag == "Enemy" ||
+                Target.tag == "Hime")
             {
-                Target.GetComponent<BossController>().Damage(EnemyDamage);
-            }
-            else if (Target.tag == "Enemy")
-            {
-                Target.GetComponent<EnemyScript>().Damage(EnemyDamage);
-            }
-            else if (Target.tag == "Hime")
-            {
-                Target.GetComponent<RastBossController>().Damage(EnemyDamage);
+                Target.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
             }
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
@@ -165,7 +164,7 @@ public class MagicController : MonoBehaviour {
         {
             if (collider.tag == "Enemy")
             {
-                collider.GetComponent<EnemyScript>().Damage(EnemyDamage);
+                collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
                 Instantiate(HitEffect, this.transform.position, this.transform.rotation);
                 Destroy(this.gameObject);
             }

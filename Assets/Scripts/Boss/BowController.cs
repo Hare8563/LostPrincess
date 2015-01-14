@@ -28,6 +28,10 @@ public class BowController : MonoBehaviour {
     /// ターゲットオブジェクト
     /// </summary>
     private GameObject TargetObject;
+    /// <summary>
+    /// 自動エイムするかどうか
+    /// </summary>
+    private bool isAim = false;
 
     void Awake()
     {
@@ -52,35 +56,27 @@ public class BowController : MonoBehaviour {
         
 	}
 
-    void FixedUpdate()
-    {
-        if (!isSetRot)
-        {
-            //ターゲットが存在していたら
-            if (Target != null)
-            {
-                isSetRot = true;
-                Vector3 TargetCenter = Target.transform.position + new Vector3(0, 4.0f, 0);
+	void FixedUpdate()
+	{
+		//まだ打ってなかったら
+		if (!isSetRot)
+		{
+			//ターゲットが存在していたら
+			if (Target != null)
+			{
+				isSetRot = true;
+                //Debug.Log(this.transform.position);
+				Vector3 TargetCenter = new Vector3();
+                TargetCenter = Method.FutureDeviation(Target, Speed, this.transform.position) + new Vector3(0, 4.0f, 0);// Target.transform.position + new Vector3(0, 4.0f, 0);
                 this.transform.rotation = Quaternion.LookRotation(TargetCenter - this.transform.position);
-                // ターゲットとの距離
-                float Distance = Vector3.Distance(TargetCenter, this.transform.position);
-                //接触
-                if (Distance < 4.0f)
-                {
-                    if (Target.tag == "Player")
-                    {
-                        Target.GetComponent<PlayerController>().Damage(5);
-                    }
-                    else if (Target.tag == "Boss")
-                    {
-                        Target.GetComponent<BossController>().Damage(5);
-                    }
-                    Destroy(this.gameObject);
-                }
-            }
-        }
-        transform.Translate(Vector3.forward * Speed);
-    }
+                //this.transform.LookAt(TargetCenter - this.transform.position);
+				//Debug.Log(TargetCenter);
+				// ターゲットとの距離
+				float Distance = Vector3.Distance(TargetCenter, this.transform.position);
+			}
+		}
+		transform.Translate(Vector3.forward * Speed);
+	}
 
     /// <summary>
     /// 目標物
@@ -106,26 +102,25 @@ public class BowController : MonoBehaviour {
     /// <param name="collider"></param>
     void OnTriggerEnter(Collider collider)
     {
+        //Debug.Log(collider.name);
         //Debug.Log("Target -> " + Target.name);
         //Debug.Log("Magic -> " + collider.name);
+        if (collider.tag == "Stage")
+        {
+            Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+            Destroy(this.gameObject);
+        }
         if (Target != null && Target.tag == collider.tag)
         {
             if (Target.tag == "Player")
             {
                 Target.GetComponent<PlayerController>().Damage(PlayerDamage);
             }
-            else if (Target.tag == "Boss")
+            else if (Target.tag == "Boss" ||
+                Target.tag == "Enemy" ||
+                Target.tag == "Hime")
             {
-                Target.GetComponent<BossController>().Damage(EnemyDamage);
-                //Debug.Log(EnemyDamage);
-            }
-            else if (Target.tag == "Enemy")
-            {
-                Target.GetComponent<EnemyScript>().Damage(EnemyDamage);
-            }
-            else if (Target.tag == "Hime")
-            {
-                Target.GetComponent<RastBossController>().Damage(EnemyDamage);
+                Target.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
             }
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
@@ -134,10 +129,19 @@ public class BowController : MonoBehaviour {
         {
             if (collider.tag == "Enemy")
             {
-                collider.GetComponent<EnemyScript>().Damage(EnemyDamage);
+                collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
                 Instantiate(HitEffect, this.transform.position, this.transform.rotation);
                 Destroy(this.gameObject);
             }
         }
+    }
+
+    /// <summary>
+    /// 自動エイムを行うかの設定
+    /// </summary>
+    /// <param name="set"></param>
+    public void setIsAutoAim(bool set)
+    {
+        isAim = set;
     }
 }

@@ -124,4 +124,24 @@ public class Method : MonoBehaviour
     {
         return Time.time * 60.0f;
     }
+
+	/// <summary>
+	/// ターゲットが次に移動すると予想される座標
+	/// </summary>
+	/// <param name="target">ターゲット</param>
+	/// <param name="speed">速度</param>
+	/// <param name="origin">スタート地点</param>
+	public static Vector3 FutureDeviation(GameObject target, float speed, Vector3 origin)
+	{
+        float t = 0;//時間(解)
+        float s = speed;//弾速
+        Vector3 vec1 = origin - target.transform.position;//発射点から対象までのベクトル
+        Vector3 vec2 = vec1 + target.rigidbody.velocity;//発射点から対象ベクトル先端までのベクトル
+        float l = vec2.magnitude;//自機と敵との距離
+        t = l / speed;
+        //Debug.Log(speed);
+        //対象が現在位置からt後にいる場所
+        Vector3 futurePosition = target.transform.position + target.rigidbody.velocity.normalized * t;
+		return futurePosition;
+	}
 }

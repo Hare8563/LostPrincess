@@ -2,6 +2,7 @@
 using System.Collections;
 using StatusClass;
 
+[RequireComponent(typeof(EnemyStatusManager))]
 public class BossController : MonoBehaviour {
     /// <summary>
     /// 敵として振る舞うか
@@ -174,10 +175,6 @@ public class BossController : MonoBehaviour {
     /// </summary>
     private bool isDamage = false;
     /// <summary>
-    /// 死んだか
-    /// </summary>
-    private bool isDead = false;
-    /// <summary>
     /// イベントコントローラー
     /// </summary>
     private GameObject eventController;
@@ -214,7 +211,7 @@ public class BossController : MonoBehaviour {
         AnctionRand = Random.Range(0, 3);
         RandomRand = Random.Range(180, 300);
 
-        status = new Status(1, 0, 50, 100);
+        status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
 	}
 	
 	/// <summary>
@@ -223,10 +220,10 @@ public class BossController : MonoBehaviour {
 	void Update () 
     {
         VectorToPlayer = TargetObject.transform.position - this.transform.position;
-        forward = Vector3.forward * Method.GameTime();
-        back = Vector3.back * Method.GameTime();
-        left = Vector3.left * Method.GameTime();
-        right = Vector3.right * Method.GameTime();
+        forward = this.transform.TransformDirection(Vector3.forward).normalized;
+        back = this.transform.TransformDirection(Vector3.back).normalized;
+        left = this.transform.TransformDirection(Vector3.left).normalized;
+        right = this.transform.TransformDirection(Vector3.right).normalized;
         ToPlayerDistance = Vector3.Distance(TargetObject.transform.position, this.transform.position);
         //プレイヤー方向を向く
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - transform.transform.position), 0.07f);
@@ -234,7 +231,7 @@ public class BossController : MonoBehaviour {
         //アニメーション切り替え
         AnimationController();
 
-        //Debug.Log(ToPlayerDistance);
+        //Debug.Log(this.rigidbody.velocity);
 	}
 
     /// <summary>
@@ -243,14 +240,14 @@ public class BossController : MonoBehaviour {
     void FixedUpdate()
     {
         //生きていたら
-        if (!this.deadFlag)
+        if (!this.GetComponent<EnemyStatusManager>().getIsDead())
         {
             //移動フラグ初期化
             isMove = false;
             //移動終了時間を指定
             if (!isEndMoveTime && !isAttack)
             {
-                endMoveTime = Random.Range(240f, 420f);
+                endMoveTime = Random.Range(30f, 300f);
                 isEndMoveTime = true;
                 AttackRatio = Random.Range(0f, 1f);
                 //Debug.Log("Reset Move Time");
@@ -262,7 +259,20 @@ public class BossController : MonoBehaviour {
             //移動終了時間に達したら攻撃に入る
             if (MoveTime >= endMoveTime) 
             {
-                isAttack = true;
+                //延長線上に障害物がなければ攻撃
+                RaycastHit hit;
+                Vector3 origin = this.transform.position + new Vector3(0, 4.0f, 0);
+                Vector3 toVec = (TargetObject.transform.position + new Vector3(0, 4.0f, 0)) - origin;
+                float dis = Vector3.Distance(origin, TargetObject.transform.position);
+                if (Physics.Raycast(origin, toVec, out hit, dis, 1 << LayerMask.NameToLayer("Stage")))
+                {
+                    isAttack = false;
+                }
+                else
+                {
+                    isAttack = true;
+                }
+                //Debug.Log(isAttack);
             }
 
             //Debug.Log("isAttack = " + isAttack);
@@ -271,6 +281,7 @@ public class BossController : MonoBehaviour {
             {
                 MoveTime = 0;
                 isEndMoveTime = false;
+                AttackRatio = 0.9f;
                 CheckAttack(AttackRatio);
             }
             else
@@ -281,7 +292,6 @@ public class BossController : MonoBehaviour {
         //死んだら
         else
         {
-            isDead = true;
             eventController.GetComponent<EventController>().WhiteOut("Ending", 0.5f);
             //Application.LoadLevel("Title");
         }
@@ -372,9 +382,11 @@ public class BossController : MonoBehaviour {
         isMove = true;
         //一定時間ごとに行動を切り替える
         RandCount += Method.GameTime();
-        if (RandomRand <= RandCount)
+        //Debug.Log(this.rigidbody.velocity.magnitude);
+        //時間になったら、もしくは引っかかるなどして止まっていたら
+        if (RandomRand <= RandCount || this.rigidbody.velocity.magnitude < 10f)
         {
-            AnctionRand = Random.Range(0, 5);
+            AnctionRand = Random.Range(0, 4);
             RandomRand = Random.Range(180, 300);
             RandCount = 0;
             //Debug.Log("Next Move");
@@ -387,48 +399,52 @@ public class BossController : MonoBehaviour {
             case 1: RargeForwardRound(); break;
             case 2: SmallBackRound(); break;
             case 3: RargeBackRound(); break;
-            default: Stopping(); break;
         }
         LeaveOrNear();
+        //常に下方向に力をかける
+        rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
         //Debug.Log("MoveNow");
+        //Debug.Log(NormalSpeed);
     }
 
     /// <summary>
-    /// 目標に向かって小さく左に回り込む
+    /// 目標に向かって左に回り込む
     /// </summary>
     void SmallForwardRound()
     {
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
+        //rigidbody.velocity = this.transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
+        //rigidbody.velocity = this.transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
+        rigidbody.AddForce((forward + left).normalized * NormalSpeed, ForceMode.VelocityChange);
     }
 
     /// <summary>
-    /// 目標に向かって大きく右に回り込む
+    /// 目標に向かって右に回り込む
     /// </summary>
     void RargeForwardRound()
     {
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.right).normalized * (NormalSpeed + 2);
-
+        //rigidbody.velocity = this.transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
+        //rigidbody.velocity = this.transform.TransformDirection(Vector3.right).normalized * (NormalSpeed + 2);
+        rigidbody.AddForce((forward + right).normalized * NormalSpeed, ForceMode.VelocityChange);
     }
 
     /// <summary>
-    /// 目標から小さく回り込みながら右に逃げる
+    /// 目標から右に逃げる
     /// </summary>
     void SmallBackRound()
     {
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.back).normalized * NormalSpeed ;
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
-
+        //rigidbody.velocity = this.transform.TransformDirection(Vector3.back).normalized * NormalSpeed ;
+        //rigidbody.velocity = this.transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
+        rigidbody.AddForce((back + right).normalized * NormalSpeed, ForceMode.VelocityChange);
     }
 
     /// <summary>
-    /// 目標から大きく回り込みながら左に逃げる
+    /// 目標から左に逃げる
     /// </summary>
     void RargeBackRound()
     {
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
-        rigidbody.velocity = this.transform.TransformDirection(Vector3.left).normalized * (NormalSpeed + 2);
+        //rigidbody.velocity = this.transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
+        //rigidbody.velocity = this.transform.TransformDirection(Vector3.left).normalized * (NormalSpeed + 2);
+        rigidbody.AddForce((back + left).normalized * NormalSpeed, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -437,7 +453,7 @@ public class BossController : MonoBehaviour {
     void Stopping()
     {
         //Debug.Log("StopNow");
-        isAttack = true;
+        //isAttack = true;
         ////立ち止まるがプレイヤーが近づくと逃げる
         //if (ToPlayerDistance < ToPlayerDistance_Min)
         //{
@@ -484,7 +500,7 @@ public class BossController : MonoBehaviour {
         animator.SetBool("isShotMagic", isShotMagic);
         animator.SetBool("isShotArrow", isShotArrow);
         animator.SetBool("isDamage", isDamage);
-        animator.SetBool("isDead", isDead);
+        animator.SetBool("isDead", this.gameObject.GetComponent<EnemyStatusManager>().getIsDead());
 
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
@@ -537,40 +553,15 @@ public class BossController : MonoBehaviour {
             {
                 isOneShotArrow = true;
                 GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                arrow.GetComponent<BowController>().setTargetObject(TargetObject); BowController.PlayerDamage = this.status.BOW_POW;
+                arrow.GetComponent<BowController>().setTargetObject(TargetObject);
+                arrow.GetComponent<BowController>().setIsAutoAim(true);
+                BowController.PlayerDamage = this.status.BOW_POW;
             }
         }
         //ダメージモーションの時
         else if (currentBaseState.nameHash == damageState)
         {
             isDamage = false;
-        }
-    }
-
-    /// <summary>
-    /// 外部からダメージを呼び出す関数
-    /// </summary>
-    /// <param name="val">ダメージ値</param>
-    public void Damage(int val)
-    {
-        //AudioSource audio = GetComponent<AudioSource> ();
-        //audio.Play ();
-        isDamage = true;
-        this.status.HP -= val;
-        if (this.status.HP <= 0)
-            this.deadFlag = true;
-    }
-
-    /// <summary>
-    /// オブジェクトから離れた時に呼び出される
-    /// </summary>
-    /// <param name="collider"></param>
-    void OnTriggerExit(Collider collider)
-    {
-        //Debug.Log(collider.name);
-        if (collider.name == "LimitArea")
-        {
-            AnctionRand = Random.Range(0, 2);
         }
     }
 }

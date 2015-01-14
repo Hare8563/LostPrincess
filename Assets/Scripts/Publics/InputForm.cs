@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using AssemblyCSharp;
 public class InputForm : MonoBehaviour {
 	public static string InputFormName=@"";
 	// Use this for initialization
@@ -32,7 +32,17 @@ public class InputForm : MonoBehaviour {
 							  (formHeight - 200)/2+(height-formHeight)/2+100 , 70, 20);
 		if (GUI.Button (rect2, "決定")) {
 			//クリックしたときの関数実行
-			Destroy (this);
+			PlayerPrefsEx prefs = new PlayerPrefsEx ();
+			prefs.SetString ("NAME", InputFormName);
+			prefs.SetInt ("HP", 100);
+			prefs.SetInt ("MP", 100);
+			prefs.SetInt ("LV", 1);
+			prefs.SetInt ("EXP", 0);
+			prefs.SetInt ("Sword", 10);
+			prefs.SetInt ("Magic", 8);
+			prefs.SetInt ("Bow", 5);
+			prefs.Save (System.Environment.CurrentDirectory + "/saveData.xml");
+			Application.LoadLevel ("stage");
 		}
 
 	}
