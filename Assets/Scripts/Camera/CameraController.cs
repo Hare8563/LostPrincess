@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour {
     /// <summary>
     /// ターゲットオブジェクトとの距離
     /// </summary>
-    [SerializeField]
     private Vector3 distance;
     /// <summary>
     /// マウスのスクリーン座標
@@ -71,7 +70,7 @@ public class CameraController : MonoBehaviour {
         rotation.x += -mouseY * speed;   //上下回転
         rotation.y += mouseX * speed;  //左右回転
         if (rotation.x > 180) rotation.x -= 360;
-        Debug.Log(rotation.x);
+        //Debug.Log(rotation.x);
         if (rotation.x > maxRage_X)
         {
             rotation.x = maxRage_X;
@@ -91,7 +90,7 @@ public class CameraController : MonoBehaviour {
     /// <returns>カメラの方向</returns>
     public Vector3 getCameraDirection(Vector3 direction)
     {
-        Vector3 cameraDirection = transform.TransformDirection(direction);
+        Vector3 cameraDirection = Camera.main.transform.TransformDirection(direction);
         cameraDirection = new Vector3(cameraDirection.x, 0, cameraDirection.z);
         return cameraDirection;
     }

@@ -28,8 +28,8 @@ public class SwordSlash : MonoBehaviour {
 		if(collider.tag == TargetTag)
 		{
 			if(TargetTag == "Player"){ collider.GetComponent<PlayerController>().Damage(5); }
-			else if(TargetTag == "Boss"){ collider.GetComponent<BossController>().Damage(5); }
-			else if(TargetTag == "Enemy"){ collider.GetComponent<EnemyScript>().Damage(5); }
+            else if (TargetTag == "Boss") { collider.GetComponent<EnemyStatusManager>().Damage(5); }
+            else if (TargetTag == "Enemy") { collider.GetComponent<EnemyStatusManager>().Damage(5); }
 			Destroy(this.gameObject);
 		}
 	}
