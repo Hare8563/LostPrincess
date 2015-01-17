@@ -178,6 +178,14 @@ public class BossController : MonoBehaviour {
     /// イベントコントローラー
     /// </summary>
     private GameObject eventController;
+    /// <summary>
+    /// 敵オブジェクト
+    /// </summary>
+    private GameObject[] EnemyObject = new GameObject[2];
+    /// <summary>
+    /// 追加敵を出現させる時のHP
+    /// </summary>
+    public float ActiveEnemyHP;
 
     /// <summary>
     /// 読み込み
@@ -196,6 +204,16 @@ public class BossController : MonoBehaviour {
         ArrowObject = Resources.Load("Prefab/Arrow") as GameObject;
         animator = this.gameObject.GetComponent<Animator>();
         eventController = GameObject.Find("EventManager");
+        int i = 0;
+        foreach (GameObject obj in GameObject.FindObjectsOfType(typeof(GameObject)))
+        {
+            if (obj.transform.parent == null && obj.name == "DarkMatter")
+            {
+                EnemyObject[i] = obj;
+                EnemyObject[i].SetActive(false);
+                i++;
+            }
+        }
     }
 
 	/// <summary>
@@ -217,7 +235,7 @@ public class BossController : MonoBehaviour {
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update () 
+    void Update()
     {
         VectorToPlayer = TargetObject.transform.position - this.transform.position;
         forward = this.transform.TransformDirection(Vector3.forward).normalized;
@@ -231,8 +249,17 @@ public class BossController : MonoBehaviour {
         //アニメーション切り替え
         AnimationController();
 
+        //HPが指定数以下になったら
+        Debug.Log(this.GetComponent<EnemyStatusManager>().getStatus().HP);
+        if (this.GetComponent<EnemyStatusManager>().getStatus().HP <= ActiveEnemyHP)
+        {
+            for (int i = 0; i < EnemyObject.Length; i++)
+            {
+                EnemyObject[i].SetActive(true);
+            }
+        }
         //Debug.Log(this.rigidbody.velocity);
-	}
+    }
 
     /// <summary>
     /// 固定更新
@@ -281,7 +308,7 @@ public class BossController : MonoBehaviour {
             {
                 MoveTime = 0;
                 isEndMoveTime = false;
-                AttackRatio = 0.9f;
+                //AttackRatio = 0.9f;
                 CheckAttack(AttackRatio);
             }
             else
@@ -292,6 +319,10 @@ public class BossController : MonoBehaviour {
         //死んだら
         else
         {
+            for (int i = 0; i < EnemyObject.Length; i++)
+            {
+                EnemyObject[i].SetActive(false);
+            }
             eventController.GetComponent<EventController>().WhiteOut("Ending", 0.5f);
             //Application.LoadLevel("Title");
         }
