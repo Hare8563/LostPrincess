@@ -186,6 +186,18 @@ public class BossController : MonoBehaviour {
     /// 追加敵を出現させる時のHP
     /// </summary>
     public float ActiveEnemyHP;
+    /// <summary>
+    /// 剣振り効果音
+    /// </summary>
+    public AudioClip SwordSe;
+    /// <summary>
+    /// 魔法効果音
+    /// </summary>
+    public AudioClip MagicSe;
+    /// <summary>
+    /// 弓効果音
+    /// </summary>
+    public AudioClip BowSe;
 
     /// <summary>
     /// 読み込み
@@ -551,6 +563,7 @@ public class BossController : MonoBehaviour {
             isAttackSword = false;
             isAttackSwordRun = false;
             isAttack = false;
+            //audio.PlayOneShot(SwordSe);
         }
         //魔法モーション(_01)の時
         else if (currentBaseState.nameHash == magic_01State)
@@ -568,6 +581,7 @@ public class BossController : MonoBehaviour {
                 GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
                 magic.GetComponent<MagicController>().setTargetObject(TargetObject);
                 MagicController.PlayerDamage = this.status.Magic_Power;
+                audio.PlayOneShot(MagicSe);
             }
         }
         //弓モーション(_01)の時
@@ -587,6 +601,7 @@ public class BossController : MonoBehaviour {
                 arrow.GetComponent<BowController>().setTargetObject(TargetObject);
                 arrow.GetComponent<BowController>().setIsAutoAim(true);
                 BowController.PlayerDamage = this.status.BOW_POW;
+                audio.PlayOneShot(BowSe);
             }
         }
         //ダメージモーションの時

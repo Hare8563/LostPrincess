@@ -203,6 +203,18 @@ public class PlayerController : MonoBehaviour
     /// マネージャーオブジェクト
     /// </summary>
     private GameObject manager;
+    /// <summary>
+    /// 剣振り効果音
+    /// </summary>
+    public AudioClip SwordSe;
+    /// <summary>
+    /// 魔法効果音
+    /// </summary>
+    public AudioClip MagicSe;
+    /// <summary>
+    /// 弓効果音
+    /// </summary>
+    public AudioClip BowSe;
 
 
     void Awake()
@@ -338,7 +350,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Attack()
     {
-        skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
+        //skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
         if ((currentBaseState.nameHash != LvUpState ||
             currentBaseState.nameHash != DamageState) &&
@@ -392,6 +404,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isOneShotSword)
             {
+                audio.PlayOneShot(SwordSe);
                 isOneShotSword = true;
                 //skill.SwordSlash();
             }
@@ -409,6 +422,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isOneShotMagic)
             {
+                audio.PlayOneShot(MagicSe);
                 isOneShotMagic = true;
                 //if (isBossBattle)
                 //{
@@ -445,6 +459,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isOneShotArrow)
             {
+                audio.PlayOneShot(BowSe);
                 isOneShotArrow = true;
                 //if (isBossBattle)
                 //{

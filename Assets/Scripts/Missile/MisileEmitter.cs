@@ -26,6 +26,10 @@ public class MisileEmitter : MonoBehaviour {
     /// 爆発プレハブ
     /// </summary>
     private GameObject ExprosionPrehub;
+    /// <summary>
+    /// 分裂効果音
+    /// </summary>
+    public AudioClip SubEmitSe;
 
     void Awake()
     {
@@ -69,6 +73,7 @@ public class MisileEmitter : MonoBehaviour {
             Instantiate(MisileObject, this.transform.position, InitrotTarget * Quaternion.Euler(new Vector3(calcRote, -calcRote, 0)));  //⑥
             Instantiate(MisileObject, this.transform.position, InitrotTarget * Quaternion.Euler(new Vector3(rote, 0, 0)));              //⑦
             Instantiate(MisileObject, this.transform.position, InitrotTarget * Quaternion.Euler(new Vector3(calcRote, calcRote, 0)));   //⑧
+            audio.PlayOneShot(SubEmitSe);
             Destroy(this.gameObject);
         }
         //Debug.Log(Distance);

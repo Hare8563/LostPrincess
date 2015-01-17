@@ -69,6 +69,14 @@ public class DarkMatterController : MonoBehaviour {
     /// </summary>
     [SerializeField]
     private int ShotInterval = 1;
+    /// <summary>
+    /// ミサイル発射効果音
+    /// </summary>
+    public AudioClip MisileShotSe;
+    /// <summary>
+    /// ガトリング発射効果音
+    /// </summary>
+    public AudioClip GatlingShotSe;
 
     void Awake()
     {
@@ -145,6 +153,7 @@ public class DarkMatterController : MonoBehaviour {
         ShotSecond += Method.GameTime();
         if ((int)ShotSecond % ShotInterval == 0)
         {
+            audio.PlayOneShot(GatlingShotSe, 0.5f);
             GameObject bullet = Instantiate(BulletObject, this.transform.position + RandomPoint, toPlayer) as GameObject;
             bullet.GetComponent<BulletController>().setBulletSpeed(BulletSpeed);
         }
@@ -160,7 +169,9 @@ public class DarkMatterController : MonoBehaviour {
         if ((int)ShotSecond % ShotInterval == 0)
         {
             GameObject misile = Instantiate(MisileObject, this.transform.position, this.transform.rotation) as GameObject;
+            //真上に飛ばす
             misile.transform.localEulerAngles = new Vector3(270,0,0);
+            audio.PlayOneShot(MisileShotSe);
         }
     }
 }

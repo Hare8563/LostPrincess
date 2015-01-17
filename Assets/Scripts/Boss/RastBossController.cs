@@ -138,9 +138,17 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     private int randomUse_NormalSkill = 0;
     /// <summary>
+    /// 既に使用したノーマルスキル
+    /// </summary>
+    private int oldUse_NormalSkill = 0;
+    /// <summary>
     /// 使用するバーサクスキルをランダムに決める
     /// </summary>
     private int randomUse_BerserkSkill = 0;
+    /// <summary>
+    /// 既に使用したバーサクスキル
+    /// </summary>
+    private int oldUse_BerserkSkill = 0;
     /// <summary>
     /// バーサク状態か
     /// </summary>
@@ -293,8 +301,20 @@ public class RastBossController : MonoBehaviour
                 {
                     nowStayAttackTime = 0;
                     nextAttackTime = Random.Range(240f, 360f);
+                    //使用スキルを決定
                     randomUse_NormalSkill = Random.Range(0, 3);
+                    //前回使用したスキルが再使用されるのを防ぐ
+                    while (oldUse_NormalSkill == randomUse_NormalSkill)
+                    {
+                        randomUse_NormalSkill = Random.Range(0, 3);
+                    }
                     randomUse_BerserkSkill = Random.Range(0, 3);
+                    while (oldUse_BerserkSkill == randomUse_BerserkSkill)
+                    {
+                        randomUse_BerserkSkill = Random.Range(0, 3);
+                    }
+                    oldUse_NormalSkill = randomUse_NormalSkill;
+                    oldUse_BerserkSkill = randomUse_BerserkSkill;
                     AttackFlag = true;
                 }
             }
