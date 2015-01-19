@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
     static int arrow_02State = Animator.StringToHash("Base Layer.Arrow_02");
     static int LvUpState = Animator.StringToHash("Base Layer.Take 0001");
     static int DamageState = Animator.StringToHash("Base Layer.Damage");
+    static int DeadState = Animator.StringToHash("Base Layer.Dead_01");
     /// <summary>
     /// Statusクラス
     /// </summary>
@@ -105,6 +106,10 @@ public class PlayerController : MonoBehaviour
     /// 死亡フラグ
     /// </summary>
     private bool deadFlag = false;
+    /// <summary>
+    /// 死亡フラグを建てたかどうか
+    /// </summary>
+    private bool isDeadFlag = false;
     /// <summary>
     /// ダメージを受けたかの判定
     /// </summary>
@@ -275,12 +280,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //移動
-        if (!isAttackSword &&
-            !isShotMagic &&
-            !isShotArrow)
-        {
-            Move();
-        }
+        Move();
         //攻撃
         Attack();
     }
@@ -290,59 +290,65 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        float inputH = Input.GetAxis("Horizontal");
-        float inputV = Input.GetAxis("Vertical");
-        animator.SetFloat("Horizontal", inputH);
-        isMove = false;
-        Vector3 forward = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.forward).normalized;
-        Vector3 back = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.back).normalized;
-        Vector3 right = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.right).normalized;
-        Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
-        Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
-        float rotSpeed = 0.2f;
-        //前
-        if (isMoveButton.forwerd)
+        if (!isDeadFlag &&
+            !isAttackSword &&
+            !isShotMagic &&
+            !isShotArrow)
         {
-            isMove = true;
-            rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
-        }
-        //後ろ
-        else if (isMoveButton.back)
-        {
-            isMove = true;
-            rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
-        }
-        //左
-        if (isMoveButton.left)
-        {
-            isMove = true;
-            rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
-        }
-        //右
-        else if (isMoveButton.right)
-        {
-            isMove = true;
-            rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
-        }
-        
-        //ジャンプ
-        if (isMoveButton.jump && canJump)
-        {
-            float Power = 150f;
-            //法線に上方向ベクトル加算
-            nowCollissionStayNormalVec += Vector3.up;
-            rigidbody.AddForce(nowCollissionStayNormalVec.normalized * Power, ForceMode.VelocityChange);
-            //ベクトル初期化
-            nowCollissionStayNormalVec = Vector3.up;
-            canJump = false;
-        }
+            float inputH = Input.GetAxis("Horizontal");
+            float inputV = Input.GetAxis("Vertical");
+            animator.SetFloat("Horizontal", inputH);
+            isMove = false;
+            Vector3 forward = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.forward).normalized;
+            Vector3 back = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.back).normalized;
+            Vector3 right = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.right).normalized;
+            Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
+            Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
+            float rotSpeed = 0.2f;
+            //前
+            if (isMoveButton.forwerd)
+            {
+                isMove = true;
+                rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
+            }
+            //後ろ
+            else if (isMoveButton.back)
+            {
+                isMove = true;
+                rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
+            }
+            //左
+            if (isMoveButton.left)
+            {
+                isMove = true;
+                rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
+            }
+            //右
+            else if (isMoveButton.right)
+            {
+                isMove = true;
+                rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
+            }
 
-        //常に下方向に力をかける
-        rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
+            //ジャンプ
+            if (isMoveButton.jump && canJump)
+            {
+                float Power = 150f;
+                //法線に上方向ベクトル加算
+                nowCollissionStayNormalVec += Vector3.up;
+                rigidbody.AddForce(nowCollissionStayNormalVec.normalized * Power, ForceMode.VelocityChange);
+                //ベクトル初期化
+                nowCollissionStayNormalVec = Vector3.up;
+                canJump = false;
+            }
+
+            //常に下方向に力をかける
+            rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
+        }
     }
 
     /// <summary>
@@ -382,8 +388,6 @@ public class PlayerController : MonoBehaviour
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
         {
-            //ダメージフラグを初期化
-            isDamage = false;
             //LvUpフラグを初期化
             LvUp = false;
         }
@@ -424,16 +428,6 @@ public class PlayerController : MonoBehaviour
             {
                 audio.PlayOneShot(MagicSe);
                 isOneShotMagic = true;
-                //if (isBossBattle)
-                //{
-                //    GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                //    magic.GetComponent<MagicController>().setTargetObject(TargetObject);
-                //}
-                //else
-                //{
-                //    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
-                //}
-
                 if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
                 {
                     GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
@@ -461,16 +455,6 @@ public class PlayerController : MonoBehaviour
             {
                 audio.PlayOneShot(BowSe);
                 isOneShotArrow = true;
-                //if (isBossBattle)
-                //{
-                //    GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                //    arrow.GetComponent<BowController>().setTargetObject(TargetObject);
-                //    arrow.GetComponent<BowController>().setIsAutoAim(true);
-                //}
-                //else
-                //{
-                //    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
-                //}
                 if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
                 {
                     GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
@@ -483,6 +467,17 @@ public class PlayerController : MonoBehaviour
                 BowController.EnemyDamage = this.status.BOW_POW;
                 //skill.SpreadArrow ();
             }
+        }
+        //ダメージモーションの時
+        if (currentBaseState.nameHash == DamageState)
+        {
+            //ダメージフラグを初期化
+            isDamage = false;
+        }
+        //死亡モーションの時
+        if (currentBaseState.nameHash == DeadState)
+        {
+            this.deadFlag = false;
         }
         animator.SetBool("isMove", isMove);
         //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
@@ -631,7 +626,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 何かに当たったら（トリガー）
+    /// 何かに当たったら（コリジョン）
     /// </summary>
     /// <param name="collision"></param>
     void OnCollisionEnter(Collision collision)
@@ -711,11 +706,14 @@ public class PlayerController : MonoBehaviour
         {
             this.status.HP = 0;
         }
-        if (this.status.HP < 0 && deadFlag == false)
+        //HPが無くなったら死亡フラグを立てる
+        if (this.status.HP <= 0 && !isDeadFlag)
         {
             this.deadFlag = true;
+            isDeadFlag = true;
         }
-        else
+        //HPが残っていたらダメージフラグ
+        else if (deadFlag != false)
         {
             this.isDamage = true;
         }

@@ -71,10 +71,6 @@ public class BossController : MonoBehaviour {
     /// </summary>
     private bool isShotMagic = false;
     /// <summary>
-    /// 魔法を一発打ったか(短時間に連続して出さないようにする)
-    /// </summary>
-    private bool isOneShotMagic = false;
-    /// <summary>
     /// 矢
     /// </summary>
     private GameObject ArrowObject;
@@ -82,10 +78,6 @@ public class BossController : MonoBehaviour {
     /// 弓を打ったか
     /// </summary>
     private bool isShotArrow = false;
-    /// <summary>
-    /// 弓を一発打ったか(短時間に連続して出さないようにする)
-    /// </summary>
-    private bool isOneShotArrow = false;
     /// <summary>
     /// プレイヤーとの距離
     /// </summary>
@@ -156,10 +148,8 @@ public class BossController : MonoBehaviour {
     static int runState = Animator.StringToHash("Base Layer.Run");
     static int swordRunState = Animator.StringToHash("Base Layer.Sword_Run");
     static int swordState = Animator.StringToHash("Base Layer.Sword");
-    static int magic_01State = Animator.StringToHash("Base Layer.Magic_01");
-    static int magic_02State = Animator.StringToHash("Base Layer.Magic_02");
-    static int arrow_01State = Animator.StringToHash("Base Layer.Arrow_01");
-    static int arrow_02State = Animator.StringToHash("Base Layer.Arrow_02");
+    static int magicState = Animator.StringToHash("Base Layer.Magic");
+    static int arrowState = Animator.StringToHash("Base Layer.Arrow");
     static int damageState = Animator.StringToHash("Base Layer.Damage");
 
     /// <summary>
@@ -198,6 +188,14 @@ public class BossController : MonoBehaviour {
     /// 弓効果音
     /// </summary>
     public AudioClip BowSe;
+    /// <summary>
+    /// 魔法オブジェクトインスタンス
+    /// </summary>
+    private GameObject magicInstance;
+    /// <summary>
+    /// 弓オブジェクトインスタンス
+    /// </summary>
+    private GameObject arrowInstance;
 
     /// <summary>
     /// 読み込み
@@ -259,10 +257,9 @@ public class BossController : MonoBehaviour {
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - transform.transform.position), 0.07f);
         this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         //アニメーション切り替え
-        AnimationController();
+        AnimationCheck();
 
         //HPが指定数以下になったら
-        Debug.Log(this.GetComponent<EnemyStatusManager>().getStatus().HP);
         if (this.GetComponent<EnemyStatusManager>().getStatus().HP <= ActiveEnemyHP)
         {
             for (int i = 0; i < EnemyObject.Length; i++)
@@ -324,7 +321,7 @@ public class BossController : MonoBehaviour {
                 CheckAttack(AttackRatio);
             }
             else
-            {
+            {                
                 Move();
             }
         }
@@ -369,12 +366,11 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void SwordAttack()
     {
-        //Debug.Log("SwordAttack");
         isAttackSwordRun = true;
         //プレイヤーに近づくフラグがたったら
         if (isAttackSwordRun)
         {
-            float Distance = 20.0f;
+            float Distance = 10.0f;
             //一定距離近づいたら剣振りフラグを立てる
             if (ToPlayerDistance <= Distance)
             {
@@ -384,11 +380,13 @@ public class BossController : MonoBehaviour {
             //プレイヤーに向かって進む
             else
             {
-                this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position), 0.1f);
-                this.transform.position += transform.forward * AttackSpeed;
+                Vector3 target = new Vector3(TargetObject.transform.position.x, 0, TargetObject.transform.position.z);
+                this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target - this.transform.position), 0.7f);
+                
+                rigidbody.AddForce(forward.normalized * AttackSpeed, ForceMode.VelocityChange);
             }
         }
-        //Debug.Log("SwordNow");
+        Debug.Log("SwordNow");
     }
 
     /// <summary>
@@ -396,11 +394,11 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void MagicAttack()
     {
-        //Debug.Log("MagicAttack");
         if (!isShotMagic)
         {
             isShotMagic = true;
-            //MagicBallObject.GetComponent<MagicController>().TargetObject = TargetObject;
+            isAttackSwordRun = false;
+            isAttackSword = false;
         }
     }
 
@@ -409,11 +407,11 @@ public class BossController : MonoBehaviour {
     /// </summary>
     void BowAttack()
     {
-        //Debug.Log("BowAttack");
         if (!isShotArrow)
         {
             isShotArrow = true;
-            //ArrowObject.GetComponent<BowController>().TargetObject = TargetObject;
+            isAttackSwordRun = false;
+            isAttackSword = false;
         }
     }
 
@@ -446,8 +444,6 @@ public class BossController : MonoBehaviour {
         LeaveOrNear();
         //常に下方向に力をかける
         rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
-        //Debug.Log("MoveNow");
-        //Debug.Log(NormalSpeed);
     }
 
     /// <summary>
@@ -532,82 +528,81 @@ public class BossController : MonoBehaviour {
     /// <summary>
     /// アニメーション管理
     /// </summary>
-    void AnimationController()
+    void AnimationCheck()
     {
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        animator.SetBool("isMove", isMove);
-        animator.SetBool("isAttack", isAttack);
-        animator.SetBool("isAttackSwordRun", isAttackSwordRun);
-        animator.SetBool("isAttackSword", isAttackSword);
-        animator.SetBool("isShotMagic", isShotMagic);
-        animator.SetBool("isShotArrow", isShotArrow);
-        animator.SetBool("isDamage", isDamage);
-        animator.SetBool("isDead", this.gameObject.GetComponent<EnemyStatusManager>().getIsDead());
 
         //立ちモーションの時
         if (currentBaseState.nameHash == idleState)
         {
-            //Debug.Log("Idle");
-            isAttack = false;
             isDamage = false;
-        }
-        //走りモーションの時
-        else if (currentBaseState.nameHash == runState)
-        {
-            
+            isAttack = false;
         }
         //剣モーションの時
         else if (currentBaseState.nameHash == swordState)
         {
             isAttackSword = false;
             isAttackSwordRun = false;
-            isAttack = false;
-            //audio.PlayOneShot(SwordSe);
+            isAttack = true;
         }
-        //魔法モーション(_01)の時
-        else if (currentBaseState.nameHash == magic_01State)
+        //魔法モーションの時
+        else if (currentBaseState.nameHash == magicState)
         {
-            isOneShotMagic = false;
             isShotMagic = false;
-            isAttack = false;
+            isAttack = true;
         }
-        //魔法モーション(_02)の時
-        else if (currentBaseState.nameHash == magic_02State)
+        //弓モーションの時
+        else if (currentBaseState.nameHash == arrowState)
         {
-            if (!isOneShotMagic)//!isShotMagic)
-            {
-                isOneShotMagic = true;
-                GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                magic.GetComponent<MagicController>().setTargetObject(TargetObject);
-                MagicController.PlayerDamage = this.status.Magic_Power;
-                audio.PlayOneShot(MagicSe);
-            }
-        }
-        //弓モーション(_01)の時
-        else if (currentBaseState.nameHash == arrow_01State)
-        {
-            isOneShotArrow = false;
             isShotArrow = false;
-            isAttack = false;
-        }
-        //弓モーション(_02)の時
-        else if (currentBaseState.nameHash == arrow_02State)
-        {
-            if (!isOneShotArrow)
-            {
-                isOneShotArrow = true;
-                GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
-                arrow.GetComponent<BowController>().setTargetObject(TargetObject);
-                arrow.GetComponent<BowController>().setIsAutoAim(true);
-                BowController.PlayerDamage = this.status.BOW_POW;
-                audio.PlayOneShot(BowSe);
-            }
+            isAttack = true;
         }
         //ダメージモーションの時
         else if (currentBaseState.nameHash == damageState)
         {
             isDamage = false;
         }
+
+        //反映
+        //Debug.Log(isMove);
+        animator.SetBool("isMove", isMove);
+        animator.SetBool("isAttackSwordRun", isAttackSwordRun);
+        animator.SetBool("isAttackSword", isAttackSword);
+        animator.SetBool("isShotMagic", isShotMagic);
+        animator.SetBool("isShotArrow", isShotArrow);
+        animator.SetBool("isDamage", isDamage);
+        animator.SetBool("isDead", this.gameObject.GetComponent<EnemyStatusManager>().getIsDead());
+    }
+
+    /// <summary>
+    /// 剣攻撃イベント
+    /// </summary>
+    void SwordAttackEvent()
+    {
+
+    }
+
+    /// <summary>
+    /// 魔法攻撃イベント
+    /// </summary>
+    void MagicAttackEvent()
+    {
+        magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+        magicInstance.GetComponent<MagicController>().setTargetObject(TargetObject);
+        MagicController.PlayerDamage = this.status.Magic_Power;
+        audio.PlayOneShot(MagicSe);
+    }
+
+    /// <summary>
+    /// 弓攻撃イベント
+    /// </summary>
+    void BowAttackEvent()
+    {
+        arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
+        arrowInstance.GetComponent<BowController>().setTargetObject(TargetObject);
+        arrowInstance.GetComponent<BowController>().setIsAutoAim(true);
+        BowController.PlayerDamage = this.status.BOW_POW;
+        audio.PlayOneShot(BowSe);
     }
 }
