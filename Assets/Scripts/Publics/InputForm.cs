@@ -42,7 +42,7 @@ public class InputForm : MonoBehaviour {
 			prefs.SetInt ("Magic", 8);
 			prefs.SetInt ("Bow", 5);
 			prefs.Save (System.Environment.CurrentDirectory + "/saveData.xml");
-			Application.LoadLevel ("stage");
+            LoadingController.NextScene("stage");
 		}
 
 	}

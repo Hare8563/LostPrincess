@@ -250,9 +250,10 @@ public class RastBossController : MonoBehaviour
         AnimationController();
         DashEffect.SetActive(isDashEffect);
         ShieldObject.SetActive(isShield);
+        //死んでいたら
         if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
         {
-			Application.LoadLevel("Title");
+            LoadingController.NextScene("Title");
 		}
     }
 

@@ -29,7 +29,7 @@ public class toBossStage : MonoBehaviour {
             prefs.SetInt("Magic", TargetModel.status.Magic_Power);
             prefs.Save(System.Environment.CurrentDirectory + "/saveData.xml");
 
-		    Application.LoadLevel (@"Boss");
+            LoadingController.NextScene("Boss");
         }
 	}
 }
