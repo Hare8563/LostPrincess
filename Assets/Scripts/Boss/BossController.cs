@@ -386,7 +386,7 @@ public class BossController : MonoBehaviour {
                 rigidbody.AddForce(forward.normalized * AttackSpeed, ForceMode.VelocityChange);
             }
         }
-        Debug.Log("SwordNow");
+        //Debug.Log("SwordNow");
     }
 
     /// <summary>

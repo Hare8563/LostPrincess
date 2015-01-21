@@ -23,22 +23,17 @@ public class MisileSub : MonoBehaviour {
     /// 爆発プレハブ
     /// </summary>
     private GameObject ExprosionPrehub;
-    /// <summary>
-    /// オブジェクト削除までの時間
-    /// </summary>
-    private float DestroyCount;
 
 	// Use this for initialization
 	void Start () 
     {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
-        DestroyCount = 0;
+		Destroy(this.gameObject, 5f);
     }
 	
 	// Update is called once per frame
 	void Update () 
     {
-        DestroyCount += Method.GameTime();
         // ターゲットまでの角度を取得
         Vector3 vecTarget = PlayerObject.transform.position + new Vector3(0, 4.0f, 0) - this.transform.position; // ターゲットへのベクトル
         Vector3 vecForward = transform.TransformDirection(Vector3.forward);   // 弾の正面ベクトル
@@ -50,26 +45,20 @@ public class MisileSub : MonoBehaviour {
         transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget, t);
         // 前進
         transform.position += transform.TransformDirection(Vector3.forward) * _speed * Time.deltaTime;
-        if (DestroyCount >= 300)
-        {
-            DestroyCount = 0;
-            Destroy(this.gameObject);
-        }
-        else if (this.transform.position.y <= 0)
-        {
-            //Instantiate(ExprosionPrehub, new Vector3(this.transform.position.x, 0, this.transform.position.z), this.transform.rotation);
-            Destroy(this.gameObject);
-        }
     }
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.tag == "Player")
-        {
-            Debug.Log("misile damage");
-            collider.gameObject.GetComponent<PlayerController>().Damage(3);
-            //Instantiate(ExprosionPrehub, this.transform.position, this.transform.rotation);
 
-            Destroy(this.gameObject);
-        }
-    }
+	/// <summary>
+	/// 何かに当たったら
+	/// </summary>
+	/// <param name="collision"></param>
+	void OnTriggerEnter(Collider collider)
+	{
+		//Debug.Log(collision.collider.name);
+		if (collider.tag == "Player")
+		{
+			//Debug.Log("bullet damage");
+			collider.gameObject.GetComponent<PlayerController>().Damage(1);
+		}
+		Destroy(this.gameObject);
+	}
 }

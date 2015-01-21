@@ -88,14 +88,9 @@ public class PlayerController : MonoBehaviour
     //各アニメーションへのステート
     static int idleState = Animator.StringToHash("Base Layer.Idle");
     static int runState = Animator.StringToHash("Base Layer.Run");
-    static int swordRunState = Animator.StringToHash("Base Layer.Sword_Run");
-    static int sword_01State = Animator.StringToHash("Base Layer.Sword");
-    static int sword_02State = Animator.StringToHash("Base Layer.Sword_02");
-    static int magic_01State = Animator.StringToHash("Base Layer.Magic_01");
-    static int magic_02State = Animator.StringToHash("Base Layer.Magic_02");
-    static int arrow_01State = Animator.StringToHash("Base Layer.Arrow_01");
-    static int arrow_02State = Animator.StringToHash("Base Layer.Arrow_02");
-    static int LvUpState = Animator.StringToHash("Base Layer.Take 0001");
+    static int swordState = Animator.StringToHash("Base Layer.Sword");
+    static int magicState = Animator.StringToHash("Base Layer.Magic");
+    static int arrowState = Animator.StringToHash("Base Layer.Arrow");
     static int DamageState = Animator.StringToHash("Base Layer.Damage");
     static int DeadState = Animator.StringToHash("Base Layer.Dead_01");
     /// <summary>
@@ -219,12 +214,20 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 弓効果音
     /// </summary>
-    public AudioClip BowSe;
-
-
-    void Awake()
-    {
-        if (GameObject.FindGameObjectWithTag("Boss") != null)
+	public AudioClip BowSe;
+	/// <summary>
+	/// 魔法オブジェクトインスタンス
+	/// </summary>
+	private GameObject magicInstance;
+	/// <summary>
+	/// 弓オブジェクトインスタンス
+	/// </summary>
+	private GameObject arrowInstance;
+	
+	
+	void Awake()
+	{
+		if (GameObject.FindGameObjectWithTag("Boss") != null)
         {
             TargetObject = GameObject.FindGameObjectWithTag("Boss");
         }
@@ -271,7 +274,7 @@ public class PlayerController : MonoBehaviour
         //武器切り替え
         WeaponChange();
         //アニメーション管理
-        AnimationController();
+        AnimationCheck();
         //ボタンイベント
         ButtonEvent();
     }
@@ -358,8 +361,7 @@ public class PlayerController : MonoBehaviour
     {
         //skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        if ((currentBaseState.nameHash != LvUpState ||
-            currentBaseState.nameHash != DamageState) &&
+        if (currentBaseState.nameHash != DamageState &&
             mouseButton.left)
         {
             switch (nowWeapon)
@@ -380,7 +382,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// アニメーション管理
     /// </summary>
-    void AnimationController()
+    void AnimationCheck()
     {
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
@@ -397,76 +399,22 @@ public class PlayerController : MonoBehaviour
 
         }
         //剣モーションの時
-        else if (currentBaseState.nameHash == sword_01State)
+        else if (currentBaseState.nameHash == swordState)
         {
-            isOneShotSword = false;
             //攻撃フラグを初期化
             isAttackSword = false;
         }
-        //剣モーション02の時
-        else if (currentBaseState.nameHash == sword_02State)
+        //魔法モーションの時
+        else if (currentBaseState.nameHash == magicState)
         {
-            if (!isOneShotSword)
-            {
-                audio.PlayOneShot(SwordSe);
-                isOneShotSword = true;
-                //skill.SwordSlash();
-            }
-        }
-        //魔法モーション(_01)の時
-        else if (currentBaseState.nameHash == magic_01State)
-        {
-            isOneShotMagic = false;
             //攻撃フラグを初期化
             isShotMagic = false;
-
         }
-        //魔法モーション(_02)の時
-        else if (currentBaseState.nameHash == magic_02State)
+        //弓モーションの時
+        else if (currentBaseState.nameHash == arrowState)
         {
-            if (!isOneShotMagic)
-            {
-                audio.PlayOneShot(MagicSe);
-                isOneShotMagic = true;
-                if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-                {
-                    GameObject magic = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-                    magic.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
-                }
-                else
-                {
-                    Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
-                }
-                MagicController.EnemyDamage = this.status.Magic_Power;
-                //skill.Meteo ();
-            }
-        }
-        //弓モーション(_01)の時
-        else if (currentBaseState.nameHash == arrow_01State)
-        {
-            isOneShotArrow = false;
             //攻撃フラグを初期化
             isShotArrow = false;
-        }
-        //弓モーション(_02)の時
-        else if (currentBaseState.nameHash == arrow_02State)
-        {
-            if (!isOneShotArrow)
-            {
-                audio.PlayOneShot(BowSe);
-                isOneShotArrow = true;
-                if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-                {
-                    GameObject arrow = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-                    arrow.GetComponent<BowController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
-                }
-                else
-                {
-                    Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
-                }
-                BowController.EnemyDamage = this.status.BOW_POW;
-                //skill.SpreadArrow ();
-            }
         }
         //ダメージモーションの時
         if (currentBaseState.nameHash == DamageState)
@@ -477,25 +425,71 @@ public class PlayerController : MonoBehaviour
         //死亡モーションの時
         if (currentBaseState.nameHash == DeadState)
         {
-            this.deadFlag = false;
+            deadFlag = false;
         }
         animator.SetBool("isMove", isMove);
-        //animator.SetBool("isAttackSwordRun", isAttackSwordRun);
         animator.SetBool("isAttackSword", isAttackSword);
         animator.SetBool("isShotMagic", isShotMagic);
         animator.SetBool("isShotArrow", isShotArrow);
         animator.SetBool("DeadFlag", deadFlag);
         animator.SetBool("isDamage", isDamage);
-        animator.SetBool("isLvUp", LvUp);
     }
 
     /// <summary>
-    /// アニメーションイベント
+    /// 走りイベント
     /// </summary>
     void RunSeTiming()
     {
         //Debug.Log("Se Play");
         Instantiate(RunSmokeEffect, this.transform.position, this.transform.rotation);
+    }
+
+    /// <summary>
+    /// 剣攻撃イベント
+    /// </summary>
+    void SwordAttackEvent()
+    {
+		audio.PlayOneShot(SwordSe);
+    }
+
+    /// <summary>
+    /// 魔法攻撃イベント
+    /// </summary>
+    void MagicAttackEvent()
+    {
+		audio.PlayOneShot(MagicSe);
+		isOneShotMagic = true;
+		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+		{
+			magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+			magicInstance.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+		}
+		else
+		{
+			Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+		}
+		MagicController.EnemyDamage = this.status.Magic_Power;
+
+    }
+
+    /// <summary>
+    /// 弓攻撃イベント
+    /// </summary>
+    void BowAttackEvent()
+    {
+		audio.PlayOneShot(BowSe);
+		isOneShotArrow = true;
+		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+		{
+			arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+			arrowInstance.GetComponent<BowController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+		}
+		else
+		{
+			Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+		}
+		BowController.EnemyDamage = this.status.BOW_POW;
+
     }
 
     /// <summary>
@@ -586,43 +580,36 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void WeaponChange()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            nowWeapon = (int)WeaponEnum.SWORD;
+		if (Input.GetKeyDown(KeyCode.Alpha1) || nowWeapon == 0)
+		{
+			nowWeapon = (int)WeaponEnum.SWORD;
             //武器表示を設定
             Weapon_Sword.renderer.enabled = true;
             Weapon_Rod.renderer.enabled = false;
             Weapon_Bow.renderer.enabled = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            nowWeapon = (int)WeaponEnum.MAGIC;
+		if (Input.GetKeyDown(KeyCode.Alpha2) || nowWeapon == 1)
+		{
+			nowWeapon = (int)WeaponEnum.MAGIC;
             //武器表示を設定
             Weapon_Sword.renderer.enabled = false;
             Weapon_Rod.renderer.enabled = true;
             Weapon_Bow.renderer.enabled = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            nowWeapon = (int)WeaponEnum.BOW;
+		if (Input.GetKeyDown(KeyCode.Alpha3) || nowWeapon == 2)
+		{
+			nowWeapon = (int)WeaponEnum.BOW;
             //武器表示を設定
             Weapon_Sword.renderer.enabled = false;
             Weapon_Rod.renderer.enabled = false;
             Weapon_Bow.renderer.enabled = true;
         }
-        else if (mouseButton.rightDown) //Input.GetMouseButtonDown (1)
+        if (mouseButton.rightDown) //Input.GetMouseButtonDown (1)
 		{
-            //if (nowWeapon == 2)
-            //{
-            //    nowWeapon = (int)WeaponEnum.SWORD;
-            //}
-            //else
-            //{
-            //    nowWeapon++;
-            //}
             Method.Selecting(ref nowWeapon, 3, "up");
 
 		}
+        //Debug.Log(nowWeapon);
     }
 
     /// <summary>
@@ -646,12 +633,12 @@ public class PlayerController : MonoBehaviour
     {
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
 
-        if (collider.gameObject.CompareTag("Enemy") && currentBaseState.nameHash == sword_02State)
+        if (collider.gameObject.CompareTag("Enemy") && currentBaseState.nameHash == swordState)
         {
             var status = collider.gameObject.GetComponent<EnemyStatusManager>();
             status.Damage(this.status.Sword_Power);
         }
-        else if (collider.gameObject.CompareTag("Hime") && currentBaseState.nameHash == sword_02State)
+        else if (collider.gameObject.CompareTag("Hime") && currentBaseState.nameHash == swordState)
         {
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             var hime = collider.gameObject.GetComponent<RastBossController>();
