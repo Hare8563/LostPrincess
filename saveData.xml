@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-  <string>aaaa</string>
+  <string>TESTPLAYER</string>
   <key>HP</key>
   <integer>100</integer>
   <key>MP</key>
-  <integer>50</integer>
+  <integer>60</integer>
   <key>LV</key>
   <integer>2</integer>
   <key>EXP</key>

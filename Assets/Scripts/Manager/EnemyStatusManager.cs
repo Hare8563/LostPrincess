@@ -29,18 +29,18 @@ public sealed class EnemyStatusManager : MonoBehaviour
     /// <summary>
     /// 体力
     /// </summary>
-    [SerializeField]
-    private int hp;
+//    [SerializeField]
+//    private int hp;
     /// <summary>
     /// 魔力
     /// </summary>
-    [SerializeField]
-    private int mp;
+//    [SerializeField]
+//    private int mp;
     /// <summary>
     /// 経験値
     /// </summary>
-    [SerializeField]
-    private int exp;
+//    [SerializeField]
+//    private int exp;
     /// <summary>
     /// 死んだかどうか
     /// </summary>
@@ -54,13 +54,13 @@ public sealed class EnemyStatusManager : MonoBehaviour
         switch (type)
         {
             case Type.enemy:
-				status = new Status(lv,exp,hp, "Assets/LvTable.csv");
+						status = new Status(lv, "Assets/EnemyTable.csv");
                 break;
             case Type.boss:
-				status = new Status(lv, exp, hp, "Assets/LvTable.csv");
+						status = new Status(lv, "Assets/RastBassTable.csv");
                 break;
             case Type.hime:
-				status = new Status(lv, exp, hp, "Assets/LvTable.csv");
+						status = new Status(lv, "Assets/RastBassTable.csv");
                 break;
         }
     }
