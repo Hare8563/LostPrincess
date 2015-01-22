@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Enemy\DarkMatterController.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\Event\EventController.cs" />
+     <Compile Include="Assets\Scripts\GameOver\GameOverManager.cs" />
      <Compile Include="Assets\Scripts\Loading\LoadingController.cs" />
      <Compile Include="Assets\Scripts\Manager\AimCursorManager.cs" />
      <Compile Include="Assets\Scripts\Manager\EnemyStatusManager.cs" />

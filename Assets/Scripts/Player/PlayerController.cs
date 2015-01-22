@@ -698,6 +698,8 @@ public class PlayerController : MonoBehaviour
         {
             this.deadFlag = true;
             isDeadFlag = true;
+            Application.LoadLevelAdditive("GameOver");
+            Time.timeScale = 0.3f;
         }
         //HPが残っていたらダメージフラグ
         else if (deadFlag != false)

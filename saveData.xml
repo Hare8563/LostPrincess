@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-  <string>aaaa</string>
+  <string>aa</string>
   <key>HP</key>
-  <integer>100</integer>
+  <integer>94</integer>
   <key>MP</key>
   <integer>100</integer>
   <key>LV</key>
-  <integer>1</integer>
+  <integer>2</integer>
   <key>EXP</key>
-  <integer>0</integer>
+  <integer>6</integer>
   <key>Sword</key>
-  <integer>2</integer>
+  <integer>1</integer>
   <key>Bow</key>
-  <integer>2</integer>
+  <integer>1</integer>
   <key>Magic</key>
-  <integer>2</integer>
+  <integer>1</integer>
 </root>
