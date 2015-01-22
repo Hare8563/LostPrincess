@@ -2,6 +2,7 @@
 using System.Collections;
 using StatusClass;
 using SkillClass;
+using CSV;
 
 public class PlayerController : MonoBehaviour
 {
@@ -224,7 +225,6 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	private GameObject arrowInstance;
 	
-	
 	void Awake()
 	{
 		if (GameObject.FindGameObjectWithTag("Boss") != null)
@@ -250,6 +250,7 @@ public class PlayerController : MonoBehaviour
         mainCamera = GameObject.Find("CameraControllPoint");
 
         manager = GameObject.Find("Manager");
+	
     }
 
     // Use this for initialization
@@ -261,7 +262,7 @@ public class PlayerController : MonoBehaviour
             statusManager.getLoadStatus().EXP,
             statusManager.getLoadStatus().HP,
             statusManager.getLoadStatus().MP,
-            statusManager.getLoadStatus().NAME);
+			statusManager.getLoadStatus().NAME, "Assets/LvTable.csv");
         Weapon_Sword.renderer.enabled = true;
         Weapon_Rod.renderer.enabled = false;
         Weapon_Bow.renderer.enabled = false;

@@ -8,7 +8,7 @@ public class Mao : MonoBehaviour {
 	//bool DeadFlag = false;
 	// Use this for initialization
 	void Start () {
-		MaoStatus = new Status (10, 0, 100, 20);
+				MaoStatus = new Status (10, 0, 300, "Assets/RastBassTable.csv");
 		player = GameObject.FindWithTag (@"Player").gameObject;
 	}
 	
