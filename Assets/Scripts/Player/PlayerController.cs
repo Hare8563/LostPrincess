@@ -38,6 +38,11 @@ public class PlayerController : MonoBehaviour
     [Range(0, 100)]
     private float AttackSpeed = 0;
     /// <summary>
+    /// 死ねるかどうか（デバッグ用）
+    /// </summary>
+    [SerializeField]
+    private bool canDead;
+    /// <summary>
     /// 魔法ボール
     /// </summary>
     private GameObject MagicBallObject;
@@ -224,7 +229,11 @@ public class PlayerController : MonoBehaviour
 	/// 弓オブジェクトインスタンス
 	/// </summary>
 	private GameObject arrowInstance;
-	
+    /// <summary>
+    /// 剣による攻撃が与えられるか
+    /// </summary>
+    private bool canSwordDamage = false;
+
 	void Awake()
 	{
 		if (GameObject.FindGameObjectWithTag("Boss") != null)
@@ -446,11 +455,20 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 剣攻撃イベント
+    /// 剣攻撃開始イベント
     /// </summary>
-    void SwordAttackEvent()
+    void SwordAttack_StartEvent()
     {
 		audio.PlayOneShot(SwordSe);
+        canSwordDamage = true;
+    }
+
+    /// <summary>
+    /// 剣攻撃終了イベント
+    /// </summary>
+    void SwordAttack_EndEvent()
+    {
+        canSwordDamage = false;
     }
 
     /// <summary>
@@ -460,6 +478,7 @@ public class PlayerController : MonoBehaviour
     {
 		audio.PlayOneShot(MagicSe);
 		isOneShotMagic = true;
+        //ロックオンしていたら追従
 		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
 		{
 			magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
@@ -467,10 +486,10 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+			Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
 		}
 		MagicController.EnemyDamage = this.status.Magic_Power;
-
+        //Debug.Log(MagicController.EnemyDamage);
     }
 
     /// <summary>
@@ -480,6 +499,7 @@ public class PlayerController : MonoBehaviour
     {
 		audio.PlayOneShot(BowSe);
 		isOneShotArrow = true;
+        //ロックオンしていたら追従
 		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
 		{
 			arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
@@ -487,10 +507,10 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+            Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
 		}
 		BowController.EnemyDamage = this.status.BOW_POW;
-
+        //Debug.Log(MagicController.EnemyDamage);
     }
 
     /// <summary>
@@ -632,18 +652,24 @@ public class PlayerController : MonoBehaviour
     /// <param name="collider"></param>
     void OnTriggerStay(Collider collider)
     {
-        currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-
-        if (collider.gameObject.CompareTag("Enemy") && currentBaseState.nameHash == swordState)
+        
+        if (collider.gameObject.CompareTag("Hime") && canSwordDamage)
         {
-            var status = collider.gameObject.GetComponent<EnemyStatusManager>();
-            status.Damage(this.status.Sword_Power);
-        }
-        else if (collider.gameObject.CompareTag("Hime") && currentBaseState.nameHash == swordState)
-        {
-            Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+            //Instantiate(HitEffect, collider.transform.position, this.transform.rotation);
             var hime = collider.gameObject.GetComponent<RastBossController>();
             hime.GetComponent<EnemyStatusManager>().Damage(this.status.Sword_Power);
+            canSwordDamage = false;
+            Debug.Log("Hit");
+        }
+        else if ((collider.gameObject.CompareTag("Enemy") ||
+                collider.gameObject.CompareTag("Boss")) && 
+                canSwordDamage)
+        {
+            //Instantiate(HitEffect, collider.transform.position, this.transform.rotation);
+            var status = collider.gameObject.GetComponent<EnemyStatusManager>();
+            status.Damage(this.status.Sword_Power);
+            canSwordDamage = false;
+            //Debug.Log("Hit");
         }
     }
 
@@ -695,7 +721,7 @@ public class PlayerController : MonoBehaviour
             this.status.HP = 0;
         }
         //HPが無くなったら死亡フラグを立てる
-        if (this.status.HP <= 0 && !isDeadFlag)
+        if (this.status.HP <= 0 && !isDeadFlag && canDead)
         {
             this.deadFlag = true;
             isDeadFlag = true;

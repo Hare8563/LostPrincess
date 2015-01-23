@@ -3,17 +3,17 @@
   <key>NAME</key>
   <string>TESTPLAYER</string>
   <key>HP</key>
-  <integer>94</integer>
+  <integer>24</integer>
   <key>MP</key>
   <integer>60</integer>
   <key>LV</key>
-  <integer>2</integer>
+  <integer>3</integer>
   <key>EXP</key>
-  <integer>6</integer>
+  <integer>12</integer>
   <key>Sword</key>
-  <integer>35</integer>
+  <integer>45</integer>
   <key>Bow</key>
-  <integer>17</integer>
+  <integer>22</integer>
   <key>Magic</key>
-  <integer>33</integer>
+  <integer>43</integer>
 </root>

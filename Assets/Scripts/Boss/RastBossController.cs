@@ -193,6 +193,10 @@ public class RastBossController : MonoBehaviour
     /// HPが半分以下になったか
     /// </summary>
     private bool isHarf = false;
+    /// <summary>
+    /// 初期HP
+    /// </summary>
+    private float initHp;
 
 #if skillDebug
     //ノーマルスキル
@@ -237,6 +241,8 @@ public class RastBossController : MonoBehaviour
         nextPosition = nowPosition = this.transform.position;
         nextAttackTime = Random.Range(240f, 360f);
         ShieldObject.SetActive(isShield);
+        initHp = this.GetComponent<EnemyStatusManager>().getStatus().HP;
+        //Debug.Log(initHp);
     }
 
     /// <summary>
@@ -263,7 +269,7 @@ public class RastBossController : MonoBehaviour
     void Move()
     {
         //HPが半分以下だったら
-        if (!isHarf && this.GetComponent<EnemyStatusManager>().getStatus().HP <= 50)
+        if (!isHarf && this.GetComponent<EnemyStatusManager>().getStatus().HP <= initHp / 2)
         {
             isHarf = true;
             if(!isBerserk)isDown = true;

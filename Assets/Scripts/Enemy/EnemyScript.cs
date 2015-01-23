@@ -95,14 +95,15 @@ public class EnemyScript : MonoBehaviour
     /// <param name="collider"></param>
     public void OnTriggerStay(Collider col)
     {
-		var anim = GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0);
-		if (col.gameObject.CompareTag (@"Player") && anim.IsName ("Base Layer.swordB")) {
-				Debug.Log (this.status.Sword_Power);
-				player.GetComponent<PlayerController>().Damage (this.status.Sword_Power);
-				Vector3 vector = player.transform.position - this.transform.position;
+        var anim = GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+        if (col.gameObject.CompareTag(@"Player") && anim.IsName("Base Layer.swordB"))
+        {
+            //Debug.Log (this.status.Sword_Power);
+            player.GetComponent<PlayerController>().Damage(this.status.Sword_Power);
+            Vector3 vector = player.transform.position - this.transform.position;
 
-				player.rigidbody.AddForce (vector.normalized * 2.0f, ForceMode.VelocityChange);
-		}
+            player.rigidbody.AddForce(vector.normalized * 2.0f, ForceMode.VelocityChange);
+        }
     }
 
     ///// <summary>
