@@ -12,6 +12,7 @@ namespace CSV{
 		private int[,] csvData;
 
 		public CsvReader(string filePath){
+			
 			using (System.IO.StreamReader sr = new System.IO.StreamReader(filePath, System.Text.Encoding.Default))
 			{
 					string str = "";
