@@ -3,6 +3,11 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+    void Awake()
+    {
+        Application.LoadLevelAdditive("Canvas");
+    }
+
 	// Use this for initialization
 	void Start () 
     {

@@ -25,14 +25,13 @@ public class AimCursorManager : MonoBehaviour {
 
     void Awake()
     {
-        canvas = GameObject.Find("Canvas");
         PlayerObject = GameObject.FindWithTag("Player");
     }
 
 	// Use this for initialization
 	void Start () 
     {
-	
+        canvas = GameObject.Find("Canvas");
 	}
 	
 	// Update is called once per frame

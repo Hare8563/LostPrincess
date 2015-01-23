@@ -53,7 +53,6 @@ public class StatusManager : MonoBehaviour {
     /// </summary>
     void Awake()
     {
-        canvas = GameObject.Find("Canvas");
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
         if (isHimeBattle) HimeObject = GameObject.FindGameObjectWithTag("Hime");
     }
@@ -63,7 +62,7 @@ public class StatusManager : MonoBehaviour {
 	/// </summary>
 	void Start () 
     {
-        
+        canvas = GameObject.Find("Canvas");
 	}
 	
 	/// <summary>
