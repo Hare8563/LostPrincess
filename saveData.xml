@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-<<<<<<< HEAD
-  <string>aa</string>
-=======
   <string>TESTPLAYER</string>
->>>>>>> 2ca0b9f68190f40c63028312c257658594c62ebd
   <key>HP</key>
   <integer>94</integer>
   <key>MP</key>
@@ -15,17 +11,9 @@
   <key>EXP</key>
   <integer>6</integer>
   <key>Sword</key>
-<<<<<<< HEAD
-  <integer>1</integer>
-  <key>Bow</key>
-  <integer>1</integer>
-  <key>Magic</key>
-  <integer>1</integer>
-=======
   <integer>35</integer>
   <key>Bow</key>
   <integer>17</integer>
   <key>Magic</key>
   <integer>33</integer>
->>>>>>> 2ca0b9f68190f40c63028312c257658594c62ebd
 </root>

@@ -224,7 +224,7 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void Start()
     {
-		status = new Status(30, "Assets/RastBassLv.csv");
+		status = new Status(30, "Assets/RastBassTable.csv");
         //エフェクトサイズとライト光量を初期化
         nowEffectSize = EfectSize_Min;
         nowLightIntensity = EfectLightIntensity_Min;
