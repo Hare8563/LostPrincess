@@ -9,6 +9,7 @@ public class SwordEffectOperator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 				player = GameObject.Find (@"HERO_MOTION07");
+				this.GetComponent<TrailRenderer> ().enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -16,10 +17,9 @@ public class SwordEffectOperator : MonoBehaviour {
 				var playerState = player.GetComponent<Animator> ();
 				var animState = playerState.GetCurrentAnimatorStateInfo (0);
 				if (animState.IsName(@"Base Layer.Sword") || animState.IsName(@"Base Layer.Sword_02")) {
-						this.GetComponent<TrailRenderer> ().enabled = true;
-
 				} else {
 						this.GetComponent<TrailRenderer> ().enabled = false;
 				}
 	}
+
 }

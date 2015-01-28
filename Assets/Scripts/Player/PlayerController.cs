@@ -234,6 +234,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private bool canSwordDamage = false;
 
+    /// <summary>
+    /// 剣の攻撃エフェクト
+    /// </summary>
+    private GameObject sword_trail;
+
+
 	void Awake()
 	{
 		if (GameObject.FindGameObjectWithTag("Boss") != null)
@@ -259,6 +265,8 @@ public class PlayerController : MonoBehaviour
         mainCamera = GameObject.Find("CameraControllPoint");
 
         manager = GameObject.Find("Manager");
+
+        sword_trail = GameObject.Find ("Sword_Tral");
 	
     }
 
@@ -459,6 +467,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_StartEvent()
     {
+
+        sword_trail.GetComponent<TrailRenderer> ().enabled = true;
+		
 		audio.PlayOneShot(SwordSe);
         canSwordDamage = true;
     }
@@ -468,6 +479,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_EndEvent()
     {
+
+        sword_trail.GetComponent<TrailRenderer> ().enabled = false;
+
         canSwordDamage = false;
     }
 
