@@ -13,9 +13,11 @@
         //iSamples ("iSamples", Int) = 20
     }
     SubShader {
-        Tags { "RenderType"="Opaque" }
+		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
         LOD 200
         Cull Off
+		ZWrite Off
+		Blend SrcAlpha OneMinusSrcAlpha  
          
         CGPROGRAM
         #pragma target 3.0

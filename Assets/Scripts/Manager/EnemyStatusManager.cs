@@ -70,7 +70,7 @@ public sealed class EnemyStatusManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-
+        //Debug.Log(this.status.HP);
     }
 
     /// <summary>

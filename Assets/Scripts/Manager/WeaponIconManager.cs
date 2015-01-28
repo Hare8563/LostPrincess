@@ -33,12 +33,12 @@ public class WeaponIconManager : MonoBehaviour {
     void Awake()
     {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
-        canvas = GameObject.Find("Canvas");
     }
 
 	// Use this for initialization
 	void Start () 
     {
+        canvas = GameObject.Find("Canvas");
         foreach (Transform child in canvas.transform)
         {
             if (child.name == "Sword")

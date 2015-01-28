@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class buttonController : MonoBehaviour {
+    /// <summary>
+    /// 既にボタンが押されたか
+    /// </summary>
+    private bool isDownButton = false;
 
 	// Use this for initialization
 	void Start () 
@@ -16,7 +20,11 @@ public class buttonController : MonoBehaviour {
 	}
 
 	public void ButtonClick(){
-		Application.LoadLevelAdditive ("InputFormScene");
+        if (!isDownButton)
+        {
+            isDownButton = true;
+            Application.LoadLevelAdditive("InputFormScene");
+        }
 		//Application.LoadLevel (@"stage");
 	}
 
