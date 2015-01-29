@@ -5,15 +5,15 @@
   <key>HP</key>
   <integer>0</integer>
   <key>MP</key>
-  <integer>60</integer>
+  <integer>0</integer>
   <key>LV</key>
-  <integer>4</integer>
+  <integer>5</integer>
   <key>EXP</key>
   <integer>15</integer>
   <key>Sword</key>
-  <integer>55</integer>
+  <integer>60</integer>
   <key>Bow</key>
-  <integer>27</integer>
+  <integer>30</integer>
   <key>Magic</key>
-  <integer>53</integer>
+  <integer>55</integer>
 </root>

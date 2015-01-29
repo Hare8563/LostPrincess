@@ -221,6 +221,14 @@ public class PlayerController : MonoBehaviour
     /// 弓効果音
     /// </summary>
 	public AudioClip BowSe;
+    /// <summary>
+    /// 選択効果音
+    /// </summary>
+    public AudioClip SelectSe;
+    /// <summary>
+    /// 魔法がでないときの効果音
+    /// </summary>
+    public AudioClip NonMagicSe;
 	/// <summary>
 	/// 魔法オブジェクトインスタンス
 	/// </summary>
@@ -490,19 +498,27 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void MagicAttackEvent()
     {
-		audio.PlayOneShot(MagicSe);
-		isOneShotMagic = true;
-        //ロックオンしていたら追従
-		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-		{
-			magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-			magicInstance.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
-		}
-		else
-		{
-			Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
-		}
-		MagicController.EnemyDamage = this.status.Magic_Power;
+        if (this.status.MP > 0)
+        {
+            this.status.MP -= 10;
+            audio.PlayOneShot(MagicSe);
+            isOneShotMagic = true;
+            //ロックオンしていたら追従
+            if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+            {
+                magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+                magicInstance.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+            }
+            else
+            {
+                Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
+            }
+            MagicController.EnemyDamage = this.status.Magic_Power;
+        }
+        else
+        {
+            audio.PlayOneShot(NonMagicSe);
+        }
         //Debug.Log(MagicController.EnemyDamage);
     }
 
@@ -615,6 +631,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void WeaponChange()
     {
+
+
 		if (Input.GetKeyDown(KeyCode.Alpha1) || nowWeapon == 0)
 		{
 			nowWeapon = (int)WeaponEnum.SWORD;
@@ -641,6 +659,7 @@ public class PlayerController : MonoBehaviour
         }
         if (mouseButton.rightDown) //Input.GetMouseButtonDown (1)
 		{
+            audio.PlayOneShot(SelectSe);
             Method.Selecting(ref nowWeapon, 3, "up");
 
 		}

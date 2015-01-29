@@ -21,6 +21,12 @@ public class EnemyScript : MonoBehaviour
     /// 二点間距離
     /// </summary>
     float twoPointDistance;
+    /// <summary>
+    /// ダメージを受けたときの効果音
+    /// </summary>
+    [SerializeField]
+    private AudioClip expGetSe;
+
 
     /// <summary>
     /// 初期化
@@ -67,6 +73,7 @@ public class EnemyScript : MonoBehaviour
         //HPが0になったら経験値を取得
         if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
         {
+            audio.PlayOneShot(expGetSe);
 			StartCoroutine(@"Coroutine");
 			Destroy(this.gameObject);
         }
