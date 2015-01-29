@@ -700,7 +700,7 @@ public class PlayerController : MonoBehaviour
             var hime = collider.gameObject.GetComponent<RastBossController>();
             hime.GetComponent<EnemyStatusManager>().Damage(this.status.Sword_Power);
             canSwordDamage = false;
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
         }
         else if ((collider.gameObject.CompareTag("Enemy") ||
                 collider.gameObject.CompareTag("Boss")) && 
@@ -710,7 +710,7 @@ public class PlayerController : MonoBehaviour
             var status = collider.gameObject.GetComponent<EnemyStatusManager>();
             status.Damage(this.status.Sword_Power);
             canSwordDamage = false;
-            //Debug.Log("Hit");
+            Debug.Log("Hit");
         }
     }
 
