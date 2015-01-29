@@ -410,6 +410,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void AnimationCheck()
     {
+        if (LvUp == true)
+        {
+            AudioSource[] audioSource = GetComponents<AudioSource>();
+            audio.PlayOneShot(audioSource[audioSource.Length - 1].clip);
+            var particle = GetComponent<ParticleSystem>();
+            particle.Play();
+        }
+
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
 
@@ -730,6 +738,7 @@ public class PlayerController : MonoBehaviour
         this.status.EXP += exp;
         if (this.status.EXP >= this.status.ExpLimit)
         {
+
             status.LevUp();
             LvUp = true;
             isMove = false;

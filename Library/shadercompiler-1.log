@@ -2,10 +2,6 @@ Base path: /Applications/Unity/Unity.app/Contents
 Pipe name: \\.\pipe\UnityShaderCompiler-1--1594822232
 Cmd: getPlatforms
 Cmd: compileSnippet
-  api=0 type=0 insize=3359 outsize=636 kw=WATER_SIMPLE ok=1
+  api=0 type=0 insize=9510 outsize=4814 kw=WATER_REFLECTIVE WATER_VERTEX_DISPLACEMENT_ON WATER_EDGEBLEND_OFF ok=1
 Cmd: compileSnippet
-  api=0 type=1 insize=3359 outsize=823 kw=WATER_SIMPLE ok=1
-Cmd: compileSnippet
-  api=0 type=0 insize=9510 outsize=2206 kw=WATER_SIMPLE WATER_VERTEX_DISPLACEMENT_OFF WATER_EDGEBLEND_OFF ok=1
-Cmd: compileSnippet
-  api=0 type=1 insize=9510 outsize=6 kw=WATER_SIMPLE WATER_VERTEX_DISPLACEMENT_OFF WATER_EDGEBLEND_OFF ok=1
+  api=0 type=1 insize=9510 outsize=6 kw=WATER_REFLECTIVE WATER_VERTEX_DISPLACEMENT_ON WATER_EDGEBLEND_OFF ok=1
