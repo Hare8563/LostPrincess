@@ -1,19 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-  <string>TESTPLAYER</string>
+  <string>プレイヤー</string>
   <key>HP</key>
+<<<<<<< HEAD
   <integer>100</integer>
+=======
+  <integer>140</integer>
+>>>>>>> 0b9d7041ed6b874ed4305e7f305c7e1229164994
   <key>MP</key>
   <integer>100</integer>
   <key>LV</key>
+<<<<<<< HEAD
   <integer>50</integer>
   <key>EXP</key>
   <integer>16</integer>
+=======
+  <integer>2</integer>
+  <key>EXP</key>
+  <integer>6</integer>
+>>>>>>> 0b9d7041ed6b874ed4305e7f305c7e1229164994
   <key>Sword</key>
-  <integer>45</integer>
+  <integer>35</integer>
   <key>Bow</key>
-  <integer>22</integer>
+  <integer>17</integer>
   <key>Magic</key>
-  <integer>43</integer>
+  <integer>33</integer>
 </root>
