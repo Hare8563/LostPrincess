@@ -371,7 +371,8 @@ public class PlayerController : MonoBehaviour
     {
         //skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-        if (currentBaseState.nameHash != DamageState &&
+		if (!isDeadFlag &&
+		    currentBaseState.nameHash != DamageState &&
             mouseButton.left)
         {
             switch (nowWeapon)
