@@ -2,16 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player/PlayerController.cs">
     <Files>
-      <File FileName="../../../Projects/getJSONProject/getJSONProject/Program.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/CsvReader.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Event/EventController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Player/StatusClass.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Manager/StatusManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mao.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="264" Column="1" />
-      <File FileName="Assets/Scripts/Boss/RastBossController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Manager/EnemyStatusManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Enemy/EnemyScript.cs" Line="40" Column="34" />
+      <File FileName="Assets/Scripts/Player/StatusClass.cs" Line="92" Column="67" />
+      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="499" Column="1" />
+      <File FileName="Assets/Scripts/Manager/EnemyStatusManager.cs" Line="48" Column="4" />
+      <File FileName="Assets/Scripts/SwordEffectOperator.cs" Line="20" Column="13" />
+      <File FileName="Assets/Scripts/Enemy/EnemyScript.cs" Line="77" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

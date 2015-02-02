@@ -221,6 +221,14 @@ public class PlayerController : MonoBehaviour
     /// 弓効果音
     /// </summary>
 	public AudioClip BowSe;
+    /// <summary>
+    /// 選択効果音
+    /// </summary>
+    public AudioClip SelectSe;
+    /// <summary>
+    /// 魔法がでないときの効果音
+    /// </summary>
+    public AudioClip NonMagicSe;
 	/// <summary>
 	/// 魔法オブジェクトインスタンス
 	/// </summary>
@@ -233,6 +241,12 @@ public class PlayerController : MonoBehaviour
     /// 剣による攻撃が与えられるか
     /// </summary>
     private bool canSwordDamage = false;
+
+    /// <summary>
+    /// 剣の攻撃エフェクト
+    /// </summary>
+    private GameObject sword_trail;
+
 
 	void Awake()
 	{
@@ -259,6 +273,8 @@ public class PlayerController : MonoBehaviour
         mainCamera = GameObject.Find("CameraControllPoint");
 
         manager = GameObject.Find("Manager");
+
+        sword_trail = GameObject.Find ("Sword_Tral");
 	
     }
 
@@ -394,6 +410,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void AnimationCheck()
     {
+        if (LvUp == true)
+        {
+            AudioSource[] audioSource = GetComponents<AudioSource>();
+            audio.PlayOneShot(audioSource[audioSource.Length - 1].clip);
+            var particle = GetComponent<ParticleSystem>();
+            particle.Play();
+        }
+
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
 
@@ -459,6 +483,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_StartEvent()
     {
+
+        sword_trail.GetComponent<TrailRenderer> ().enabled = true;
+		
 		audio.PlayOneShot(SwordSe);
         canSwordDamage = true;
     }
@@ -468,6 +495,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_EndEvent()
     {
+
+        sword_trail.GetComponent<TrailRenderer> ().enabled = false;
+
         canSwordDamage = false;
     }
 
@@ -476,19 +506,27 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void MagicAttackEvent()
     {
-		audio.PlayOneShot(MagicSe);
-		isOneShotMagic = true;
-        //ロックオンしていたら追従
-		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-		{
-			magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-			magicInstance.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
-		}
-		else
-		{
-			Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
-		}
-		MagicController.EnemyDamage = this.status.Magic_Power;
+        if (this.status.MP > 0)
+        {
+            this.status.MP -= 10;
+            audio.PlayOneShot(MagicSe);
+            isOneShotMagic = true;
+            //ロックオンしていたら追従
+            if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+            {
+                magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+                magicInstance.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+            }
+            else
+            {
+                Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
+            }
+            MagicController.EnemyDamage = this.status.Magic_Power;
+        }
+        else
+        {
+            audio.PlayOneShot(NonMagicSe);
+        }
         //Debug.Log(MagicController.EnemyDamage);
     }
 
@@ -601,6 +639,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void WeaponChange()
     {
+
+
 		if (Input.GetKeyDown(KeyCode.Alpha1) || nowWeapon == 0)
 		{
 			nowWeapon = (int)WeaponEnum.SWORD;
@@ -627,6 +667,7 @@ public class PlayerController : MonoBehaviour
         }
         if (mouseButton.rightDown) //Input.GetMouseButtonDown (1)
 		{
+            audio.PlayOneShot(SelectSe);
             Method.Selecting(ref nowWeapon, 3, "up");
 
 		}
@@ -659,7 +700,7 @@ public class PlayerController : MonoBehaviour
             var hime = collider.gameObject.GetComponent<RastBossController>();
             hime.GetComponent<EnemyStatusManager>().Damage(this.status.Sword_Power);
             canSwordDamage = false;
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
         }
         else if ((collider.gameObject.CompareTag("Enemy") ||
                 collider.gameObject.CompareTag("Boss")) && 
@@ -669,7 +710,7 @@ public class PlayerController : MonoBehaviour
             var status = collider.gameObject.GetComponent<EnemyStatusManager>();
             status.Damage(this.status.Sword_Power);
             canSwordDamage = false;
-            //Debug.Log("Hit");
+            Debug.Log("Hit");
         }
     }
 
@@ -697,6 +738,7 @@ public class PlayerController : MonoBehaviour
         this.status.EXP += exp;
         if (this.status.EXP >= this.status.ExpLimit)
         {
+
             status.LevUp();
             LvUp = true;
             isMove = false;

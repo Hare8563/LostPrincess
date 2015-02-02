@@ -45,7 +45,7 @@ public sealed class EnemyStatusManager : MonoBehaviour
     /// 死んだかどうか
     /// </summary>
     private bool isDead = false;
-
+   
     /// <summary>
     /// 初期化
     /// </summary>
@@ -79,6 +79,8 @@ public sealed class EnemyStatusManager : MonoBehaviour
     /// <param name="value">ダメージ量</param>
     public void Damage(int value)
     {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
         this.status.HP -= value;
         if (this.status.HP <= 0)
         {

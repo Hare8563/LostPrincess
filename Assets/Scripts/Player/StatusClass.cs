@@ -89,6 +89,8 @@ namespace StatusClass{
         /// </summary>
 		public void LevUp(){
             this.LEV++;
+            this.HP = lvData.getParamValue(this.LEV, CsvParam.HP);
+            this.MP = lvData.getParamValue(this.LEV, CsvParam.MP);
             this.EXP = 0;
 			this.Sword_Power = lvData.getParamValue(this.LEV, CsvParam.SWORD_ATK);
 			this.Magic_Power = lvData.getParamValue(this.LEV, CsvParam.MAGIC_ATK);
