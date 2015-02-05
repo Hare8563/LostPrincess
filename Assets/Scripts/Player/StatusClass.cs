@@ -36,11 +36,11 @@ namespace StatusClass{
 			lvData = new CsvReader (LvTablePath);
 			LEV = Lv;
 			EXP = 0;
-			HP = lvData.getParamValue(1, CsvParam.HP);
-			MP = lvData.getParamValue(1, CsvParam.MP);
-			BOW_POW = lvData.getParamValue (1, CsvParam.BOW_ATK);
-			Sword_Power=lvData.getParamValue(1,CsvParam.SWORD_ATK);
-			Magic_Power = lvData.getParamValue(1,CsvParam.MAGIC_ATK);
+			HP = lvData.getParamValue(LEV-1, CsvParam.HP);
+			MP = lvData.getParamValue(LEV-1, CsvParam.MP);
+			BOW_POW = lvData.getParamValue (LEV-1, CsvParam.BOW_ATK);
+			Sword_Power=lvData.getParamValue(LEV-1,CsvParam.SWORD_ATK);
+			Magic_Power = lvData.getParamValue(LEV-1,CsvParam.MAGIC_ATK);
 			NAME = "NONAME";
 		}
 

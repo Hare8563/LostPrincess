@@ -3,27 +3,17 @@
   <key>NAME</key>
   <string>プレイヤー</string>
   <key>HP</key>
-<<<<<<< HEAD
-  <integer>100</integer>
-=======
-  <integer>140</integer>
->>>>>>> 0b9d7041ed6b874ed4305e7f305c7e1229164994
+  <integer>1140</integer>
   <key>MP</key>
-  <integer>100</integer>
+  <integer>460</integer>
   <key>LV</key>
-<<<<<<< HEAD
-  <integer>50</integer>
+  <integer>52</integer>
   <key>EXP</key>
-  <integer>16</integer>
-=======
-  <integer>2</integer>
-  <key>EXP</key>
-  <integer>6</integer>
->>>>>>> 0b9d7041ed6b874ed4305e7f305c7e1229164994
+  <integer>15</integer>
   <key>Sword</key>
-  <integer>35</integer>
+  <integer>295</integer>
   <key>Bow</key>
-  <integer>17</integer>
+  <integer>265</integer>
   <key>Magic</key>
-  <integer>33</integer>
+  <integer>290</integer>
 </root>

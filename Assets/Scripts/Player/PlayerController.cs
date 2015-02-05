@@ -484,9 +484,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_StartEvent()
     {
-
         sword_trail.GetComponent<TrailRenderer> ().enabled = true;
-		
 		audio.PlayOneShot(SwordSe);
         canSwordDamage = true;
     }
@@ -496,9 +494,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_EndEvent()
     {
-
         sword_trail.GetComponent<TrailRenderer> ().enabled = false;
-
         canSwordDamage = false;
     }
 
@@ -693,8 +689,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="collider"></param>
     void OnTriggerStay(Collider collider)
-    {
-        
+    { 
         if (collider.gameObject.CompareTag("Hime") && canSwordDamage)
         {
             //Instantiate(HitEffect, collider.transform.position, this.transform.rotation);
@@ -776,6 +771,7 @@ public class PlayerController : MonoBehaviour
         {
             this.isDamage = true;
         }
+        Debug.Log(this.status.HP);
     }
 
     /// <summary>

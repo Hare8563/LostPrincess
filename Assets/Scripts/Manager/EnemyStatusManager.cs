@@ -2,6 +2,7 @@
 using System.Collections;
 using StatusClass;
 
+[RequireComponent(typeof(AudioSource))]
 public sealed class EnemyStatusManager : MonoBehaviour
 {
     /// <summary>
@@ -51,6 +52,7 @@ public sealed class EnemyStatusManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
+		//Debug.Log("LV = " + lv);
         switch (type)
         {
             case Type.enemy:
@@ -63,6 +65,7 @@ public sealed class EnemyStatusManager : MonoBehaviour
 						status = new Status(lv, "Assets/RastBassTable.csv");
                 break;
         }
+		//Debug.Log("HP = " + status.HP);
     }
 
     /// <summary>

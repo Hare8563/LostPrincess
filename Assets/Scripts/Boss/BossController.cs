@@ -173,9 +173,9 @@ public class BossController : MonoBehaviour {
     /// </summary>
     private GameObject[] EnemyObject = new GameObject[2];
     /// <summary>
-    /// 追加敵を出現させる時のHP
+    /// 初期HP
     /// </summary>
-    public float ActiveEnemyHP;
+    private float InitHP;
     /// <summary>
     /// 剣振り効果音
     /// </summary>
@@ -196,6 +196,10 @@ public class BossController : MonoBehaviour {
     /// 弓オブジェクトインスタンス
     /// </summary>
     private GameObject arrowInstance;
+    /// <summary>
+    /// 剣による攻撃が与えられるか
+    /// </summary>
+    private bool canSwordDamage = false;
 
     /// <summary>
     /// 読み込み
@@ -240,6 +244,8 @@ public class BossController : MonoBehaviour {
         RandomRand = Random.Range(180, 300);
 
         status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
+
+		InitHP = this.GetComponent<EnemyStatusManager>().getStatus().HP;
 	}
 	
 	/// <summary>
@@ -260,7 +266,8 @@ public class BossController : MonoBehaviour {
         AnimationCheck();
 
         //HPが指定数以下になったら
-        if (this.GetComponent<EnemyStatusManager>().getStatus().HP <= ActiveEnemyHP)
+		//Debug.Log(this.GetComponent<EnemyStatusManager>().getStatus().HP);
+        if (this.GetComponent<EnemyStatusManager>().getStatus().HP <= InitHP / 2)
         {
             for (int i = 0; i < EnemyObject.Length; i++)
             {
@@ -576,11 +583,19 @@ public class BossController : MonoBehaviour {
     }
 
     /// <summary>
-    /// 剣攻撃イベント
+    /// 剣攻撃開始イベント
     /// </summary>
-    void SwordAttackEvent()
+    void SwordAttack_StartEvent()
     {
+        canSwordDamage = true;
+    }
 
+    /// <summary>
+    /// 剣攻撃終了イベント
+    /// </summary>
+    void SwordAttack_EndEvent()
+    {
+        canSwordDamage = false;
     }
 
     /// <summary>
@@ -604,5 +619,19 @@ public class BossController : MonoBehaviour {
         arrowInstance.GetComponent<BowController>().setIsAutoAim(true);
         BowController.PlayerDamage = this.status.BOW_POW;
         audio.PlayOneShot(BowSe);
+    }
+
+    /// <summary>
+    /// 何かに当たり続けたら(トリガー)
+    /// </summary>
+    /// <param name="collider"></param>
+    void OnTriggerStay(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Player") && canSwordDamage)
+        {
+            canSwordDamage = false;
+            var status = collider.gameObject.GetComponent<PlayerController>();
+            status.Damage(this.status.Sword_Power);
+        }
     }
 }
