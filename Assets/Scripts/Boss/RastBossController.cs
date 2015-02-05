@@ -197,6 +197,10 @@ public class RastBossController : MonoBehaviour
     /// 初期HP
     /// </summary>
     private float initHp;
+    /// <summary>
+    /// 攻撃アイコンオブジェクト
+    /// </summary>
+    private GameObject AttackIconObject;
 
 #if skillDebug
     //ノーマルスキル
@@ -221,6 +225,8 @@ public class RastBossController : MonoBehaviour
         DashEffect = this.transform.FindChild("DashEffect").gameObject;
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
         ShieldObject = GameObject.Find("Shield");
+        AttackIconObject = GameObject.Find("HimeAttackIcon");
+        //Debug.Log(AttackIconObject);
     }
 
     /// <summary>
@@ -228,7 +234,7 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void Start()
     {
-				status = new Status(30, "CSV/RastBassTable");
+		status = new Status(30, "CSV/RastBassTable");
         //エフェクトサイズとライト光量を初期化
         nowEffectSize = EfectSize_Min;
         nowLightIntensity = EfectLightIntensity_Min;
@@ -268,6 +274,7 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void Move()
     {
+        AttackIconObject.GetComponent<AttackIconScript>().setAttackIcon("");
         //HPが半分以下だったら
         if (!isHarf && this.GetComponent<EnemyStatusManager>().getStatus().HP <= initHp / 2)
         {
@@ -398,6 +405,7 @@ public class RastBossController : MonoBehaviour
     {
 		float maxScale = 50f;
 		float maxDis = 600f;
+        AttackIconObject.GetComponent<AttackIconScript>().setAttackIcon("sword");
         if (AttackFlag)
         {       
             //スキル発動
@@ -434,6 +442,7 @@ public class RastBossController : MonoBehaviour
     void BigMeteo()
     {
         isDashEffect = false;
+        AttackIconObject.GetComponent<AttackIconScript>().setAttackIcon("bow");
         //移動
         //TODO:移動処理（必要なら）
         if (AttackFlag)
@@ -486,6 +495,7 @@ public class RastBossController : MonoBehaviour
     void PhotonLaser()
     {
         isDashEffect = false;
+        AttackIconObject.GetComponent<AttackIconScript>().setAttackIcon("magic");
         //チャージ行動（？）
         //TODO:チャージ行動処理
 
