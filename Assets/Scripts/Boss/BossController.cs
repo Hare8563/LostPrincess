@@ -196,6 +196,10 @@ public class BossController : MonoBehaviour {
     /// 弓オブジェクトインスタンス
     /// </summary>
     private GameObject arrowInstance;
+    /// <summary>
+    /// 初期HP
+    /// </summary>
+    private float initHp;
 
     /// <summary>
     /// 読み込み
@@ -240,6 +244,7 @@ public class BossController : MonoBehaviour {
         RandomRand = Random.Range(180, 300);
 
         status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
+        initHp = status.HP;
 	}
 	
 	/// <summary>
@@ -260,7 +265,7 @@ public class BossController : MonoBehaviour {
         AnimationCheck();
 
         //HPが指定数以下になったら
-        if (this.GetComponent<EnemyStatusManager>().getStatus().HP <= ActiveEnemyHP)
+        if (this.GetComponent<EnemyStatusManager>().getStatus().HP <= initHp / 2)
         {
             for (int i = 0; i < EnemyObject.Length; i++)
             {
@@ -268,6 +273,7 @@ public class BossController : MonoBehaviour {
             }
         }
         //Debug.Log(this.rigidbody.velocity);
+        Debug.Log(this.status.HP);
     }
 
     /// <summary>
