@@ -12,7 +12,7 @@ namespace CSV{
 		private int[,] csvData;
 
 		public CsvReader(string filePath){
-            Debug.Log(filePath);
+            //Debug.Log(filePath);
             var csvFile = Resources.Load(filePath) as TextAsset;
            
 //            using (System.IO.StreamReader sr = new System.IO.StreamReader(filePath, System.Text.Encoding.Default))
