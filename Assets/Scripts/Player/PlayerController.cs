@@ -541,7 +541,6 @@ public class PlayerController : MonoBehaviour
 		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
 		{
 			arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-			arrowInstance.GetComponent<BowController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
 		}
 		else
 		{
