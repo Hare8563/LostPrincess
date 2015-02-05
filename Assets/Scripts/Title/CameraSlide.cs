@@ -18,9 +18,24 @@ public class CameraSlide : MonoBehaviour {
     /// 現在のZ座標
     /// </summary>
     private float nowZ = 0;
+    /// <summary>
+    /// 初期Z座標
+    /// </summary>
+    private float InitZ;
+    /// <summary>
+    /// プレイヤーオブジェクト
+    /// </summary>
+    private GameObject PlayerObject;
+
+    void Awake()
+    {
+        PlayerObject = GameObject.FindGameObjectWithTag("Player");
+    }
+
 	// Use this for initialization
-	void Start () {
-	    
+	void Start () 
+    {
+        InitZ = this.transform.position.z;    
 	}
 	
 	// Update is called once per frame
@@ -29,18 +44,13 @@ public class CameraSlide : MonoBehaviour {
         nowZ += Speed * Method.GameTime();
         if (nowZ >= MaxZ)
         {
-            nowZ = 0;
-            isEnd = true;
+            nowZ = InitZ;
+            PlayerObject.GetComponent<TitleCharaController>().Initialize();
         }
         else
         {
-            isEnd = false;
+            
         }
         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, nowZ);
 	}
-
-    /// <summary>
-    /// 最後まで来たフラグ
-    /// </summary>
-    public static bool isEnd { set; get; }
 }
