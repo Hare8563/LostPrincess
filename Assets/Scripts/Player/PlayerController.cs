@@ -287,7 +287,7 @@ public class PlayerController : MonoBehaviour
             statusManager.getLoadStatus().EXP,
             statusManager.getLoadStatus().HP,
             statusManager.getLoadStatus().MP,
-			statusManager.getLoadStatus().NAME, "Assets/LvTable.csv");
+						statusManager.getLoadStatus().NAME, "CSV/LvTable");
         Weapon_Sword.renderer.enabled = true;
         Weapon_Rod.renderer.enabled = false;
         Weapon_Bow.renderer.enabled = false;
@@ -387,8 +387,7 @@ public class PlayerController : MonoBehaviour
     {
         //skill = new Skill(ShotPoint.transform.position, this.transform.rotation, "Boss");
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
-		if (!isDeadFlag &&
-		    currentBaseState.nameHash != DamageState &&
+        if (currentBaseState.nameHash != DamageState &&
             mouseButton.left)
         {
             switch (nowWeapon)
@@ -484,7 +483,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_StartEvent()
     {
+
         sword_trail.GetComponent<TrailRenderer> ().enabled = true;
+		
 		audio.PlayOneShot(SwordSe);
         canSwordDamage = true;
     }
@@ -494,7 +495,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_EndEvent()
     {
+
         sword_trail.GetComponent<TrailRenderer> ().enabled = false;
+
         canSwordDamage = false;
     }
 
@@ -689,7 +692,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="collider"></param>
     void OnTriggerStay(Collider collider)
-    { 
+    {
+        
         if (collider.gameObject.CompareTag("Hime") && canSwordDamage)
         {
             //Instantiate(HitEffect, collider.transform.position, this.transform.rotation);
@@ -771,7 +775,6 @@ public class PlayerController : MonoBehaviour
         {
             this.isDamage = true;
         }
-        Debug.Log(this.status.HP);
     }
 
     /// <summary>

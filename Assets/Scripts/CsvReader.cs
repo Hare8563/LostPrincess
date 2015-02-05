@@ -12,15 +12,18 @@ namespace CSV{
 		private int[,] csvData;
 
 		public CsvReader(string filePath){
-			
-			using (System.IO.StreamReader sr = new System.IO.StreamReader(filePath, System.Text.Encoding.Default))
-			{
+            Debug.Log(filePath);
+            var csvFile = Resources.Load(filePath) as TextAsset;
+           
+//            using (System.IO.StreamReader sr = new System.IO.StreamReader(filePath, System.Text.Encoding.Default))
+//			{
 					string str = "";
 					List<string> arrText = new List<string>();
 
-					while (str != null)
+                    System.IO.StringReader reader = new System.IO.StringReader(csvFile.text);
+                    while (reader.Peek() > -1)
 					{
-							str = sr.ReadLine();
+                            str = reader.ReadLine();
 							if (str != null)
 							{
 									arrText.Add(str);
@@ -48,8 +51,8 @@ namespace CSV{
 							a++;
 					}
 
-					sr.Close();
-			}
+//					sr.Close();
+//			}
 		}
 
 		public int getParamValue(int level, CsvParam param){
