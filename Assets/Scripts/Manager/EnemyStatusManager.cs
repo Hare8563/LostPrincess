@@ -63,6 +63,9 @@ public sealed class EnemyStatusManager : MonoBehaviour
 						status = new Status(lv, "CSV/RastBassTable");
                 break;
         }
+        //Debug.Log("TYPE = " + type.ToString());
+        //Debug.Log("LV = " + lv);
+        //Debug.Log("HP = " + status.HP);
     }
 
     /// <summary>
