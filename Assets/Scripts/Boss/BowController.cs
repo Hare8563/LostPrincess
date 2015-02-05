@@ -77,7 +77,7 @@ public class BowController : MonoBehaviour {
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward.normalized, out hit, Mathf.Infinity))//, 1 << LayerMask.NameToLayer("Stage")))
                 {
                     this.transform.rotation = Quaternion.LookRotation(hit.point - this.transform.position);
-                    Debug.Log("hit");
+                    //Debug.Log("hit");
                 }
                 else
                 {

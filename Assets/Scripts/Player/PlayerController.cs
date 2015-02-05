@@ -495,9 +495,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_StartEvent()
     {
-
         sword_trail.GetComponent<TrailRenderer> ().enabled = true;
-		
 		audio.PlayOneShot(SwordSe);
         canSwordDamage = true;
     }

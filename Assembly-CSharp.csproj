@@ -54,6 +54,7 @@
      <Compile Include="Assets\JMO Assets\MatCap Shaders\Demo\Assets\MC_SwitchTexture.cs" />
      <Compile Include="Assets\ProCore\Prototype\Scripts\RebuildMeshOnWake.cs" />
      <Compile Include="Assets\Scripts\Ambient\Lightningcontroller.cs" />
+     <Compile Include="Assets\Scripts\Boss\AttackIconScript.cs" />
      <Compile Include="Assets\Scripts\Boss\BossController.cs" />
      <Compile Include="Assets\Scripts\Boss\BowController.cs" />
      <Compile Include="Assets\Scripts\Boss\CollisionOnly.cs" />
@@ -83,6 +84,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\StatusClass.cs" />
      <Compile Include="Assets\Scripts\PlayerName.cs" />
+     <Compile Include="Assets\Scripts\Publics\BillBord.cs" />
      <Compile Include="Assets\Scripts\Publics\GUITextureResize.cs" />
      <Compile Include="Assets\Scripts\Publics\GameObjectExtensions.cs" />
      <Compile Include="Assets\Scripts\Publics\GetObjecter.cs" />
