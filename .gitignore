@@ -6,4 +6,5 @@ Temp
 *.userprefs
 *.xml
 *.csproj
+*.log
 Assembly*
