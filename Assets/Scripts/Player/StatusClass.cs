@@ -21,7 +21,7 @@ namespace StatusClass{
         /// デフォルトコンストラクタ
         /// </summary>
 		public Status(){
-			lvData = new CsvReader ("Assets/LvTable.csv");
+			lvData = new CsvReader ("CSV/LvTable");
 			LEV = 1;
 			EXP = 0;
 			HP = lvData.getParamValue(1, CsvParam.HP);

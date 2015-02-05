@@ -48,6 +48,7 @@ public class StatusManager : MonoBehaviour {
     /// </summary>
     public bool isHimeBattle = false;
     
+
     /// <summary>
     /// 読み込み
     /// </summary>

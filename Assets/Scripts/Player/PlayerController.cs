@@ -287,7 +287,7 @@ public class PlayerController : MonoBehaviour
             statusManager.getLoadStatus().EXP,
             statusManager.getLoadStatus().HP,
             statusManager.getLoadStatus().MP,
-			statusManager.getLoadStatus().NAME, "Assets/LvTable.csv");
+						statusManager.getLoadStatus().NAME, "CSV/LvTable");
         Weapon_Sword.renderer.enabled = true;
         Weapon_Rod.renderer.enabled = false;
         Weapon_Bow.renderer.enabled = false;

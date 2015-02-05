@@ -54,13 +54,13 @@ public sealed class EnemyStatusManager : MonoBehaviour
         switch (type)
         {
             case Type.enemy:
-						status = new Status(lv, "Assets/EnemyTable.csv");
+						status = new Status(lv, "CSV/EnemyTable");
                 break;
             case Type.boss:
-						status = new Status(lv, "Assets/RastBassTable.csv");
+						status = new Status(lv, "CSV/RastBassTable");
                 break;
             case Type.hime:
-						status = new Status(lv, "Assets/RastBassTable.csv");
+						status = new Status(lv, "CSV/RastBassTable");
                 break;
         }
     }
