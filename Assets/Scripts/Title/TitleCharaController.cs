@@ -69,4 +69,9 @@ public class TitleCharaController : MonoBehaviour {
             }
         }
 	}
+
+    void RunSeTiming()
+    {
+
+    }
 }
