@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
+<<<<<<< HEAD
+  <string>
+  </string>
+=======
   <string>test</string>
+>>>>>>> 342e07c2544536efd30a39992b1335b3966ee555
   <key>HP</key>
   <integer>100</integer>
   <key>MP</key>

@@ -6,16 +6,28 @@ public class LoadingController : MonoBehaviour {
     /// シーン名
     /// </summary>
     private static string SceneName = "";
+    /// <summary>
+    /// ゲーム最初のロード画面か
+    /// </summary>
+    private static bool isInit = true;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start () 
+    {
+        if (isInit)
+        {
+            isInit = false;
+            Application.LoadLevel("Title");
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        Application.LoadLevel(SceneName);
+        if (!isInit)
+        {
+            Application.LoadLevel(SceneName);
+        }
 	}
 
     /// <summary>
