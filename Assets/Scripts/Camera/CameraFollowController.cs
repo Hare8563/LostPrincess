@@ -54,7 +54,7 @@ public class CameraFollowController : MonoBehaviour
             else if (mouceWheelValue > 0.5f) { mouceWheelValue = 0.5f; }
             Vector3 toOriginVec = Camera.main.transform.position - this.transform.parent.position;
             Camera.main.transform.position = this.transform.position + toOriginVec * mouceWheelValue;
-            Debug.Log(mouceWheelValue * 100f);
+            //Debug.Log(mouceWheelValue * 100f);
             CameraIcon.transform.position = new Vector3(CameraIcon.transform.position.x, CameraIconInit_Y - mouceWheelValue * 300f, CameraIcon.transform.position.z);
         }
         //Camera.main.transform.LookAt(this.transform.parent.transform.position);
