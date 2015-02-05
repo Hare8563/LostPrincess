@@ -4,3 +4,7 @@ Temp
 *.unityproj
 *.sln
 *.userprefs
+*.xml
+*.csproj
+*.log
+Assembly*
