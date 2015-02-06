@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-  <string>test</string>
+  <string>
+  </string>
   <key>HP</key>
   <integer>100</integer>
   <key>MP</key>

@@ -21,11 +21,20 @@ public class BigMeteo : MonoBehaviour {
     /// 反射させられたか
     /// </summary>
     private bool isReflect = false;
+    /// <summary>
+    /// シールドオブジェクト
+    /// </summary>
+    private GameObject ShieldObject;
+    /// <summary>
+    /// シールドコントローラー
+    /// </summary>
+    private ShieldController shieldController;
 
     void Awake()
     {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
         EnemyObject = GameObject.FindGameObjectWithTag("Hime");
+        ShieldObject = GameObject.Find("Shield");
     }
 
 	// Use this for initialization
@@ -39,7 +48,16 @@ public class BigMeteo : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        
+        if (!isReflect)
+        {
+            this.gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
+        }
+        else
+        {
+            this.gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
+            shieldController = ShieldObject.GetComponent<ShieldController>();
+            shieldController.setToShieldCollision("BigMeteoBall");
+        }
 	}
 
 	void FixedUpdate()

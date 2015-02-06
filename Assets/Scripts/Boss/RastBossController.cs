@@ -234,7 +234,8 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void Start()
     {
-		status = new Status(30, "CSV/RastBassTable");
+		//status = new Status(30, "CSV/RastBassTable");
+        status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
         //エフェクトサイズとライト光量を初期化
         nowEffectSize = EfectSize_Min;
         nowLightIntensity = EfectLightIntensity_Min;
@@ -267,6 +268,7 @@ public class RastBossController : MonoBehaviour
         {
             LoadingController.NextScene("Title");
 		}
+        Debug.Log(status.HP);
     }
 
     /// <summary>
@@ -371,10 +373,11 @@ public class RastBossController : MonoBehaviour
 			//ダウン時間経過
 			DownTime += Method.GameTime();
 			//5秒間ダウン
-			if(DownTime > 300)
+			if(DownTime > 300 || this.transform.position.y < -20)
 			{
+                DownTime = 301;
 				//上昇
-				if(this.transform.position.y < 20f)
+				if(this.transform.position.y < 10f)
 				{
 					this.rigidbody.AddForce(this.transform.TransformDirection(Vector3.up).normalized * 1, ForceMode.VelocityChange);
 				}
