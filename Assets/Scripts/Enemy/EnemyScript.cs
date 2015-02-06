@@ -28,6 +28,16 @@ public class EnemyScript : MonoBehaviour
     private AudioClip expGetSe;
 
     /// <summary>
+    /// 敵のタイプ
+    /// </summary>
+    [SerializeField]
+    private enum Type
+    {
+        sword = 0,
+        magic,
+        bow,
+    }
+    /// <summary>
     /// 初期化
     /// </summary>
     void Start()
