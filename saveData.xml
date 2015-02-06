@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-  <string>勇者</string>
+  <string>test</string>
   <key>HP</key>
-  <integer>140</integer>
+  <integer>137</integer>
   <key>MP</key>
   <integer>70</integer>
   <key>LV</key>
