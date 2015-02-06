@@ -247,6 +247,15 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private GameObject sword_trail;
 
+    /// <summary>
+    /// 初期MP
+    /// </summary>
+    private float InitMP;
+    /// <summary>
+    /// MP回復タイミングまでのカウント
+    /// </summary>
+    private float RecoveryTimingCount = 0;
+
 
 	void Awake()
 	{
@@ -287,10 +296,11 @@ public class PlayerController : MonoBehaviour
             statusManager.getLoadStatus().EXP,
             statusManager.getLoadStatus().HP,
             statusManager.getLoadStatus().MP,
-			statusManager.getLoadStatus().NAME, "Assets/LvTable.csv");
+						statusManager.getLoadStatus().NAME, "CSV/LvTable");
         Weapon_Sword.renderer.enabled = true;
         Weapon_Rod.renderer.enabled = false;
         Weapon_Bow.renderer.enabled = false;
+        InitMP = status.MP;
     }
 
     void Update()
@@ -303,6 +313,8 @@ public class PlayerController : MonoBehaviour
         AnimationCheck();
         //ボタンイベント
         ButtonEvent();
+        //MP回復
+        MPRecovery();
     }
 
     // Update is called once per frame
@@ -483,9 +495,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_StartEvent()
     {
-
         sword_trail.GetComponent<TrailRenderer> ().enabled = true;
-		
 		audio.PlayOneShot(SwordSe);
         canSwordDamage = true;
     }
@@ -506,9 +516,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void MagicAttackEvent()
     {
-        if (this.status.MP > 0)
+        int useMP = 10;
+        if (this.status.MP > useMP)
         {
-            this.status.MP -= 10;
+            this.status.MP -= useMP;
             audio.PlayOneShot(MagicSe);
             isOneShotMagic = true;
             //ロックオンしていたら追従
@@ -541,7 +552,6 @@ public class PlayerController : MonoBehaviour
 		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
 		{
 			arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-			arrowInstance.GetComponent<BowController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
 		}
 		else
 		{
@@ -639,8 +649,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void WeaponChange()
     {
-
-
 		if (Input.GetKeyDown(KeyCode.Alpha1) || nowWeapon == 0)
 		{
 			nowWeapon = (int)WeaponEnum.SWORD;
@@ -762,18 +770,35 @@ public class PlayerController : MonoBehaviour
         {
             this.status.HP = 0;
         }
-        //HPが無くなったら死亡フラグを立てる
-        if (this.status.HP <= 0 && !isDeadFlag && canDead)
-        {
-            this.deadFlag = true;
-            isDeadFlag = true;
-            Application.LoadLevelAdditive("GameOver");
-            Time.timeScale = 0.3f;
-        }
+        ////HPが無くなったら死亡フラグを立てる
+        //if (this.status.HP <= 0 && !isDeadFlag && canDead)
+        //{
+        //    this.deadFlag = true;
+        //    isDeadFlag = true;
+        //    Application.LoadLevelAdditive("GameOver");
+        //    Time.timeScale = 0.3f;
+        //}
+        //else
         //HPが残っていたらダメージフラグ
-        else if (deadFlag != false)
+        if (deadFlag != false)
         {
             this.isDamage = true;
+        }
+    }
+
+    /// <summary>
+    /// MPの回復
+    /// </summary>
+    private void MPRecovery()
+    {
+        RecoveryTimingCount += Method.GameTime();
+        if ((int)RecoveryTimingCount % 10 == 0)
+        {
+            RecoveryTimingCount = 0;
+            if (InitMP > status.MP)
+            {
+                status.MP += 1;
+            }
         }
     }
 

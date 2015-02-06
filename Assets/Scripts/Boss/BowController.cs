@@ -52,29 +52,39 @@ public class BowController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        
-        
+       
 	}
 
 	void FixedUpdate()
-	{
-		//まだ打ってなかったら
-		if (!isSetRot)
-		{
-			//ターゲットが存在していたら
-			if (Target != null)
-			{
-				isSetRot = true;
-                //Debug.Log(this.transform.position);
-				Vector3 TargetCenter = new Vector3();
+    { 
+        //まだ打ってなかったら
+        if (!isSetRot)
+        {
+            //ターゲットが存在していたら
+            if (Target != null)
+            {
+                isSetRot = true;
+                Vector3 TargetCenter = new Vector3();
                 TargetCenter = Method.FutureDeviation(Target, Speed, this.transform.position) + new Vector3(0, 4.0f, 0);// Target.transform.position + new Vector3(0, 4.0f, 0);
                 this.transform.rotation = Quaternion.LookRotation(TargetCenter - this.transform.position);
-                //this.transform.LookAt(TargetCenter - this.transform.position);
-				//Debug.Log(TargetCenter);
-				// ターゲットとの距離
-				float Distance = Vector3.Distance(TargetCenter, this.transform.position);
-			}
-		}
+                // ターゲットとの距離
+                float Distance = Vector3.Distance(TargetCenter, this.transform.position);
+            }
+            else
+            {
+                isSetRot = true;
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward.normalized, out hit, Mathf.Infinity))//, 1 << LayerMask.NameToLayer("Stage")))
+                {
+                    this.transform.rotation = Quaternion.LookRotation(hit.point - this.transform.position);
+                    //Debug.Log("hit");
+                }
+                else
+                {
+                    this.transform.rotation = Camera.main.transform.rotation;
+                }
+            }
+        }
 		transform.Translate(Vector3.forward * Speed);
 	}
 
@@ -110,18 +120,22 @@ public class BowController : MonoBehaviour {
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
         }
+        else if (Target == null && 
+                (collider.tag == "Boss" ||
+                collider.tag == "Enemy" ||
+                collider.tag == "Hime"))
+        {
+            collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
+            Instantiate(HitEffect, this.transform.position, this.transform.rotation);
+            Destroy(this.gameObject);
+        }
         if (Target != null && Target.tag == collider.tag)
         {
             if (Target.tag == "Player")
             {
                 Target.GetComponent<PlayerController>().Damage(PlayerDamage);
             }
-            else if (Target.tag == "Boss" ||
-                Target.tag == "Enemy" ||
-                Target.tag == "Hime")
-            {
-                Target.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
-            }
+            
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
         }

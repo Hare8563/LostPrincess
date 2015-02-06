@@ -37,6 +37,7 @@ public class TitleCharaController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
+        nextNode = 1;
         node = GameObject.Find("Node_" + nextNode);
         InitPos = this.transform.position;
         InitRot = this.transform.rotation;
@@ -58,15 +59,19 @@ public class TitleCharaController : MonoBehaviour {
             {
                 node = GameObject.Find("Node_" + nextNode);
             }
-            else if (CameraSlide.isEnd)
-            {
-                nextNode = 1;
-                node = GameObject.Find("Node_" + nextNode);
-                this.transform.position = InitPos;
-                this.transform.rotation = InitRot;
-                GameObject slide = GameObject.Find("Slide");
-                slide.transform.position = new Vector3(0, 0, 0);
-            }
         }
 	}
+
+    public void Initialize()
+    {
+        nextNode = 1;
+        node = GameObject.Find("Node_" + nextNode);
+        this.transform.position = InitPos;
+        this.transform.rotation = InitRot;
+    }
+
+    void RunSeTiming()
+    {
+
+    }
 }

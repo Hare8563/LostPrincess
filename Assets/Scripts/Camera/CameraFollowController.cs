@@ -3,10 +3,28 @@ using System.Collections;
 
 public class CameraFollowController : MonoBehaviour
 {
+    /// <summary>
+    /// マウスホイールの移動量
+    /// </summary>
+    private float mouceWheel;
+    /// <summary>
+    /// マウスホイールの合計移動量
+    /// </summary>
+    private float mouceWheelValue;
+    /// <summary>
+    /// カメラアイコンUIオブジェクト
+    /// </summary>
+    private GameObject CameraIcon;
+    /// <summary>
+    /// カメラアイコンの初期Y座標
+    /// </summary>
+    private float CameraIconInit_Y;
+
     // Use this for initialization
     void Start()
     {
-
+        CameraIcon = GameObject.Find("ZoomCameraIcon");
+        CameraIconInit_Y = CameraIcon.transform.position.y;
     }
 
     // Update is called once per frame
@@ -21,12 +39,24 @@ public class CameraFollowController : MonoBehaviour
         if (Physics.Raycast(this.transform.parent.transform.position, toVec, out hit, dis, 1 << LayerMask.NameToLayer("Stage")))
         {
             //ポリゴン埋まりを防ぐために少しプレイヤー方向へカメラを戻す
-			float backDis = 0.3f;
+			float backDis = 0.5f;
 			Camera.main.transform.position = hit.point - toVec.normalized * backDis;
         }
         else
         {
-            Camera.main.transform.position = this.transform.position;
+            //カメラを自身の場所へ移動
+            //Camera.main.transform.position = this.transform.position;
+            //マウスホイールによってプレイヤーとの距離を変更
+            mouceWheel = Input.GetAxis("Mouse ScrollWheel");
+            mouceWheelValue += -mouceWheel;
+            //距離制限
+            if (mouceWheelValue < -0.5f) { mouceWheelValue = -0.5f; }
+            else if (mouceWheelValue > 0.5f) { mouceWheelValue = 0.5f; }
+            Vector3 toOriginVec = Camera.main.transform.position - this.transform.parent.position;
+            Camera.main.transform.position = this.transform.position + toOriginVec * mouceWheelValue;
+            //Debug.Log(mouceWheelValue * 100f);
+            CameraIcon.transform.position = new Vector3(CameraIcon.transform.position.x, CameraIconInit_Y - mouceWheelValue * 300f, CameraIcon.transform.position.z);
         }
+        //Camera.main.transform.LookAt(this.transform.parent.transform.position);
     }
 }
