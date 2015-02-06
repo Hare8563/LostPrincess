@@ -4,17 +4,17 @@
   <string>
   </string>
   <key>HP</key>
-  <integer>100</integer>
+  <integer>160</integer>
   <key>MP</key>
-  <integer>100</integer>
+  <integer>80</integer>
   <key>LV</key>
-  <integer>1</integer>
+  <integer>3</integer>
   <key>EXP</key>
   <integer>0</integer>
   <key>Sword</key>
   <integer>10</integer>
-  <key>Magic</key>
-  <integer>8</integer>
   <key>Bow</key>
-  <integer>5</integer>
+  <integer>7</integer>
+  <key>Magic</key>
+  <integer>4</integer>
 </root>
