@@ -378,7 +378,7 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
             }
             //カメラ方向へキャラクターの向きを調整する
-            transform.rotation *= mainCamera.transform.rotation;
+			transform.rotation = Quaternion.Slerp(transform.rotation,mainCamera.transform.rotation, rotSpeed);
             transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
 
             //ジャンプ
