@@ -27,6 +27,13 @@ public class EnemyScript : MonoBehaviour
     [SerializeField]
     private AudioClip expGetSe;
 
+
+    /// <summary>
+    /// 魔法効果音
+    /// </summary>
+    [SerializeField]
+    private AudioClip MagicSe;
+
     ///<summary>
     /// 敵のタイプを設定するenum
     /// </summary>
@@ -55,11 +62,24 @@ public class EnemyScript : MonoBehaviour
 
     private GameObject ArrowInstance;
 
+    /// <summary>
+    /// 魔法オブジェクトインスタンス
+    /// </summary>
+    /// 
+    private GameObject MagicBallObject;
+    private GameObject magicInstance;
+
+    private bool deadFlag = false;
+
     void Awake()
     {
         if (type == EnemyType.BowEnemy)
         {
             ArrowObject = Resources.Load("Prefab/Arrow") as GameObject;
+        }
+        else if (type == EnemyType.MagicEnemy)
+        {
+            MagicBallObject = Resources.Load("Prefab/MagicBall") as GameObject;
         }
     }
 
@@ -87,6 +107,7 @@ public class EnemyScript : MonoBehaviour
                 EnemySwordAction();
                 break;
             case EnemyType.MagicEnemy:
+                EnemyMagicAction();
                 break;
             case EnemyType.BowEnemy:
                 EnemyBowAction();
@@ -97,7 +118,7 @@ public class EnemyScript : MonoBehaviour
     }
 
 	IEnumerator Coroutine(){
-			player.GetComponent<PlayerController> ().GetExp (3);
+			
 			yield return null;
 	}
 
@@ -133,14 +154,60 @@ public class EnemyScript : MonoBehaviour
         if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
         {
             audio.PlayOneShot(expGetSe);
-            StartCoroutine(@"Coroutine");
-            Destroy(this.gameObject);
+			this.collider.enabled = false;
+			deadFlag = true;
         }
         GetComponent<Animator>().SetBool(@"IsAttack", swordAttack);
         GetComponent<Animator>().SetBool(@"IsRunning", running);
+        GetComponent<Animator>().SetBool(@"deadFlag", deadFlag);
+    }
+    /// <summary>
+    /// 魔法による攻撃アクション
+    /// </summary>
+    private void EnemyMagicAction()
+    {
+        bool magicAttack = false;
+        bool walking = false;
+        float MaxDis = 30.0f;
+        float MinDis = 20.0f;
+
+        var distance = this.transform.position - player.transform.position;
+
+
+        //Debug.Log (Mathf.Sqrt(val));
+        //プレイヤーが近づいてきたら自分も近づく
+        if (twoPointDistance <= MaxDis && twoPointDistance > MinDis)
+        {
+            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (player.transform.position - this.transform.position), 1.0f);
+            this.transform.rotation = new Quaternion (0, this.transform.rotation.y, 0, this.transform.rotation.w);
+
+            Vector3 enemyVector = distance.normalized;
+            this.rigidbody.AddForce (-5.0f*enemyVector, ForceMode.VelocityChange);
+            //transform.Translate (Vector3.forward* 0.2f);
+            walking = true;
+        }
+        //目の前に来たら攻撃
+        if (twoPointDistance <= MinDis)
+        {
+            walking = false;
+            magicAttack = true;
+        }
+        //HPが0になったら経験値を取得
+        if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
+        {
+            audio.PlayOneShot(expGetSe);
+			this.collider.enabled = false;
+            deadFlag = true;
+        }
+
+        GetComponent<Animator>().SetBool(@"MagicAttack", magicAttack);
+        GetComponent<Animator>().SetBool(@"walking", walking);
+        GetComponent<Animator>().SetBool(@"deadFlag", deadFlag);
     }
 
-
+    /// <summary>
+    /// 弓キャラの攻撃アクション
+    /// </summary>
     private void EnemyBowAction()
     {
         bool bowAttack = false;
@@ -160,10 +227,11 @@ public class EnemyScript : MonoBehaviour
         if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
         {
             audio.PlayOneShot(expGetSe);
-            StartCoroutine(@"Coroutine");
-            Destroy(this.gameObject);
+            this.collider.enabled = false;
+            deadFlag = true;
         }
         GetComponent<Animator>().SetBool(@"attack", bowAttack);
+        GetComponent<Animator>().SetBool(@"deadFlag", deadFlag);
     }
 
 	public void AttackStartEvent()
@@ -174,6 +242,21 @@ public class EnemyScript : MonoBehaviour
     public void AttackEndEvent()
     {
         AttackFlag = false;
+    }
+
+    public void magicAttackEvent()
+    {
+        magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(player.transform.position - this.transform.position)) as GameObject;
+        magicInstance.GetComponent<MagicController>().setTargetObject(player);
+        MagicController.PlayerDamage = this.status.Magic_Power;
+        audio.PlayOneShot(MagicSe);
+    }
+
+	
+    public void DeadEvent()
+    {
+		player.GetComponent<PlayerController> ().GetExp (3);
+        Destroy(this.gameObject);
     }
 
     public void bowAttackEvent()

@@ -30,7 +30,7 @@ public class InputForm : MonoBehaviour {
 		InputFormName=GUI.TextField(rect1, InputFormName);
 		Rect rect2 = new Rect((formWidth - 70)/2 + (width-formWidth)/2,
 							  (formHeight - 200)/2+(height-formHeight)/2+100 , 70, 20);
-		if (GUI.Button (rect2, "決定")) {
+		if (GUI.Button (rect2, "決定") || Event.current.keyCode == KeyCode.Return) {
 			//クリックしたときの関数実行
 			PlayerPrefsEx prefs = new PlayerPrefsEx ();
 			prefs.SetString ("NAME", InputFormName);
