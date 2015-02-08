@@ -166,16 +166,16 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="ProBuilderCore">
- <HintPath>/Users/tetsushi/Documents/LostPrincess/Assets/ProCore/Prototype/Classes/ProBuilderCore.dll</HintPath>
+ <HintPath>/Users/tetsushi2/Documents/Unity/LostPrincess/Assets/ProCore/Prototype/Classes/ProBuilderCore.dll</HintPath>
  </Reference>
  <Reference Include="ProBuilderMeshOps">
- <HintPath>/Users/tetsushi/Documents/LostPrincess/Assets/ProCore/Prototype/Classes/ProBuilderMeshOps.dll</HintPath>
+ <HintPath>/Users/tetsushi2/Documents/Unity/LostPrincess/Assets/ProCore/Prototype/Classes/ProBuilderMeshOps.dll</HintPath>
  </Reference>
  <Reference Include="ProCore">
- <HintPath>/Users/tetsushi/Documents/LostPrincess/Assets/ProCore/Shared/Code/ProCore.dll</HintPath>
+ <HintPath>/Users/tetsushi2/Documents/Unity/LostPrincess/Assets/ProCore/Shared/Code/ProCore.dll</HintPath>
  </Reference>
  <Reference Include="SixBySeven">
- <HintPath>/Users/tetsushi/Documents/LostPrincess/Assets/ProCore/Shared/Code/SixBySeven.dll</HintPath>
+ <HintPath>/Users/tetsushi2/Documents/Unity/LostPrincess/Assets/ProCore/Shared/Code/SixBySeven.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

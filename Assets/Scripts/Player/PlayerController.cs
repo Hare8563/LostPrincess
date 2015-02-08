@@ -307,6 +307,7 @@ public class PlayerController : MonoBehaviour
     {
         //マウスイベント
         MouseEvent();
+
         //武器切り替え
         WeaponChange();
         //アニメーション管理
@@ -320,6 +321,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         //移動
         Move();
         //攻撃
@@ -346,6 +348,7 @@ public class PlayerController : MonoBehaviour
             Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
             Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
             float rotSpeed = 0.2f;
+
             //前
             if (isMoveButton.forwerd)
             {
@@ -374,6 +377,9 @@ public class PlayerController : MonoBehaviour
                 rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
             }
+            //カメラ方向へキャラクターの向きを調整する
+            transform.rotation *= mainCamera.transform.rotation;
+            transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
 
             //ジャンプ
             if (isMoveButton.jump && canJump)
