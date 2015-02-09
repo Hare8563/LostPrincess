@@ -382,6 +382,7 @@ public class PlayerController : MonoBehaviour
             transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
 
             //ジャンプ
+            /*
             if (isMoveButton.jump && canJump)
             {
                 float Power = 150f;
@@ -392,7 +393,7 @@ public class PlayerController : MonoBehaviour
                 nowCollissionStayNormalVec = Vector3.up;
                 canJump = false;
             }
-
+            */
             //常に下方向に力をかける
             rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
         }
