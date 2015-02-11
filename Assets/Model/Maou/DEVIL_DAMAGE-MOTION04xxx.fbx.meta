@@ -1,0 +1,823 @@
+fileFormatVersion: 2
+guid: 5030807f5292c0443b6c2b423f3baf13
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: all
+    100002: all 1
+    100004: arm_L
+    100006: arm_R
+    100008: asi1
+    100010: asi2
+    100012: body
+    100014: body 1
+    100016: body 2
+    100018: body1
+    100020: bone_rod
+    100022: cap
+    100024: //RootNode
+    100026: face
+    100028: foot
+    100030: hand_L
+    100032: hand_R
+    100034: head
+    100036: hone
+    100038: honn
+    100040: hontai
+    100042: hoon
+    100044: joint1
+    100046: joint1 1
+    100048: joint10
+    100050: joint10 1
+    100052: joint11
+    100054: joint11 1
+    100056: joint13
+    100058: joint15
+    100060: joint16
+    100062: joint2
+    100064: joint3
+    100066: joint3 1
+    100068: joint4
+    100070: joint4 1
+    100072: joint5
+    100074: joint5 1
+    100076: joint6
+    100078: joint7
+    100080: joint7 1
+    100082: joint7 2
+    100084: joint8
+    100086: joint8 1
+    100088: joint9
+    100090: joint9 1
+    100092: L_soulder
+    100094: mant
+    100096: nurbsToPoly1
+    100098: pCylinder9
+    100100: polySurface1
+    100102: polySurface1 1
+    100104: polySurface1 2
+    100106: R_soulder1
+    100108: rod
+    100110: rod 1
+    100112: shoulder_sphere
+    100114: shoulder_sphere 1
+    100116: shoulder_sphere1
+    100118: shoulder_sphere1 1
+    100120: sword
+    100122: sword 1
+    100124: sword 2
+    100126: transform13
+    100128: transform14
+    100130: transform15
+    100132: transform16
+    100134: transform2
+    100136: transform3
+    100138: transform5
+    100140: transform6
+    100142: transform7
+    100144: transform8
+    100146: yumi
+    100148: yumiya
+    100150: yumiya 1
+    400000: all
+    400002: all 1
+    400004: arm_L
+    400006: arm_R
+    400008: asi1
+    400010: asi2
+    400012: body
+    400014: body 1
+    400016: body 2
+    400018: body1
+    400020: bone_rod
+    400022: cap
+    400024: //RootNode
+    400026: face
+    400028: foot
+    400030: hand_L
+    400032: hand_R
+    400034: head
+    400036: hone
+    400038: honn
+    400040: hontai
+    400042: hoon
+    400044: joint1
+    400046: joint1 1
+    400048: joint10
+    400050: joint10 1
+    400052: joint11
+    400054: joint11 1
+    400056: joint13
+    400058: joint15
+    400060: joint16
+    400062: joint2
+    400064: joint3
+    400066: joint3 1
+    400068: joint4
+    400070: joint4 1
+    400072: joint5
+    400074: joint5 1
+    400076: joint6
+    400078: joint7
+    400080: joint7 1
+    400082: joint7 2
+    400084: joint8
+    400086: joint8 1
+    400088: joint9
+    400090: joint9 1
+    400092: L_soulder
+    400094: mant
+    400096: nurbsToPoly1
+    400098: pCylinder9
+    400100: polySurface1
+    400102: polySurface1 1
+    400104: polySurface1 2
+    400106: R_soulder1
+    400108: rod
+    400110: rod 1
+    400112: shoulder_sphere
+    400114: shoulder_sphere 1
+    400116: shoulder_sphere1
+    400118: shoulder_sphere1 1
+    400120: sword
+    400122: sword 1
+    400124: sword 2
+    400126: transform13
+    400128: transform14
+    400130: transform15
+    400132: transform16
+    400134: transform2
+    400136: transform3
+    400138: transform5
+    400140: transform6
+    400142: transform7
+    400144: transform8
+    400146: yumi
+    400148: yumiya
+    400150: yumiya 1
+    2300000: asi1
+    2300002: asi2
+    2300004: body 2
+    2300006: cap
+    2300008: face
+    2300010: hand_L
+    2300012: hand_R
+    2300014: honn
+    2300016: hoon
+    2300018: L_soulder
+    2300020: R_soulder1
+    2300022: shoulder_sphere
+    2300024: shoulder_sphere 1
+    2300026: shoulder_sphere1
+    2300028: shoulder_sphere1 1
+    3300000: asi1
+    3300002: asi2
+    3300004: body 2
+    3300006: cap
+    3300008: face
+    3300010: hand_L
+    3300012: hand_R
+    3300014: honn
+    3300016: hoon
+    3300018: L_soulder
+    3300020: R_soulder1
+    3300022: shoulder_sphere
+    3300024: shoulder_sphere 1
+    3300026: shoulder_sphere1
+    3300028: shoulder_sphere1 1
+    4300000: cap
+    4300002: face
+    4300004: hoon
+    4300006: honn
+    4300008: body
+    4300010: R_soulder1
+    4300012: shoulder_sphere1
+    4300014: shoulder_sphere
+    4300016: L_soulder
+    4300018: shoulder_sphere
+    4300020: shoulder_sphere1
+    4300022: hand_L
+    4300024: hand_R
+    4300026: asi2
+    4300028: asi1
+    4300030: sword
+    4300032: polySurface1
+    4300034: polySurface1
+    4300036: nurbsToPoly1
+    7400000: Damage
+    7400002: Dead_01
+    7400004: Dead_02
+    9500000: //RootNode
+    13700000: nurbsToPoly1
+    13700002: polySurface1
+    13700004: polySurface1 1
+    13700006: sword 2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Damage
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 10
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hone
+        weight: 1
+      - path: hone/joint1
+        weight: 1
+      - path: hone/joint1/joint2
+        weight: 1
+      - path: hone/joint1/joint2/joint3
+        weight: 1
+      - path: hone/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1/joint10
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9/joint11
+        weight: 1
+      - path: hone/joint1/joint2/transform2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1/joint10 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1/joint5 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13/joint3
+          1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13/joint3
+          1/joint4 1
+        weight: 1
+      - path: hone/joint1/joint7
+        weight: 1
+      - path: hone/joint1/joint7/joint8
+        weight: 1
+      - path: hone/joint1/joint15
+        weight: 1
+      - path: hone/joint1/joint15/joint16
+        weight: 1
+      - path: hontai
+        weight: 1
+      - path: hontai/all
+        weight: 1
+      - path: hontai/all/body
+        weight: 1
+      - path: hontai/all/body/arm_L
+        weight: 1
+      - path: hontai/all/body/arm_L/hand_L
+        weight: 1
+      - path: hontai/all/body/arm_R
+        weight: 1
+      - path: hontai/all/body/arm_R/hand_R
+        weight: 1
+      - path: hontai/all/body1
+        weight: 1
+      - path: hontai/all/body1/all 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1/body 2
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere 1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere1 1
+        weight: 1
+      - path: hontai/all/foot
+        weight: 1
+      - path: hontai/all/foot/asi1
+        weight: 1
+      - path: hontai/all/foot/asi2
+        weight: 1
+      - path: hontai/all/head
+        weight: 1
+      - path: hontai/all/head/cap
+        weight: 1
+      - path: hontai/all/head/face
+        weight: 1
+      - path: hontai/all/head/honn
+        weight: 1
+      - path: hontai/all/head/hoon
+        weight: 1
+      - path: hontai/all/mant
+        weight: 1
+      - path: hontai/all/mant/nurbsToPoly1
+        weight: 1
+      - path: hontai/all/rod
+        weight: 1
+      - path: hontai/all/rod/polySurface1
+        weight: 1
+      - path: hontai/all/sword 1
+        weight: 1
+      - path: hontai/all/sword 1/sword 2
+        weight: 1
+      - path: hontai/all/yumiya
+        weight: 1
+      - path: hontai/all/yumiya/polySurface1 1
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/pCylinder9
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/pCylinder9/transform8
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/polySurface1 2
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/polySurface1 2/transform7
+        weight: 1
+      - path: sword
+        weight: 1
+      - path: sword/bone_rod
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Dead_01
+      takeName: Take 001
+      firstFrame: 11
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hone
+        weight: 1
+      - path: hone/joint1
+        weight: 1
+      - path: hone/joint1/joint2
+        weight: 1
+      - path: hone/joint1/joint2/joint3
+        weight: 1
+      - path: hone/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1/joint10
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9/joint11
+        weight: 1
+      - path: hone/joint1/joint2/transform2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1/joint10 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1/joint5 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13/joint3
+          1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13/joint3
+          1/joint4 1
+        weight: 1
+      - path: hone/joint1/joint7
+        weight: 1
+      - path: hone/joint1/joint7/joint8
+        weight: 1
+      - path: hone/joint1/joint15
+        weight: 1
+      - path: hone/joint1/joint15/joint16
+        weight: 1
+      - path: hontai
+        weight: 1
+      - path: hontai/all
+        weight: 1
+      - path: hontai/all/body
+        weight: 1
+      - path: hontai/all/body/arm_L
+        weight: 1
+      - path: hontai/all/body/arm_L/hand_L
+        weight: 1
+      - path: hontai/all/body/arm_R
+        weight: 1
+      - path: hontai/all/body/arm_R/hand_R
+        weight: 1
+      - path: hontai/all/body1
+        weight: 1
+      - path: hontai/all/body1/all 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1/body 2
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere 1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere1 1
+        weight: 1
+      - path: hontai/all/foot
+        weight: 1
+      - path: hontai/all/foot/asi1
+        weight: 1
+      - path: hontai/all/foot/asi2
+        weight: 1
+      - path: hontai/all/head
+        weight: 1
+      - path: hontai/all/head/cap
+        weight: 1
+      - path: hontai/all/head/face
+        weight: 1
+      - path: hontai/all/head/honn
+        weight: 1
+      - path: hontai/all/head/hoon
+        weight: 1
+      - path: hontai/all/mant
+        weight: 1
+      - path: hontai/all/mant/nurbsToPoly1
+        weight: 1
+      - path: hontai/all/rod
+        weight: 1
+      - path: hontai/all/rod/polySurface1
+        weight: 1
+      - path: hontai/all/sword 1
+        weight: 1
+      - path: hontai/all/sword 1/sword 2
+        weight: 1
+      - path: hontai/all/yumiya
+        weight: 1
+      - path: hontai/all/yumiya/polySurface1 1
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/pCylinder9
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/pCylinder9/transform8
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/polySurface1 2
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/polySurface1 2/transform7
+        weight: 1
+      - path: sword
+        weight: 1
+      - path: sword/bone_rod
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Dead_02
+      takeName: Take 001
+      firstFrame: 41
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hone
+        weight: 1
+      - path: hone/joint1
+        weight: 1
+      - path: hone/joint1/joint2
+        weight: 1
+      - path: hone/joint1/joint2/joint3
+        weight: 1
+      - path: hone/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1/joint10
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9/joint11
+        weight: 1
+      - path: hone/joint1/joint2/transform2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1/joint10 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1/joint5 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13/joint3
+          1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 1/transform6/joint5/transform13/joint3
+          1/joint4 1
+        weight: 1
+      - path: hone/joint1/joint7
+        weight: 1
+      - path: hone/joint1/joint7/joint8
+        weight: 1
+      - path: hone/joint1/joint15
+        weight: 1
+      - path: hone/joint1/joint15/joint16
+        weight: 1
+      - path: hontai
+        weight: 1
+      - path: hontai/all
+        weight: 1
+      - path: hontai/all/body
+        weight: 1
+      - path: hontai/all/body/arm_L
+        weight: 1
+      - path: hontai/all/body/arm_L/hand_L
+        weight: 1
+      - path: hontai/all/body/arm_R
+        weight: 1
+      - path: hontai/all/body/arm_R/hand_R
+        weight: 1
+      - path: hontai/all/body1
+        weight: 1
+      - path: hontai/all/body1/all 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1/body 2
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere 1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere1 1
+        weight: 1
+      - path: hontai/all/foot
+        weight: 1
+      - path: hontai/all/foot/asi1
+        weight: 1
+      - path: hontai/all/foot/asi2
+        weight: 1
+      - path: hontai/all/head
+        weight: 1
+      - path: hontai/all/head/cap
+        weight: 1
+      - path: hontai/all/head/face
+        weight: 1
+      - path: hontai/all/head/honn
+        weight: 1
+      - path: hontai/all/head/hoon
+        weight: 1
+      - path: hontai/all/mant
+        weight: 1
+      - path: hontai/all/mant/nurbsToPoly1
+        weight: 1
+      - path: hontai/all/rod
+        weight: 1
+      - path: hontai/all/rod/polySurface1
+        weight: 1
+      - path: hontai/all/sword 1
+        weight: 1
+      - path: hontai/all/sword 1/sword 2
+        weight: 1
+      - path: hontai/all/yumiya
+        weight: 1
+      - path: hontai/all/yumiya/polySurface1 1
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/pCylinder9
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/pCylinder9/transform8
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/polySurface1 2
+        weight: 1
+      - path: hontai/all/yumiya/yumiya 1/yumi/polySurface1 2/transform7
+        weight: 1
+      - path: sword
+        weight: 1
+      - path: sword/bone_rod
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

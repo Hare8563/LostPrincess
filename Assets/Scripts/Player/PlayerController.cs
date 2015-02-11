@@ -270,19 +270,13 @@ public class PlayerController : MonoBehaviour
         MagicBallObject = Resources.Load("Prefab/MagicBall") as GameObject;
         ArrowObject = Resources.Load("Prefab/Arrow") as GameObject;
         animator = this.gameObject.GetComponent<Animator>();
-
         Weapon_Sword = GameObject.FindGameObjectWithTag("Weapon_Sword");
         Weapon_Rod = GameObject.FindGameObjectWithTag("Weapon_Rod");
         Weapon_Bow = GameObject.FindGameObjectWithTag("Weapon_Bow");
-
         HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
-
         RunSmokeEffect = Resources.Load("Prefab/RunSmoke") as GameObject;
-
         mainCamera = GameObject.Find("CameraControllPoint");
-
         manager = GameObject.Find("Manager");
-
         sword_trail = GameObject.Find ("Sword_Tral");
 	
     }
@@ -553,19 +547,23 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void BowAttackEvent()
     {
-		audio.PlayOneShot(BowSe);
-		isOneShotArrow = true;
-        //ロックオンしていたら追従
-		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-		{
-			arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-		}
-		else
-		{
-            Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
-		}
-		BowController.EnemyDamage = this.status.BOW_POW;
-        //Debug.Log(MagicController.EnemyDamage);
+        if (status.AMMO > 0)
+        {
+            audio.PlayOneShot(BowSe);
+            isOneShotArrow = true;
+            //ロックオンしていたら追従
+            if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+            {
+                arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+            }
+            else
+            {
+                Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
+            }
+            BowController.EnemyDamage = this.status.BOW_POW;
+            status.AMMO--;
+            //Debug.Log(MagicController.EnemyDamage);
+        }
     }
 
     /// <summary>
