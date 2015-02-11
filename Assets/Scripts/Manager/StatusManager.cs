@@ -127,6 +127,10 @@ public class StatusManager : MonoBehaviour {
             {
                 child.gameObject.GetComponent<Text>().text = playerController.getStatus().LEV.ToString();//statusStruct.LV.ToString();
             }
+            else if (child.name == "AMMO")
+            {
+                child.gameObject.GetComponent<Text>().text = playerController.getStatus().AMMO.ToString();//statusStruct.LV.ToString();
+            }
         }
     }
 
