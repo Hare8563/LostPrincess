@@ -1,0 +1,482 @@
+fileFormatVersion: 2
+guid: c6eb2cb6b19934c488ea59ef374b10bb
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: all
+    100002: all 1
+    100004: all 2
+    100006: all 3
+    100008: all 4
+    100010: all 5
+    100012: arm_L
+    100014: arm_L 1
+    100016: arm_R
+    100018: arm_R 1
+    100020: as
+    100022: asi1
+    100024: asi1 1
+    100026: asi2
+    100028: asi2 1
+    100030: body
+    100032: body 1
+    100034: body 2
+    100036: body 3
+    100038: body 4
+    100040: body 5
+    100042: body1
+    100044: cap
+    100046: cap 1
+    100048: face
+    100050: face 1
+    100052: foot
+    100054: group1
+    100056: group3
+    100058: group3 1
+    100060: hand_L
+    100062: hand_L 1
+    100064: hand_R
+    100066: hand_R 1
+    100068: head
+    100070: head 1
+    100072: //RootNode
+    100074: hone
+    100076: honn
+    100078: hoon
+    100080: joint1
+    100082: joint1 1
+    100084: joint1 2
+    100086: joint1 3
+    100088: joint10
+    100090: joint10 1
+    100092: joint10 2
+    100094: joint10 3
+    100096: joint11
+    100098: joint11 1
+    100100: joint11 2
+    100102: joint11 3
+    100104: joint13
+    100106: joint13 1
+    100108: joint15
+    100110: joint15 1
+    100112: joint16
+    100114: joint16 1
+    100116: joint2
+    100118: joint2 1
+    100120: joint3
+    100122: joint3 1
+    100124: joint3 2
+    100126: joint3 3
+    100128: joint4
+    100130: joint4 1
+    100132: joint4 2
+    100134: joint4 3
+    100136: joint5
+    100138: joint5 1
+    100140: joint5 2
+    100142: joint5 3
+    100144: joint6
+    100146: joint6 1
+    100148: joint7
+    100150: joint7 1
+    100152: joint7 2
+    100154: joint7 3
+    100156: joint7 4
+    100158: joint7 5
+    100160: joint8
+    100162: joint8 1
+    100164: joint8 2
+    100166: joint8 3
+    100168: joint9
+    100170: joint9 1
+    100172: joint9 2
+    100174: joint9 3
+    100176: L_soulder
+    100178: L_soulder 1
+    100180: mant
+    100182: mant 1
+    100184: mant 2
+    100186: mant 3
+    100188: mant 4
+    100190: nurbsPlane1
+    100192: nurbsToPoly1
+    100194: pCylinder1
+    100196: pCylinder1 1
+    100198: pCylinder2
+    100200: pCylinder2 1
+    100202: pCylinder3
+    100204: pCylinder4
+    100206: pCylinder9
+    100208: polySurface1
+    100210: polySurface1 1
+    100212: polySurface1 2
+    100214: polySurface1 3
+    100216: polySurface2
+    100218: pSphere1
+    100220: pSphere4
+    100222: R_soulder1
+    100224: R_soulder1 1
+    100226: rod
+    100228: rod 1
+    100230: shoulder_sphere
+    100232: shoulder_sphere 1
+    100234: shoulder_sphere 2
+    100236: shoulder_sphere1
+    100238: shoulder_sphere1 1
+    100240: shoulder_sphere1 2
+    100242: shoulder_sphere2
+    100244: shoulder_sphere3
+    100246: sword
+    100248: sword 1
+    100250: sword 2
+    100252: sword 3
+    100254: transform13
+    100256: transform13 1
+    100258: transform14
+    100260: transform14 1
+    100262: transform15
+    100264: transform15 1
+    100266: transform16
+    100268: transform16 1
+    100270: transform2
+    100272: transform2 1
+    100274: transform3
+    100276: transform3 1
+    100278: transform5
+    100280: transform5 1
+    100282: transform6
+    100284: transform6 1
+    100286: transform7
+    100288: transform8
+    100290: yumi
+    100292: yumiya
+    100294: yumiya 1
+    100296: yumiya 2
+    400000: all
+    400002: all 1
+    400004: all 2
+    400006: all 3
+    400008: all 4
+    400010: all 5
+    400012: arm_L
+    400014: arm_L 1
+    400016: arm_R
+    400018: arm_R 1
+    400020: as
+    400022: asi1
+    400024: asi1 1
+    400026: asi2
+    400028: asi2 1
+    400030: body
+    400032: body 1
+    400034: body 2
+    400036: body 3
+    400038: body 4
+    400040: body 5
+    400042: body1
+    400044: cap
+    400046: cap 1
+    400048: face
+    400050: face 1
+    400052: foot
+    400054: group1
+    400056: group3
+    400058: group3 1
+    400060: hand_L
+    400062: hand_L 1
+    400064: hand_R
+    400066: hand_R 1
+    400068: head
+    400070: head 1
+    400072: //RootNode
+    400074: hone
+    400076: honn
+    400078: hoon
+    400080: joint1
+    400082: joint1 1
+    400084: joint1 2
+    400086: joint1 3
+    400088: joint10
+    400090: joint10 1
+    400092: joint10 2
+    400094: joint10 3
+    400096: joint11
+    400098: joint11 1
+    400100: joint11 2
+    400102: joint11 3
+    400104: joint13
+    400106: joint13 1
+    400108: joint15
+    400110: joint15 1
+    400112: joint16
+    400114: joint16 1
+    400116: joint2
+    400118: joint2 1
+    400120: joint3
+    400122: joint3 1
+    400124: joint3 2
+    400126: joint3 3
+    400128: joint4
+    400130: joint4 1
+    400132: joint4 2
+    400134: joint4 3
+    400136: joint5
+    400138: joint5 1
+    400140: joint5 2
+    400142: joint5 3
+    400144: joint6
+    400146: joint6 1
+    400148: joint7
+    400150: joint7 1
+    400152: joint7 2
+    400154: joint7 3
+    400156: joint7 4
+    400158: joint7 5
+    400160: joint8
+    400162: joint8 1
+    400164: joint8 2
+    400166: joint8 3
+    400168: joint9
+    400170: joint9 1
+    400172: joint9 2
+    400174: joint9 3
+    400176: L_soulder
+    400178: L_soulder 1
+    400180: mant
+    400182: mant 1
+    400184: mant 2
+    400186: mant 3
+    400188: mant 4
+    400190: nurbsPlane1
+    400192: nurbsToPoly1
+    400194: pCylinder1
+    400196: pCylinder1 1
+    400198: pCylinder2
+    400200: pCylinder2 1
+    400202: pCylinder3
+    400204: pCylinder4
+    400206: pCylinder9
+    400208: polySurface1
+    400210: polySurface1 1
+    400212: polySurface1 2
+    400214: polySurface1 3
+    400216: polySurface2
+    400218: pSphere1
+    400220: pSphere4
+    400222: R_soulder1
+    400224: R_soulder1 1
+    400226: rod
+    400228: rod 1
+    400230: shoulder_sphere
+    400232: shoulder_sphere 1
+    400234: shoulder_sphere 2
+    400236: shoulder_sphere1
+    400238: shoulder_sphere1 1
+    400240: shoulder_sphere1 2
+    400242: shoulder_sphere2
+    400244: shoulder_sphere3
+    400246: sword
+    400248: sword 1
+    400250: sword 2
+    400252: sword 3
+    400254: transform13
+    400256: transform13 1
+    400258: transform14
+    400260: transform14 1
+    400262: transform15
+    400264: transform15 1
+    400266: transform16
+    400268: transform16 1
+    400270: transform2
+    400272: transform2 1
+    400274: transform3
+    400276: transform3 1
+    400278: transform5
+    400280: transform5 1
+    400282: transform6
+    400284: transform6 1
+    400286: transform7
+    400288: transform8
+    400290: yumi
+    400292: yumiya
+    400294: yumiya 1
+    400296: yumiya 2
+    2300000: asi1
+    2300002: asi1 1
+    2300004: asi2
+    2300006: asi2 1
+    2300008: body 1
+    2300010: body 5
+    2300012: cap
+    2300014: cap 1
+    2300016: face
+    2300018: face 1
+    2300020: hand_L
+    2300022: hand_L 1
+    2300024: hand_R
+    2300026: hand_R 1
+    2300028: honn
+    2300030: hoon
+    2300032: L_soulder
+    2300034: L_soulder 1
+    2300036: nurbsToPoly1
+    2300038: pCylinder1 1
+    2300040: pCylinder2 1
+    2300042: pCylinder3
+    2300044: pCylinder4
+    2300046: polySurface1
+    2300048: polySurface1 2
+    2300050: pSphere1
+    2300052: R_soulder1
+    2300054: R_soulder1 1
+    2300056: shoulder_sphere
+    2300058: shoulder_sphere 1
+    2300060: shoulder_sphere 2
+    2300062: shoulder_sphere1
+    2300064: shoulder_sphere1 1
+    2300066: shoulder_sphere1 2
+    2300068: shoulder_sphere2
+    2300070: shoulder_sphere3
+    2300072: sword 3
+    3300000: asi1
+    3300002: asi1 1
+    3300004: asi2
+    3300006: asi2 1
+    3300008: body 1
+    3300010: body 5
+    3300012: cap
+    3300014: cap 1
+    3300016: face
+    3300018: face 1
+    3300020: hand_L
+    3300022: hand_L 1
+    3300024: hand_R
+    3300026: hand_R 1
+    3300028: honn
+    3300030: hoon
+    3300032: L_soulder
+    3300034: L_soulder 1
+    3300036: nurbsToPoly1
+    3300038: pCylinder1 1
+    3300040: pCylinder2 1
+    3300042: pCylinder3
+    3300044: pCylinder4
+    3300046: polySurface1
+    3300048: polySurface1 2
+    3300050: pSphere1
+    3300052: R_soulder1
+    3300054: R_soulder1 1
+    3300056: shoulder_sphere
+    3300058: shoulder_sphere 1
+    3300060: shoulder_sphere 2
+    3300062: shoulder_sphere1
+    3300064: shoulder_sphere1 1
+    3300066: shoulder_sphere1 2
+    3300068: shoulder_sphere2
+    3300070: shoulder_sphere3
+    3300072: sword 3
+    4300000: sword
+    4300002: polySurface1
+    4300004: cap
+    4300006: face
+    4300008: hoon
+    4300010: honn
+    4300012: body
+    4300014: R_soulder1
+    4300016: shoulder_sphere1
+    4300018: shoulder_sphere
+    4300020: L_soulder
+    4300022: shoulder_sphere
+    4300024: shoulder_sphere1
+    4300026: hand_L
+    4300028: hand_R
+    4300030: asi2
+    4300032: asi1
+    4300034: pCylinder2
+    4300036: pCylinder1
+    4300038: nurbsToPoly1
+    4300040: polySurface1
+    4300042: face
+    4300044: pCylinder3
+    4300046: pCylinder4
+    4300048: cap
+    4300050: body
+    4300052: pSphere1
+    4300054: hand_L
+    4300056: pSphere4
+    4300058: hand_R
+    4300060: L_soulder
+    4300062: shoulder_sphere1
+    4300064: shoulder_sphere
+    4300066: R_soulder1
+    4300068: shoulder_sphere3
+    4300070: shoulder_sphere2
+    4300072: asi1
+    4300074: asi2
+    4300076: sword
+    4300078: polySurface2
+    4300080: polySurface1
+    4300082: pCylinder2
+    4300084: pCylinder1
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: pCylinder1
+    13700002: pCylinder2
+    13700004: polySurface1 1
+    13700006: polySurface2
+    13700008: pSphere4
+    13700010: sword 2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
