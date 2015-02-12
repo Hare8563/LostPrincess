@@ -1,10 +1,10 @@
 # =============== #
 # Unity generated #
 # =============== #
-Temp/
-Obj/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
 UnityGenerated/
-Library/
 
 /Library
 /Temp
