@@ -273,7 +273,7 @@ public class BossController : MonoBehaviour {
             }
         }
         //Debug.Log(this.rigidbody.velocity);
-        Debug.Log(this.status.HP);
+        //Debug.Log(this.status.HP);
     }
 
     /// <summary>
