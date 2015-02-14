@@ -701,6 +701,7 @@ public class PlayerController : MonoBehaviour
         {
             isReject = true;
         }
+        //エフェクト生成終了
         else if (Input.GetKeyUp(KeyCode.Space))
         {
             isReject = false;
@@ -711,6 +712,7 @@ public class PlayerController : MonoBehaviour
         {
             this.status.MP = (int)InitMP;
         }
+        Debug.Log(isReject);
     }
 
     /// <summary>
@@ -720,6 +722,10 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(RejectObject, this.transform.position, new Quaternion(0, 0, 0, 0));
         this.animator.speed = 0;
+        if (!isReject)
+        {
+            this.animator.speed = 1;
+        }
     }
 
     /// <summary>

@@ -57,6 +57,7 @@ public class RejectScript : MonoBehaviour {
             foreach (ParticleSystem particleSystem in childs)
             {
                 particleSystem.enableEmission = true;
+                this.transform.position = PlayerObject.transform.position + new Vector3(0, 0.1f, 0);
                 isReject = true;
                 RejectMP();
             }
