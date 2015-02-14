@@ -273,7 +273,7 @@ public class RastBossController : MonoBehaviour
         {
             LoadingController.NextScene("Title");
 		}
-        Debug.Log(status.HP);
+        //Debug.Log(status.HP);
     }
 
     /// <summary>

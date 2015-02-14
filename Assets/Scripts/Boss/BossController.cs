@@ -358,7 +358,7 @@ public class BossController : MonoBehaviour {
             {
                 EnemyObject[i].SetActive(false);
             }
-            eventController.GetComponent<EventController>().WhiteOut("Ending", 0.3f);
+            eventController.GetComponent<EventController>().FadeOut("BossEnd", 0.3f);
             //Application.LoadLevel("Title");
         }
     }
