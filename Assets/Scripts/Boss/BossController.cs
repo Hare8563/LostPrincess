@@ -200,6 +200,15 @@ public class BossController : MonoBehaviour {
     /// 初期HP
     /// </summary>
     private float initHp;
+    /// <summary>
+    /// 下向きの力
+    /// </summary>
+    [SerializeField]
+    private float DownForce;
+    /// <summary>
+    /// ステータスマネージャークラス
+    /// </summary>
+    private EnemyStatusManager enemyStatusManager;
 
     /// <summary>
     /// 読み込み
@@ -228,6 +237,7 @@ public class BossController : MonoBehaviour {
                 i++;
             }
         }
+        enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
     }
 
 	/// <summary>
@@ -243,7 +253,7 @@ public class BossController : MonoBehaviour {
         AnctionRand = Random.Range(0, 3);
         RandomRand = Random.Range(180, 300);
 
-        status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
+        status = enemyStatusManager.getStatus();
         initHp = status.HP;
 	}
 	
@@ -259,17 +269,27 @@ public class BossController : MonoBehaviour {
         right = this.transform.TransformDirection(Vector3.right).normalized;
         ToPlayerDistance = Vector3.Distance(TargetObject.transform.position, this.transform.position);
         //プレイヤー方向を向く
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - transform.transform.position), 0.07f);
-        this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        if (!enemyStatusManager.getIsDead())
+        {
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(TargetObject.transform.position - transform.transform.position), 0.07f);
+            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+        }
         //アニメーション切り替え
         AnimationCheck();
 
         //HPが指定数以下になったら
-        if (this.GetComponent<EnemyStatusManager>().getStatus().HP <= initHp / 2)
+        if (enemyStatusManager.getStatus().HP <= initHp / 2)
         {
             for (int i = 0; i < EnemyObject.Length; i++)
             {
                 EnemyObject[i].SetActive(true);
+            }
+        }
+        if (enemyStatusManager.getStatus().HP <= 0)
+        {
+            for (int i = 0; i < EnemyObject.Length; i++)
+            {
+                EnemyObject[i].SetActive(false);
             }
         }
         //Debug.Log(this.rigidbody.velocity);
@@ -338,7 +358,7 @@ public class BossController : MonoBehaviour {
             {
                 EnemyObject[i].SetActive(false);
             }
-            eventController.GetComponent<EventController>().WhiteOut("Ending", 0.5f);
+            eventController.GetComponent<EventController>().WhiteOut("Ending", 0.3f);
             //Application.LoadLevel("Title");
         }
     }
@@ -449,7 +469,7 @@ public class BossController : MonoBehaviour {
         }
         LeaveOrNear();
         //常に下方向に力をかける
-        rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
+        rigidbody.AddForce(Vector3.down * DownForce, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -578,7 +598,7 @@ public class BossController : MonoBehaviour {
         animator.SetBool("isShotMagic", isShotMagic);
         animator.SetBool("isShotArrow", isShotArrow);
         animator.SetBool("isDamage", isDamage);
-        animator.SetBool("isDead", this.gameObject.GetComponent<EnemyStatusManager>().getIsDead());
+        animator.SetBool("isDead", enemyStatusManager.getIsDead());
     }
 
     /// <summary>
@@ -610,5 +630,13 @@ public class BossController : MonoBehaviour {
         arrowInstance.GetComponent<BowController>().setIsAutoAim(true);
         BowController.PlayerDamage = this.status.BOW_POW;
         audio.PlayOneShot(BowSe);
+    }
+
+    /// <summary>
+    /// 死亡イベント
+    /// </summary>
+    void DeadEvent()
+    {
+        this.animator.speed = 0;
     }
 }

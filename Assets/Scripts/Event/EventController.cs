@@ -71,9 +71,9 @@ public class EventController : MonoBehaviour
         }
         //アルファ値を加算
         a += (speed * Method.GameTime()) / 255;
-        if (a >= 1.0f)
+        if (a >= 0.5f)
         {
-            a = 1.0f;
+            a = 0.5f;
             Application.LoadLevel(scenename);
         }
     }
