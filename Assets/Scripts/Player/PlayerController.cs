@@ -248,13 +248,17 @@ public class PlayerController : MonoBehaviour
     private GameObject sword_trail;
 
     /// <summary>
+    /// MP回復エフェクト
+    /// </summary>
+    private GameObject RejectObject;
+    /// <summary>
     /// 初期MP
     /// </summary>
-    private float InitMP;
+    private float InitMP = 0;
     /// <summary>
-    /// MP回復タイミングまでのカウント
+    /// MP回復中かどうか
     /// </summary>
-    private float RecoveryTimingCount = 0;
+    private bool isReject = false;
 
 
 	void Awake()
@@ -278,7 +282,7 @@ public class PlayerController : MonoBehaviour
         mainCamera = GameObject.Find("CameraControllPoint");
         manager = GameObject.Find("Manager");
         sword_trail = GameObject.Find ("Sword_Tral");
-	
+        RejectObject = Resources.Load("Prefab/RejectEffect") as GameObject;
     }
 
     // Use this for initialization
@@ -294,14 +298,13 @@ public class PlayerController : MonoBehaviour
         Weapon_Sword.renderer.enabled = true;
         Weapon_Rod.renderer.enabled = false;
         Weapon_Bow.renderer.enabled = false;
-        InitMP = status.MP;
+        InitMP = this.status.MP;
     }
 
     void Update()
     {
         //マウスイベント
         MouseEvent();
-
         //武器切り替え
         WeaponChange();
         //アニメーション管理
@@ -309,13 +312,12 @@ public class PlayerController : MonoBehaviour
         //ボタンイベント
         ButtonEvent();
         //MP回復
-        MPRecovery();
+        MPReject();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
         //移動
         Move();
         //攻撃
@@ -330,7 +332,8 @@ public class PlayerController : MonoBehaviour
         if (!isDeadFlag &&
             !isAttackSword &&
             !isShotMagic &&
-            !isShotArrow)
+            !isShotArrow &&
+            !isReject)
         {
             float inputH = Input.GetAxis("Horizontal");
             float inputV = Input.GetAxis("Vertical");
@@ -480,6 +483,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isShotArrow", isShotArrow);
         animator.SetBool("DeadFlag", deadFlag);
         animator.SetBool("isDamage", isDamage);
+        animator.SetBool("isReject", isReject);
     }
 
     /// <summary>
@@ -688,6 +692,37 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// MPの回復
+    /// </summary>
+    private void MPReject()
+    {
+        //エフェクトの生成
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isReject = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isReject = false;
+            this.animator.speed = 1;
+        }
+        //上限以上回復しないよう調整
+        if (InitMP < this.status.MP)
+        {
+            this.status.MP = (int)InitMP;
+        }
+    }
+
+    /// <summary>
+    /// MP回復イベント
+    /// </summary>
+    void MPRejectEvent()
+    {
+        Instantiate(RejectObject, this.transform.position, new Quaternion(0, 0, 0, 0));
+        this.animator.speed = 0;
+    }
+
+    /// <summary>
     /// 何かに当たったら（コリジョン）
     /// </summary>
     /// <param name="collision"></param>
@@ -788,22 +823,6 @@ public class PlayerController : MonoBehaviour
         if (deadFlag != false)
         {
             this.isDamage = true;
-        }
-    }
-
-    /// <summary>
-    /// MPの回復
-    /// </summary>
-    private void MPRecovery()
-    {
-        RecoveryTimingCount += Method.GameTime();
-        if ((int)RecoveryTimingCount % 10 == 0)
-        {
-            RecoveryTimingCount = 0;
-            if (InitMP > status.MP)
-            {
-                status.MP += 1;
-            }
         }
     }
 

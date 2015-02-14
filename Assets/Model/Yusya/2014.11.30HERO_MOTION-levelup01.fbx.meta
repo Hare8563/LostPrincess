@@ -230,7 +230,8 @@ ModelImporter:
     4300036: polySurface1
     4300038: pasted__polySurface1
     4300042: nurbsToPoly2
-    7400000: Take 001
+    7400000: LvUp
+    7400002: MPReject
     9500000: //RootNode
     13700000: nurbsToPoly2
     13700002: pasted__polySurface1
@@ -249,7 +250,408 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: LvUp
+      takeName: Take 001
+      firstFrame: 270
+      lastFrame: 420
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: all
+        weight: 1
+      - path: all/body
+        weight: 1
+      - path: all/body/arm_L
+        weight: 1
+      - path: all/body/arm_L/hand_L
+        weight: 1
+      - path: all/body/arm_L/pSphere1
+        weight: 1
+      - path: all/body/arm_R
+        weight: 1
+      - path: all/body/arm_R/hand_R
+        weight: 1
+      - path: all/body/arm_R/pSphere4
+        weight: 1
+      - path: all/body/body 1
+        weight: 1
+      - path: all/head
+        weight: 1
+      - path: all/head/face
+        weight: 1
+      - path: all/head/face/cap
+        weight: 1
+      - path: all/head/face/pCylinder3
+        weight: 1
+      - path: all/head/face/pCylinder4
+        weight: 1
+      - path: all/L_soulder
+        weight: 1
+      - path: all/L_soulder/shoulder_sphere
+        weight: 1
+      - path: all/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: all/R_soulder1
+        weight: 1
+      - path: all/R_soulder1/shoulder_sphere2
+        weight: 1
+      - path: all/R_soulder1/shoulder_sphere3
+        weight: 1
+      - path: group
+        weight: 1
+      - path: group/pasted__all
+        weight: 1
+      - path: group/pasted__all/pasted__body
+        weight: 1
+      - path: group/pasted__all/pasted__body/pasted__asi1
+        weight: 1
+      - path: group/pasted__asi2
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/pasted__joint1
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/pasted__joint4
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform15
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform15/joint6
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform15/joint6/joint7
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform15/joint6/joint7/joint10
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform16
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform16/joint8
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform16/joint8/joint9
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform16/joint8/joint9/joint11
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1/pasted__joint9
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1/pasted__joint9/pasted__joint10
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1/pasted__joint11
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1/pasted__joint11/joint5
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6/pasted__joint5
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6/pasted__joint5/transform13
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6/pasted__joint5/transform13/joint3
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6/pasted__joint5/transform13/joint3/joint4
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint7
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint7/pasted__joint8
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint15
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint15/pasted__joint16
+        weight: 1
+      - path: group2
+        weight: 1
+      - path: group2/pasted__group2
+        weight: 1
+      - path: group2/pasted__group2/pasted__pCylinder9
+        weight: 1
+      - path: group2/pasted__group2/pasted__pCylinder9/transform9
+        weight: 1
+      - path: group2/pasted__group2/pasted__polySurface1 1
+        weight: 1
+      - path: group2/pasted__group2/pasted__polySurface1 1/transform10
+        weight: 1
+      - path: group2/pasted__pCylinder7
+        weight: 1
+      - path: group2/pasted__pCylinder7/pasted__transform7
+        weight: 1
+      - path: group2/pasted__pCylinder8
+        weight: 1
+      - path: group2/pasted__pCylinder8/pasted__transform8
+        weight: 1
+      - path: nurbsToPoly1
+        weight: 1
+      - path: nurbsToPoly2
+        weight: 1
+      - path: polySurface1
+        weight: 1
+      - path: rod
+        weight: 1
+      - path: sword
+        weight: 1
+      - path: sword/bone_rod
+        weight: 1
+      - path: sword/sword 1
+        weight: 1
+      - path: transform1
+        weight: 1
+      - path: transform4
+        weight: 1
+      - path: transform11
+        weight: 1
+      - path: transform12
+        weight: 1
+      - path: yumiya
+        weight: 1
+      - path: yumiya/pasted__polySurface1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: MPReject
+      takeName: Take 001
+      firstFrame: 350
+      lastFrame: 370
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .4202452
+        functionName: MPRejectEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: all
+        weight: 1
+      - path: all/body
+        weight: 1
+      - path: all/body/arm_L
+        weight: 1
+      - path: all/body/arm_L/hand_L
+        weight: 1
+      - path: all/body/arm_L/pSphere1
+        weight: 1
+      - path: all/body/arm_R
+        weight: 1
+      - path: all/body/arm_R/hand_R
+        weight: 1
+      - path: all/body/arm_R/pSphere4
+        weight: 1
+      - path: all/body/body 1
+        weight: 1
+      - path: all/head
+        weight: 1
+      - path: all/head/face
+        weight: 1
+      - path: all/head/face/cap
+        weight: 1
+      - path: all/head/face/pCylinder3
+        weight: 1
+      - path: all/head/face/pCylinder4
+        weight: 1
+      - path: all/L_soulder
+        weight: 1
+      - path: all/L_soulder/shoulder_sphere
+        weight: 1
+      - path: all/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: all/R_soulder1
+        weight: 1
+      - path: all/R_soulder1/shoulder_sphere2
+        weight: 1
+      - path: all/R_soulder1/shoulder_sphere3
+        weight: 1
+      - path: group
+        weight: 1
+      - path: group/pasted__all
+        weight: 1
+      - path: group/pasted__all/pasted__body
+        weight: 1
+      - path: group/pasted__all/pasted__body/pasted__asi1
+        weight: 1
+      - path: group/pasted__asi2
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/pasted__joint1
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/pasted__joint4
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform15
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform15/joint6
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform15/joint6/joint7
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform15/joint6/joint7/joint10
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform16
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform16/joint8
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform16/joint8/joint9
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/transform16/joint8/joint9/joint11
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1/pasted__joint9
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1/pasted__joint9/pasted__joint10
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1/pasted__joint11
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/transform14/pasted__joint7
+          1/pasted__joint11/joint5
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6/pasted__joint5
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6/pasted__joint5/transform13
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6/pasted__joint5/transform13/joint3
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint2/transform5/rod 1/transform6/pasted__joint5/transform13/joint3/joint4
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint7
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint7/pasted__joint8
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint15
+        weight: 1
+      - path: group1/pasted__joint1/pasted__joint15/pasted__joint16
+        weight: 1
+      - path: group2
+        weight: 1
+      - path: group2/pasted__group2
+        weight: 1
+      - path: group2/pasted__group2/pasted__pCylinder9
+        weight: 1
+      - path: group2/pasted__group2/pasted__pCylinder9/transform9
+        weight: 1
+      - path: group2/pasted__group2/pasted__polySurface1 1
+        weight: 1
+      - path: group2/pasted__group2/pasted__polySurface1 1/transform10
+        weight: 1
+      - path: group2/pasted__pCylinder7
+        weight: 1
+      - path: group2/pasted__pCylinder7/pasted__transform7
+        weight: 1
+      - path: group2/pasted__pCylinder8
+        weight: 1
+      - path: group2/pasted__pCylinder8/pasted__transform8
+        weight: 1
+      - path: nurbsToPoly1
+        weight: 1
+      - path: nurbsToPoly2
+        weight: 1
+      - path: polySurface1
+        weight: 1
+      - path: rod
+        weight: 1
+      - path: sword
+        weight: 1
+      - path: sword/bone_rod
+        weight: 1
+      - path: sword/sword 1
+        weight: 1
+      - path: transform1
+        weight: 1
+      - path: transform4
+        weight: 1
+      - path: transform11
+        weight: 1
+      - path: transform12
+        weight: 1
+      - path: yumiya
+        weight: 1
+      - path: yumiya/pasted__polySurface1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

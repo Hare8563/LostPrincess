@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-<<<<<<< HEAD
-  <string>444</string>
-=======
   <string>test</string>
->>>>>>> develop
   <key>HP</key>
   <integer>200</integer>
   <key>MP</key>
