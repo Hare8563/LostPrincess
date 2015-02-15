@@ -109,13 +109,8 @@ public class CameraFollowController : MonoBehaviour
         if (Physics.Raycast(this.transform.parent.transform.position, toVec, out hit, dis, 1 << LayerMask.NameToLayer("Stage")))
         {
             //ポリゴン埋まりを防ぐために少しプレイヤー方向へカメラを戻す
-<<<<<<< HEAD
-            float backDis = 0.5f;
-            Camera.main.transform.position = hit.point - toVec.normalized * backDis;
-=======
 			float backDis = 5.0f;
 			Camera.main.transform.position = hit.point - toVec.normalized * backDis;
->>>>>>> develop
         }
         else
         {
