@@ -527,16 +527,17 @@ public class PlayerController : MonoBehaviour
             this.status.MP -= useMP;
             audio.PlayOneShot(MagicSe);
             isOneShotMagic = true;
-            //ロックオンしていたら追従
-            if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-            {
-                magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-                magicInstance.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
-            }
-            else
-            {
-                Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
-            }
+            ////ロックオンしていたら追従
+            //if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+            //{
+            //    magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+            //    magicInstance.GetComponent<MagicController>().setTargetObject(manager.GetComponent<AimCursorManager>().getLockOnObject());
+            //}
+            //else
+            //{
+            //    Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
+            //}
+            Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
             MagicController.EnemyDamage = this.status.Magic_Power;
         }
         else
@@ -555,15 +556,16 @@ public class PlayerController : MonoBehaviour
         {
             audio.PlayOneShot(BowSe);
             isOneShotArrow = true;
-            //ロックオンしていたら追従
-            if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-            {
-                arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-            }
-            else
-            {
-                Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
-            }
+            ////ロックオンしていたら追従
+            //if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+            //{
+            //    arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+            //}
+            //else
+            //{
+            //    Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
+            //}
+            Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
             BowController.EnemyDamage = this.status.BOW_POW;
             status.AMMO--;
             //Debug.Log(MagicController.EnemyDamage);
