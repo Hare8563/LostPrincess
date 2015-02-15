@@ -260,10 +260,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private bool isReject = false;
 
-
-	void Awake()
-	{
-		if (GameObject.FindGameObjectWithTag("Boss") != null)
+    void Awake()
+    {
+        if (GameObject.FindGameObjectWithTag("Boss") != null)
         {
             TargetObject = GameObject.FindGameObjectWithTag("Boss");
         }
@@ -281,7 +280,7 @@ public class PlayerController : MonoBehaviour
         RunSmokeEffect = Resources.Load("Prefab/RunSmoke") as GameObject;
         mainCamera = GameObject.Find("CameraControllPoint");
         manager = GameObject.Find("Manager");
-        sword_trail = GameObject.Find ("Sword_Tral");
+        sword_trail = GameObject.Find("Sword_Tral");
         RejectObject = Resources.Load("Prefab/RejectEffect") as GameObject;
     }
 
@@ -714,7 +713,7 @@ public class PlayerController : MonoBehaviour
         {
             this.status.MP = (int)InitMP;
         }
-        Debug.Log(isReject);
+        //Debug.Log(isReject);
     }
 
     /// <summary>

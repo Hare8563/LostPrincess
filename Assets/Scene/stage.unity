@@ -2061,7 +2061,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 56901564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: -30.5}
+  m_LocalPosition: {x: 5, y: .5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 77011523}
@@ -2784,7 +2784,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 77011518}
+<<<<<<< HEAD
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+=======
   m_LocalRotation: {x: .18660979, y: 0, z: 0, w: .982434154}
+>>>>>>> develop
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4193,7 +4197,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6566322, guid: 35354996c8f5b487ea166e489ac8df73, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 35354996c8f5b487ea166e489ac8df73, type: 2}
   m_RootGameObject: {fileID: 1034256970}
   m_IsPrefabParent: 0
@@ -44846,7 +44851,6 @@ GameObject:
   - 114: {fileID: 1034256977}
   - 54: {fileID: 1034256976}
   - 136: {fileID: 1034256975}
-  - 65: {fileID: 1034256974}
   - 82: {fileID: 1034256973}
   - 82: {fileID: 1034256978}
   - 198: {fileID: 1034256980}
@@ -44960,19 +44964,6 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!65 &1034256974
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6566322, guid: 35354996c8f5b487ea166e489ac8df73,
-    type: 2}
-  m_PrefabInternal: {fileID: 113392740}
-  m_GameObject: {fileID: 1034256970}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: .217999995, y: .100000001, z: .136999995}
-  m_Center: {x: 0, y: .186000004, z: .147}
 --- !u!136 &1034256975
 CapsuleCollider:
   m_ObjectHideFlags: 0

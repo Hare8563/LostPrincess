@@ -37,8 +37,13 @@ public class AimCursorManager : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
+        //SearchObject();
+        //MoveAimCursor();
+=======
 		//SearchObject();
 		//MoveAimCursor();
+>>>>>>> develop
     }
 
 	/// <summary>
