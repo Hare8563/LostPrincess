@@ -104,12 +104,18 @@ public class CameraFollowController : MonoBehaviour
         Vector3 toVec = this.transform.position - this.transform.parent.gameObject.transform.position;
         //プレイヤーの頭上とカメラとの距離
         float dis = Vector3.Distance(this.transform.position, this.transform.parent.transform.position);
+
         //カメラとプレイヤーとの間に障害物が存在したら
         if (Physics.Raycast(this.transform.parent.transform.position, toVec, out hit, dis, 1 << LayerMask.NameToLayer("Stage")))
         {
             //ポリゴン埋まりを防ぐために少しプレイヤー方向へカメラを戻す
+<<<<<<< HEAD
             float backDis = 0.5f;
             Camera.main.transform.position = hit.point - toVec.normalized * backDis;
+=======
+			float backDis = 5.0f;
+			Camera.main.transform.position = hit.point - toVec.normalized * backDis;
+>>>>>>> develop
         }
         else
         {
@@ -121,9 +127,10 @@ public class CameraFollowController : MonoBehaviour
             //距離制限
             if (mouceWheelValue < -0.5f) { mouceWheelValue = -0.5f; }
             else if (mouceWheelValue > 0.5f) { mouceWheelValue = 0.5f; }
+            //カメラ移動
             Vector3 toOriginVec = Camera.main.transform.position - this.transform.parent.position;
             Camera.main.transform.position = this.transform.position + toOriginVec * mouceWheelValue;
-            //Debug.Log(mouceWheelValue * 100f);
+            //カメラ位置反映
             CameraIcon.transform.position = new Vector3(CameraIcon.transform.position.x, CameraIconInit_Y - mouceWheelValue * 300f, CameraIcon.transform.position.z);
         }
         //Camera.main.transform.LookAt(this.transform.parent.transform.position);
