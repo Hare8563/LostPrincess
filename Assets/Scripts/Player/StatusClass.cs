@@ -7,6 +7,7 @@ namespace StatusClass{
 		private int alpha = 2;
 		public int ExpLimit = 10;
 		public int LEV;//Level
+        public int AMMO;
 		public int  EXP;//Experience value
 		public int HP;//HO
 		public int MP;
@@ -23,6 +24,7 @@ namespace StatusClass{
 		public Status(){
 			lvData = new CsvReader ("CSV/LvTable");
 			LEV = 1;
+            AMMO = 50;
 			EXP = 0;
 			HP = lvData.getParamValue(1, CsvParam.HP);
 			MP = lvData.getParamValue(1, CsvParam.MP);
@@ -36,6 +38,7 @@ namespace StatusClass{
         {
             lvData = new CsvReader(LvTablePath);
             LEV = Lv;
+            AMMO = 50;
             EXP = 0;
             HP = lvData.getParamValue(Lv - 1, CsvParam.HP);
             MP = lvData.getParamValue(Lv - 1, CsvParam.MP);
@@ -55,6 +58,7 @@ namespace StatusClass{
 		public Status(int Lev, int Exp,int Hp, string LvTablePath){
 			lvData = new CsvReader (LvTablePath);
             LEV = Lev;
+            AMMO = 50;
 			EXP = Exp;
 			HP = Hp < lvData.getParamValue(Lev, CsvParam.HP) ? Hp : lvData.getParamValue(Lev, CsvParam.HP);//Hpが最大値以下の場合はHpを入れる
 			MP = lvData.getParamValue(Lev, CsvParam.MP);
@@ -76,6 +80,7 @@ namespace StatusClass{
 		public Status(int Lev, int Exp, int Hp, int Mp, string Name, string LvTablePath){
 			lvData = new CsvReader (LvTablePath);
 			LEV = Lev;
+            AMMO = 50;
 			EXP = Exp;
 			HP = Hp < lvData.getParamValue(Lev, CsvParam.HP) ? Hp : lvData.getParamValue(Lev, CsvParam.HP);//Hpが最大値以下の場合はHpを入れる
 			MP = Mp < lvData.getParamValue(Lev, CsvParam.MP) ? Mp : lvData.getParamValue(Lev, CsvParam.MP);

@@ -204,7 +204,7 @@ ModelImporter:
     4300016: pasted__pasted__pCone1
     4300018: pasted__pasted__pCube1
     4300020: pasted__pasted__pCube2
-    7400000: Take 001
+    7400000: dead
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -221,7 +221,214 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: dead
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .97303921
+        functionName: DeadEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group4
+        weight: 1
+      - path: group4/pasted__all
+        weight: 1
+      - path: group4/pasted__all/pasted__body
+        weight: 1
+      - path: group4/pasted__all/pasted__body/pasted__arm_L
+        weight: 1
+      - path: group4/pasted__all/pasted__body/pasted__arm_R
+        weight: 1
+      - path: group4/pasted__all/pasted__head
+        weight: 1
+      - path: group4/pasted__group
+        weight: 1
+      - path: group4/pasted__group/pasted__pasted__all
+        weight: 1
+      - path: group4/pasted__group/pasted__pasted__all/pasted__pasted__body
+        weight: 1
+      - path: group4/pasted__group1
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__pasted__joint4
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__pasted__joint4/transform1
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__pasted__joint4/transform1/joint1
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__pasted__joint4/transform1/joint1/joint2
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__transform15
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__transform15/pasted__joint6
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__transform15/pasted__joint6/pasted__joint7
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__transform15/pasted__joint6/pasted__joint7/pasted__joint10
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__transform16
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__transform16/pasted__joint8
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__transform16/pasted__joint8/pasted__joint9
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__pasted__joint3/pasted__transform16/pasted__joint8/pasted__joint9/pasted__joint11
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1/pasted__transform3
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1/pasted__transform3/pasted__pasted__joint13
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1/pasted__transform3/pasted__pasted__joint13/pasted__transform14
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1/pasted__transform3/pasted__pasted__joint13/pasted__transform14/pasted__pasted__joint7
+          1
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1/pasted__transform3/pasted__pasted__joint13/pasted__transform14/pasted__pasted__joint7
+          1/pasted__pasted__joint9
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1/pasted__transform3/pasted__pasted__joint13/pasted__transform14/pasted__pasted__joint7
+          1/pasted__pasted__joint9/pasted__pasted__joint10
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1/pasted__transform3/pasted__pasted__joint13/pasted__transform14/pasted__pasted__joint7
+          1/pasted__pasted__joint11
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform2/pasted__joint1/pasted__transform3/pasted__pasted__joint13/pasted__transform14/pasted__pasted__joint7
+          1/pasted__pasted__joint11/pasted__joint5
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform5
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform5/pasted__rod
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform5/pasted__rod/pasted__transform6
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform5/pasted__rod/pasted__transform6/pasted__pasted__joint5
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform5/pasted__rod/pasted__transform6/pasted__pasted__joint5/pasted__transform13
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform5/pasted__rod/pasted__transform6/pasted__pasted__joint5/pasted__transform13/pasted__joint3
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint2/pasted__transform5/pasted__rod/pasted__transform6/pasted__pasted__joint5/pasted__transform13/pasted__joint3/pasted__joint4
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint7
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint7/pasted__pasted__joint8
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint15
+        weight: 1
+      - path: group4/pasted__group1/pasted__pasted__joint1/pasted__pasted__joint15/pasted__pasted__joint16
+        weight: 1
+      - path: group4/pasted__mant
+        weight: 1
+      - path: group4/pasted__mant/pasted__pasted__all 1
+        weight: 1
+      - path: group4/pasted__mant/pasted__pasted__all 1/pasted__pasted__mant
+        weight: 1
+      - path: group4/pasted__sword
+        weight: 1
+      - path: group4/pasted__yumiya
+        weight: 1
+      - path: group6
+        weight: 1
+      - path: group6/pasted__group2
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2/pasted__pasted__body 1
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2/pasted__pasted__body 1/pasted__pasted__arm_L
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2/pasted__pasted__body 1/pasted__pasted__arm_L/pasted__pasted__hand_L
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2/pasted__pasted__body 1/pasted__pasted__arm_R
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2/pasted__pasted__body 1/pasted__pasted__arm_R/pasted__pasted__hand_R
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2/pasted__pasted__body 1/pasted__pasted__body
+          2
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2/pasted__pasted__head
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__all 2/pasted__pasted__head/pasted__pasted__face
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group/pasted__pasted__pasted__all
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group/pasted__pasted__pasted__all/pasted__pasted__pasted__body
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group/pasted__pasted__pasted__all/pasted__pasted__pasted__body/pasted__pasted__pasted__asi1
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group/pasted__pasted__pasted__asi2
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__group2
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__group2/pasted__pasted__pasted__pCylinder9
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__group2/pasted__pasted__pasted__pCylinder9/pasted__pasted__transform9
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__group2/pasted__pasted__pasted__polySurface1
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__group2/pasted__pasted__pasted__polySurface1/pasted__pasted__transform10
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__pCylinder7
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__pCylinder7/pasted__pasted__pasted__transform7
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__pCylinder8
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__group2/pasted__pasted__pasted__pCylinder8/pasted__pasted__pasted__transform8
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__pCone1
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__pCube1
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__pCube2
+        weight: 1
+      - path: group6/pasted__group2/pasted__pasted__polySurface1
+        weight: 1
+      - path: polySurface1
+        weight: 1
+      - path: yumiya
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

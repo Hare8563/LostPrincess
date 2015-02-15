@@ -172,7 +172,7 @@ ModelImporter:
     4300016: pasted__pCube1
     4300018: pasted__pCube2
     7400000: idle
-    7400002: bowAction
+    7400002: bowAttack
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -364,10 +364,10 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: bowAction
+      name: bowAttack
       takeName: Take 001
       firstFrame: 181
-      lastFrame: 260
+      lastFrame: 241
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -386,7 +386,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: .422713012
+      - time: .417721599
         functionName: bowAttackEvent
         data: 
         objectReferenceParameter: {instanceID: 0}

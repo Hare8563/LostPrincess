@@ -270,19 +270,13 @@ public class PlayerController : MonoBehaviour
         MagicBallObject = Resources.Load("Prefab/MagicBall") as GameObject;
         ArrowObject = Resources.Load("Prefab/Arrow") as GameObject;
         animator = this.gameObject.GetComponent<Animator>();
-
         Weapon_Sword = GameObject.FindGameObjectWithTag("Weapon_Sword");
         Weapon_Rod = GameObject.FindGameObjectWithTag("Weapon_Rod");
         Weapon_Bow = GameObject.FindGameObjectWithTag("Weapon_Bow");
-
         HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
-
         RunSmokeEffect = Resources.Load("Prefab/RunSmoke") as GameObject;
-
         mainCamera = GameObject.Find("CameraControllPoint");
-
         manager = GameObject.Find("Manager");
-
         sword_trail = GameObject.Find ("Sword_Tral");
 	
     }
@@ -307,6 +301,7 @@ public class PlayerController : MonoBehaviour
     {
         //マウスイベント
         MouseEvent();
+
         //武器切り替え
         WeaponChange();
         //アニメーション管理
@@ -320,6 +315,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         //移動
         Move();
         //攻撃
@@ -346,6 +342,7 @@ public class PlayerController : MonoBehaviour
             Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
             Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
             float rotSpeed = 0.2f;
+
             //前
             if (isMoveButton.forwerd)
             {
@@ -374,8 +371,12 @@ public class PlayerController : MonoBehaviour
                 rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
             }
+            //カメラ方向へキャラクターの向きを調整する
+			transform.rotation = Quaternion.Slerp(transform.rotation,mainCamera.transform.rotation, rotSpeed);
+            transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
 
             //ジャンプ
+            /*
             if (isMoveButton.jump && canJump)
             {
                 float Power = 150f;
@@ -386,7 +387,7 @@ public class PlayerController : MonoBehaviour
                 nowCollissionStayNormalVec = Vector3.up;
                 canJump = false;
             }
-
+            */
             //常に下方向に力をかける
             rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
         }
@@ -546,19 +547,23 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void BowAttackEvent()
     {
-		audio.PlayOneShot(BowSe);
-		isOneShotArrow = true;
-        //ロックオンしていたら追従
-		if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-		{
-			arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-		}
-		else
-		{
-            Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
-		}
-		BowController.EnemyDamage = this.status.BOW_POW;
-        //Debug.Log(MagicController.EnemyDamage);
+        if (status.AMMO > 0)
+        {
+            audio.PlayOneShot(BowSe);
+            isOneShotArrow = true;
+            //ロックオンしていたら追従
+            if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
+            {
+                arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
+            }
+            else
+            {
+                Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
+            }
+            BowController.EnemyDamage = this.status.BOW_POW;
+            status.AMMO--;
+            //Debug.Log(MagicController.EnemyDamage);
+        }
     }
 
     /// <summary>
