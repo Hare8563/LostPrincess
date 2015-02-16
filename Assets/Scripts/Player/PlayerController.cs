@@ -260,6 +260,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private bool isReject = false;
 
+    /// <summary>
+    /// 照準オブジェクト
+    /// </summary>
+    private GameObject AimObjecct;
+
     void Awake()
     {
         if (GameObject.FindGameObjectWithTag("Boss") != null)
@@ -282,6 +287,8 @@ public class PlayerController : MonoBehaviour
         manager = GameObject.Find("Manager");
         sword_trail = GameObject.Find("Sword_Tral");
         RejectObject = Resources.Load("Prefab/RejectEffect") as GameObject;
+
+        AimObjecct = GameObject.Find("AimOrigin");
     }
 
     // Use this for initialization
@@ -536,7 +543,7 @@ public class PlayerController : MonoBehaviour
             //{
             //    Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
             //}
-            Instantiate(MagicBallObject, ShotPoint.transform.position, this.transform.rotation);
+            Instantiate(MagicBallObject, ShotPoint.transform.position, AimObjecct.transform.rotation);
             MagicController.EnemyDamage = this.status.Magic_Power;
         }
         else
@@ -564,7 +571,7 @@ public class PlayerController : MonoBehaviour
             //{
             //    Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
             //}
-            Instantiate(ArrowObject, ShotPoint.transform.position, this.transform.rotation);
+            Instantiate(ArrowObject, ShotPoint.transform.position, AimObjecct.transform.rotation);
             BowController.EnemyDamage = this.status.BOW_POW;
             status.AMMO--;
             //Debug.Log(MagicController.EnemyDamage);

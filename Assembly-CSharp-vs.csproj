@@ -97,6 +97,7 @@
      <Compile Include="Assets\Scripts\Other\RotationObject.cs" />
      <Compile Include="Assets\Scripts\Other\stageScript.cs" />
      <Compile Include="Assets\Scripts\Other\toBossStage.cs" />
+     <Compile Include="Assets\Scripts\Player\AimScript.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\RejectScript.cs" />
      <Compile Include="Assets\Scripts\Player\StatusClass.cs" />
