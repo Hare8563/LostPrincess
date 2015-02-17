@@ -27,8 +27,8 @@ Material:
         second: .5
       data:
         first:
-          name: _SquashAmount
-        second: 1
+          name: _Occlusion
+        second: 7.5
       data:
         first:
           name: _BaseLight
@@ -37,10 +37,6 @@ Material:
         first:
           name: _AO
         second: 8.58490562
-      data:
-        first:
-          name: _Occlusion
-        second: 7.5
     m_Colors:
       data:
         first:

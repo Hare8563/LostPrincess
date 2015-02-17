@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eaf85a5a7715942408881b409f7bf16d
+guid: 5884b0f1cfcde894bbeb431373a1c841
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -177,6 +177,7 @@ ModelImporter:
     2300030: shoulder_sphere 1
     2300032: shoulder_sphere1
     2300034: shoulder_sphere1 1
+    2300036: sword 1
     3300000: asi1
     3300002: asi2
     3300004: body 2
@@ -195,6 +196,7 @@ ModelImporter:
     3300030: shoulder_sphere 1
     3300032: shoulder_sphere1
     3300034: shoulder_sphere1 1
+    3300036: sword 1
     4300000: cap
     4300002: face
     4300004: hoon
@@ -216,11 +218,14 @@ ModelImporter:
     4300036: polySurface1
     4300038: rod
     4300040: sword
-    7400000: Take 001
+    7400000: Idle
+    7400002: Run
+    7400004: Sword
+    7400006: Magic
+    7400008: Arrow
     9500000: //RootNode
     13700000: nurbsToPoly1
     13700002: polySurface1
-    13700004: sword 1
   materials:
     importMaterials: 1
     materialName: 0
@@ -236,7 +241,966 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 5
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hone
+        weight: 1
+      - path: hone/joint1
+        weight: 1
+      - path: hone/joint1/joint2
+        weight: 1
+      - path: hone/joint1/joint2/joint3
+        weight: 1
+      - path: hone/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1/joint10
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9/joint11
+        weight: 1
+      - path: hone/joint1/joint2/transform2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1/joint10 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1/joint5 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1/joint4 1
+        weight: 1
+      - path: hone/joint1/joint7
+        weight: 1
+      - path: hone/joint1/joint7/joint8
+        weight: 1
+      - path: hone/joint1/joint15
+        weight: 1
+      - path: hone/joint1/joint15/joint16
+        weight: 1
+      - path: hontai
+        weight: 1
+      - path: hontai/all
+        weight: 1
+      - path: hontai/all/body
+        weight: 1
+      - path: hontai/all/body/arm_L
+        weight: 1
+      - path: hontai/all/body/arm_L/hand_L
+        weight: 1
+      - path: hontai/all/body/arm_R
+        weight: 1
+      - path: hontai/all/body/arm_R/hand_R
+        weight: 1
+      - path: hontai/all/body1
+        weight: 1
+      - path: hontai/all/body1/all 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1/body 2
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere 1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere1 1
+        weight: 1
+      - path: hontai/all/foot
+        weight: 1
+      - path: hontai/all/foot/asi1
+        weight: 1
+      - path: hontai/all/foot/asi2
+        weight: 1
+      - path: hontai/all/head
+        weight: 1
+      - path: hontai/all/head/cap
+        weight: 1
+      - path: hontai/all/head/face
+        weight: 1
+      - path: hontai/all/head/honn
+        weight: 1
+      - path: hontai/all/head/hoon
+        weight: 1
+      - path: hontai/all/mant 1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder2
+        weight: 1
+      - path: hontai/group4
+        weight: 1
+      - path: hontai/mant
+        weight: 1
+      - path: hontai/mant/nurbsToPoly1
+        weight: 1
+      - path: hontai/rod
+        weight: 1
+      - path: hontai/rod/rod 1
+        weight: 1
+      - path: hontai/sword
+        weight: 1
+      - path: hontai/sword/sword 1
+        weight: 1
+      - path: hontai/yumiya
+        weight: 1
+      - path: hontai/yumiya/polySurface1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9/transform8
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1/transform7
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 11
+      lastFrame: 70
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hone
+        weight: 1
+      - path: hone/joint1
+        weight: 1
+      - path: hone/joint1/joint2
+        weight: 1
+      - path: hone/joint1/joint2/joint3
+        weight: 1
+      - path: hone/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1/joint10
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9/joint11
+        weight: 1
+      - path: hone/joint1/joint2/transform2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1/joint10 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1/joint5 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1/joint4 1
+        weight: 1
+      - path: hone/joint1/joint7
+        weight: 1
+      - path: hone/joint1/joint7/joint8
+        weight: 1
+      - path: hone/joint1/joint15
+        weight: 1
+      - path: hone/joint1/joint15/joint16
+        weight: 1
+      - path: hontai
+        weight: 1
+      - path: hontai/all
+        weight: 1
+      - path: hontai/all/body
+        weight: 1
+      - path: hontai/all/body/arm_L
+        weight: 1
+      - path: hontai/all/body/arm_L/hand_L
+        weight: 1
+      - path: hontai/all/body/arm_R
+        weight: 1
+      - path: hontai/all/body/arm_R/hand_R
+        weight: 1
+      - path: hontai/all/body1
+        weight: 1
+      - path: hontai/all/body1/all 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1/body 2
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere 1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere1 1
+        weight: 1
+      - path: hontai/all/foot
+        weight: 1
+      - path: hontai/all/foot/asi1
+        weight: 1
+      - path: hontai/all/foot/asi2
+        weight: 1
+      - path: hontai/all/head
+        weight: 1
+      - path: hontai/all/head/cap
+        weight: 1
+      - path: hontai/all/head/face
+        weight: 1
+      - path: hontai/all/head/honn
+        weight: 1
+      - path: hontai/all/head/hoon
+        weight: 1
+      - path: hontai/all/mant 1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder2
+        weight: 1
+      - path: hontai/group4
+        weight: 1
+      - path: hontai/mant
+        weight: 1
+      - path: hontai/mant/nurbsToPoly1
+        weight: 1
+      - path: hontai/rod
+        weight: 1
+      - path: hontai/rod/rod 1
+        weight: 1
+      - path: hontai/sword
+        weight: 1
+      - path: hontai/sword/sword 1
+        weight: 1
+      - path: hontai/yumiya
+        weight: 1
+      - path: hontai/yumiya/polySurface1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9/transform8
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1/transform7
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Sword
+      takeName: Take 001
+      firstFrame: 71
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hone
+        weight: 1
+      - path: hone/joint1
+        weight: 1
+      - path: hone/joint1/joint2
+        weight: 1
+      - path: hone/joint1/joint2/joint3
+        weight: 1
+      - path: hone/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1/joint10
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9/joint11
+        weight: 1
+      - path: hone/joint1/joint2/transform2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1/joint10 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1/joint5 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1/joint4 1
+        weight: 1
+      - path: hone/joint1/joint7
+        weight: 1
+      - path: hone/joint1/joint7/joint8
+        weight: 1
+      - path: hone/joint1/joint15
+        weight: 1
+      - path: hone/joint1/joint15/joint16
+        weight: 1
+      - path: hontai
+        weight: 1
+      - path: hontai/all
+        weight: 1
+      - path: hontai/all/body
+        weight: 1
+      - path: hontai/all/body/arm_L
+        weight: 1
+      - path: hontai/all/body/arm_L/hand_L
+        weight: 1
+      - path: hontai/all/body/arm_R
+        weight: 1
+      - path: hontai/all/body/arm_R/hand_R
+        weight: 1
+      - path: hontai/all/body1
+        weight: 1
+      - path: hontai/all/body1/all 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1/body 2
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere 1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere1 1
+        weight: 1
+      - path: hontai/all/foot
+        weight: 1
+      - path: hontai/all/foot/asi1
+        weight: 1
+      - path: hontai/all/foot/asi2
+        weight: 1
+      - path: hontai/all/head
+        weight: 1
+      - path: hontai/all/head/cap
+        weight: 1
+      - path: hontai/all/head/face
+        weight: 1
+      - path: hontai/all/head/honn
+        weight: 1
+      - path: hontai/all/head/hoon
+        weight: 1
+      - path: hontai/all/mant 1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder2
+        weight: 1
+      - path: hontai/group4
+        weight: 1
+      - path: hontai/mant
+        weight: 1
+      - path: hontai/mant/nurbsToPoly1
+        weight: 1
+      - path: hontai/rod
+        weight: 1
+      - path: hontai/rod/rod 1
+        weight: 1
+      - path: hontai/sword
+        weight: 1
+      - path: hontai/sword/sword 1
+        weight: 1
+      - path: hontai/yumiya
+        weight: 1
+      - path: hontai/yumiya/polySurface1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9/transform8
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1/transform7
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Magic
+      takeName: Take 001
+      firstFrame: 121
+      lastFrame: 180
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .780979753
+        functionName: MagicAttackEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hone
+        weight: 1
+      - path: hone/joint1
+        weight: 1
+      - path: hone/joint1/joint2
+        weight: 1
+      - path: hone/joint1/joint2/joint3
+        weight: 1
+      - path: hone/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1/joint10
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9/joint11
+        weight: 1
+      - path: hone/joint1/joint2/transform2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1/joint10 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1/joint5 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1/joint4 1
+        weight: 1
+      - path: hone/joint1/joint7
+        weight: 1
+      - path: hone/joint1/joint7/joint8
+        weight: 1
+      - path: hone/joint1/joint15
+        weight: 1
+      - path: hone/joint1/joint15/joint16
+        weight: 1
+      - path: hontai
+        weight: 1
+      - path: hontai/all
+        weight: 1
+      - path: hontai/all/body
+        weight: 1
+      - path: hontai/all/body/arm_L
+        weight: 1
+      - path: hontai/all/body/arm_L/hand_L
+        weight: 1
+      - path: hontai/all/body/arm_R
+        weight: 1
+      - path: hontai/all/body/arm_R/hand_R
+        weight: 1
+      - path: hontai/all/body1
+        weight: 1
+      - path: hontai/all/body1/all 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1/body 2
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere 1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere1 1
+        weight: 1
+      - path: hontai/all/foot
+        weight: 1
+      - path: hontai/all/foot/asi1
+        weight: 1
+      - path: hontai/all/foot/asi2
+        weight: 1
+      - path: hontai/all/head
+        weight: 1
+      - path: hontai/all/head/cap
+        weight: 1
+      - path: hontai/all/head/face
+        weight: 1
+      - path: hontai/all/head/honn
+        weight: 1
+      - path: hontai/all/head/hoon
+        weight: 1
+      - path: hontai/all/mant 1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder2
+        weight: 1
+      - path: hontai/group4
+        weight: 1
+      - path: hontai/mant
+        weight: 1
+      - path: hontai/mant/nurbsToPoly1
+        weight: 1
+      - path: hontai/rod
+        weight: 1
+      - path: hontai/rod/rod 1
+        weight: 1
+      - path: hontai/sword
+        weight: 1
+      - path: hontai/sword/sword 1
+        weight: 1
+      - path: hontai/yumiya
+        weight: 1
+      - path: hontai/yumiya/polySurface1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9/transform8
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1/transform7
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Arrow
+      takeName: Take 001
+      firstFrame: 181
+      lastFrame: 250
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .72622472
+        functionName: BowAttackEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hone
+        weight: 1
+      - path: hone/joint1
+        weight: 1
+      - path: hone/joint1/joint2
+        weight: 1
+      - path: hone/joint1/joint2/joint3
+        weight: 1
+      - path: hone/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform15/joint6/joint7 1/joint10
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9
+        weight: 1
+      - path: hone/joint1/joint2/joint3/transform16/joint8 1/joint9/joint11
+        weight: 1
+      - path: hone/joint1/joint2/transform2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint9 1/joint10 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1
+        weight: 1
+      - path: hone/joint1/joint2/transform2/joint1 1/transform3/joint13/transform14/joint7
+          2/joint11 1/joint5 1
+        weight: 1
+      - path: hone/joint1/joint2/transform5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1
+        weight: 1
+      - path: hone/joint1/joint2/transform5/rod 2/transform6/joint5/transform13/joint3
+          1/joint4 1
+        weight: 1
+      - path: hone/joint1/joint7
+        weight: 1
+      - path: hone/joint1/joint7/joint8
+        weight: 1
+      - path: hone/joint1/joint15
+        weight: 1
+      - path: hone/joint1/joint15/joint16
+        weight: 1
+      - path: hontai
+        weight: 1
+      - path: hontai/all
+        weight: 1
+      - path: hontai/all/body
+        weight: 1
+      - path: hontai/all/body/arm_L
+        weight: 1
+      - path: hontai/all/body/arm_L/hand_L
+        weight: 1
+      - path: hontai/all/body/arm_R
+        weight: 1
+      - path: hontai/all/body/arm_R/hand_R
+        weight: 1
+      - path: hontai/all/body1
+        weight: 1
+      - path: hontai/all/body1/all 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1
+        weight: 1
+      - path: hontai/all/body1/all 1/body 1/body 2
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere
+        weight: 1
+      - path: hontai/all/body1/all 1/L_soulder/shoulder_sphere1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere 1
+        weight: 1
+      - path: hontai/all/body1/all 1/R_soulder1/shoulder_sphere1 1
+        weight: 1
+      - path: hontai/all/foot
+        weight: 1
+      - path: hontai/all/foot/asi1
+        weight: 1
+      - path: hontai/all/foot/asi2
+        weight: 1
+      - path: hontai/all/head
+        weight: 1
+      - path: hontai/all/head/cap
+        weight: 1
+      - path: hontai/all/head/face
+        weight: 1
+      - path: hontai/all/head/honn
+        weight: 1
+      - path: hontai/all/head/hoon
+        weight: 1
+      - path: hontai/all/mant 1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder1
+        weight: 1
+      - path: hontai/all/mant 1/pCylinder2
+        weight: 1
+      - path: hontai/group4
+        weight: 1
+      - path: hontai/mant
+        weight: 1
+      - path: hontai/mant/nurbsToPoly1
+        weight: 1
+      - path: hontai/rod
+        weight: 1
+      - path: hontai/rod/rod 1
+        weight: 1
+      - path: hontai/sword
+        weight: 1
+      - path: hontai/sword/sword 1
+        weight: 1
+      - path: hontai/yumiya
+        weight: 1
+      - path: hontai/yumiya/polySurface1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/pCylinder9/transform8
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1
+        weight: 1
+      - path: hontai/yumiya/yumiya 1/yumi/polySurface1 1/transform7
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

@@ -27,6 +27,6 @@ public class Ending : MonoBehaviour {
             LoadingController.NextScene("RastBoss");
         }
         //ホワイトイン
-        EventManager.GetComponent<EventController>().WhiteIn(0.2f);
+        EventManager.GetComponent<EventController>().FadeIn(0.2f);
 	}
 }

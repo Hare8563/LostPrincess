@@ -187,13 +187,13 @@ StateMachine:
       second:
       - {fileID: 110100000}
     data:
-      first: {fileID: 110249791}
-      second:
-      - {fileID: 110147282}
-    data:
       first: {fileID: 110297418}
       second:
       - {fileID: 110140776}
+    data:
+      first: {fileID: 110249791}
+      second:
+      - {fileID: 110147282}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: -72, y: -60, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

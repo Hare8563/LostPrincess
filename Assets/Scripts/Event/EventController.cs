@@ -27,8 +27,6 @@ public class EventController : MonoBehaviour
     void Awake()
     {
         WhiteGuiTexture = this.transform.FindChild("WhiteTex").guiTexture;
-        GuiTextures = GameObject.FindGameObjectsWithTag("GUITexture");
-        GuiTexts = GameObject.FindGameObjectsWithTag("GUIText");
     }
 
     // Use this for initialization
@@ -50,19 +48,9 @@ public class EventController : MonoBehaviour
     /// </summary>
     /// <param name="scenename">ホワイトアウトした後に遷移するシーン</param>
     /// /// <param name="speed">ホワイトアウトするはやさ</param>
-    public void WhiteOut(string scenename, float speed)
+    public void FadeOut(string scenename, float speed)
     {
-        //GUIテクスチャの非表示
-        for (int i = 0; i < GuiTextures.Length; i++)
-        {
-            GuiTextures[i].guiTexture.enabled = false;
-        }
-        //GUIテキストの非表示
-        for (int i = 0; i < GuiTexts.Length; i++)
-        {
-            GuiTexts[i].guiText.enabled = false;
-        }
-
+        //WhiteGuiTexture.color = color;
         //初期化
         if (!isAlfa)
         {
@@ -71,9 +59,9 @@ public class EventController : MonoBehaviour
         }
         //アルファ値を加算
         a += (speed * Method.GameTime()) / 255;
-        if (a >= 1.0f)
+        if (a >= 0.5f)
         {
-            a = 1.0f;
+            a = 0.5f;
             Application.LoadLevel(scenename);
         }
     }
@@ -82,8 +70,9 @@ public class EventController : MonoBehaviour
     /// ホワイトイン
     /// </summary>
     /// <param name="speed">ホワイトインするはやさ</param>
-    public void WhiteIn(float speed)
+    public void FadeIn(float speed)
     {
+        //WhiteGuiTexture.color = color;
         //初期化
         if (!isAlfa)
         {

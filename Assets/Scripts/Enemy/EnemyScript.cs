@@ -61,6 +61,10 @@ public class EnemyScript : MonoBehaviour
     private GameObject ArrowObject;
 
     private GameObject ArrowInstance;
+    /// <summary>
+    /// ステータスマネージャークラス
+    /// </summary>
+    private EnemyStatusManager enemyStatusManager;
 
     /// <summary>
     /// 魔法オブジェクトインスタンス
@@ -81,6 +85,7 @@ public class EnemyScript : MonoBehaviour
         {
             MagicBallObject = Resources.Load("Prefab/MagicBall") as GameObject;
         }
+        enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
     }
 
     /// <summary>
@@ -90,7 +95,7 @@ public class EnemyScript : MonoBehaviour
     {
         player = GameObject.Find(@"HERO_MOTION07");
 
-        status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
+        status = enemyStatusManager.getStatus();
     }
 
     /// <summary>
@@ -151,7 +156,7 @@ public class EnemyScript : MonoBehaviour
             swordAttack = true;
         }
         //HPが0になったら経験値を取得
-        if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
+        if (enemyStatusManager.getIsDead())
         {
             audio.PlayOneShot(expGetSe);
 			this.collider.enabled = false;
@@ -193,7 +198,7 @@ public class EnemyScript : MonoBehaviour
             magicAttack = true;
         }
         //HPが0になったら経験値を取得
-        if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
+        if (enemyStatusManager.getIsDead())
         {
             audio.PlayOneShot(expGetSe);
 			this.collider.enabled = false;
@@ -224,7 +229,7 @@ public class EnemyScript : MonoBehaviour
             bowAttack = true;
         }
         //HPが0になったら経験値を取得
-        if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
+        if (enemyStatusManager.getIsDead())
         {
             audio.PlayOneShot(expGetSe);
             this.collider.enabled = false;

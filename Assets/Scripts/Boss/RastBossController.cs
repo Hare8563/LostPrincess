@@ -201,6 +201,10 @@ public class RastBossController : MonoBehaviour
     /// 攻撃アイコンオブジェクト
     /// </summary>
     private GameObject AttackIconObject;
+    /// <summary>
+    /// ステータスマネージャークラス
+    /// </summary>
+    private EnemyStatusManager enemyStatusManager;
 
 #if skillDebug
     //ノーマルスキル
@@ -226,6 +230,7 @@ public class RastBossController : MonoBehaviour
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
         ShieldObject = GameObject.Find("Shield");
         AttackIconObject = GameObject.Find("HimeAttackIcon");
+        enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
         //Debug.Log(AttackIconObject);
     }
 
@@ -235,7 +240,7 @@ public class RastBossController : MonoBehaviour
     void Start()
     {
 		//status = new Status(30, "CSV/RastBassTable");
-        status = this.gameObject.GetComponent<EnemyStatusManager>().getStatus();
+        status = enemyStatusManager.getStatus();
         //エフェクトサイズとライト光量を初期化
         nowEffectSize = EfectSize_Min;
         nowLightIntensity = EfectLightIntensity_Min;
@@ -264,11 +269,11 @@ public class RastBossController : MonoBehaviour
         DashEffect.SetActive(isDashEffect);
         ShieldObject.SetActive(isShield);
         //死んでいたら
-        if (this.gameObject.GetComponent<EnemyStatusManager>().getIsDead())
+        if (enemyStatusManager.getIsDead())
         {
             LoadingController.NextScene("Title");
 		}
-        Debug.Log(status.HP);
+        //Debug.Log(status.HP);
     }
 
     /// <summary>

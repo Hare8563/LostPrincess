@@ -2,7 +2,11 @@ fileFormatVersion: 2
 guid: 2dc2e6de09928ae4a86f7d9d1874e9b0
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ShotPoint: {instanceID: 0}
+  - SwordSe: {fileID: 8300000, guid: bf6337ddbd3da6b47b95485fe69ffdd3, type: 3}
+  - MagicSe: {fileID: 8300000, guid: 81d8ac722774a4341884dda65191b400, type: 3}
+  - BowSe: {fileID: 8300000, guid: 7cfb7f5a58633475e89d19369bc2855d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

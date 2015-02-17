@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// カメラの回転原点
+/// </summary>
 public class CameraController : MonoBehaviour {
 	/// <summary>
 	/// 追うオブジェクト
@@ -48,7 +51,10 @@ public class CameraController : MonoBehaviour {
 
     void Awake()
     {
-
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 	
 	void Start () 
