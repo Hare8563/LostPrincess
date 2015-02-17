@@ -253,10 +253,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private GameObject RejectObject;
     /// <summary>
-    /// 初期MP
-    /// </summary>
-    private float InitMP = 0;
-    /// <summary>
     /// MP回復中かどうか
     /// </summary>
     private bool isReject = false;
@@ -305,7 +301,6 @@ public class PlayerController : MonoBehaviour
         Weapon_Sword.renderer.enabled = true;
         Weapon_Rod.renderer.enabled = false;
         Weapon_Bow.renderer.enabled = false;
-        InitMP = this.status.MP;
     }
 
     void Update()
@@ -724,9 +719,10 @@ public class PlayerController : MonoBehaviour
             this.animator.speed = 1;
         }
         //上限以上回復しないよう調整
-        if (InitMP < this.status.MP)
+        Debug.Log(this.status.MPMAX);
+        if (this.status.MPMAX < this.status.MP)
         {
-            this.status.MP = (int)InitMP;
+            this.status.MP = this.status.MPMAX;
         }
         //Debug.Log(isReject);
     }
