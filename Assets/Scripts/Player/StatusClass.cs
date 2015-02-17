@@ -11,6 +11,7 @@ namespace StatusClass{
 		public int  EXP;//Experience value
 		public int HP;//HO
 		public int MP;
+		public int MPMAX;//MPの最大値
 		public int BOW_POW;
 		public int Sword_Power;
 		public int Magic_Power;
@@ -28,6 +29,7 @@ namespace StatusClass{
 			EXP = 0;
 			HP = lvData.getParamValue(1, CsvParam.HP);
 			MP = lvData.getParamValue(1, CsvParam.MP);
+            MPMAX = MP;
 			BOW_POW = lvData.getParamValue (1, CsvParam.BOW_ATK);
 			Sword_Power=lvData.getParamValue(1,CsvParam.SWORD_ATK);
 			Magic_Power = lvData.getParamValue(1,CsvParam.MAGIC_ATK);
@@ -42,6 +44,7 @@ namespace StatusClass{
             EXP = 0;
             HP = lvData.getParamValue(Lv - 1, CsvParam.HP);
             MP = lvData.getParamValue(Lv - 1, CsvParam.MP);
+			MPMAX = MP;
             BOW_POW = lvData.getParamValue(Lv - 1, CsvParam.BOW_ATK);
             Sword_Power = lvData.getParamValue(Lv - 1, CsvParam.SWORD_ATK);
             Magic_Power = lvData.getParamValue(Lv - 1, CsvParam.MAGIC_ATK);
@@ -62,6 +65,7 @@ namespace StatusClass{
 			EXP = Exp;
 			HP = Hp < lvData.getParamValue(Lev, CsvParam.HP) ? Hp : lvData.getParamValue(Lev, CsvParam.HP);//Hpが最大値以下の場合はHpを入れる
 			MP = lvData.getParamValue(Lev, CsvParam.MP);
+            MPMAX = MP;
 			BOW_POW = lvData.getParamValue (Lev, CsvParam.BOW_ATK);
 			Sword_Power = lvData.getParamValue(Lev, CsvParam.SWORD_ATK);
 			Magic_Power = lvData.getParamValue(Lev, CsvParam.MAGIC_ATK);
@@ -84,6 +88,7 @@ namespace StatusClass{
 			EXP = Exp;
 			HP = Hp < lvData.getParamValue(Lev, CsvParam.HP) ? Hp : lvData.getParamValue(Lev, CsvParam.HP);//Hpが最大値以下の場合はHpを入れる
 			MP = Mp < lvData.getParamValue(Lev, CsvParam.MP) ? Mp : lvData.getParamValue(Lev, CsvParam.MP);
+            MPMAX = MP;
 			BOW_POW = lvData.getParamValue (Lev, CsvParam.BOW_ATK);
 			Sword_Power = lvData.getParamValue(Lev, CsvParam.SWORD_ATK);
 			Magic_Power = lvData.getParamValue(Lev, CsvParam.MAGIC_ATK);
@@ -97,6 +102,7 @@ namespace StatusClass{
             this.LEV++;
             this.HP = lvData.getParamValue(this.LEV, CsvParam.HP);
             this.MP = lvData.getParamValue(this.LEV, CsvParam.MP);
+            MPMAX = MP;
             this.EXP = 0;
 			this.Sword_Power = lvData.getParamValue(this.LEV, CsvParam.SWORD_ATK);
 			this.Magic_Power = lvData.getParamValue(this.LEV, CsvParam.MAGIC_ATK);

@@ -22,6 +22,7 @@ public class toBossStage : MonoBehaviour {
             prefs.SetString("NAME", TargetModel.status.NAME);
             prefs.SetInt("HP", TargetModel.status.HP);
             prefs.SetInt("MP", TargetModel.status.MP);
+            prefs.SetInt("MPMAX", TargetModel.status.MPMAX);
             prefs.SetInt("LV", TargetModel.status.LEV);
             prefs.SetInt("EXP", TargetModel.status.EXP);
             prefs.SetInt("Sword", TargetModel.status.Sword_Power);

@@ -1,19 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-  <string>仕事なう</string>
+  <string>
+  </string>
   <key>HP</key>
-  <integer>150</integer>
+  <integer>200</integer>
   <key>MP</key>
+  <integer>60</integer>
+  <key>MPMAX</key>
   <integer>100</integer>
   <key>LV</key>
-  <integer>4</integer>
+  <integer>5</integer>
   <key>EXP</key>
-  <integer>24</integer>
+  <integer>3</integer>
   <key>Sword</key>
-  <integer>55</integer>
+  <integer>60</integer>
   <key>Bow</key>
-  <integer>27</integer>
+  <integer>30</integer>
   <key>Magic</key>
-  <integer>53</integer>
+  <integer>55</integer>
 </root>
