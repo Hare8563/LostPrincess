@@ -37,7 +37,7 @@ public class MagicScript : MonoBehaviour
     /// </summary>
     private MouseButtonStruct mouseButton;
     /// <summary>
-    /// 子カメラオブジェクト
+    /// カメラ目標座標オブジェクト
     /// </summary>
     private GameObject CameraObject;
     /// <summary>
@@ -65,19 +65,19 @@ public class MagicScript : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-	
+        Instantiate(CursorObject, RayHitPoint, CursorObject.transform.rotation);
 	}
 	
 	// Update is called once per frame
 	void Update () {
         MouseEvent();
-        CameraMove();
         CameraRay();
-        if (CursorObjectInst == null)
-        {
-            CursorObjectInst = (GameObject)Instantiate(CursorObject, RayHitPoint, CursorObject.transform.rotation);
-        }
 	}
+
+    void FixedUpdate()
+    {
+        CameraMove();
+    }
 
     /// <summary>
     /// マウスイベント
@@ -99,8 +99,15 @@ public class MagicScript : MonoBehaviour
     /// </summary>
     void CameraMove()
     {
-        Vector3 moveVec = new Vector3(mouseX, 0, mouseY);
-        CameraObject.rigidbody.AddForce(moveVec * 80);
+        float speed = 80;
+        if (mouseX != 0)
+        {
+            CameraObject.rigidbody.AddForce(CameraObject.transform.TransformDirection(Vector3.right) * mouseX * speed);
+        }
+        if (mouseY != 0)
+        {
+            CameraObject.rigidbody.AddForce(CameraObject.transform.TransformDirection(Vector3.up) * mouseY * speed);
+        }
     }
 
     /// <summary>

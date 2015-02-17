@@ -550,7 +550,7 @@ public class PlayerController : MonoBehaviour
             //{
             //    Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
             //}
-            Instantiate(MagicBallObject, this.transform.position, MagicBallObject.transform.rotation);
+            Instantiate(MagicBallObject, this.transform.position, this.transform.rotation);
             animator.speed = 0;
             MagicController.EnemyDamage = this.status.Magic_Power;
         }

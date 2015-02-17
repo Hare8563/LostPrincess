@@ -118,6 +118,9 @@ public class MagicCursorScript : MonoBehaviour
         this.transform.localScale = new Vector3(scale, 1, scale);
     }
 
+    /// <summary>
+    /// 移動
+    /// </summary>
     void Move()
     {
         if (magicScript != null)
@@ -133,14 +136,15 @@ public class MagicCursorScript : MonoBehaviour
     {
         if (mouseButton.leftUp)
         {
+            Camera.main.rect = new Rect(0, 0, 1, 1);
             cameraController.setCanMove(true);
-            Destroy(MagicOriginObject);
             //魔法発動
             InvocationFlag = true;
-            //Instantiate(MeteoObject )
+            Destroy(MagicOriginObject);
         }
-        else if (mouseButton.left)
+        else if (!InvocationFlag)
         {
+            Camera.main.rect = new Rect(0, 0, 0, 0);
             cameraController.setCanMove(false);
         }
     }
