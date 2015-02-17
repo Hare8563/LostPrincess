@@ -88,7 +88,6 @@ public class Meteo : MonoBehaviour
             else if (TargetTag == "Enemy") { collider.GetComponent<EnemyStatusManager>().Damage(5); }
         }
         Instantiate(DetonatorObject, this.transform.position, DetonatorObject.transform.rotation);
-        Destroy(this.gameObject);
     }
 
     /// <summary>
