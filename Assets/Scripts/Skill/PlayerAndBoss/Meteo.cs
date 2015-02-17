@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Meteo : MonoBehaviour
 {
-
     /// <summary>
     /// スピード
     /// </summary>
@@ -31,6 +30,10 @@ public class Meteo : MonoBehaviour
 	/// Y座標
 	/// </summary>
 	private float y = 0;
+    /// <summary>
+    /// 爆発オブジェクト
+    /// </summary>
+    public GameObject DetonatorObject;
 
     /// <summary>
     /// 初期化
@@ -53,38 +56,39 @@ public class Meteo : MonoBehaviour
         //移動
         Move();
 
-        //下にカーソルを表示させる
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity))
-        {
-            //Debug.Log(hit.collider.name);
-            if (hit.collider.name == "Cube_005")
-            {
-                if (!isCursor)
-                {
-                    isCursor = true;
-                    cursorInstance = (GameObject)Instantiate(Cursor, hit.point, hit.transform.rotation);
-                }
-                //Debug.Log(cursorInstance);
-                if (cursorInstance != null) cursorInstance.GetComponent<Cursor>().SetPosition = hit.point + new Vector3(0, 0.1f, 0);
-            }
-        }
+        ////下にカーソルを表示させる
+        //RaycastHit hit;
+        //if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity))
+        //{
+        //    //Debug.Log(hit.collider.name);
+        //    if (hit.collider.name == "Cube_005")
+        //    {
+        //        if (!isCursor)
+        //        {
+        //            isCursor = true;
+        //            cursorInstance = (GameObject)Instantiate(Cursor, hit.point, hit.transform.rotation);
+        //        }
+        //        //Debug.Log(cursorInstance);
+        //        if (cursorInstance != null) cursorInstance.GetComponent<Cursor>().SetPosition = hit.point + new Vector3(0, 0.1f, 0);
+        //    }
+        //}
     }
 
     /// <summary>
     /// 何かに当たったら
     /// </summary>
     /// <param name="collider"></param>
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision other)
     {
 		//Debug.Log(collider.tag);
-        if (collider.tag == TargetTag)
+        if (other.collider.tag == TargetTag)
         {
-            if (TargetTag == "Player") { collider.GetComponent<PlayerController>().Damage(5); }
-            else if (TargetTag == "Boss") { collider.GetComponent<EnemyStatusManager>().Damage(5); }
+            if (TargetTag == "Player") { other.collider.GetComponent<PlayerController>().Damage(5); }
+            else if (TargetTag == "Boss") { other.collider.GetComponent<EnemyStatusManager>().Damage(5); }
             else if (TargetTag == "Enemy") { collider.GetComponent<EnemyStatusManager>().Damage(5); }
-            Destroy(this.gameObject);
         }
+        Instantiate(DetonatorObject, this.transform.position, DetonatorObject.transform.rotation);
+        Destroy(this.gameObject);
     }
 
     /// <summary>

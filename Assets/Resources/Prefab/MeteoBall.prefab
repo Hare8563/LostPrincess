@@ -45,7 +45,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.80999994, y: 1.17999995, z: -20.2399998}
+  m_LocalPosition: {x: 28.1224365, y: 0, z: -2.66345215}
   m_LocalScale: {x: 30, y: 30, z: 30}
   m_Children:
   - {fileID: 400002}
@@ -81,10 +81,10 @@ ParticleAnimator:
     rgba: 2303967743
   colorAnimation[3]:
     serializedVersion: 2
-    rgba: 1124073471
+    rgba: 1787530123
   colorAnimation[4]:
     serializedVersion: 2
-    rgba: 184549375
+    rgba: 829255021
   worldRotationAxis: {x: 0, y: 0, z: 0}
   localRotationAxis: {x: 0, y: 0, z: 0}
   sizeGrow: -.899999976
@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 2
+  DetonatorObject: {fileID: 100000, guid: c8fd86fe5050dc04bb501b291c30f591, type: 2}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -226,10 +227,10 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .5
+  m_Radius: .300000012
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
