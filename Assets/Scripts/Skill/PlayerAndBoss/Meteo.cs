@@ -34,6 +34,10 @@ public class Meteo : MonoBehaviour
     /// 爆発オブジェクト
     /// </summary>
     public GameObject DetonatorObject;
+    /// <summary>
+    /// プレイヤーコントローラークラス
+    /// </summary>
+    private PlayerController playerController;
 
     /// <summary>
     /// 初期化
@@ -41,6 +45,8 @@ public class Meteo : MonoBehaviour
     void Awake()
     {
         Cursor = Resources.Load("Prefab/MeteoPoint") as GameObject;
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        Debug.Log(playerController);
     }
 
     // Use this for initialization
@@ -81,13 +87,26 @@ public class Meteo : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
 		//Debug.Log(collider.tag);
-        if (other.collider.tag == TargetTag)
+        //周辺のオブジェクトコライダを取得
+        float radius = 20;
+        Collider[] targets = Physics.OverlapSphere(transform.position, radius);
+        //周辺にいるオブジェクトにダメージ
+        foreach (Collider i in targets)
         {
-            if (TargetTag == "Player") { other.collider.GetComponent<PlayerController>().Damage(5); }
-            else if (TargetTag == "Boss") { other.collider.GetComponent<EnemyStatusManager>().Damage(5); }
-            else if (TargetTag == "Enemy") { collider.GetComponent<EnemyStatusManager>().Damage(5); }
+            //Debug.Log(i.tag);
+            if (i.tag == "Player") { i.gameObject.GetComponent<PlayerController>().Damage(playerController.getStatus().Magic_Power); }
+            else if (i.tag == "Boss") { i.gameObject.GetComponent<EnemyStatusManager>().Damage(playerController.getStatus().Magic_Power); }
+            else if (i.tag == "Enemy") { i.gameObject.GetComponent<EnemyStatusManager>().Damage(playerController.getStatus().Magic_Power); }
         }
+
+        //if (other.collider.tag == TargetTag)
+        //{
+        //    if (TargetTag == "Player") { other.collider.GetComponent<PlayerController>().Damage(5); }
+        //    else if (TargetTag == "Boss") { other.collider.GetComponent<EnemyStatusManager>().Damage(playerController.getStatus().Magic_Power); }
+        //    else if (TargetTag == "Enemy") { collider.GetComponent<EnemyStatusManager>().Damage(playerController.getStatus().Magic_Power); }
+        //}
         Instantiate(DetonatorObject, this.transform.position, DetonatorObject.transform.rotation);
+        Destroy(this.gameObject);
     }
 
     /// <summary>
