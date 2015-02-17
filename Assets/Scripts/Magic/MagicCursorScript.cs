@@ -62,12 +62,17 @@ public class MagicCursorScript : MonoBehaviour
     /// メテオを発射した回数
     /// </summary>
     private int InvoCount = 0;
+    /// <summary>
+    /// カメラコントロールオブジェクト
+    /// </summary>
+    private CameraController cameraController;
 
     void Awake()
     {
         MagicOriginObject = GameObject.Find("MagicOrigin(Clone)");
         magicScript = MagicOriginObject.GetComponent<MagicScript>();
         MeteoObject = Resources.Load("Prefab/MeteoBall") as GameObject;
+        cameraController = GameObject.Find("CameraControllPoint").GetComponent<CameraController>();
     }
 
     // Use this for initialization
@@ -105,10 +110,11 @@ public class MagicCursorScript : MonoBehaviour
     /// </summary>
     void Scale()
     {
-        if (mouseButton.left && scale < MaxScale)
-        {
-            scale += 0.03f;
-        }
+        //if (mouseButton.left && scale < MaxScale)
+        //{
+        //    scale += 0.03f;
+        //}
+        scale = MaxScale;
         this.transform.localScale = new Vector3(scale, 1, scale);
     }
 
@@ -127,19 +133,27 @@ public class MagicCursorScript : MonoBehaviour
     {
         if (mouseButton.leftUp)
         {
+            cameraController.setCanMove(true);
             Destroy(MagicOriginObject);
             //魔法発動
             InvocationFlag = true;
             //Instantiate(MeteoObject )
         }
+        else if (mouseButton.left)
+        {
+            cameraController.setCanMove(false);
+        }
     }
 
+    /// <summary>
+    /// カーソル範囲内にメテオを落とす
+    /// </summary>
     void MagicInvocation()
     {
         if (InvocationFlag)
         {
             InvoSecond += Method.GameTime();
-            if ((int)InvoSecond % 10 == 0 &&
+            if ((int)InvoSecond % 20 == 0 &&
                 InvoCount < scale)
             {
                 float height = 100;

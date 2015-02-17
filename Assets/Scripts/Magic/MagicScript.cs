@@ -100,7 +100,7 @@ public class MagicScript : MonoBehaviour
     void CameraMove()
     {
         Vector3 moveVec = new Vector3(mouseX, 0, mouseY);
-        CameraObject.rigidbody.AddForce(moveVec * 20);
+        CameraObject.rigidbody.AddForce(moveVec * 80);
     }
 
     /// <summary>

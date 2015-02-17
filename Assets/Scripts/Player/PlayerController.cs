@@ -534,7 +534,8 @@ public class PlayerController : MonoBehaviour
     void MagicAttackEvent()
     {
         int useMP = 10;
-        if (this.status.MP > useMP)
+        if (this.status.MP > useMP &&
+            mouseButton.left)
         {
             this.status.MP -= useMP;
             //audio.PlayOneShot(MagicSe);

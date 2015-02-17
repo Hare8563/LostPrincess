@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f52338c0e83e8e043aadde41b26a935c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxScale: 15
+  MaxScale: 10
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
