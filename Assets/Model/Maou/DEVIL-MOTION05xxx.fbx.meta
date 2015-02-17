@@ -1,0 +1,277 @@
+fileFormatVersion: 2
+guid: eaf85a5a7715942408881b409f7bf16d
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: all
+    100002: all 1
+    100004: arm_L
+    100006: arm_R
+    100008: asi1
+    100010: asi2
+    100012: body
+    100014: body 1
+    100016: body 2
+    100018: body1
+    100020: cap
+    100022: //RootNode
+    100024: face
+    100026: foot
+    100028: group4
+    100030: hand_L
+    100032: hand_R
+    100034: head
+    100036: hone
+    100038: honn
+    100040: hontai
+    100042: hoon
+    100044: joint1
+    100046: joint1 1
+    100048: joint10
+    100050: joint10 1
+    100052: joint11
+    100054: joint11 1
+    100056: joint13
+    100058: joint15
+    100060: joint16
+    100062: joint2
+    100064: joint3
+    100066: joint3 1
+    100068: joint4
+    100070: joint4 1
+    100072: joint5
+    100074: joint5 1
+    100076: joint6
+    100078: joint7
+    100080: joint7 1
+    100082: joint7 2
+    100084: joint8
+    100086: joint8 1
+    100088: joint9
+    100090: joint9 1
+    100092: L_soulder
+    100094: mant
+    100096: mant 1
+    100098: nurbsToPoly1
+    100100: pCylinder1
+    100102: pCylinder2
+    100104: pCylinder9
+    100106: polySurface1
+    100108: polySurface1 1
+    100110: R_soulder1
+    100112: rod
+    100114: rod 1
+    100116: rod 2
+    100118: shoulder_sphere
+    100120: shoulder_sphere 1
+    100122: shoulder_sphere1
+    100124: shoulder_sphere1 1
+    100126: sword
+    100128: sword 1
+    100130: transform13
+    100132: transform14
+    100134: transform15
+    100136: transform16
+    100138: transform2
+    100140: transform3
+    100142: transform5
+    100144: transform6
+    100146: transform7
+    100148: transform8
+    100150: yumi
+    100152: yumiya
+    100154: yumiya 1
+    400000: all
+    400002: all 1
+    400004: arm_L
+    400006: arm_R
+    400008: asi1
+    400010: asi2
+    400012: body
+    400014: body 1
+    400016: body 2
+    400018: body1
+    400020: cap
+    400022: //RootNode
+    400024: face
+    400026: foot
+    400028: group4
+    400030: hand_L
+    400032: hand_R
+    400034: head
+    400036: hone
+    400038: honn
+    400040: hontai
+    400042: hoon
+    400044: joint1
+    400046: joint1 1
+    400048: joint10
+    400050: joint10 1
+    400052: joint11
+    400054: joint11 1
+    400056: joint13
+    400058: joint15
+    400060: joint16
+    400062: joint2
+    400064: joint3
+    400066: joint3 1
+    400068: joint4
+    400070: joint4 1
+    400072: joint5
+    400074: joint5 1
+    400076: joint6
+    400078: joint7
+    400080: joint7 1
+    400082: joint7 2
+    400084: joint8
+    400086: joint8 1
+    400088: joint9
+    400090: joint9 1
+    400092: L_soulder
+    400094: mant
+    400096: mant 1
+    400098: nurbsToPoly1
+    400100: pCylinder1
+    400102: pCylinder2
+    400104: pCylinder9
+    400106: polySurface1
+    400108: polySurface1 1
+    400110: R_soulder1
+    400112: rod
+    400114: rod 1
+    400116: rod 2
+    400118: shoulder_sphere
+    400120: shoulder_sphere 1
+    400122: shoulder_sphere1
+    400124: shoulder_sphere1 1
+    400126: sword
+    400128: sword 1
+    400130: transform13
+    400132: transform14
+    400134: transform15
+    400136: transform16
+    400138: transform2
+    400140: transform3
+    400142: transform5
+    400144: transform6
+    400146: transform7
+    400148: transform8
+    400150: yumi
+    400152: yumiya
+    400154: yumiya 1
+    2300000: asi1
+    2300002: asi2
+    2300004: body 2
+    2300006: cap
+    2300008: face
+    2300010: hand_L
+    2300012: hand_R
+    2300014: honn
+    2300016: hoon
+    2300018: L_soulder
+    2300020: pCylinder1
+    2300022: pCylinder2
+    2300024: R_soulder1
+    2300026: rod 1
+    2300028: shoulder_sphere
+    2300030: shoulder_sphere 1
+    2300032: shoulder_sphere1
+    2300034: shoulder_sphere1 1
+    3300000: asi1
+    3300002: asi2
+    3300004: body 2
+    3300006: cap
+    3300008: face
+    3300010: hand_L
+    3300012: hand_R
+    3300014: honn
+    3300016: hoon
+    3300018: L_soulder
+    3300020: pCylinder1
+    3300022: pCylinder2
+    3300024: R_soulder1
+    3300026: rod 1
+    3300028: shoulder_sphere
+    3300030: shoulder_sphere 1
+    3300032: shoulder_sphere1
+    3300034: shoulder_sphere1 1
+    4300000: cap
+    4300002: face
+    4300004: hoon
+    4300006: honn
+    4300008: body
+    4300010: R_soulder1
+    4300012: shoulder_sphere1
+    4300014: shoulder_sphere
+    4300016: L_soulder
+    4300018: shoulder_sphere
+    4300020: shoulder_sphere1
+    4300022: hand_L
+    4300024: hand_R
+    4300026: asi2
+    4300028: asi1
+    4300030: pCylinder2
+    4300032: pCylinder1
+    4300034: nurbsToPoly1
+    4300036: polySurface1
+    4300038: rod
+    4300040: sword
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: nurbsToPoly1
+    13700002: polySurface1
+    13700004: sword 1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
