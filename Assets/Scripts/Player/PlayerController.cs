@@ -340,7 +340,8 @@ public class PlayerController : MonoBehaviour
             !isAttackSword &&
             !isShotMagic &&
             !isShotArrow &&
-            !isReject)
+            !isReject &&
+            !mouseButton.left)
         {
             float inputH = Input.GetAxis("Horizontal");
             float inputV = Input.GetAxis("Vertical");
