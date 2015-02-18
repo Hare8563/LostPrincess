@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour
         public bool center;
         public bool rightDown;
         public bool leftDown;
+        public bool leftUp;
         public bool centerDown;
     }
     /// <summary>
@@ -252,10 +253,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private GameObject RejectObject;
     /// <summary>
-    /// 初期MP
-    /// </summary>
-    private float InitMP = 0;
-    /// <summary>
     /// MP回復中かどうか
     /// </summary>
     private bool isReject = false;
@@ -275,7 +272,7 @@ public class PlayerController : MonoBehaviour
         {
             TargetObject = GameObject.FindGameObjectWithTag("Hime");
         }
-        MagicBallObject = Resources.Load("Prefab/MagicBall") as GameObject;
+        MagicBallObject = Resources.Load("Prefab/MagicOrigin") as GameObject;
         ArrowObject = Resources.Load("Prefab/Arrow") as GameObject;
         animator = this.gameObject.GetComponent<Animator>();
         Weapon_Sword = GameObject.FindGameObjectWithTag("Weapon_Sword");
@@ -304,7 +301,6 @@ public class PlayerController : MonoBehaviour
         Weapon_Sword.renderer.enabled = true;
         Weapon_Rod.renderer.enabled = false;
         Weapon_Bow.renderer.enabled = false;
-        InitMP = this.status.MP;
     }
 
     void Update()
@@ -339,7 +335,8 @@ public class PlayerController : MonoBehaviour
             !isAttackSword &&
             !isShotMagic &&
             !isShotArrow &&
-            !isReject)
+            !isReject &&
+            !mouseButton.left)
         {
             float inputH = Input.GetAxis("Horizontal");
             float inputV = Input.GetAxis("Vertical");
@@ -465,6 +462,10 @@ public class PlayerController : MonoBehaviour
         {
             //攻撃フラグを初期化
             isShotMagic = false;
+            if (mouseButton.leftUp)
+            {
+                animator.speed = 1;
+            }
         }
         //弓モーションの時
         else if (currentBaseState.nameHash == arrowState)
@@ -528,10 +529,11 @@ public class PlayerController : MonoBehaviour
     void MagicAttackEvent()
     {
         int useMP = 10;
-        if (this.status.MP > useMP)
+        if (this.status.MP > useMP &&
+            mouseButton.left)
         {
             this.status.MP -= useMP;
-            audio.PlayOneShot(MagicSe);
+            //audio.PlayOneShot(MagicSe);
             isOneShotMagic = true;
             ////ロックオンしていたら追従
             //if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
@@ -543,14 +545,14 @@ public class PlayerController : MonoBehaviour
             //{
             //    Instantiate(MagicBallObject, ShotPoint.transform.position, Camera.main.transform.rotation);
             //}
-            Instantiate(MagicBallObject, ShotPoint.transform.position, AimObjecct.transform.rotation);
+            Instantiate(MagicBallObject, this.transform.position, this.transform.rotation);
+            animator.speed = 0;
             MagicController.EnemyDamage = this.status.Magic_Power;
         }
         else
         {
             audio.PlayOneShot(NonMagicSe);
         }
-        //Debug.Log(MagicController.EnemyDamage);
     }
 
     /// <summary>
@@ -588,6 +590,7 @@ public class PlayerController : MonoBehaviour
         mouseButton.center = Input.GetMouseButton((int)MouseButtonEnum.CENTER_BUTTON);
         mouseButton.rightDown = Input.GetMouseButtonDown((int)MouseButtonEnum.RIGHT_BUTTON);
         mouseButton.leftDown = Input.GetMouseButtonDown((int)MouseButtonEnum.LEFT_BUTTON);
+        mouseButton.leftUp = Input.GetMouseButtonUp((int)MouseButtonEnum.LEFT_BUTTON);
         mouseButton.centerDown = Input.GetMouseButtonDown((int)MouseButtonEnum.CENTER_BUTTON);
     }
 
@@ -716,9 +719,10 @@ public class PlayerController : MonoBehaviour
             this.animator.speed = 1;
         }
         //上限以上回復しないよう調整
-        if (InitMP < this.status.MP)
+        Debug.Log(this.status.MPMAX);
+        if (this.status.MPMAX < this.status.MP)
         {
-            this.status.MP = (int)InitMP;
+            this.status.MP = this.status.MPMAX;
         }
         //Debug.Log(isReject);
     }
