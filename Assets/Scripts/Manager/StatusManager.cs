@@ -20,6 +20,7 @@ public class StatusManager : MonoBehaviour {
         public string NAME;
         public int HP;
         public int MP;
+        public int MPMAX;
         public int LV;
         public int EXP;
         public int SWORD;
@@ -84,6 +85,7 @@ public class StatusManager : MonoBehaviour {
         prefs = new PlayerPrefsEx();
         prefs.Load(System.Environment.CurrentDirectory + "/saveData.xml");
         PlayerStatus.NAME = prefs.GetString("NAME");// Debug.Log("NAME = " + statusStruct.NAME);
+        PlayerStatus.MPMAX = prefs.GetInt("MPMAX");
         PlayerStatus.HP = prefs.GetInt("HP"); //Debug.Log("HP = " + statusStruct.HP);
         PlayerStatus.MP = prefs.GetInt("MP"); //Debug.Log("MP = " + statusStruct.MP);
         PlayerStatus.LV = prefs.GetInt("LV"); //Debug.Log("LV = " + statusStruct.LV);

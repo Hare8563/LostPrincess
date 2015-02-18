@@ -1,22 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <key>NAME</key>
-  <string>
-  </string>
+  <string>aaa</string>
   <key>HP</key>
-  <integer>0</integer>
+  <integer>185</integer>
   <key>MP</key>
-  <integer>73</integer>
+  <integer>40</integer>
   <key>MPMAX</key>
-  <integer>150</integer>
+  <integer>40</integer>
   <key>LV</key>
-  <integer>10</integer>
+  <integer>5</integer>
   <key>EXP</key>
-  <integer>54</integer>
+  <integer>3</integer>
   <key>Sword</key>
-  <integer>85</integer>
+  <integer>16</integer>
   <key>Bow</key>
-  <integer>55</integer>
+  <integer>11</integer>
   <key>Magic</key>
-  <integer>80</integer>
+  <integer>6</integer>
 </root>

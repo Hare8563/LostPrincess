@@ -829,14 +829,14 @@ public class PlayerController : MonoBehaviour
             this.status.HP = 0;
         }
         ////HPが無くなったら死亡フラグを立てる
-        //if (this.status.HP <= 0 && !isDeadFlag && canDead)
-        //{
-        //    this.deadFlag = true;
-        //    isDeadFlag = true;
-        //    Application.LoadLevelAdditive("GameOver");
-        //    Time.timeScale = 0.3f;
-        //}
-        //else
+//        if (this.status.HP <= 0 && !isDeadFlag && canDead)
+//        {
+//            this.deadFlag = true;
+//            isDeadFlag = true;
+//            Application.LoadLevelAdditive("GameOver");
+//            Time.timeScale = 0.3f;
+//        }
+//        else
         //HPが残っていたらダメージフラグ
         if (deadFlag != false)
         {
