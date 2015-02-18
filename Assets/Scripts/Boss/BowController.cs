@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BowController : MonoBehaviour {
 
@@ -36,31 +37,38 @@ public class BowController : MonoBehaviour {
     /// 矢を停止させるフラグ
     /// </summary>
     private bool StopFlag = false;
+    /// <summary>
+    /// チャージエフェクト配列
+    /// </summary>
+    private List<ParticleSystem> Effects = new List<ParticleSystem>();
 
     void Awake()
     {
         HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
+        for (int i = 0; i < 3; i++)
+        {
+            Effects.Add(this.transform.Find("Charge_Lv" + (i + 1)).gameObject.GetComponent<ParticleSystem>());
+        }
     }
 
 	// Use this for initialization
 	void Start () 
     {
         isSetRot = false;
-        Destroy(this.gameObject, DestroyTime);
+        //Destroy(this.gameObject, DestroyTime);
         if (Target == null && TargetObject != null)
         {
             Target = TargetObject;
-        }        
+        }
+        for (int i = 0; i < Effects.Count; i++)
+        {
+            Effects[i].enableEmission = false;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-       
-	}
-
-	void FixedUpdate()
-    { 
         //まだ打ってなかったら
         if (!isSetRot)
         {
@@ -80,8 +88,8 @@ public class BowController : MonoBehaviour {
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward.normalized, out hit, Mathf.Infinity))//, 1 << LayerMask.NameToLayer("Stage")))
                 {
-				  if(hit.collider.tag == "Enemy")
-                    this.transform.rotation = Quaternion.LookRotation(hit.point - this.transform.position);
+                    if (hit.collider.tag == "Enemy")
+                        this.transform.rotation = Quaternion.LookRotation(hit.point - this.transform.position);
                     //Debug.Log("hit");
                 }
                 else
@@ -90,8 +98,13 @@ public class BowController : MonoBehaviour {
                 }
             }
         }
+	}
+
+	void FixedUpdate()
+    { 
         if (!StopFlag)
         {
+            Destroy(this.gameObject, DestroyTime);
             transform.Translate(Vector3.forward * Speed);
         }
 	}
@@ -161,11 +174,22 @@ public class BowController : MonoBehaviour {
     }
 
     /// <summary>
-    /// 自動エイムを行うかの設定
+    /// 移動停止するかどうか指定
     /// </summary>
-    /// <param name="set"></param>
-    public void setIsAutoAim(bool set)
+    /// <param name="value"></param>
+    public void setMoveStop(bool value)
     {
-        isAim = set;
+        StopFlag = value;
+    }
+
+    /// <summary>
+    /// 生成するチャージエフェクトを指定する
+    /// </summary>
+    public void setChargeEffectEmit(int num)
+    {
+        if (0 < num && num <= Effects.Count)
+        {
+            Effects[num-1].enableEmission = true;
+        }
     }
 }
