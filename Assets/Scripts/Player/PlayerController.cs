@@ -237,7 +237,11 @@ public class PlayerController : MonoBehaviour
 	/// <summary>
 	/// 弓オブジェクトインスタンス
 	/// </summary>
-	private GameObject arrowInstance;
+    private GameObject arrowInstance;
+    /// <summary>
+    /// 弓チャージフラグ
+    /// </summary>
+    private bool BowChargeFlag = false;
     /// <summary>
     /// 剣による攻撃が与えられるか
     /// </summary>
@@ -260,7 +264,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 照準オブジェクト
     /// </summary>
-    private GameObject AimObjecct;
+    private GameObject AimObject;
 
     void Awake()
     {
@@ -285,7 +289,7 @@ public class PlayerController : MonoBehaviour
         sword_trail = GameObject.Find("Sword_Tral");
         RejectObject = Resources.Load("Prefab/RejectEffect") as GameObject;
 
-        AimObjecct = GameObject.Find("AimOrigin");
+        AimObject = GameObject.Find("AimOrigin");
     }
 
     // Use this for initialization
@@ -315,6 +319,8 @@ public class PlayerController : MonoBehaviour
         ButtonEvent();
         //MP回復
         MPReject();
+        //弓チャージ
+        BowCharge();
     }
 
     // Update is called once per frame
@@ -556,6 +562,34 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// 弓チャージイベント
+    /// </summary>
+    void BowChargeEvent()
+    {
+        animator.speed = 0;
+        BowChargeFlag = true;
+    }
+
+    /// <summary>
+    /// 弓チャージ
+    /// </summary>
+    void BowCharge()
+    {
+        if (BowChargeFlag)
+        {
+            if (mouseButton.left)
+            {
+
+            }
+            if (mouseButton.leftUp)
+            {
+                animator.speed = 1;
+                BowChargeFlag = false;
+            }
+        }
+    }
+
+    /// <summary>
     /// 弓攻撃イベント
     /// </summary>
     void BowAttackEvent()
@@ -573,7 +607,7 @@ public class PlayerController : MonoBehaviour
             //{
             //    Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
             //}
-            Instantiate(ArrowObject, ShotPoint.transform.position, AimObjecct.transform.rotation);
+            Instantiate(ArrowObject, ShotPoint.transform.position, AimObject.transform.rotation);
             BowController.EnemyDamage = this.status.BOW_POW;
             status.AMMO--;
             //Debug.Log(MagicController.EnemyDamage);

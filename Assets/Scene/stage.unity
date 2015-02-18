@@ -4221,6 +4221,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11466324, guid: 35354996c8f5b487ea166e489ac8df73, type: 2}
+      propertyPath: isBossBattle
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35354996c8f5b487ea166e489ac8df73, type: 2}
   m_RootGameObject: {fileID: 1034256970}
@@ -12504,7 +12508,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 285090488}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 233fbc074a4fa4e02a8fd9f69ffb43ea, type: 3}
   m_PlayOnAwake: 1
@@ -45328,7 +45332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e88407d9774ac44f9f843eb1228bab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBossBattle: 1
+  isBossBattle: 0
   RoadSpeed: .5
   NormalSpeed: 5
   AttackSpeed: 10

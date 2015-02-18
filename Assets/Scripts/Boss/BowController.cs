@@ -32,6 +32,10 @@ public class BowController : MonoBehaviour {
     /// 自動エイムするかどうか
     /// </summary>
     private bool isAim = false;
+    /// <summary>
+    /// 矢を停止させるフラグ
+    /// </summary>
+    private bool StopFlag = false;
 
     void Awake()
     {
@@ -46,7 +50,7 @@ public class BowController : MonoBehaviour {
         if (Target == null && TargetObject != null)
         {
             Target = TargetObject;
-        }
+        }        
 	}
 	
 	// Update is called once per frame
@@ -86,7 +90,10 @@ public class BowController : MonoBehaviour {
                 }
             }
         }
-		transform.Translate(Vector3.forward * Speed);
+        if (!StopFlag)
+        {
+            transform.Translate(Vector3.forward * Speed);
+        }
 	}
 
     /// <summary>
@@ -118,8 +125,10 @@ public class BowController : MonoBehaviour {
         //Debug.Log("Magic -> " + collider.name);
         if (collider.tag == "Stage")
         {
+            StopFlag = true;
+            this.rigidbody.collider.enabled = false;
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 5.0f);
         }
         else if (Target == null && 
                 (collider.tag == "Boss" ||
