@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 9f38fe9a34a543e41aab26bc5530ca8e
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - DetonatorObject: {fileID: 116426, guid: 77f576c2ff04cd045a19a42e700dd327, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
