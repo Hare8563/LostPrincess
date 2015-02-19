@@ -268,7 +268,6 @@ public class EnemyScript : MonoBehaviour
     {
         ArrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(player.transform.position - this.transform.position)) as GameObject;
         ArrowInstance.GetComponent<BowController>().setTargetObject(player);
-        ArrowInstance.GetComponent<BowController>().setIsAutoAim(true);
         BowController.PlayerDamage = this.status.BOW_POW;
     }
     ///// <summary>

@@ -627,7 +627,6 @@ public class BossController : MonoBehaviour {
     {
         arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
         arrowInstance.GetComponent<BowController>().setTargetObject(TargetObject);
-        arrowInstance.GetComponent<BowController>().setIsAutoAim(true);
         BowController.PlayerDamage = this.status.BOW_POW;
         audio.PlayOneShot(BowSe);
     }
