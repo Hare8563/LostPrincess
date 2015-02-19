@@ -2493,11 +2493,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 68797477}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2024955936}
-  m_RootOrder: 0
+  m_Father: {fileID: 505106525}
+  m_RootOrder: 1
 --- !u!81 &68797479
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4220,6 +4220,10 @@ Prefab:
     - target: {fileID: 466404, guid: 35354996c8f5b487ea166e489ac8df73, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466324, guid: 35354996c8f5b487ea166e489ac8df73, type: 2}
+      propertyPath: canDead
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35354996c8f5b487ea166e489ac8df73, type: 2}
@@ -7978,7 +7982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 5
 --- !u!1 &198776740
 GameObject:
   m_ObjectHideFlags: 0
@@ -9387,7 +9391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 4
 --- !u!95 &219224783
 Animator:
   serializedVersion: 3
@@ -9807,7 +9811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 3
+  lv: 8
 --- !u!95 &227005235
 Animator:
   serializedVersion: 3
@@ -14845,7 +14849,7 @@ Transform:
   m_Children:
   - {fileID: 810125398}
   m_Father: {fileID: 505106525}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!114 &330197777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16421,7 +16425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 8
 --- !u!82 &361892846
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21588,7 +21592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 6
 --- !u!82 &492254045
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22217,6 +22221,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2024955936}
+  - {fileID: 68797478}
   - {fileID: 330197776}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -27140,7 +27145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 3
+  lv: 8
 --- !u!95 &625847181
 Animator:
   serializedVersion: 3
@@ -32460,7 +32465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 5
 --- !u!95 &728501061
 Animator:
   serializedVersion: 3
@@ -32584,7 +32589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 5
 --- !u!82 &729945123
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50029,7 +50034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 7
 --- !u!82 &1125159701
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59441,7 +59446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 6
 --- !u!82 &1335473238
 AudioSource:
   m_ObjectHideFlags: 0
@@ -60295,7 +60300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 8
 --- !u!82 &1351850299
 AudioSource:
   m_ObjectHideFlags: 0
@@ -72004,7 +72009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 7
 --- !u!82 &1636961027
 AudioSource:
   m_ObjectHideFlags: 0
@@ -73531,7 +73536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 4
 --- !u!82 &1671566831
 AudioSource:
   m_ObjectHideFlags: 0
@@ -73862,7 +73867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 4
 --- !u!95 &1672251528
 Animator:
   serializedVersion: 3
@@ -74248,7 +74253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 4
 --- !u!95 &1673743560
 Animator:
   serializedVersion: 3
@@ -75526,7 +75531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 3
 --- !u!1 &1699616311
 GameObject:
   m_ObjectHideFlags: 0
@@ -79483,7 +79488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 4
 --- !u!1 &1786265985
 GameObject:
   m_ObjectHideFlags: 0
@@ -79735,7 +79740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 3
 --- !u!95 &1791869484
 Animator:
   serializedVersion: 3
@@ -81878,7 +81883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 3
+  lv: 6
 --- !u!95 &1839979983
 Animator:
   serializedVersion: 3
@@ -87687,7 +87692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 3
+  lv: 10
 --- !u!95 &1985477923
 Animator:
   serializedVersion: 3
@@ -87854,7 +87859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lv: 1
+  lv: 8
 --- !u!95 &1987530290
 Animator:
   serializedVersion: 3
@@ -89533,10 +89538,9 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2024955934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: .5, z: -10}
+  m_LocalPosition: {x: 0, y: 1.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 68797478}
+  m_Children: []
   m_Father: {fileID: 505106525}
   m_RootOrder: 0
 --- !u!1 &2025035379

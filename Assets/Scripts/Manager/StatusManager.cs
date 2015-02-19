@@ -83,6 +83,7 @@ public class StatusManager : MonoBehaviour {
     {
         //Debug.Log(System.Environment.CurrentDirectory);
         prefs = new PlayerPrefsEx();
+//		CSV.CsvReader csv = new CSV.CsvReader ("CSV/LvTable");
         prefs.Load(System.Environment.CurrentDirectory + "/saveData.xml");
         PlayerStatus.NAME = prefs.GetString("NAME");// Debug.Log("NAME = " + statusStruct.NAME);
         PlayerStatus.MPMAX = prefs.GetInt("MPMAX");
