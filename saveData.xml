@@ -3,19 +3,19 @@
   <key>NAME</key>
   <string>test</string>
   <key>HP</key>
-  <integer>154</integer>
+  <integer>135</integer>
   <key>MP</key>
-  <integer>8</integer>
+  <integer>20</integer>
   <key>MPMAX</key>
-  <integer>38</integer>
+  <integer>40</integer>
   <key>LV</key>
-  <integer>4</integer>
-  <key>EXP</key>
-  <integer>9</integer>
-  <key>Sword</key>
-  <integer>13</integer>
-  <key>Bow</key>
-  <integer>9</integer>
-  <key>Magic</key>
   <integer>5</integer>
+  <key>EXP</key>
+  <integer>24</integer>
+  <key>Sword</key>
+  <integer>16</integer>
+  <key>Bow</key>
+  <integer>11</integer>
+  <key>Magic</key>
+  <integer>6</integer>
 </root>
