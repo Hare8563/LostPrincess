@@ -88,7 +88,7 @@ namespace StatusClass{
 			EXP = Exp;
 			HP = Hp < lvData.getParamValue(Lev, CsvParam.HP) ? Hp : lvData.getParamValue(Lev, CsvParam.HP);//Hpが最大値以下の場合はHpを入れる
 			MP = Mp < lvData.getParamValue(Lev, CsvParam.MP) ? Mp : lvData.getParamValue(Lev, CsvParam.MP);
-            MPMAX = MP;
+            MPMAX = lvData.getParamValue(Lev, CsvParam.MP);
 			BOW_POW = lvData.getParamValue (Lev, CsvParam.BOW_ATK);
 			Sword_Power = lvData.getParamValue(Lev, CsvParam.SWORD_ATK);
 			Magic_Power = lvData.getParamValue(Lev, CsvParam.MAGIC_ATK);
