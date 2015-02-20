@@ -612,7 +612,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 弓発射イベント
     /// </summary>
-    void BowAttackEvent()
+    void BowShotEvent()
     {
         if (status.AMMO > 0)
         {
@@ -775,7 +775,7 @@ public class PlayerController : MonoBehaviour
             this.animator.speed = 1;
         }
         //上限以上回復しないよう調整
-        Debug.Log(this.status.MPMAX);
+        //Debug.Log(this.status.MPMAX);
         if (this.status.MPMAX < this.status.MP)
         {
             this.status.MP = this.status.MPMAX;

@@ -1199,15 +1199,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: .586497843
-        functionName: BowAttackEvent
+      - time: .426160365
+        functionName: BowChargeEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: .426160365
-        functionName: BowChargeEvent
+      - time: .503571033
+        functionName: BowShotEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

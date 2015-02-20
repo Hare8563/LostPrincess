@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BowController : MonoBehaviour {
-
+    /// <summary>
+    /// 速さ
+    /// </summary>
     [SerializeField]
     [Range(0, 100)]
     private float Speed = 0;
@@ -30,25 +32,26 @@ public class BowController : MonoBehaviour {
     /// </summary>
     private GameObject TargetObject;
     /// <summary>
-    /// 自動エイムするかどうか
-    /// </summary>
-    private bool isAim = false;
-    /// <summary>
     /// 矢を停止させるフラグ
     /// </summary>
     private bool StopFlag = false;
     /// <summary>
-    /// チャージエフェクト配列
+    /// 矢エフェクトクラス
     /// </summary>
-    private List<ParticleSystem> Effects = new List<ParticleSystem>();
+    private ArrowEffectScript arrowEffect = new ArrowEffectScript();
+    /// <summary>
+    /// チャージした時間
+    /// </summary>
+    private float ChargeTime = 0;
+    /// <summary>
+    /// チャージした段階
+    /// </summary>
+    private int ColorIndex = 0;
 
     void Awake()
     {
         HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
-        for (int i = 0; i < 3; i++)
-        {
-            Effects.Add(this.transform.Find("Charge_Lv" + (i + 1)).gameObject.GetComponent<ParticleSystem>());
-        }
+        arrowEffect = this.GetComponent<ArrowEffectScript>();
     }
 
 	// Use this for initialization
@@ -60,10 +63,8 @@ public class BowController : MonoBehaviour {
         {
             Target = TargetObject;
         }
-        for (int i = 0; i < Effects.Count; i++)
-        {
-            Effects[i].enableEmission = false;
-        }
+        arrowEffect.setChargeEffectEmit(true);
+        arrowEffect.setShotEffectEmit(false);
 	}
 	
 	// Update is called once per frame
@@ -101,11 +102,37 @@ public class BowController : MonoBehaviour {
 	}
 
 	void FixedUpdate()
-    { 
+    {
+        //移動可能だったら
         if (!StopFlag)
         {
-            Destroy(this.gameObject, DestroyTime);
             transform.Translate(Vector3.forward * Speed);
+            arrowEffect.setChargeEffectEmit(false);
+            arrowEffect.setShotEffectEmit(true);
+            Destroy(this.gameObject, DestroyTime);
+        }
+        //移動不可だったら
+        else
+        {
+            //チャージ中だったら
+            if (this.rigidbody.collider.enabled)
+            {
+                ChargeTime += Method.GameTime();
+                if ((int)ChargeTime % 60 == 0 && ColorIndex < 2)
+                {
+                    ChargeTime = 0;
+                    ColorIndex++;
+                    arrowEffect.setColorNumber(ColorIndex);
+                }
+                arrowEffect.setChargeEffectEmit(true);
+                arrowEffect.setShotEffectEmit(false);
+            }
+            //刺さっていたら
+            else
+            {
+                arrowEffect.setChargeEffectEmit(false);
+                arrowEffect.setShotEffectEmit(false);
+            }
         }
 	}
 
@@ -133,9 +160,6 @@ public class BowController : MonoBehaviour {
     /// <param name="collider"></param>
     void OnTriggerEnter(Collider collider)
     {
-        //Debug.Log(collider.name);
-        //Debug.Log("Target -> " + Target.name);
-        //Debug.Log("Magic -> " + collider.name);
         if (collider.tag == "Stage")
         {
             StopFlag = true;
@@ -180,16 +204,5 @@ public class BowController : MonoBehaviour {
     public void setMoveStop(bool value)
     {
         StopFlag = value;
-    }
-
-    /// <summary>
-    /// 生成するチャージエフェクトを指定する
-    /// </summary>
-    public void setChargeEffectEmit(int num)
-    {
-        if (0 < num && num <= Effects.Count)
-        {
-            Effects[num-1].enableEmission = true;
-        }
     }
 }
