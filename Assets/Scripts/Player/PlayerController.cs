@@ -237,7 +237,11 @@ public class PlayerController : MonoBehaviour
 	/// <summary>
 	/// 弓オブジェクトインスタンス
 	/// </summary>
-	private GameObject arrowInstance;
+    private GameObject arrowInstance;
+    /// <summary>
+    /// 弓チャージフラグ
+    /// </summary>
+    private bool BowChargeFlag = false;
     /// <summary>
     /// 剣による攻撃が与えられるか
     /// </summary>
@@ -260,7 +264,12 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 照準オブジェクト
     /// </summary>
-    private GameObject AimObjecct;
+    private GameObject AimObject;
+
+    /// <summary>
+    /// プレイヤーの右手オブジェクト
+    /// </summary>
+    private GameObject armRight;
 
     void Awake()
     {
@@ -285,7 +294,8 @@ public class PlayerController : MonoBehaviour
         sword_trail = GameObject.Find("Sword_Tral");
         RejectObject = Resources.Load("Prefab/RejectEffect") as GameObject;
 
-        AimObjecct = GameObject.Find("AimOrigin");
+        AimObject = GameObject.Find("AimOrigin");
+        armRight = this.transform.FindDeep("hand_R");
     }
 
     // Use this for initialization
@@ -315,6 +325,8 @@ public class PlayerController : MonoBehaviour
         ButtonEvent();
         //MP回復
         MPReject();
+        //弓チャージ
+        BowCharge();
     }
 
     // Update is called once per frame
@@ -331,71 +343,80 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        if (!isDeadFlag &&
-            !isAttackSword &&
-            !isShotMagic &&
-            !isShotArrow &&
-            !isReject &&
-            !mouseButton.left)
+        float rotSpeed = 0.2f;
+        if (!mouseButton.left)
         {
-            float inputH = Input.GetAxis("Horizontal");
-            float inputV = Input.GetAxis("Vertical");
-            animator.SetFloat("Horizontal", inputH);
-            isMove = false;
-            Vector3 forward = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.forward).normalized;
-            Vector3 back = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.back).normalized;
-            Vector3 right = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.right).normalized;
-            Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
-            Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
-            float rotSpeed = 0.2f;
+            if (!isDeadFlag &&
+                !isAttackSword &&
+                !isShotMagic &&
+                !isShotArrow &&
+                !isReject)
+            {
+                float inputH = Input.GetAxis("Horizontal");
+                float inputV = Input.GetAxis("Vertical");
+                animator.SetFloat("Horizontal", inputH);
+                isMove = false;
+                Vector3 forward = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.forward).normalized;
+                Vector3 back = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.back).normalized;
+                Vector3 right = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.right).normalized;
+                Vector3 left = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.left).normalized;
+                Vector3 down = mainCamera.GetComponent<CameraController>().getCameraDirection(Vector3.down).normalized;
+                
 
-            //前
-            if (isMoveButton.forwerd)
-            {
-                isMove = true;
-                rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
+                //前
+                if (isMoveButton.forwerd)
+                {
+                    isMove = true;
+                    rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
+                }
+                //後ろ
+                else if (isMoveButton.back)
+                {
+                    isMove = true;
+                    rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
+                }
+                //左
+                if (isMoveButton.left)
+                {
+                    isMove = true;
+                    rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
+                }
+                //右
+                else if (isMoveButton.right)
+                {
+                    isMove = true;
+                    rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
+                }
+                //カメラ方向へキャラクターの向きを調整する
+                transform.rotation = Quaternion.Slerp(transform.rotation, mainCamera.transform.rotation, rotSpeed);
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+
+                //ジャンプ
+                /*
+                if (isMoveButton.jump && canJump)
+                {
+                    float Power = 150f;
+                    //法線に上方向ベクトル加算
+                    nowCollissionStayNormalVec += Vector3.up;
+                    rigidbody.AddForce(nowCollissionStayNormalVec.normalized * Power, ForceMode.VelocityChange);
+                    //ベクトル初期化
+                    nowCollissionStayNormalVec = Vector3.up;
+                    canJump = false;
+                }
+                */
+                //常に下方向に力をかける
+                rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
             }
-            //後ろ
-            else if (isMoveButton.back)
-            {
-                isMove = true;
-                rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
-            }
-            //左
-            if (isMoveButton.left)
-            {
-                isMove = true;
-                rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
-            }
-            //右
-            else if (isMoveButton.right)
-            {
-                isMove = true;
-                rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
-            }
+        }
+        else
+        {
             //カメラ方向へキャラクターの向きを調整する
-			transform.rotation = Quaternion.Slerp(transform.rotation,mainCamera.transform.rotation, rotSpeed);
-            transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
-
-            //ジャンプ
-            /*
-            if (isMoveButton.jump && canJump)
-            {
-                float Power = 150f;
-                //法線に上方向ベクトル加算
-                nowCollissionStayNormalVec += Vector3.up;
-                rigidbody.AddForce(nowCollissionStayNormalVec.normalized * Power, ForceMode.VelocityChange);
-                //ベクトル初期化
-                nowCollissionStayNormalVec = Vector3.up;
-                canJump = false;
-            }
-            */
-            //常に下方向に力をかける
-            rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
+            transform.rotation = Quaternion.Slerp(transform.rotation, mainCamera.transform.rotation, rotSpeed);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
     }
 
@@ -556,7 +577,40 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 弓攻撃イベント
+    /// 弓チャージイベント
+    /// </summary>
+    void BowChargeEvent()
+    {
+        animator.speed = 0;
+        BowChargeFlag = true;
+        //矢を右手に
+        arrowInstance = (GameObject)Instantiate(ArrowObject, armRight.transform.position, this.transform.rotation);
+        arrowInstance.transform.parent = armRight.transform;
+        arrowInstance.transform.localPosition = Vector3.zero;
+        arrowInstance.transform.rotation = this.transform.rotation;
+        arrowInstance.GetComponent<BowController>().setMoveStop(true);
+    }
+
+    /// <summary>
+    /// 弓チャージ
+    /// </summary>
+    void BowCharge()
+    {
+        if (BowChargeFlag)
+        {
+            if (!mouseButton.left)
+            {
+                animator.speed = 1;
+                BowChargeFlag = false;
+            }
+            //arrowInstance.GetComponent<BowController>().setChargeEffectEmit(1);
+            //arrowInstance.GetComponent<BowController>().setChargeEffectEmit(2);
+            //arrowInstance.GetComponent<BowController>().setChargeEffectEmit(3);
+        }
+    }
+
+    /// <summary>
+    /// 弓発射イベント
     /// </summary>
     void BowAttackEvent()
     {
@@ -573,7 +627,9 @@ public class PlayerController : MonoBehaviour
             //{
             //    Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
             //}
-            Instantiate(ArrowObject, ShotPoint.transform.position, AimObjecct.transform.rotation);
+            arrowInstance.transform.parent = null;
+            arrowInstance.GetComponent<BowController>().setMoveStop(false);
+            arrowInstance.transform.rotation = AimObject.transform.rotation;
             BowController.EnemyDamage = this.status.BOW_POW;
             status.AMMO--;
             //Debug.Log(MagicController.EnemyDamage);
