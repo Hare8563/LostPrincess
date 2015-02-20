@@ -118,7 +118,7 @@ public class BowController : MonoBehaviour {
             if (this.rigidbody.collider.enabled)
             {
                 ChargeTime += Method.GameTime();
-                if ((int)ChargeTime % 60 == 0 && ColorIndex < 2)
+                if ((int)ChargeTime % 30 == 0 && ColorIndex < 2)
                 {
                     ChargeTime = 0;
                     ColorIndex++;

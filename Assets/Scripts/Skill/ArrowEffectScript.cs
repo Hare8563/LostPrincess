@@ -62,7 +62,7 @@ public class ArrowEffectScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        float speed = 0.02f;
+        float speed = 0.05f;
         Method.SmoothChange(ref ChargeColor.r, effectColor.r, speed);
         Method.SmoothChange(ref ChargeColor.g, effectColor.g, speed);
         Method.SmoothChange(ref ChargeColor.b, effectColor.b, speed);

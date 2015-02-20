@@ -603,6 +603,12 @@ public class PlayerController : MonoBehaviour
                 animator.speed = 1;
                 BowChargeFlag = false;
             }
+            else
+            {
+                arrowInstance.transform.localPosition = Vector3.zero;
+                arrowInstance.transform.localPosition = Vector3.zero;
+                arrowInstance.transform.rotation = this.transform.rotation;
+            }
             //arrowInstance.GetComponent<BowController>().setChargeEffectEmit(1);
             //arrowInstance.GetComponent<BowController>().setChargeEffectEmit(2);
             //arrowInstance.GetComponent<BowController>().setChargeEffectEmit(3);
