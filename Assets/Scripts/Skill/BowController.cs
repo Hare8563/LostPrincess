@@ -46,7 +46,7 @@ public class BowController : MonoBehaviour {
     /// <summary>
     /// チャージした段階
     /// </summary>
-    private int ColorIndex = 0;
+    private int ChargeIndex = 0;
 
     void Awake()
     {
@@ -118,11 +118,11 @@ public class BowController : MonoBehaviour {
             if (this.rigidbody.collider.enabled)
             {
                 ChargeTime += Method.GameTime();
-                if ((int)ChargeTime % 30 == 0 && ColorIndex < 2)
+                if ((int)ChargeTime % 30 == 0 && ChargeIndex < 2)
                 {
                     ChargeTime = 0;
-                    ColorIndex++;
-                    arrowEffect.setColorNumber(ColorIndex);
+                    ChargeIndex++;
+                    arrowEffect.setColorNumber(ChargeIndex);
                 }
                 arrowEffect.setChargeEffectEmit(true);
                 arrowEffect.setShotEffectEmit(false);
@@ -172,7 +172,7 @@ public class BowController : MonoBehaviour {
                 collider.tag == "Enemy" ||
                 collider.tag == "Hime"))
         {
-            collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
+            collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage * (((ChargeIndex + 1) / 3)));
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
         }
