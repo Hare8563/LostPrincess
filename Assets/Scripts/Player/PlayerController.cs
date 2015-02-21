@@ -311,6 +311,8 @@ public class PlayerController : MonoBehaviour
         Weapon_Sword.renderer.enabled = true;
         Weapon_Rod.renderer.enabled = false;
         Weapon_Bow.renderer.enabled = false;
+        statusManager.setMaxHp(this.status.HP);
+        statusManager.setMaxHp(this.status.MP);
     }
 
     void Update()
@@ -838,7 +840,7 @@ public class PlayerController : MonoBehaviour
             var status = collider.gameObject.GetComponent<EnemyStatusManager>();
             status.Damage(this.status.Sword_Power);
             canSwordDamage = false;
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
         }
     }
 
