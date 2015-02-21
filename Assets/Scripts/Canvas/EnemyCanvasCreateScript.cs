@@ -23,6 +23,10 @@ public class EnemyCanvasCreateScript : MonoBehaviour {
     /// キャンバスオブジェクト
     /// </summary>
     private GameObject canvas;
+    /// <summary>
+    /// ゲージオブジェクト
+    /// </summary>
+    private GameObject[] Gauges;
 
     void Awake()
     {
@@ -64,16 +68,18 @@ public class EnemyCanvasCreateScript : MonoBehaviour {
     /// <returns>生成したオブジェクト</returns>
     public EnemyCanvasHPScript Add(float maxHp, string name)
     {
+        if (canvas == null)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+        Gauges = GameObject.FindGameObjectsWithTag("Enemygauge");
+        GaugeCount = Gauges.Length;
         MaxHp = maxHp;
         GaugeInstance = (GameObject)Instantiate(EnemyStatusGaugeInstance, Vector3.zero, this.transform.rotation);
         GaugeInstance.GetComponent<EnemyCanvasCreateScript>().setName(name);
         //Debug.Log(maxHp);
         GaugeInstance.GetComponent<EnemyCanvasHPScript>().setMaxHp(maxHp);
         GaugeInstance.GetComponent<EnemyCanvasHPScript>().setNowHp(maxHp);
-        if (canvas == null)
-        {
-            canvas = GameObject.Find("Canvas");
-        }
         GaugeInstance.transform.parent = canvas.transform;
         GaugeInstance.transform.localScale = new Vector3(-2, 2, 2);
         GaugeInstance.transform.localPosition = new Vector3(0, -30 * GaugeCount, 0);
