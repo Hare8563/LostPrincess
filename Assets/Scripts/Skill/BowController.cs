@@ -172,7 +172,7 @@ public class BowController : MonoBehaviour {
                 collider.tag == "Enemy" ||
                 collider.tag == "Hime"))
         {
-            collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage * (((ChargeIndex + 1) / 3)));
+            collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage * (((ChargeIndex + 1) / 3) + 1));
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
         }
