@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <key>NAME</key>
+  <string>
+  </string>
+  <key>HP</key>
+  <integer>120</integer>
+  <key>MP</key>
+  <integer>32</integer>
+  <key>MPMAX</key>
+  <integer>32</integer>
+  <key>LV</key>
+  <integer>1</integer>
+  <key>EXP</key>
+  <integer>0</integer>
+  <key>Sword</key>
+  <integer>4</integer>
+  <key>Magic</key>
+  <integer>2</integer>
+  <key>Bow</key>
+  <integer>3</integer>
+</root>
