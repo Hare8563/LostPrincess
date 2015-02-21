@@ -205,6 +205,10 @@ public class RastBossController : MonoBehaviour
     /// ステータスマネージャークラス
     /// </summary>
     private EnemyStatusManager enemyStatusManager;
+    /// <summary>
+    /// HPゲージオブジェクト
+    /// </summary>
+    private EnemyCanvasHPScript HPGaugeObject;
 
 #if skillDebug
     //ノーマルスキル
@@ -254,6 +258,7 @@ public class RastBossController : MonoBehaviour
         nextAttackTime = Random.Range(240f, 360f);
         ShieldObject.SetActive(isShield);
         initHp = this.GetComponent<EnemyStatusManager>().getStatus().HP;
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "裏姫");
         //Debug.Log(initHp);
     }
 
@@ -268,6 +273,8 @@ public class RastBossController : MonoBehaviour
         AnimationController();
         DashEffect.SetActive(isDashEffect);
         ShieldObject.SetActive(isShield);
+        //Debug.Log(this.status.HP);
+        HPGaugeObject.setNowHp(this.status.HP);
         //死んでいたら
         if (enemyStatusManager.getIsDead())
         {

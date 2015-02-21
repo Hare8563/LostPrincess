@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using StatusClass;
 
 [RequireComponent(typeof(EnemyStatusManager))]
 public class DarkMatterController : MonoBehaviour {
@@ -77,16 +78,30 @@ public class DarkMatterController : MonoBehaviour {
     /// ガトリング発射効果音
     /// </summary>
     public AudioClip GatlingShotSe;
+    /// <summary>
+    /// Statusクラス
+    /// </summary>
+    public Status status;
+    /// <summary>
+    /// ステータスマネージャークラス
+    /// </summary>
+    private EnemyStatusManager enemyStatusManager;
+    /// <summary>
+    /// HPゲージオブジェクト
+    /// </summary>
+    private EnemyCanvasHPScript HPGaugeObject;
 
     void Awake()
     {
         BulletObject = Resources.Load("Prefab/Bullet") as GameObject;
         MisileObject = Resources.Load("Prefab/MisileEmitter") as GameObject;
+        enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
     }
 
 	// Use this for initialization
 	void Start () {
-	
+        status = enemyStatusManager.getStatus();
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "分かつ輩");
 	}
 	
 	// Update is called once per frame
@@ -132,6 +147,11 @@ public class DarkMatterController : MonoBehaviour {
                     Misile();
                     break;
             }
+        }
+        HPGaugeObject.setNowHp(this.status.HP);
+        if (this.status.HP <= 0)
+        {
+            Destroy(this.gameObject);
         }
 	}
 

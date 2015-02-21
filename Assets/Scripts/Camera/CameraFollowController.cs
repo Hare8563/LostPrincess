@@ -50,8 +50,8 @@ public class CameraFollowController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        CameraIcon = GameObject.Find("ZoomCameraIcon");
-        CameraIconInit_Y = CameraIcon.transform.position.y;
+        //CameraIcon = GameObject.Find("ZoomCameraIcon");
+        //CameraIconInit_Y = CameraIcon.transform.position.y;
         CameraPosX = this.transform.localPosition.x;
     }
 
@@ -135,7 +135,7 @@ public class CameraFollowController : MonoBehaviour
                 Vector3 toOriginVec = this.transform.position - this.transform.parent.position;
                 this.transform.position += toOriginVec * -mouseWheel;
                 //カメラ位置反映
-                CameraIcon.transform.position = new Vector3(CameraIcon.transform.position.x, CameraIconInit_Y - mouseWheelValue * 300f, CameraIcon.transform.position.z);
+                //CameraIcon.transform.position = new Vector3(CameraIcon.transform.position.x, CameraIconInit_Y - mouseWheelValue * 300f, CameraIcon.transform.position.z);
                 //Camera.main.transform.LookAt(this.transform.parent.transform.position);
             }
             //カメラを自身の場所へ移動
