@@ -46,7 +46,7 @@ public class Meteo : MonoBehaviour
     {
         Cursor = Resources.Load("Prefab/MeteoPoint") as GameObject;
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        Debug.Log(playerController);
+        //Debug.Log(playerController);
     }
 
     // Use this for initialization
