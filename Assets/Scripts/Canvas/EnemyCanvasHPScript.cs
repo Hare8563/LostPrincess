@@ -12,6 +12,14 @@ public class EnemyCanvasHPScript : MonoBehaviour {
     /// 現在のHP
     /// </summary>
     private float NowHp = 0;
+    /// <summary>
+    /// 幅
+    /// </summary>
+    private float width;
+    /// <summary>
+    /// サブゲージの幅
+    /// </summary>
+    private float subWidth = 100;
 
 	// Use this for initialization
 	void Start () {
@@ -22,12 +30,17 @@ public class EnemyCanvasHPScript : MonoBehaviour {
 	void Update () {
         //Debug.Log("Max = " + MaxHp);
         //Debug.Log("Now = " + NowHp);
+        width = (NowHp / MaxHp) * 100;
         foreach (Transform i in this.transform)
         {
             if (i.gameObject.name == "EnemyHP_Gauge")
             {
-                Debug.Log((NowHp / MaxHp) * 100);
-                i.GetComponent<Image>().rectTransform.sizeDelta = new Vector2((NowHp / MaxHp) * 100, 100);
+                i.GetComponent<Image>().rectTransform.sizeDelta = new Vector2(width, 100);
+            }
+            else if (i.gameObject.name == "EnemyHP_Gauge_Sub")
+            {
+                Method.SmoothChange(ref subWidth, width, 0.7f);
+                i.GetComponent<Image>().rectTransform.sizeDelta = new Vector2(subWidth - 0.5f, 100);
             }
         }
 	}
