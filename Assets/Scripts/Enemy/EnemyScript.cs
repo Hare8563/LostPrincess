@@ -158,7 +158,7 @@ public class EnemyScript : MonoBehaviour
         //HPが0になったら経験値を取得
         if (enemyStatusManager.getIsDead())
         {
-            audio.PlayOneShot(expGetSe);
+            //audio.PlayOneShot(expGetSe);
 			this.collider.enabled = false;
 			deadFlag = true;
         }
@@ -173,8 +173,8 @@ public class EnemyScript : MonoBehaviour
     {
         bool magicAttack = false;
         bool walking = false;
-        float MaxDis = 30.0f;
-        float MinDis = 20.0f;
+        float MaxDis = 100.0f;
+        float MinDis = 70.0f;
 
         var distance = this.transform.position - player.transform.position;
 
@@ -200,7 +200,7 @@ public class EnemyScript : MonoBehaviour
         //HPが0になったら経験値を取得
         if (enemyStatusManager.getIsDead())
         {
-            audio.PlayOneShot(expGetSe);
+            //audio.PlayOneShot(expGetSe);
 			this.collider.enabled = false;
             deadFlag = true;
         }
@@ -216,7 +216,7 @@ public class EnemyScript : MonoBehaviour
     private void EnemyBowAction()
     {
         bool bowAttack = false;
-        float MaxDis = 30.0f;
+        float MaxDis = 100.0f;
 
         var distance = this.transform.position - player.transform.position;
 
@@ -231,7 +231,7 @@ public class EnemyScript : MonoBehaviour
         //HPが0になったら経験値を取得
         if (enemyStatusManager.getIsDead())
         {
-            audio.PlayOneShot(expGetSe);
+            //audio.PlayOneShot(expGetSe);
             this.collider.enabled = false;
             deadFlag = true;
         }
@@ -260,7 +260,7 @@ public class EnemyScript : MonoBehaviour
 	
     public void DeadEvent()
     {
-		player.GetComponent<PlayerController> ().GetExp (3);
+		//player.GetComponent<PlayerController> ().GetExp (3);
         Destroy(this.gameObject);
     }
 

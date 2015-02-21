@@ -50,11 +50,11 @@ public class BigMeteo : MonoBehaviour {
     {
         if (!isReflect)
         {
-            this.gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
+            this.gameObject.layer = LayerMask.NameToLayer("Attack_Enemy");
         }
         else
         {
-            this.gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
+            this.gameObject.layer = LayerMask.NameToLayer("Attack_Player");
             shieldController = ShieldObject.GetComponent<ShieldController>();
             shieldController.setToShieldCollision("BigMeteoBall");
         }
