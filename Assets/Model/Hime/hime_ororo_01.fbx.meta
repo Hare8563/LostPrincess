@@ -109,7 +109,7 @@ ModelImporter:
     4300018: pSphere3
     4300020: pSphere1
     4300022: pSphere4
-    7400000: Take 001
+    7400000: orooro
     9500000: //RootNode
     13700000: pSphere1
     13700002: pSphere4
@@ -128,7 +128,107 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: orooro
+      takeName: Take 001
+      firstFrame: 90
+      lastFrame: 135
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: joint1
+        weight: 1
+      - path: joint1/joint2
+        weight: 1
+      - path: joint1/joint2/joint3
+        weight: 1
+      - path: joint1/joint2/joint3/joint4
+        weight: 1
+      - path: joint1/joint2/joint5
+        weight: 1
+      - path: joint1/joint2/joint5/joint6
+        weight: 1
+      - path: joint1/joint2/joint13
+        weight: 1
+      - path: joint1/joint2/joint13/joint14
+        weight: 1
+      - path: joint1/joint7
+        weight: 1
+      - path: joint1/joint7/joint8
+        weight: 1
+      - path: joint1/joint15
+        weight: 1
+      - path: joint1/joint15/joint16
+        weight: 1
+      - path: joint17
+        weight: 1
+      - path: joint17/joint18
+        weight: 1
+      - path: joint17/joint18/joint19
+        weight: 1
+      - path: joint17/joint20
+        weight: 1
+      - path: joint17/joint20/joint21
+        weight: 1
+      - path: locator1
+        weight: 1
+      - path: princes1
+        weight: 1
+      - path: princes1/body
+        weight: 1
+      - path: princes1/body/dress
+        weight: 1
+      - path: princes1/body/dress/pCylinder1
+        weight: 1
+      - path: princes1/body/dress/polySurface8
+        weight: 1
+      - path: princes1/body/dress/pSphere3
+        weight: 1
+      - path: princes1/body/ribbon
+        weight: 1
+      - path: princes1/body/ribbon2
+        weight: 1
+      - path: princes1/body/teil
+        weight: 1
+      - path: princes1/hands
+        weight: 1
+      - path: princes1/hands/pSphere1
+        weight: 1
+      - path: princes1/hands/pSphere4
+        weight: 1
+      - path: princes1/head
+        weight: 1
+      - path: princes1/head/face
+        weight: 1
+      - path: princes1/head/hair
+        weight: 1
+      - path: princes1/head/hair/polySurface9
+        weight: 1
+      - path: princes1/head/hair/polySurface10
+        weight: 1
+      - path: princes1/head/royal_crown
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
