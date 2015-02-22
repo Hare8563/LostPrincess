@@ -36,6 +36,7 @@ public class InputForm : MonoBehaviour {
 			prefs.SetString ("NAME", InputFormName);
 			prefs.SetInt ("HP", 100);
 			prefs.SetInt ("MP", 100);
+			prefs.SetInt ("MPMAX", 100);
 			prefs.SetInt ("LV", 1);
 			prefs.SetInt ("EXP", 0);
 			prefs.SetInt ("Sword", 10);
