@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using AssemblyCSharp;
 
-public class StatusManager : MonoBehaviour {
+public class StatusManager : MonoBehaviour
+{
     /// <summary>
     /// uGUIキャンバス
     /// </summary>
@@ -20,6 +21,7 @@ public class StatusManager : MonoBehaviour {
         public string NAME;
         public int HP;
         public int MP;
+        public int MPMAX;
         public int LV;
         public int EXP;
         public int SWORD;
@@ -47,7 +49,9 @@ public class StatusManager : MonoBehaviour {
     /// 姫戦かどうか
     /// </summary>
     public bool isHimeBattle = false;
-    
+
+    private static float maxHp;
+    private static float maxMp;
 
     /// <summary>
     /// 読み込み
@@ -58,22 +62,22 @@ public class StatusManager : MonoBehaviour {
         if (isHimeBattle) HimeObject = GameObject.FindGameObjectWithTag("Hime");
     }
 
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Start () 
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    void Start()
     {
         canvas = GameObject.Find("Canvas");
-	}
-	
-	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update () 
+    }
+
+    /// <summary>
+    /// 更新
+    /// </summary>
+    void Update()
     {
         //GUI管理
         StatusGUIController();
-	}
+    }
 
     /// <summary>
     /// ロード
@@ -82,8 +86,10 @@ public class StatusManager : MonoBehaviour {
     {
         //Debug.Log(System.Environment.CurrentDirectory);
         prefs = new PlayerPrefsEx();
+        //		CSV.CsvReader csv = new CSV.CsvReader ("CSV/LvTable");
         prefs.Load(System.Environment.CurrentDirectory + "/saveData.xml");
         PlayerStatus.NAME = prefs.GetString("NAME");// Debug.Log("NAME = " + statusStruct.NAME);
+        PlayerStatus.MPMAX = prefs.GetInt("MPMAX");
         PlayerStatus.HP = prefs.GetInt("HP"); //Debug.Log("HP = " + statusStruct.HP);
         PlayerStatus.MP = prefs.GetInt("MP"); //Debug.Log("MP = " + statusStruct.MP);
         PlayerStatus.LV = prefs.GetInt("LV"); //Debug.Log("LV = " + statusStruct.LV);
@@ -91,6 +97,9 @@ public class StatusManager : MonoBehaviour {
         PlayerStatus.SWORD = prefs.GetInt("Sword"); //Debug.Log("SWORD = " + statusStruct.SWORD);
         PlayerStatus.BOW = prefs.GetInt("Bow"); //Debug.Log("BOW = " + statusStruct.BOW);
         PlayerStatus.MAGIC = prefs.GetInt("Magic"); //Debug.Log("MAGIC = " + statusStruct.MAGIC);
+        maxHp = PlayerStatus.HP;
+        maxMp = PlayerStatus.MP;
+        //Debug.Log(maxHp);
     }
 
     /// <summary>
@@ -107,21 +116,24 @@ public class StatusManager : MonoBehaviour {
     /// </summary>
     private void PlayerStatusControll()
     {
+        Debug.Log(maxHp);
         PlayerController playerController = PlayerObject.GetComponent<PlayerController>();
         foreach (Transform child in canvas.transform)
         {
             //Debug.Log(child.name);
             if (child.name == "NAME")
             {
-                child.gameObject.GetComponent<Text>().text = playerController.getStatus().NAME;//statusStruct.NAME;
+                //child.gameObject.GetComponent<Text>().text = playerController.getStatus().NAME;//statusStruct.NAME;
             }
             else if (child.name == "HP")
             {
-                child.gameObject.GetComponent<Text>().text = playerController.getStatus().HP.ToString();//statusStruct.HP.ToString();
+                //child.gameObject.GetComponent<Text>().text = playerController.getStatus().HP.ToString();//statusStruct.HP.ToString();
+                child.gameObject.GetComponent<Image>().fillAmount = playerController.getStatus().HP / maxHp;
             }
             else if (child.name == "MP")
             {
-                child.gameObject.GetComponent<Text>().text = playerController.getStatus().MP.ToString();//statusStruct.MP.ToString();
+                //child.gameObject.GetComponent<Text>().text = playerController.getStatus().MP.ToString();//statusStruct.MP.ToString();
+                child.gameObject.GetComponent<Image>().fillAmount = playerController.getStatus().MP / maxMp;
             }
             else if (child.name == "LV")
             {
@@ -158,5 +170,21 @@ public class StatusManager : MonoBehaviour {
     {
         Load();
         return PlayerStatus;
+    }
+    /// <summary>
+    /// 最大HPを設定
+    /// </summary>
+    /// <param name="value"></param>
+    public void setMaxHp(float value)
+    {
+        //maxHp = value;
+    }
+    /// <summary>
+    /// 最大MPを設定
+    /// </summary>
+    /// <param name="value"></param>
+    public void setMaxMp(float value)
+    {
+        maxMp = value;
     }
 }

@@ -48,6 +48,10 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     [Range(0, 10)]
     private float speed;
+    /// <summary>
+    /// 移動可能かどうか
+    /// </summary>
+    private bool canMove = true;
 
     void Awake()
     {
@@ -63,31 +67,34 @@ public class CameraController : MonoBehaviour {
         Screen.lockCursor = true;
         Screen.showCursor = false;
 	}
-	
-	void Update () 
-    {
-        //Debug.Log(transform.TransformDirection(Vector3.forward));
-		this.transform.position = target.transform.position + distance;
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = Input.GetAxis("Mouse Y");
 
-        rotation.x = this.transform.localEulerAngles.x;
-        rotation.y = this.transform.localEulerAngles.y;
-        rotation.x += -mouseY * speed;   //上下回転
-        rotation.y += mouseX * speed;  //左右回転
-        if (rotation.x > 180) rotation.x -= 360;
-        //Debug.Log(rotation.x);
-        if (rotation.x > maxRage_X)
+    void Update()
+    {
+        this.transform.position = target.transform.position + distance;
+        if (canMove)
         {
-            rotation.x = maxRage_X;
+            //Debug.Log(transform.TransformDirection(Vector3.forward));
+            mouseX = Input.GetAxis("Mouse X");
+            mouseY = Input.GetAxis("Mouse Y");
+
+            rotation.x = this.transform.localEulerAngles.x;
+            rotation.y = this.transform.localEulerAngles.y;
+            rotation.x += -mouseY * speed;   //上下回転
+            rotation.y += mouseX * speed;  //左右回転
+            if (rotation.x > 180) rotation.x -= 360;
+            //Debug.Log(rotation.x);
+            if (rotation.x > maxRage_X)
+            {
+                rotation.x = maxRage_X;
+            }
+            if (rotation.x < minRage_X)
+            {
+                rotation.x = minRage_X;
+            }
+            this.transform.localEulerAngles = new Vector3(rotation.x, rotation.y, 0);
+            ChangeCursor();
         }
-        if (rotation.x < minRage_X)
-        {
-            rotation.x = minRage_X;
-        }
-        this.transform.localEulerAngles = new Vector3(rotation.x, rotation.y, 0);
-        ChangeCursor();
-	}
+    }
 
     /// <summary>
     /// カメラの方向情報を取得する
@@ -111,5 +118,13 @@ public class CameraController : MonoBehaviour {
             Screen.lockCursor = !Screen.lockCursor;
             Screen.showCursor = !Screen.showCursor;
         }
+    }
+
+    /// <summary>
+    /// 移動可能かどうかを設定する
+    /// </summary>
+    public void setCanMove(bool value)
+    {
+        canMove = value;
     }
 }

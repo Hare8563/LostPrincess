@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using AssemblyCSharp;
+using CSV;
 public class InputForm : MonoBehaviour {
 	public static string InputFormName=@"";
 	// Use this for initialization
@@ -33,15 +34,16 @@ public class InputForm : MonoBehaviour {
 		if (GUI.Button (rect2, "決定") || Event.current.keyCode == KeyCode.Return) {
 			//クリックしたときの関数実行
 			PlayerPrefsEx prefs = new PlayerPrefsEx ();
+            CsvReader reader = new CsvReader("CSV/LvTable");
 			prefs.SetString ("NAME", InputFormName);
-			prefs.SetInt ("HP", 100);
-			prefs.SetInt ("MP", 100);
-			prefs.SetInt ("MPMAX", 100);
+            prefs.SetInt ("HP", reader.getParamValue(1,CsvParam.HP));
+            prefs.SetInt ("MP", reader.getParamValue(1,CsvParam.MP));
+            prefs.SetInt("MPMAX", reader.getParamValue(1, CsvParam.MP));
 			prefs.SetInt ("LV", 1);
 			prefs.SetInt ("EXP", 0);
-			prefs.SetInt ("Sword", 10);
-			prefs.SetInt ("Magic", 8);
-			prefs.SetInt ("Bow", 5);
+            prefs.SetInt ("Sword", reader.getParamValue(1,CsvParam.SWORD_ATK));
+            prefs.SetInt ("Magic", reader.getParamValue(1,CsvParam.MAGIC_ATK));
+            prefs.SetInt ("Bow", reader.getParamValue(1,CsvParam.BOW_ATK));
 			prefs.Save (System.Environment.CurrentDirectory + "/saveData.xml");
             LoadingController.NextScene("stage");
 		}
