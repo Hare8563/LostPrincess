@@ -1,0 +1,324 @@
+fileFormatVersion: 2
+guid: e7cab662ce9c44a85a4d404b153cebe4
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: all
+    100002: all1
+    100004: all2
+    100006: all3
+    100008: arm_L
+    100010: arm_L 1
+    100012: arm_L 2
+    100014: arm_L 3
+    100016: arm_R
+    100018: arm_R 1
+    100020: arm_R 2
+    100022: arm_R 3
+    100024: body
+    100026: body 1
+    100028: body 2
+    100030: body 3
+    100032: body 4
+    100034: face
+    100036: group10
+    100038: group2
+    100040: group3
+    100042: group4
+    100044: group5
+    100046: group6
+    100048: group7
+    100050: group8
+    100052: group9
+    100054: hand_L
+    100056: hand_R
+    100058: head
+    100060: head 1
+    100062: head 2
+    100064: head 3
+    100066: pasted__group2
+    100068: pasted__pCylinder6
+    100070: pasted__pCylinder7
+    100072: pasted__pCylinder8
+    100074: pasted__pCylinder9
+    100076: pasted__polySurface1
+    100078: pasted__pSphere5
+    100080: pasted__transform7
+    100082: pasted__transform8
+    100084: pCone1
+    100086: pSphere1
+    100088: pSphere4
+    100090: pSphere5
+    100092: rod
+    100094: transform1
+    100096: transform10
+    100098: transform4
+    100100: transform9
+    100102: //RootNode
+    400000: all
+    400002: all1
+    400004: all2
+    400006: all3
+    400008: arm_L
+    400010: arm_L 1
+    400012: arm_L 2
+    400014: arm_L 3
+    400016: arm_R
+    400018: arm_R 1
+    400020: arm_R 2
+    400022: arm_R 3
+    400024: body
+    400026: body 1
+    400028: body 2
+    400030: body 3
+    400032: body 4
+    400034: face
+    400036: group10
+    400038: group2
+    400040: group3
+    400042: group4
+    400044: group5
+    400046: group6
+    400048: group7
+    400050: group8
+    400052: group9
+    400054: hand_L
+    400056: hand_R
+    400058: head
+    400060: head 1
+    400062: head 2
+    400064: head 3
+    400066: pasted__group2
+    400068: pasted__pCylinder6
+    400070: pasted__pCylinder7
+    400072: pasted__pCylinder8
+    400074: pasted__pCylinder9
+    400076: pasted__polySurface1
+    400078: pasted__pSphere5
+    400080: pasted__transform7
+    400082: pasted__transform8
+    400084: pCone1
+    400086: pSphere1
+    400088: pSphere4
+    400090: pSphere5
+    400092: rod
+    400094: transform1
+    400096: transform10
+    400098: transform4
+    400100: transform9
+    400102: //RootNode
+    2300000: pasted__pCylinder6
+    2300002: pasted__pSphere5
+    3300000: pasted__pCylinder6
+    3300002: pasted__pSphere5
+    4300000: face
+    4300002: body
+    4300004: pSphere1
+    4300006: hand_L
+    4300008: pSphere4
+    4300010: hand_R
+    4300012: pCone1
+    4300014: pSphere5
+    4300016: pasted__pSphere5
+    4300018: pasted__pCylinder6
+    7400000: dead
+    9500000: //RootNode
+    13700000: body 4
+    13700002: face
+    13700004: hand_L
+    13700006: hand_R
+    13700008: pCone1
+    13700010: pSphere1
+    13700012: pSphere4
+    13700014: pSphere5
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: dead
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 180
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .251376152
+        functionName: DeadEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: all
+        weight: 1
+      - path: all/body
+        weight: 1
+      - path: all/body/arm_L
+        weight: 1
+      - path: all/body/arm_L/hand_L
+        weight: 1
+      - path: all/body/arm_L/pSphere1
+        weight: 1
+      - path: all/body/arm_R
+        weight: 1
+      - path: all/body/arm_R/hand_R
+        weight: 1
+      - path: all/body/arm_R/pSphere4
+        weight: 1
+      - path: all/body/body 4
+        weight: 1
+      - path: all/group3
+        weight: 1
+      - path: all/group3/pCone1
+        weight: 1
+      - path: all/group4
+        weight: 1
+      - path: all/group4/pSphere5
+        weight: 1
+      - path: all/head
+        weight: 1
+      - path: all/head/face
+        weight: 1
+      - path: all1
+        weight: 1
+      - path: all1/body 1
+        weight: 1
+      - path: all1/body 1/arm_L 1
+        weight: 1
+      - path: all1/body 1/arm_R 1
+        weight: 1
+      - path: all1/group5
+        weight: 1
+      - path: all1/group6
+        weight: 1
+      - path: all1/head 1
+        weight: 1
+      - path: all2
+        weight: 1
+      - path: all2/body 2
+        weight: 1
+      - path: all2/body 2/arm_L 2
+        weight: 1
+      - path: all2/body 2/arm_R 2
+        weight: 1
+      - path: all2/group7
+        weight: 1
+      - path: all2/group8
+        weight: 1
+      - path: all2/head 2
+        weight: 1
+      - path: all3
+        weight: 1
+      - path: all3/body 3
+        weight: 1
+      - path: all3/body 3/arm_L 3
+        weight: 1
+      - path: all3/body 3/arm_R 3
+        weight: 1
+      - path: all3/group9
+        weight: 1
+      - path: all3/group10
+        weight: 1
+      - path: all3/head 3
+        weight: 1
+      - path: group2
+        weight: 1
+      - path: group2/pasted__group2
+        weight: 1
+      - path: group2/pasted__group2/pasted__pCylinder9
+        weight: 1
+      - path: group2/pasted__group2/pasted__pCylinder9/transform9
+        weight: 1
+      - path: group2/pasted__group2/pasted__polySurface1
+        weight: 1
+      - path: group2/pasted__group2/pasted__polySurface1/transform10
+        weight: 1
+      - path: group2/pasted__pCylinder7
+        weight: 1
+      - path: group2/pasted__pCylinder7/pasted__transform7
+        weight: 1
+      - path: group2/pasted__pCylinder8
+        weight: 1
+      - path: group2/pasted__pCylinder8/pasted__transform8
+        weight: 1
+      - path: rod
+        weight: 1
+      - path: rod/pasted__pCylinder6
+        weight: 1
+      - path: rod/pasted__pSphere5
+        weight: 1
+      - path: transform1
+        weight: 1
+      - path: transform4
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

@@ -137,8 +137,24 @@ ModelImporter:
     400130: //RootNode
     2300000: pasted__pCylinder6
     2300002: pasted__pSphere5
+    2300004: body 4
+    2300006: face
+    2300008: hand_L
+    2300010: hand_R
+    2300012: pCone1
+    2300014: pSphere1
+    2300016: pSphere4
+    2300018: pSphere5
     3300000: pasted__pCylinder6
     3300002: pasted__pSphere5
+    3300004: body 4
+    3300006: face
+    3300008: hand_L
+    3300010: hand_R
+    3300012: pCone1
+    3300014: pSphere1
+    3300016: pSphere4
+    3300018: pSphere5
     4300000: face
     4300002: body
     4300004: pSphere1

@@ -209,6 +209,14 @@ public class BossController : MonoBehaviour {
     /// ステータスマネージャークラス
     /// </summary>
     private EnemyStatusManager enemyStatusManager;
+    /// <summary>
+    /// HPゲージオブジェクト
+    /// </summary>
+    private EnemyCanvasHPScript HPGaugeObject;
+    /// <summary>
+    /// 召喚フラグ
+    /// </summary>
+    private bool SummonFlag = false;
 
     /// <summary>
     /// 読み込み
@@ -255,6 +263,7 @@ public class BossController : MonoBehaviour {
 
         status = enemyStatusManager.getStatus();
         initHp = status.HP;
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "堕ちた者");
 	}
 	
 	/// <summary>
@@ -277,21 +286,26 @@ public class BossController : MonoBehaviour {
         //アニメーション切り替え
         AnimationCheck();
 
-        //HPが指定数以下になったら
+        //HPが指定数以下になったら敵召喚
         if (enemyStatusManager.getStatus().HP <= initHp / 2)
         {
-            for (int i = 0; i < EnemyObject.Length; i++)
-            {
-                EnemyObject[i].SetActive(true);
-            }
+            SummonFlag = true;
         }
         if (enemyStatusManager.getStatus().HP <= 0)
         {
+            SummonFlag = false;
+        }
+        if (SummonFlag)
+        {
             for (int i = 0; i < EnemyObject.Length; i++)
             {
-                EnemyObject[i].SetActive(false);
+                if (EnemyObject[i] != null)
+                {
+                    EnemyObject[i].SetActive(SummonFlag);
+                }
             }
         }
+        HPGaugeObject.setNowHp(this.status.HP);
         //Debug.Log(this.rigidbody.velocity);
         //Debug.Log(this.status.HP);
     }
@@ -356,7 +370,10 @@ public class BossController : MonoBehaviour {
         {
             for (int i = 0; i < EnemyObject.Length; i++)
             {
-                EnemyObject[i].SetActive(false);
+                if (EnemyObject[i] != null)
+                {
+                    EnemyObject[i].SetActive(false);
+                }
             }
             eventController.GetComponent<EventController>().FadeOut("BossEnd", 0.3f);
             //Application.LoadLevel("Title");
@@ -627,7 +644,6 @@ public class BossController : MonoBehaviour {
     {
         arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
         arrowInstance.GetComponent<BowController>().setTargetObject(TargetObject);
-        arrowInstance.GetComponent<BowController>().setIsAutoAim(true);
         BowController.PlayerDamage = this.status.BOW_POW;
         audio.PlayOneShot(BowSe);
     }
