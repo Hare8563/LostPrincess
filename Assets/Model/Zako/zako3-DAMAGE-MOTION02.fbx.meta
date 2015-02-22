@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7de43661bdaf3403ea38c343dbcb24eb
+guid: e7cab662ce9c44a85a4d404b153cebe4
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -21,54 +21,40 @@ ModelImporter:
     100030: body 3
     100032: body 4
     100034: face
-    100036: group
-    100038: group1
-    100040: group2
-    100042: hand_L
-    100044: hand_R
-    100046: head
-    100048: head 1
-    100050: head 2
-    100052: head 3
-    100054: joint1
-    100056: joint2
-    100058: joint3
-    100060: pasted__all
-    100062: pasted__group2
-    100064: pasted__joint1
-    100066: pasted__joint13
-    100068: pasted__joint14
-    100070: pasted__joint15
-    100072: pasted__joint16
-    100074: pasted__joint2
-    100076: pasted__joint3
-    100078: pasted__joint4
-    100080: pasted__joint5
-    100082: pasted__joint6
-    100084: pasted__joint7
-    100086: pasted__joint8
-    100088: pasted__pCylinder6
-    100090: pasted__pCylinder7
-    100092: pasted__pCylinder8
-    100094: pasted__pCylinder9
-    100096: pasted__polySurface1
-    100098: pasted__pSphere5
-    100100: pasted__transform7
-    100102: pasted__transform8
-    100104: pCone1
-    100106: pSphere1
-    100108: pSphere4
-    100110: pSphere5
-    100112: rod
-    100114: transform1
-    100116: transform10
-    100118: transform2
-    100120: transform3
-    100122: transform4
-    100124: transform5
-    100126: transform6
-    100128: transform9
-    100130: //RootNode
+    100036: group10
+    100038: group2
+    100040: group3
+    100042: group4
+    100044: group5
+    100046: group6
+    100048: group7
+    100050: group8
+    100052: group9
+    100054: hand_L
+    100056: hand_R
+    100058: head
+    100060: head 1
+    100062: head 2
+    100064: head 3
+    100066: pasted__group2
+    100068: pasted__pCylinder6
+    100070: pasted__pCylinder7
+    100072: pasted__pCylinder8
+    100074: pasted__pCylinder9
+    100076: pasted__polySurface1
+    100078: pasted__pSphere5
+    100080: pasted__transform7
+    100082: pasted__transform8
+    100084: pCone1
+    100086: pSphere1
+    100088: pSphere4
+    100090: pSphere5
+    100092: rod
+    100094: transform1
+    100096: transform10
+    100098: transform4
+    100100: transform9
+    100102: //RootNode
     400000: all
     400002: all1
     400004: all2
@@ -87,74 +73,44 @@ ModelImporter:
     400030: body 3
     400032: body 4
     400034: face
-    400036: group
-    400038: group1
-    400040: group2
-    400042: hand_L
-    400044: hand_R
-    400046: head
-    400048: head 1
-    400050: head 2
-    400052: head 3
-    400054: joint1
-    400056: joint2
-    400058: joint3
-    400060: pasted__all
-    400062: pasted__group2
-    400064: pasted__joint1
-    400066: pasted__joint13
-    400068: pasted__joint14
-    400070: pasted__joint15
-    400072: pasted__joint16
-    400074: pasted__joint2
-    400076: pasted__joint3
-    400078: pasted__joint4
-    400080: pasted__joint5
-    400082: pasted__joint6
-    400084: pasted__joint7
-    400086: pasted__joint8
-    400088: pasted__pCylinder6
-    400090: pasted__pCylinder7
-    400092: pasted__pCylinder8
-    400094: pasted__pCylinder9
-    400096: pasted__polySurface1
-    400098: pasted__pSphere5
-    400100: pasted__transform7
-    400102: pasted__transform8
-    400104: pCone1
-    400106: pSphere1
-    400108: pSphere4
-    400110: pSphere5
-    400112: rod
-    400114: transform1
-    400116: transform10
-    400118: transform2
-    400120: transform3
-    400122: transform4
-    400124: transform5
-    400126: transform6
-    400128: transform9
-    400130: //RootNode
+    400036: group10
+    400038: group2
+    400040: group3
+    400042: group4
+    400044: group5
+    400046: group6
+    400048: group7
+    400050: group8
+    400052: group9
+    400054: hand_L
+    400056: hand_R
+    400058: head
+    400060: head 1
+    400062: head 2
+    400064: head 3
+    400066: pasted__group2
+    400068: pasted__pCylinder6
+    400070: pasted__pCylinder7
+    400072: pasted__pCylinder8
+    400074: pasted__pCylinder9
+    400076: pasted__polySurface1
+    400078: pasted__pSphere5
+    400080: pasted__transform7
+    400082: pasted__transform8
+    400084: pCone1
+    400086: pSphere1
+    400088: pSphere4
+    400090: pSphere5
+    400092: rod
+    400094: transform1
+    400096: transform10
+    400098: transform4
+    400100: transform9
+    400102: //RootNode
     2300000: pasted__pCylinder6
     2300002: pasted__pSphere5
-    2300004: body 4
-    2300006: face
-    2300008: hand_L
-    2300010: hand_R
-    2300012: pCone1
-    2300014: pSphere1
-    2300016: pSphere4
-    2300018: pSphere5
     3300000: pasted__pCylinder6
     3300002: pasted__pSphere5
-    3300004: body 4
-    3300006: face
-    3300008: hand_L
-    3300010: hand_R
-    3300012: pCone1
-    3300014: pSphere1
-    3300016: pSphere4
-    3300018: pSphere5
     4300000: face
     4300002: body
     4300004: pSphere1
@@ -214,7 +170,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: .328431368
+      - time: .251376152
         functionName: DeadEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -242,13 +198,17 @@ ModelImporter:
         weight: 1
       - path: all/body/body 4
         weight: 1
+      - path: all/group3
+        weight: 1
+      - path: all/group3/pCone1
+        weight: 1
+      - path: all/group4
+        weight: 1
+      - path: all/group4/pSphere5
+        weight: 1
       - path: all/head
         weight: 1
       - path: all/head/face
-        weight: 1
-      - path: all/pCone1
-        weight: 1
-      - path: all/pSphere5
         weight: 1
       - path: all1
         weight: 1
@@ -257,6 +217,10 @@ ModelImporter:
       - path: all1/body 1/arm_L 1
         weight: 1
       - path: all1/body 1/arm_R 1
+        weight: 1
+      - path: all1/group5
+        weight: 1
+      - path: all1/group6
         weight: 1
       - path: all1/head 1
         weight: 1
@@ -268,6 +232,10 @@ ModelImporter:
         weight: 1
       - path: all2/body 2/arm_R 2
         weight: 1
+      - path: all2/group7
+        weight: 1
+      - path: all2/group8
+        weight: 1
       - path: all2/head 2
         weight: 1
       - path: all3
@@ -278,51 +246,11 @@ ModelImporter:
         weight: 1
       - path: all3/body 3/arm_R 3
         weight: 1
+      - path: all3/group9
+        weight: 1
+      - path: all3/group10
+        weight: 1
       - path: all3/head 3
-        weight: 1
-      - path: group
-        weight: 1
-      - path: group/pasted__all
-        weight: 1
-      - path: group1
-        weight: 1
-      - path: group1/pasted__joint1
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/pasted__joint3/pasted__joint4
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform2
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform2/joint1/transform3/pasted__joint13/pasted__joint14
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform5
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform5/joint2
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform5/joint2/transform6
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform5/joint2/transform6/pasted__joint5
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform5/joint2/transform6/pasted__joint5/pasted__joint6
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint2/transform5/joint2/transform6/pasted__joint5/pasted__joint6/joint3
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint7
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint7/pasted__joint8
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint15
-        weight: 1
-      - path: group1/pasted__joint1/pasted__joint15/pasted__joint16
         weight: 1
       - path: group2
         weight: 1
