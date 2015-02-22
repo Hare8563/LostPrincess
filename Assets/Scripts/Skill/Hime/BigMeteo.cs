@@ -25,10 +25,6 @@ public class BigMeteo : MonoBehaviour {
     /// シールドオブジェクト
     /// </summary>
     private GameObject ShieldObject;
-    /// <summary>
-    /// シールドコントローラー
-    /// </summary>
-    private ShieldController shieldController;
 
     void Awake()
     {
@@ -55,8 +51,7 @@ public class BigMeteo : MonoBehaviour {
         else
         {
             this.gameObject.layer = LayerMask.NameToLayer("Attack_Player");
-            shieldController = ShieldObject.GetComponent<ShieldController>();
-            shieldController.setToShieldCollision("BigMeteoBall");
+            //shieldController.setToShieldCollision("BigMeteoBall");
         }
 	}
 

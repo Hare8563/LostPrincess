@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TowerScript : MonoBehaviour {
+public class TowerScript : MonoBehaviour
+{
 
     /// <summary>
     /// 自身のステータス
@@ -11,7 +12,7 @@ public class TowerScript : MonoBehaviour {
     /// <summary>
     /// 全子オブジェクト
     /// </summary>
-    private Transform[]	ChildList;
+    private Transform[] ChildList;
     /// <summary>
     /// 子オブジェクトに与える力
     /// </summary>
@@ -46,6 +47,10 @@ public class TowerScript : MonoBehaviour {
     /// </summary>
     [SerializeField]
     private AudioClip BlokenSound;
+    /// <summary>
+    /// HPゲージオブジェクト
+    /// </summary>
+    private EnemyCanvasHPScript HPGaugeObject;
 
     void Awake()
     {
@@ -54,16 +59,18 @@ public class TowerScript : MonoBehaviour {
         BlokenDUst = Resources.Load("Prefab/BlokenDust") as GameObject;
     }
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start()
     {
         ChildCount = this.gameObject.transform.childCount;
-        Debug.Log(ChildCount);
-	}
-	
-	// Update is called once per frame
-	void Update () 
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.thisStatus.getStatus().HP, "姫護りの塔");
+        //Debug.Log(ChildCount);
+    }
+
+    // Update is called once per frame
+    void Update()
     {
+        HPGaugeObject.setNowHp(this.thisStatus.getStatus().HP);
         if (this.thisStatus.getStatus().HP <= 0)
         {
             if (!DeadFlag)
@@ -80,9 +87,9 @@ public class TowerScript : MonoBehaviour {
                     i.transform.parent = null;
                     BrokenObjects.Add(i.gameObject);
                     forceVec = new Vector3(Random.Range(-range, range), Random.Range(-range, 0), Random.Range(-range, range));
-                    i.gameObject.AddComponent<Rigidbody>();
+                    if (i.gameObject.GetComponent<Rigidbody>() == null) i.gameObject.AddComponent<Rigidbody>();
                     i.gameObject.rigidbody.AddForce(forceVec, ForceMode.Impulse);
-                    i.gameObject.rigidbody.AddTorque(forceVec/5, ForceMode.Impulse);
+                    i.gameObject.rigidbody.AddTorque(forceVec / 5, ForceMode.Impulse);
                     i.gameObject.rigidbody.AddForce(Vector3.down * 5, ForceMode.Impulse);
                 }
                 //死んだ瞬間に消したいオブジェクトを削除
@@ -108,5 +115,5 @@ public class TowerScript : MonoBehaviour {
                 Destroy(this.gameObject);
             }
         }
-	}
+    }
 }

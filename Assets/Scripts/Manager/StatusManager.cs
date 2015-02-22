@@ -116,7 +116,7 @@ public class StatusManager : MonoBehaviour
     /// </summary>
     private void PlayerStatusControll()
     {
-        Debug.Log(maxHp);
+        //Debug.Log(maxHp);
         PlayerController playerController = PlayerObject.GetComponent<PlayerController>();
         foreach (Transform child in canvas.transform)
         {
