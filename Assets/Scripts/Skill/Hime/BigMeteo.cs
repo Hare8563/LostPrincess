@@ -25,10 +25,6 @@ public class BigMeteo : MonoBehaviour {
     /// シールドオブジェクト
     /// </summary>
     private GameObject ShieldObject;
-    /// <summary>
-    /// シールドコントローラー
-    /// </summary>
-    private ShieldController shieldController;
 
     void Awake()
     {
@@ -50,13 +46,12 @@ public class BigMeteo : MonoBehaviour {
     {
         if (!isReflect)
         {
-            this.gameObject.layer = LayerMask.NameToLayer("EnemyAttack");
+            this.gameObject.layer = LayerMask.NameToLayer("Attack_Enemy");
         }
         else
         {
-            this.gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
-            shieldController = ShieldObject.GetComponent<ShieldController>();
-            shieldController.setToShieldCollision("BigMeteoBall");
+            this.gameObject.layer = LayerMask.NameToLayer("Attack_Player");
+            //shieldController.setToShieldCollision("BigMeteoBall");
         }
 	}
 
@@ -68,7 +63,7 @@ public class BigMeteo : MonoBehaviour {
 	void OnTriggerEnter(Collider collider)
 	{
 		//Debug.Log (collider.tag);
-        if (collider.tag == "Weapon_Sword")
+        if (collider.tag == "SwordCollider")
         {
             isReflect = true;
             this.transform.LookAt(EnemyObject.transform.position);

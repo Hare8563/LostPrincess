@@ -136,7 +136,7 @@ public class MagicCursorScript : MonoBehaviour
     {
         if (mouseButton.leftUp)
         {
-            Camera.main.rect = new Rect(0, 0, 1, 1);
+            //Camera.main.rect = new Rect(0, 0, 1, 1);
             cameraController.setCanMove(true);
             //魔法発動
             InvocationFlag = true;
@@ -144,7 +144,7 @@ public class MagicCursorScript : MonoBehaviour
         }
         else if (!InvocationFlag)
         {
-            Camera.main.rect = new Rect(0, 0, 0, 0);
+            //Camera.main.rect = new Rect(0, 0, 0, 0);
             cameraController.setCanMove(false);
         }
     }

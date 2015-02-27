@@ -22,7 +22,7 @@ public class Ending : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetMouseButton(0))
         {
             LoadingController.NextScene("RastBoss");
         }

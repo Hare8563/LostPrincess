@@ -234,7 +234,7 @@ namespace HimeSkillClass
                 {
                     //Debug.Log(BombTiming);
                     BombTiming += Method.GameTime();
-                    if (BombTiming > 10)
+                    if (BombTiming > 20)
                     {
                         BombTiming = 0;
                         GameObject bomb = (GameObject)Instantiate(BombObject, EmmitObject.transform.position + EmmitObject.transform.TransformDirection(Vector3.back * 10.0f), EmmitObject.transform.rotation);

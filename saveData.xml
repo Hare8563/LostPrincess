@@ -4,19 +4,19 @@
   <string>
   </string>
   <key>HP</key>
-  <integer>111</integer>
-  <key>MP</key>
-  <integer>34</integer>
-  <key>MPMAX</key>
-  <integer>34</integer>
-  <key>LV</key>
-  <integer>2</integer>
-  <key>EXP</key>
-  <integer>9</integer>
-  <key>Sword</key>
-  <integer>7</integer>
-  <key>Bow</key>
-  <integer>5</integer>
-  <key>Magic</key>
   <integer>3</integer>
+  <key>MP</key>
+  <integer>97</integer>
+  <key>MPMAX</key>
+  <integer>100</integer>
+  <key>LV</key>
+  <integer>1</integer>
+  <key>EXP</key>
+  <integer>0</integer>
+  <key>Sword</key>
+  <integer>4</integer>
+  <key>Bow</key>
+  <integer>1</integer>
+  <key>Magic</key>
+  <integer>2</integer>
 </root>

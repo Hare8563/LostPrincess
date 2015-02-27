@@ -1,0 +1,217 @@
+fileFormatVersion: 2
+guid: 7ea5452065003744cb2faa01d75b1f4a
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: hime_mo02:body
+    100004: hime_mo02:dress
+    100006: hime_mo02:face
+    100008: hime_mo02:hair
+    100010: hime_mo02:hands
+    100012: hime_mo02:head
+    100014: hime_mo02:joint17
+    100016: hime_mo02:joint18
+    100018: hime_mo02:joint19
+    100020: hime_mo02:joint20
+    100022: hime_mo02:joint21
+    100024: hime_mo02:pCylinder1
+    100026: hime_mo02:polySurface10
+    100028: hime_mo02:polySurface8
+    100030: hime_mo02:polySurface9
+    100032: hime_mo02:princes1
+    100034: hime_mo02:pSphere1
+    100036: hime_mo02:pSphere3
+    100038: hime_mo02:pSphere4
+    100040: hime_mo02:ribbon
+    100042: hime_mo02:ribbon2
+    100044: hime_mo02:royal_crown
+    100046: hime_mo02:teil
+    400000: //RootNode
+    400002: hime_mo02:body
+    400004: hime_mo02:dress
+    400006: hime_mo02:face
+    400008: hime_mo02:hair
+    400010: hime_mo02:hands
+    400012: hime_mo02:head
+    400014: hime_mo02:joint17
+    400016: hime_mo02:joint18
+    400018: hime_mo02:joint19
+    400020: hime_mo02:joint20
+    400022: hime_mo02:joint21
+    400024: hime_mo02:pCylinder1
+    400026: hime_mo02:polySurface10
+    400028: hime_mo02:polySurface8
+    400030: hime_mo02:polySurface9
+    400032: hime_mo02:princes1
+    400034: hime_mo02:pSphere1
+    400036: hime_mo02:pSphere3
+    400038: hime_mo02:pSphere4
+    400040: hime_mo02:ribbon
+    400042: hime_mo02:ribbon2
+    400044: hime_mo02:royal_crown
+    400046: hime_mo02:teil
+    2300000: hime_mo02:face
+    2300002: hime_mo02:pCylinder1
+    2300004: hime_mo02:polySurface10
+    2300006: hime_mo02:polySurface8
+    2300008: hime_mo02:polySurface9
+    2300010: hime_mo02:pSphere3
+    2300012: hime_mo02:ribbon
+    2300014: hime_mo02:ribbon2
+    2300016: hime_mo02:royal_crown
+    2300018: hime_mo02:teil
+    3300000: hime_mo02:face
+    3300002: hime_mo02:pCylinder1
+    3300004: hime_mo02:polySurface10
+    3300006: hime_mo02:polySurface8
+    3300008: hime_mo02:polySurface9
+    3300010: hime_mo02:pSphere3
+    3300012: hime_mo02:ribbon
+    3300014: hime_mo02:ribbon2
+    3300016: hime_mo02:royal_crown
+    3300018: hime_mo02:teil
+    4300000: hime_mo02:royal_crown
+    4300002: hime_mo02:polySurface10
+    4300004: hime_mo02:polySurface9
+    4300006: hime_mo02:face
+    4300008: hime_mo02:ribbon
+    4300010: hime_mo02:ribbon2
+    4300012: hime_mo02:teil
+    4300014: hime_mo02:polySurface8
+    4300016: hime_mo02:pCylinder1
+    4300018: hime_mo02:pSphere3
+    4300020: hime_mo02:pSphere1
+    4300022: hime_mo02:pSphere4
+    7400000: Kyusyutu
+    9500000: //RootNode
+    13700000: hime_mo02:pSphere1
+    13700002: hime_mo02:pSphere4
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Kyusyutu
+      takeName: Take 001
+      firstFrame: 40
+      lastFrame: 240
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: hime_mo02:joint17
+        weight: 1
+      - path: hime_mo02:joint17/hime_mo02:joint18
+        weight: 1
+      - path: hime_mo02:joint17/hime_mo02:joint18/hime_mo02:joint19
+        weight: 1
+      - path: hime_mo02:joint17/hime_mo02:joint20
+        weight: 1
+      - path: hime_mo02:joint17/hime_mo02:joint20/hime_mo02:joint21
+        weight: 1
+      - path: hime_mo02:princes1
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:body
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:body/hime_mo02:dress
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:body/hime_mo02:dress/hime_mo02:pCylinder1
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:body/hime_mo02:dress/hime_mo02:polySurface8
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:body/hime_mo02:dress/hime_mo02:pSphere3
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:body/hime_mo02:ribbon
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:body/hime_mo02:ribbon2
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:body/hime_mo02:teil
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:hands
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:hands/hime_mo02:pSphere1
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:hands/hime_mo02:pSphere4
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:head
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:head/hime_mo02:face
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:head/hime_mo02:hair
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:head/hime_mo02:hair/hime_mo02:polySurface9
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:head/hime_mo02:hair/hime_mo02:polySurface10
+        weight: 1
+      - path: hime_mo02:princes1/hime_mo02:head/hime_mo02:royal_crown
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

@@ -217,6 +217,10 @@ public class BossController : MonoBehaviour {
     /// 召喚フラグ
     /// </summary>
     private bool SummonFlag = false;
+    /// <summary>
+    /// オーラエフェクトオブジェクト
+    /// </summary>
+    private GameObject SlipFireObject;
 
     /// <summary>
     /// 読み込み
@@ -246,6 +250,7 @@ public class BossController : MonoBehaviour {
             }
         }
         enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
+        SlipFireObject = this.transform.FindChild("SlipFire").gameObject;
     }
 
 	/// <summary>
@@ -263,7 +268,8 @@ public class BossController : MonoBehaviour {
 
         status = enemyStatusManager.getStatus();
         initHp = status.HP;
-        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "堕ちた者");
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "かつての伝説");
+        SlipFireObject.SetActive(false);
 	}
 	
 	/// <summary>
@@ -289,12 +295,15 @@ public class BossController : MonoBehaviour {
         //HPが指定数以下になったら敵召喚
         if (enemyStatusManager.getStatus().HP <= initHp / 2)
         {
+            SlipFireObject.SetActive(true);
             SummonFlag = true;
         }
+        //HPがなくなったら
         if (enemyStatusManager.getStatus().HP <= 0)
         {
             SummonFlag = false;
         }
+        //召喚フラグが立ったら
         if (SummonFlag)
         {
             for (int i = 0; i < EnemyObject.Length; i++)
@@ -413,7 +422,7 @@ public class BossController : MonoBehaviour {
         //プレイヤーに近づくフラグがたったら
         if (isAttackSwordRun)
         {
-            float Distance = 10.0f;
+            float Distance = 12.0f;
             //一定距離近づいたら剣振りフラグを立てる
             if (ToPlayerDistance <= Distance)
             {
@@ -633,6 +642,7 @@ public class BossController : MonoBehaviour {
     {
         magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
         magicInstance.GetComponent<MagicController>().setTargetObject(TargetObject);
+        //magicInstance.layer = 1 << LayerMask.NameToLayer("Attack_Enemy");
         MagicController.PlayerDamage = this.status.Magic_Power;
         audio.PlayOneShot(MagicSe);
     }

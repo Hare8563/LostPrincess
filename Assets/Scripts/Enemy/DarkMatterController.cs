@@ -101,7 +101,7 @@ public class DarkMatterController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         status = enemyStatusManager.getStatus();
-        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "分かつ輩");
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "トモガラ");
 	}
 	
 	// Update is called once per frame
