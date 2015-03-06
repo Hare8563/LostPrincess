@@ -75,14 +75,14 @@ public class EnemyCanvasCreateScript : MonoBehaviour {
         Gauges = GameObject.FindGameObjectsWithTag("Enemygauge");
         GaugeCount = Gauges.Length;
         MaxHp = maxHp;
-        GaugeInstance = (GameObject)Instantiate(EnemyStatusGaugeInstance, Vector3.zero, this.transform.rotation);
+        GaugeInstance = (GameObject)Instantiate(EnemyStatusGaugeInstance, Vector3.zero, EnemyStatusGaugeInstance.transform.rotation);
         GaugeInstance.GetComponent<EnemyCanvasCreateScript>().setName(name);
         //Debug.Log(maxHp);
         GaugeInstance.GetComponent<EnemyCanvasHPScript>().setMaxHp(maxHp);
         GaugeInstance.GetComponent<EnemyCanvasHPScript>().setNowHp(maxHp);
         GaugeInstance.transform.parent = canvas.transform;
-        GaugeInstance.transform.localScale = new Vector3(-2, 2, 2);
-        GaugeInstance.transform.localPosition = new Vector3(0, -30 * GaugeCount, 0);
+        GaugeInstance.transform.localScale = new Vector3(2, 2, 2);
+        GaugeInstance.transform.localPosition = new Vector3(0, -25 * GaugeCount, 0);
         Destroy(GaugeInstance.GetComponent<EnemyCanvasCreateScript>());
         GaugeCount++;
         return GaugeInstance.GetComponent<EnemyCanvasHPScript>();

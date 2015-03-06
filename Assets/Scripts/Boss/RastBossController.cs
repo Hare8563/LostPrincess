@@ -178,10 +178,6 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     private bool isShield = false;
     /// <summary>
-    /// シールドコントローラー
-    /// </summary>
-    private ShieldController shieldController;
-    /// <summary>
     /// スキルを使用した時間
     /// </summary>
     private float usingSkillTime = 0;
@@ -198,10 +194,6 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     private float initHp;
     /// <summary>
-    /// 攻撃アイコンオブジェクト
-    /// </summary>
-    private GameObject AttackIconObject;
-    /// <summary>
     /// ステータスマネージャークラス
     /// </summary>
     private EnemyStatusManager enemyStatusManager;
@@ -209,6 +201,14 @@ public class RastBossController : MonoBehaviour
     /// HPゲージオブジェクト
     /// </summary>
     private EnemyCanvasHPScript HPGaugeObject;
+    /// <summary>
+    /// シールドコントローラオブジェクト
+    /// </summary>
+    private ShieldController shieldController;
+    /// <summary>
+    /// HP回復までの時間
+    /// </summary>
+    private float RejectCount = 0;
 
 #if skillDebug
     //ノーマルスキル
@@ -233,7 +233,7 @@ public class RastBossController : MonoBehaviour
         DashEffect = this.transform.FindChild("DashEffect").gameObject;
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
         ShieldObject = GameObject.Find("Shield");
-        AttackIconObject = GameObject.Find("HimeAttackIcon");
+        shieldController = ShieldObject.GetComponent<ShieldController>();
         enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
         //Debug.Log(AttackIconObject);
     }
@@ -250,6 +250,7 @@ public class RastBossController : MonoBehaviour
         nowLightIntensity = EfectLightIntensity_Min;
         foreach (GameObject i in AttackPoints)
         {
+            //Debug.Log(i.name);
             i.particleSystem.startSize = nowEffectSize;
             i.light.intensity = nowLightIntensity;
         }
@@ -258,7 +259,7 @@ public class RastBossController : MonoBehaviour
         nextAttackTime = Random.Range(240f, 360f);
         ShieldObject.SetActive(isShield);
         initHp = this.GetComponent<EnemyStatusManager>().getStatus().HP;
-        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "裏姫");
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "姫・真");
         //Debug.Log(initHp);
     }
 
@@ -272,9 +273,10 @@ public class RastBossController : MonoBehaviour
 		Down();
         AnimationController();
         DashEffect.SetActive(isDashEffect);
-        ShieldObject.SetActive(isShield);
+        if (ShieldObject) ShieldObject.SetActive(isShield);
         //Debug.Log(this.status.HP);
         HPGaugeObject.setNowHp(this.status.HP);
+        RejectHP();
         //死んでいたら
         if (enemyStatusManager.getIsDead())
         {
@@ -288,9 +290,8 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        AttackIconObject.GetComponent<AttackIconScript>().setAttackIcon("");
         //HPが半分以下だったら
-        if (!isHarf && this.GetComponent<EnemyStatusManager>().getStatus().HP <= initHp / 2)
+        if (!isHarf && this.status.HP <= initHp / 2)
         {
             isHarf = true;
             if(!isBerserk)isDown = true;
@@ -301,14 +302,14 @@ public class RastBossController : MonoBehaviour
             if (!AttackFlag)
             {
                 //移動可能範囲
-                float canAreaMoveDistance = 70;
+                float canAreaMoveDistance = 30;
                 float Speed = 0.05f;
                 //ランダム時間毎に移動する
                 nowStayTime += Method.GameTime();
                 if (nowStayTime > moveTiming)
                 {
                     nowStayTime = 0;
-                    if (!isHarf) moveTiming = Random.Range(0f, 120f);
+                    if (!isHarf) moveTiming = Random.Range(0f, 180f);
                     else moveTiming = Random.Range(0f, 60f);
                     float AngleRand_X = Random.Range(0, 360 * Mathf.PI / 180);
                     float AngleRand_Z = Random.Range(0, 360 * Mathf.PI / 180);
@@ -420,7 +421,6 @@ public class RastBossController : MonoBehaviour
     {
 		float maxScale = 50f;
 		float maxDis = 600f;
-        AttackIconObject.GetComponent<AttackIconScript>().setAttackIcon("sword");
         if (AttackFlag)
         {       
             //スキル発動
@@ -457,7 +457,6 @@ public class RastBossController : MonoBehaviour
     void BigMeteo()
     {
         isDashEffect = false;
-        AttackIconObject.GetComponent<AttackIconScript>().setAttackIcon("bow");
         //移動
         //TODO:移動処理（必要なら）
         if (AttackFlag)
@@ -510,7 +509,6 @@ public class RastBossController : MonoBehaviour
     void PhotonLaser()
     {
         isDashEffect = false;
-        AttackIconObject.GetComponent<AttackIconScript>().setAttackIcon("magic");
         //チャージ行動（？）
         //TODO:チャージ行動処理
 
@@ -621,7 +619,6 @@ public class RastBossController : MonoBehaviour
 
 		if(!isDown)
 		{
-            shieldController = ShieldObject.GetComponent<ShieldController>();
 	        //攻撃態勢だったら
 	        if (currentBaseState.nameHash == attack_02State)
 	        {
@@ -643,15 +640,15 @@ public class RastBossController : MonoBehaviour
 	                switch (randomUse_NormalSkill)
 	                {
 	                    case 0:
-                            shieldController.setToShieldCollision("");
+                            //shieldController.setToShieldCollision("");
 	                        BigMeteo();
 	                        break;
 	                    case 1:
-                            shieldController.setToShieldCollision("Arrow");
+                            //shieldController.setToShieldCollision("Arrow");
 	                        PhotonLaser();
 	                        break;
 	                    case 2:
-                            shieldController.setToShieldCollision("MagicBall");
+                            //shieldController.setToShieldCollision("MagicBall");
 	                        HighRash();
 	                        break;
                     }
@@ -666,15 +663,15 @@ public class RastBossController : MonoBehaviour
                         switch (randomUse_BerserkSkill)
                         {
                             case 0:
-                                shieldController.setToShieldCollision("");
+                                //shieldController.setToShieldCollision("");
                                 HighTornado();
                                 break;
                             case 1:
-                                shieldController.setToShieldCollision("");
+                                //shieldController.setToShieldCollision("");
                                 BigMine();
                                 break;
                             case 2:
-                                shieldController.setToShieldCollision("");
+                                //shieldController.setToShieldCollision("");
                                 OmegaBeam();
                                 break;
                         }
@@ -684,10 +681,31 @@ public class RastBossController : MonoBehaviour
 	        }
 	        else
 	        {
-                shieldController.setToShieldCollision("");
+                //shieldController.setToShieldCollision("");
 	            himeSkill = new HimeSkill(this.transform.position, this.transform.rotation, this.gameObject);
 	        }
 		}
+    }
+
+    /// <summary>
+    /// HP回復
+    /// </summary>
+    private void RejectHP()
+    {
+        //Debug.Log(shieldController.getTowerCount());
+        if (initHp > this.status.HP)
+        {
+            RejectCount += Method.GameTime();
+            if ((int)RejectCount % 60 == 0)
+            {
+                RejectCount = 0;
+                this.status.HP += shieldController.getTowerCount();
+            }
+        }
+        if (initHp < this.status.HP)
+        {
+            this.status.HP = (int)initHp;
+        }
     }
 
 	void OnTriggerEnter(Collider collider)

@@ -1,0 +1,137 @@
+fileFormatVersion: 2
+guid: 4343a0c7544ae344084c984a14041f81
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: hime_mo02:body
+    100004: hime_mo02:dress
+    100006: hime_mo02:face
+    100008: hime_mo02:group1
+    100010: hime_mo02:hair
+    100012: hime_mo02:hands
+    100014: hime_mo02:head
+    100016: hime_mo02:joint17
+    100018: hime_mo02:joint18
+    100020: hime_mo02:joint19
+    100022: hime_mo02:joint20
+    100024: hime_mo02:joint21
+    100026: hime_mo02:pCylinder1
+    100028: hime_mo02:polySurface10
+    100030: hime_mo02:polySurface8
+    100032: hime_mo02:polySurface9
+    100034: hime_mo02:princes1
+    100036: hime_mo02:pSphere1
+    100038: hime_mo02:pSphere3
+    100040: hime_mo02:pSphere4
+    100042: hime_mo02:ribbon
+    100044: hime_mo02:ribbon2
+    100046: hime_mo02:royal_crown
+    100048: hime_mo02:teil
+    100050: polySurface11
+    100052: transform1
+    100054: transform10
+    100056: transform11
+    100058: transform12
+    100060: transform2
+    100062: transform3
+    100064: transform4
+    100066: transform5
+    100068: transform6
+    100070: transform7
+    100072: transform8
+    100074: transform9
+    400000: //RootNode
+    400002: hime_mo02:body
+    400004: hime_mo02:dress
+    400006: hime_mo02:face
+    400008: hime_mo02:group1
+    400010: hime_mo02:hair
+    400012: hime_mo02:hands
+    400014: hime_mo02:head
+    400016: hime_mo02:joint17
+    400018: hime_mo02:joint18
+    400020: hime_mo02:joint19
+    400022: hime_mo02:joint20
+    400024: hime_mo02:joint21
+    400026: hime_mo02:pCylinder1
+    400028: hime_mo02:polySurface10
+    400030: hime_mo02:polySurface8
+    400032: hime_mo02:polySurface9
+    400034: hime_mo02:princes1
+    400036: hime_mo02:pSphere1
+    400038: hime_mo02:pSphere3
+    400040: hime_mo02:pSphere4
+    400042: hime_mo02:ribbon
+    400044: hime_mo02:ribbon2
+    400046: hime_mo02:royal_crown
+    400048: hime_mo02:teil
+    400050: polySurface11
+    400052: transform1
+    400054: transform10
+    400056: transform11
+    400058: transform12
+    400060: transform2
+    400062: transform3
+    400064: transform4
+    400066: transform5
+    400068: transform6
+    400070: transform7
+    400072: transform8
+    400074: transform9
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

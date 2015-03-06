@@ -116,7 +116,7 @@ public class StatusManager : MonoBehaviour
     /// </summary>
     private void PlayerStatusControll()
     {
-        Debug.Log(maxHp);
+        //Debug.Log(maxHp);
         PlayerController playerController = PlayerObject.GetComponent<PlayerController>();
         foreach (Transform child in canvas.transform)
         {
@@ -177,7 +177,7 @@ public class StatusManager : MonoBehaviour
     /// <param name="value"></param>
     public void setMaxHp(float value)
     {
-        //maxHp = value;
+        maxHp = value;
     }
     /// <summary>
     /// 最大MPを設定
