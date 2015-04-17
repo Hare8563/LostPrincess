@@ -209,6 +209,34 @@ public class RastBossController : MonoBehaviour
     /// HP回復までの時間
     /// </summary>
     private float RejectCount = 0;
+    /// <summary>
+    /// 落下フラグ
+    /// </summary>
+    private bool DownFlag = false;
+    /// <summary>
+    /// コライダ情報の構造体
+    /// </summary>
+    private struct ColliderStatus
+    {
+        public Vector3 Center;
+        public Vector3 Size;
+    }
+    /// <summary>
+    /// 通常時のコライダ情報
+    /// </summary>
+    private ColliderStatus Normal;
+    /// <summary>
+    /// ダウン時のコライダ情報
+    /// </summary>
+    private ColliderStatus Down;
+    /// <summary>
+    /// 落下エフェクt
+    /// </summary>
+    private GameObject DownSmoke;
+    /// <summary>
+    /// イベントコントローラクラス
+    /// </summary>
+    private EventController eventController;
 
 #if skillDebug
     //ノーマルスキル
@@ -235,6 +263,8 @@ public class RastBossController : MonoBehaviour
         ShieldObject = GameObject.Find("Shield");
         shieldController = ShieldObject.GetComponent<ShieldController>();
         enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
+        DownSmoke = Resources.Load("Prefab/HimeDownSmoke") as GameObject;
+        eventController = GameObject.Find("EventManager").GetComponent<EventController>();
         //Debug.Log(AttackIconObject);
     }
 
@@ -243,15 +273,16 @@ public class RastBossController : MonoBehaviour
     /// </summary>
     void Start()
     {
-		//status = new Status(30, "CSV/RastBassTable");
+        //status = new Status(30, "CSV/RastBassTable");
         status = enemyStatusManager.getStatus();
         //エフェクトサイズとライト光量を初期化
         nowEffectSize = EfectSize_Min;
         nowLightIntensity = EfectLightIntensity_Min;
         foreach (GameObject i in AttackPoints)
         {
-            i.particleSystem.startSize = nowEffectSize;
-            i.light.intensity = nowLightIntensity;
+            //Debug.Log(i.name);
+            i.GetComponent<ParticleSystem>().startSize = nowEffectSize;
+            i.GetComponent<Light>().intensity = nowLightIntensity;
         }
         DashEffect.SetActive(isDashEffect);
         nextPosition = nowPosition = this.transform.position;
@@ -259,6 +290,10 @@ public class RastBossController : MonoBehaviour
         ShieldObject.SetActive(isShield);
         initHp = this.GetComponent<EnemyStatusManager>().getStatus().HP;
         HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "異形の姫");
+        Normal.Center = new Vector3(0, 0.15f, 0);
+        Normal.Size = new Vector3(0.15f, 0.15f, 0.15f);
+        Down.Center = new Vector3(0, 0.05f, -0.1f);
+        Down.Size = new Vector3(0.15f, 0.08f, 0.1f);
         //Debug.Log(initHp);
     }
 
@@ -269,7 +304,7 @@ public class RastBossController : MonoBehaviour
     {
         //isBerserk = false;
         Move();
-		Down();
+		DownState();
         AnimationController();
         DashEffect.SetActive(isDashEffect);
         if (ShieldObject) ShieldObject.SetActive(isShield);
@@ -279,7 +314,10 @@ public class RastBossController : MonoBehaviour
         //死んでいたら
         if (enemyStatusManager.getIsDead())
         {
-            LoadingController.NextScene("Title");
+            isDown = true;
+            Time.timeScale = 0.5f;
+            eventController.FadeOut("RastBossAfter", 0.6f);
+            //LoadingController.NextScene("Title");
 		}
         //Debug.Log(status.HP);
     }
@@ -295,20 +333,21 @@ public class RastBossController : MonoBehaviour
             isHarf = true;
             if(!isBerserk)isDown = true;
         }
-        if (!isDown)
+
+        if (!DownFlag)
         {
             //非攻撃状態
             if (!AttackFlag)
             {
                 //移動可能範囲
-                float canAreaMoveDistance = 70;
+                float canAreaMoveDistance = 30;
                 float Speed = 0.05f;
                 //ランダム時間毎に移動する
                 nowStayTime += Method.GameTime();
                 if (nowStayTime > moveTiming)
                 {
                     nowStayTime = 0;
-                    if (!isHarf) moveTiming = Random.Range(0f, 120f);
+                    if (!isHarf) moveTiming = Random.Range(0f, 180f);
                     else moveTiming = Random.Range(0f, 60f);
                     float AngleRand_X = Random.Range(0, 360 * Mathf.PI / 180);
                     float AngleRand_Z = Random.Range(0, 360 * Mathf.PI / 180);
@@ -372,38 +411,46 @@ public class RastBossController : MonoBehaviour
 	/// <summary>
 	/// ダウン状態
 	/// </summary>
-	void Down()
+	void DownState()
 	{
-		if(isDown)
+        if (isDown)
+        {
+            //エフェクト関連初期化
+            isDashEffect = false;
+            AttackPoints[0].GetComponent<ParticleSystem>().startSize = nowEffectSize = EfectSize_Min;
+            AttackPoints[0].GetComponent<Light>().intensity = nowLightIntensity = EfectLightIntensity_Min;
+            AttackPoints[1].GetComponent<ParticleSystem>().startSize = nowEffectSize = EfectSize_Min;
+            AttackPoints[1].GetComponent<Light>().intensity = nowLightIntensity = EfectLightIntensity_Min;
+        }
+        if (DownFlag)
 		{
-			//エフェクト関連初期化
-			isDashEffect = false;
-			AttackPoints[0].particleSystem.startSize = nowEffectSize = EfectSize_Min;
-			AttackPoints[0].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
-			AttackPoints[1].particleSystem.startSize = nowEffectSize = EfectSize_Min;
-			AttackPoints[1].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
 			//ダウン時間経過
 			DownTime += Method.GameTime();
+            //下に落ちる
+            if (!isGround)
+			{
+                this.transform.Translate(Vector3.down);
+				//this.rigidbody.AddForce(this.transform.TransformDirection(Vector3.down).normalized * 5, ForceMode.VelocityChange);
+			}
 			//5秒間ダウン
-			if(DownTime > 300 || this.transform.position.y < -20)
+			else if((DownTime > 300 || this.transform.position.y < -20) && this.status.HP > 0)
 			{
                 DownTime = 301;
 				//上昇
-				if(this.transform.position.y < 10f)
+                if (this.transform.position.y < 20f)
 				{
-					this.rigidbody.AddForce(this.transform.TransformDirection(Vector3.up).normalized * 1, ForceMode.VelocityChange);
+                    isDown = false;
+                    animator.speed = 1;
+                    this.GetComponent<BoxCollider>().center = Normal.Center;
+                    this.GetComponent<BoxCollider>().size = Normal.Size;
+                    this.transform.Translate(Vector3.up / 4);
 				}
 				else
 				{
-					isDown = false;
+                    DownFlag = false;
 					//バーサクモードに切り替え
 					isBerserk = true;
 				}
-			}
-			//下に落ちる
-			else if(!isGround)
-			{
-				this.rigidbody.AddForce(this.transform.TransformDirection(Vector3.down).normalized * 5, ForceMode.VelocityChange);
 			}
 		}
 		else
@@ -464,14 +511,14 @@ public class RastBossController : MonoBehaviour
             Method.SmoothChange(ref nowEffectSize, EffectSize_Max, EffectChangeSpeed);
             Method.SmoothChange(ref nowLightIntensity, EfectLightIntensity_Max, EffectChangeSpeed);
             //値を反映
-            AttackPoints[BigMeteoTiming].particleSystem.startSize = nowEffectSize;
-            AttackPoints[BigMeteoTiming].light.intensity = nowLightIntensity;
+            AttackPoints[BigMeteoTiming].GetComponent<ParticleSystem>().startSize = nowEffectSize;
+            AttackPoints[BigMeteoTiming].GetComponent<Light>().intensity = nowLightIntensity;
             //エフェクトサイズが最大になったら
-            if (AttackPoints[BigMeteoTiming].particleSystem.startSize > EffectSize_Max)
+            if (AttackPoints[BigMeteoTiming].GetComponent<ParticleSystem>().startSize > EffectSize_Max)
             {
                 //エフェクト関連初期化
-                AttackPoints[BigMeteoTiming].particleSystem.startSize = nowEffectSize = EfectSize_Min;
-                AttackPoints[BigMeteoTiming].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
+                AttackPoints[BigMeteoTiming].GetComponent<ParticleSystem>().startSize = nowEffectSize = EfectSize_Min;
+                AttackPoints[BigMeteoTiming].GetComponent<Light>().intensity = nowLightIntensity = EfectLightIntensity_Min;
                 //スキル発動
                 himeSkill = new HimeSkill(AttackPoints[BigMeteoTiming].transform.position, AttackPoints[BigMeteoTiming].transform.rotation);
                 himeSkill.BigMeteo();
@@ -488,10 +535,10 @@ public class RastBossController : MonoBehaviour
         {
             usingSkillTime = 0;
             //エフェクト関連初期化
-            AttackPoints[0].particleSystem.startSize = nowEffectSize = EfectSize_Min;
-            AttackPoints[0].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
-            AttackPoints[1].particleSystem.startSize = nowEffectSize = EfectSize_Min;
-            AttackPoints[1].light.intensity = nowLightIntensity = EfectLightIntensity_Min;
+            AttackPoints[0].GetComponent<ParticleSystem>().startSize = nowEffectSize = EfectSize_Min;
+            AttackPoints[0].GetComponent<Light>().intensity = nowLightIntensity = EfectLightIntensity_Min;
+            AttackPoints[1].GetComponent<ParticleSystem>().startSize = nowEffectSize = EfectSize_Min;
+            AttackPoints[1].GetComponent<Light>().intensity = nowLightIntensity = EfectLightIntensity_Min;
             AttackFlag = false;
 
             //HP半分以下だったらバーサクモードへ
@@ -615,8 +662,9 @@ public class RastBossController : MonoBehaviour
         // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
         currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
         animator.SetBool("AttackFlag", AttackFlag);
+        animator.SetBool("isDown", isDown);
 
-		if(!isDown)
+        if (!DownFlag)
 		{
 	        //攻撃態勢だったら
 	        if (currentBaseState.nameHash == attack_02State)
@@ -632,7 +680,7 @@ public class RastBossController : MonoBehaviour
 	            else if (useBigMine) BigMine();
 	            else if (useOmegaBeam) OmegaBeam();
 #else
-	            //バーサク状態か
+	            //バーサク状態でなかったら
 	            if (!isBerserk)
 	            {
 	                //ノーマルスキル
@@ -653,10 +701,11 @@ public class RastBossController : MonoBehaviour
                     }
 	            }
 	            else
-	            {
+                {
                     float dis = Vector2.Distance(this.transform.position, new Vector2(0, 0));
                     //Debug.Log(dis);
-                    if (dis <= 10)
+                    //Debug.Log(dis);
+                    if (dis <= 21)
                     {
                         //バーサクスキル
                         switch (randomUse_BerserkSkill)
@@ -687,6 +736,36 @@ public class RastBossController : MonoBehaviour
     }
 
     /// <summary>
+    /// 落下イベント
+    /// </summary>
+    void DownEvent()
+    {
+        this.GetComponent<BoxCollider>().center = Down.Center;
+        this.GetComponent<BoxCollider>().size = Down.Size;
+        isGround = false;
+        DownFlag = true;
+    }
+
+    /// <summary>
+    /// 落下中イベント
+    /// </summary>
+    void DownOnGroundEvent()
+    {
+        if (!isGround)
+        {
+            animator.speed = 0;
+        }
+    }
+
+    /// <summary>
+    /// ダウンモーション停止イベント
+    /// </summary>
+    void DownStopEvent()
+    {
+        animator.speed = 0;
+    }
+
+    /// <summary>
     /// HP回復
     /// </summary>
     private void RejectHP()
@@ -707,11 +786,15 @@ public class RastBossController : MonoBehaviour
         }
     }
 
-	void OnTriggerEnter(Collider collider)
+	void OnCollisionEnter(Collision other)
 	{
+        //Debug.Log(other.collider.name);
 		//Debug.Log(collider.name);
-		if(collider.name == "Floor")
+		if(other.collider.tag == "Stage" ||
+            other.collider.tag == "Floor")
 		{
+            Instantiate(DownSmoke, this.transform.position, DownSmoke.transform.rotation);
+            animator.speed = 1;
 			isGround = true;
 		}
 	}
@@ -719,17 +802,6 @@ public class RastBossController : MonoBehaviour
 	void OnTriggerExit(Collider collider)
 	{
 		isGround = false;
-	}
-
-	/// <summary>
-	/// GUI表示
-	/// </summary>
-	void OnGUI()
-	{
-        //GUIStyle guistyle = new GUIStyle();
-        //guistyle.fontSize = 64;
-        //guistyle.normal.textColor = Color.red;
-        //GUI.Label( new Rect(Screen.width/2f, 0, 200, 200), "姫HP:" + this.status.HP , guistyle );
 	}
 
     /// <summary>

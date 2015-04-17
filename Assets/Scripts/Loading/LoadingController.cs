@@ -14,9 +14,8 @@ public class LoadingController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-        if (isInit)
+        if (SceneName == "")
         {
-            isInit = false;
             Application.LoadLevel("Title");
         }
 	}
@@ -24,9 +23,13 @@ public class LoadingController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        if (!isInit)
+        if (SceneName != "")
         {
             Application.LoadLevel(SceneName);
+        }
+        else
+        {
+            Application.LoadLevel("Title");
         }
 	}
 

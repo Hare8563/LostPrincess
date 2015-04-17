@@ -4,6 +4,11 @@ using System.Xml;
 using AssemblyCSharp;
 
 public class toBossStage : MonoBehaviour {
+    /// <summary>
+    /// 次に遷移するシーン
+    /// </summary>
+    [SerializeField]
+    private string NextScene;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +36,7 @@ public class toBossStage : MonoBehaviour {
             prefs.SetInt("Magic", TargetModel.status.Magic_Power);
             prefs.Save(System.Environment.CurrentDirectory + "/saveData.xml");
 
-            LoadingController.NextScene("Boss");
+            LoadingController.NextScene(NextScene);
         }
 	}
 }

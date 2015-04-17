@@ -26,7 +26,7 @@ public class EventController : MonoBehaviour
 
     void Awake()
     {
-        WhiteGuiTexture = this.transform.FindChild("WhiteTex").guiTexture;
+        WhiteGuiTexture = this.transform.FindChild("WhiteTex").GetComponent<GUITexture>();
     }
 
     // Use this for initialization

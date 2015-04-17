@@ -243,11 +243,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private bool BowChargeFlag = false;
     /// <summary>
-    /// 剣による攻撃が与えられるか
-    /// </summary>
-    private bool canSwordDamage = false;
-
-    /// <summary>
     /// 剣の攻撃エフェクト
     /// </summary>
     private GameObject sword_trail;
@@ -270,6 +265,18 @@ public class PlayerController : MonoBehaviour
     /// プレイヤーの右手オブジェクト
     /// </summary>
     private GameObject armRight;
+    /// <summary>
+    /// 剣攻撃コライダを持つオブジェクト
+    /// </summary>
+    private GameObject SwordColliderObject;
+    /// <summary>
+    /// 初期HP
+    /// </summary>
+    private float InitHp;
+    /// <summary>
+    /// 初期HPを設定したかどうか
+    /// </summary>
+    private static bool isSetInitHp = false;
 
     void Awake()
     {
@@ -296,6 +303,7 @@ public class PlayerController : MonoBehaviour
 
         AimObject = GameObject.Find("AimOrigin");
         armRight = this.transform.FindDeep("hand_R");
+        SwordColliderObject = this.transform.FindChild("SwordCollider").gameObject;
     }
 
     // Use this for initialization
@@ -308,11 +316,14 @@ public class PlayerController : MonoBehaviour
             statusManager.getLoadStatus().HP,
             statusManager.getLoadStatus().MP,
 						statusManager.getLoadStatus().NAME, "CSV/LvTable");
-        Weapon_Sword.renderer.enabled = true;
-        Weapon_Rod.renderer.enabled = false;
-        Weapon_Bow.renderer.enabled = false;
-        statusManager.setMaxHp(this.status.HP);
-        statusManager.setMaxHp(this.status.MP);
+        Weapon_Sword.GetComponent<Renderer>().enabled = true;
+        Weapon_Rod.GetComponent<Renderer>().enabled = false;
+        Weapon_Bow.GetComponent<Renderer>().enabled = false;
+
+        InitHp = 100;
+        statusManager.setMaxHp(100);
+        statusManager.setMaxMp(100);
+        SwordColliderObject.GetComponent<Collider>().enabled = false;
     }
 
     void Update()
@@ -329,6 +340,19 @@ public class PlayerController : MonoBehaviour
         MPReject();
         //弓チャージ
         BowCharge();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            this.status.HP = 100;
+        }
+        if (this.status.HP > InitHp)
+        {
+            this.status.HP = (int)InitHp;
+        }
+        if (this.status.HP < 0)
+        {
+            this.status.HP = 0;
+        }
     }
 
     // Update is called once per frame
@@ -369,28 +393,28 @@ public class PlayerController : MonoBehaviour
                 if (isMoveButton.forwerd)
                 {
                     isMove = true;
-                    rigidbody.AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
+                    GetComponent<Rigidbody>().AddForce(forward * NormalSpeed, ForceMode.VelocityChange);
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), rotSpeed);
                 }
                 //後ろ
                 else if (isMoveButton.back)
                 {
                     isMove = true;
-                    rigidbody.AddForce(back * NormalSpeed, ForceMode.VelocityChange);
+                    GetComponent<Rigidbody>().AddForce(back * NormalSpeed, ForceMode.VelocityChange);
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(back), rotSpeed);
                 }
                 //左
                 if (isMoveButton.left)
                 {
                     isMove = true;
-                    rigidbody.AddForce(left * NormalSpeed, ForceMode.VelocityChange);
+                    GetComponent<Rigidbody>().AddForce(left * NormalSpeed, ForceMode.VelocityChange);
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(left), rotSpeed);
                 }
                 //右
                 else if (isMoveButton.right)
                 {
                     isMove = true;
-                    rigidbody.AddForce(right * NormalSpeed, ForceMode.VelocityChange);
+                    GetComponent<Rigidbody>().AddForce(right * NormalSpeed, ForceMode.VelocityChange);
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(right), rotSpeed);
                 }
                 //カメラ方向へキャラクターの向きを調整する
@@ -411,7 +435,7 @@ public class PlayerController : MonoBehaviour
                 }
                 */
                 //常に下方向に力をかける
-                rigidbody.AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
+                GetComponent<Rigidbody>().AddForce(Vector3.down * 3.5f, ForceMode.VelocityChange);
             }
         }
         else
@@ -455,7 +479,7 @@ public class PlayerController : MonoBehaviour
         if (LvUp == true)
         {
             AudioSource[] audioSource = GetComponents<AudioSource>();
-            audio.PlayOneShot(audioSource[audioSource.Length - 1].clip);
+            GetComponent<AudioSource>().PlayOneShot(audioSource[audioSource.Length - 1].clip);
             var particle = GetComponent<ParticleSystem>();
             particle.Play();
         }
@@ -531,8 +555,8 @@ public class PlayerController : MonoBehaviour
     void SwordAttack_StartEvent()
     {
         sword_trail.GetComponent<TrailRenderer> ().enabled = true;
-		audio.PlayOneShot(SwordSe);
-        canSwordDamage = true;
+        SwordColliderObject.GetComponent<Collider>().enabled = true;
+		GetComponent<AudioSource>().PlayOneShot(SwordSe);
     }
 
     /// <summary>
@@ -540,10 +564,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void SwordAttack_EndEvent()
     {
-
         sword_trail.GetComponent<TrailRenderer> ().enabled = false;
-
-        canSwordDamage = false;
+        SwordColliderObject.GetComponent<Collider>().enabled = false;
     }
 
     /// <summary>
@@ -574,7 +596,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            audio.PlayOneShot(NonMagicSe);
+            GetComponent<AudioSource>().PlayOneShot(NonMagicSe);
         }
     }
 
@@ -583,14 +605,20 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void BowChargeEvent()
     {
-        animator.speed = 0;
-        BowChargeFlag = true;
-        //矢を右手に
-        arrowInstance = (GameObject)Instantiate(ArrowObject, armRight.transform.position, this.transform.rotation);
-        arrowInstance.transform.parent = armRight.transform;
-        arrowInstance.transform.localPosition = Vector3.zero;
-        arrowInstance.transform.rotation = this.transform.rotation;
-        arrowInstance.GetComponent<BowController>().setMoveStop(true);
+        if (status.AMMO > 0)
+        {
+            animator.speed = 0;
+            BowChargeFlag = true;
+            //矢を右手に
+            arrowInstance = (GameObject)Instantiate(ArrowObject, armRight.transform.position, this.transform.rotation);
+            arrowInstance.GetComponent<Collider>().enabled = false;
+            arrowInstance.transform.parent = armRight.transform;
+            arrowInstance.transform.localPosition = Vector3.zero;
+            arrowInstance.transform.rotation = this.transform.rotation;
+            arrowInstance.GetComponent<BowController>().setMoveStop(true);
+            arrowInstance.GetComponent<BowController>().setIsCharge(true);
+            //arrowInstance.rigidbody.collider.enabled = false;
+        }
     }
 
     /// <summary>
@@ -624,19 +652,12 @@ public class PlayerController : MonoBehaviour
     {
         if (status.AMMO > 0)
         {
-            audio.PlayOneShot(BowSe);
+            GetComponent<AudioSource>().PlayOneShot(BowSe);
             isOneShotArrow = true;
-            ////ロックオンしていたら追従
-            //if (manager.GetComponent<AimCursorManager>().getLockOnObject() != null)
-            //{
-            //    arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(manager.GetComponent<AimCursorManager>().getLockOnObject().transform.position - this.transform.position)) as GameObject;
-            //}
-            //else
-            //{
-            //    Instantiate(ArrowObject, ShotPoint.transform.position, Camera.main.transform.rotation);
-            //}
             arrowInstance.transform.parent = null;
+            arrowInstance.GetComponent<Collider>().enabled = true;
             arrowInstance.GetComponent<BowController>().setMoveStop(false);
+            arrowInstance.GetComponent<BowController>().setIsCharge(false);
             arrowInstance.transform.rotation = AimObject.transform.rotation;
             BowController.EnemyDamage = this.status.BOW_POW;
             status.AMMO--;
@@ -737,29 +758,29 @@ public class PlayerController : MonoBehaviour
 		{
 			nowWeapon = (int)WeaponEnum.SWORD;
             //武器表示を設定
-            Weapon_Sword.renderer.enabled = true;
-            Weapon_Rod.renderer.enabled = false;
-            Weapon_Bow.renderer.enabled = false;
+            Weapon_Sword.GetComponent<Renderer>().enabled = true;
+            Weapon_Rod.GetComponent<Renderer>().enabled = false;
+            Weapon_Bow.GetComponent<Renderer>().enabled = false;
         }
 		if (Input.GetKeyDown(KeyCode.Alpha2) || nowWeapon == 1)
 		{
 			nowWeapon = (int)WeaponEnum.MAGIC;
             //武器表示を設定
-            Weapon_Sword.renderer.enabled = false;
-            Weapon_Rod.renderer.enabled = true;
-            Weapon_Bow.renderer.enabled = false;
+            Weapon_Sword.GetComponent<Renderer>().enabled = false;
+            Weapon_Rod.GetComponent<Renderer>().enabled = true;
+            Weapon_Bow.GetComponent<Renderer>().enabled = false;
         }
 		if (Input.GetKeyDown(KeyCode.Alpha3) || nowWeapon == 2)
 		{
 			nowWeapon = (int)WeaponEnum.BOW;
             //武器表示を設定
-            Weapon_Sword.renderer.enabled = false;
-            Weapon_Rod.renderer.enabled = false;
-            Weapon_Bow.renderer.enabled = true;
+            Weapon_Sword.GetComponent<Renderer>().enabled = false;
+            Weapon_Rod.GetComponent<Renderer>().enabled = false;
+            Weapon_Bow.GetComponent<Renderer>().enabled = true;
         }
         if (mouseButton.rightDown) //Input.GetMouseButtonDown (1)
 		{
-            audio.PlayOneShot(SelectSe);
+            GetComponent<AudioSource>().PlayOneShot(SelectSe);
             Method.Selecting(ref nowWeapon, 3, "up");
 
 		}
@@ -823,25 +844,24 @@ public class PlayerController : MonoBehaviour
     /// <param name="collider"></param>
     void OnTriggerStay(Collider collider)
     {
-        
-        if (collider.gameObject.CompareTag("Hime") && canSwordDamage)
-        {
-            //Instantiate(HitEffect, collider.transform.position, this.transform.rotation);
-            var hime = collider.gameObject.GetComponent<RastBossController>();
-            hime.GetComponent<EnemyStatusManager>().Damage(this.status.Sword_Power);
-            canSwordDamage = false;
-            //Debug.Log("Hit");
-        }
-        else if ((collider.gameObject.CompareTag("Enemy") ||
-                collider.gameObject.CompareTag("Boss")) && 
-                canSwordDamage)
-        {
-            //Instantiate(HitEffect, collider.transform.position, this.transform.rotation);
-            var status = collider.gameObject.GetComponent<EnemyStatusManager>();
-            status.Damage(this.status.Sword_Power);
-            canSwordDamage = false;
-            //Debug.Log("Hit");
-        }
+        //if (collider.gameObject.CompareTag("Hime") && canSwordDamage)
+        //{
+        //    //Instantiate(HitEffect, collider.transform.position, this.transform.rotation);
+        //    var hime = collider.gameObject.GetComponent<RastBossController>();
+        //    hime.GetComponent<EnemyStatusManager>().Damage(this.status.Sword_Power);
+        //    canSwordDamage = false;
+        //    //Debug.Log("Hit");
+        //}
+        //else if ((collider.gameObject.CompareTag("Enemy") ||
+        //        collider.gameObject.CompareTag("Boss")) && 
+        //        canSwordDamage)
+        //{
+        //    //Instantiate(HitEffect, collider.transform.position, this.transform.rotation);
+        //    var status = collider.gameObject.GetComponent<EnemyStatusManager>();
+        //    status.Damage(this.status.Sword_Power);
+        //    canSwordDamage = false;
+        //    //Debug.Log("Hit");
+        //}
     }
 
     /// <summary>

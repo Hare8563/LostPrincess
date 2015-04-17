@@ -42,11 +42,20 @@ public class MagicController : MonoBehaviour {
     /// ターゲットオブジェクト
     /// </summary>
     private GameObject TargetObject;
+    /// <summary>
+    /// スリップファイアオブジェクト
+    /// </summary>
+    private GameObject SlipFireObject;
+    /// <summary>
+    /// スリップファイアのインスタンス
+    /// </summary>
+    private GameObject SlipFireInst;
 
     void Awake()
     {
         HitEffect = Resources.Load("Prefab/HitEffect") as GameObject;
-		LightObject = this.transform.FindChild("Point light").light;
+		LightObject = this.transform.FindChild("Point light").GetComponent<Light>();
+        SlipFireObject = Resources.Load("Prefab/SlipFire") as GameObject;
     }
 
 	void Start () 
@@ -67,7 +76,7 @@ public class MagicController : MonoBehaviour {
         if (TargetObject != null)
         {
             // ターゲットとの距離
-            Vector3 TargetCenter = Target.transform.position + new Vector3(0, 4.0f, 0);
+            Vector3 TargetCenter = Target.transform.position + new Vector3(0, 3.0f, 0);
             float Distance = Vector3.Distance(TargetCenter, this.transform.position);
             Vector3 InitvecTarget = TargetCenter - this.transform.position; // ターゲットへのベクトル
             Vector3 InitvecForward = transform.TransformDirection(Vector3.forward);   // 弾の正面ベクトル
@@ -149,6 +158,8 @@ public class MagicController : MonoBehaviour {
         {
             if (Target.tag == "Player")
             {
+                SlipFireInst = (GameObject)Instantiate(SlipFireObject, Target.transform.position, SlipFireObject.transform.rotation);
+                SlipFireInst.transform.parent = Target.transform;
                 Target.GetComponent<PlayerController>().Damage(PlayerDamage);
             }
             else if (Target.tag == "Boss" ||

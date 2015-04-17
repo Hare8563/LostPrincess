@@ -53,8 +53,8 @@ public class GameOverManager : MonoBehaviour {
     {
         backAlpha = 0;
         rogoAlpha = 0;
-        backMaterial = BackPlane.renderer.material;
-        rogoMaterial = Rogo.renderer.material;
+        backMaterial = BackPlane.GetComponent<Renderer>().material;
+        rogoMaterial = Rogo.GetComponent<Renderer>().material;
         backMaterial.color = new Color(backMaterial.color.r, backMaterial.color.g, backMaterial.color.b, backAlpha);
         rogoMaterial.color = new Color(rogoMaterial.color.r, rogoMaterial.color.g, rogoMaterial.color.b, rogoAlpha);
 	}

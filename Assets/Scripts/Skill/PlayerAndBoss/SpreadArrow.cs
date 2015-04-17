@@ -18,7 +18,7 @@ public class SpreadArrow : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		this.rigidbody.AddForce(this.transform.TransformDirection(Vector3.forward).normalized * Speed, ForceMode.VelocityChange);
+		this.GetComponent<Rigidbody>().AddForce(this.transform.TransformDirection(Vector3.forward).normalized * Speed, ForceMode.VelocityChange);
 	}
 	
 	/// <summary>

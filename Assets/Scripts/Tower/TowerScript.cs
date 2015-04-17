@@ -63,7 +63,7 @@ public class TowerScript : MonoBehaviour
     void Start()
     {
         ChildCount = this.gameObject.transform.childCount;
-        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.thisStatus.getStatus().HP, "姫護りの塔");
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.thisStatus.getStatus().HP, "守りの塔");
         //Debug.Log(ChildCount);
     }
 
@@ -80,7 +80,7 @@ public class TowerScript : MonoBehaviour
                 //エフェクト生成
                 Instantiate(BlokenDUst, this.transform.position, this.transform.rotation);
                 //効果音再生
-                audio.PlayOneShot(BlokenSound);
+                GetComponent<AudioSource>().PlayOneShot(BlokenSound);
                 //子オブジェクトをバラバラに
                 foreach (Transform i in ChildList)
                 {
@@ -88,9 +88,9 @@ public class TowerScript : MonoBehaviour
                     BrokenObjects.Add(i.gameObject);
                     forceVec = new Vector3(Random.Range(-range, range), Random.Range(-range, 0), Random.Range(-range, range));
                     if (i.gameObject.GetComponent<Rigidbody>() == null) i.gameObject.AddComponent<Rigidbody>();
-                    i.gameObject.rigidbody.AddForce(forceVec, ForceMode.Impulse);
-                    i.gameObject.rigidbody.AddTorque(forceVec / 5, ForceMode.Impulse);
-                    i.gameObject.rigidbody.AddForce(Vector3.down * 5, ForceMode.Impulse);
+                    i.gameObject.GetComponent<Rigidbody>().AddForce(forceVec, ForceMode.Impulse);
+                    i.gameObject.GetComponent<Rigidbody>().AddTorque(forceVec / 5, ForceMode.Impulse);
+                    i.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.down * 5, ForceMode.Impulse);
                 }
                 //死んだ瞬間に消したいオブジェクトを削除
                 foreach (GameObject i in Destroys)
@@ -98,7 +98,7 @@ public class TowerScript : MonoBehaviour
                     Destroy(i);
                 }
                 //タワーのコライダをOFF
-                this.rigidbody.collider.enabled = false;
+                this.GetComponent<Rigidbody>().GetComponent<Collider>().enabled = false;
             }
             //バラバラになったオブジェクトが落ちたら削除
             foreach (GameObject i in BrokenObjects)

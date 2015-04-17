@@ -53,6 +53,10 @@ public class EnemyCanvasHPScript : MonoBehaviour {
         MaxHp = maxHp;
     }
 
+    /// <summary>
+    /// 現在のHPを設定
+    /// </summary>
+    /// <param name="nowHp"></param>
     public void setNowHp(float nowHp)
     {
         NowHp = nowHp;

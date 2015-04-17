@@ -217,6 +217,10 @@ public class BossController : MonoBehaviour {
     /// 召喚フラグ
     /// </summary>
     private bool SummonFlag = false;
+    /// <summary>
+    /// オーラエフェクトオブジェクト
+    /// </summary>
+    private GameObject SlipFireObject;
 
     /// <summary>
     /// 読み込み
@@ -246,6 +250,7 @@ public class BossController : MonoBehaviour {
             }
         }
         enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
+        SlipFireObject = this.transform.FindChild("SlipFire").gameObject;
     }
 
 	/// <summary>
@@ -263,7 +268,8 @@ public class BossController : MonoBehaviour {
 
         status = enemyStatusManager.getStatus();
         initHp = status.HP;
-        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "堕ちた者");
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "かつての伝説");
+        SlipFireObject.SetActive(false);
 	}
 	
 	/// <summary>
@@ -289,12 +295,15 @@ public class BossController : MonoBehaviour {
         //HPが指定数以下になったら敵召喚
         if (enemyStatusManager.getStatus().HP <= initHp / 2)
         {
+            SlipFireObject.SetActive(true);
             SummonFlag = true;
         }
+        //HPがなくなったら
         if (enemyStatusManager.getStatus().HP <= 0)
         {
             SummonFlag = false;
         }
+        //召喚フラグが立ったら
         if (SummonFlag)
         {
             for (int i = 0; i < EnemyObject.Length; i++)
@@ -413,7 +422,7 @@ public class BossController : MonoBehaviour {
         //プレイヤーに近づくフラグがたったら
         if (isAttackSwordRun)
         {
-            float Distance = 10.0f;
+            float Distance = 12.0f;
             //一定距離近づいたら剣振りフラグを立てる
             if (ToPlayerDistance <= Distance)
             {
@@ -426,7 +435,7 @@ public class BossController : MonoBehaviour {
                 Vector3 target = new Vector3(TargetObject.transform.position.x, 0, TargetObject.transform.position.z);
                 this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target - this.transform.position), 0.7f);
                 
-                rigidbody.AddForce(forward.normalized * AttackSpeed, ForceMode.VelocityChange);
+                GetComponent<Rigidbody>().AddForce(forward.normalized * AttackSpeed, ForceMode.VelocityChange);
             }
         }
         //Debug.Log("SwordNow");
@@ -468,7 +477,7 @@ public class BossController : MonoBehaviour {
         RandCount += Method.GameTime();
         //Debug.Log(this.rigidbody.velocity.magnitude);
         //時間になったら、もしくは引っかかるなどして止まっていたら
-        if (RandomRand <= RandCount || this.rigidbody.velocity.magnitude < 10f)
+        if (RandomRand <= RandCount || this.GetComponent<Rigidbody>().velocity.magnitude < 10f)
         {
             AnctionRand = Random.Range(0, 4);
             RandomRand = Random.Range(180, 300);
@@ -486,7 +495,7 @@ public class BossController : MonoBehaviour {
         }
         LeaveOrNear();
         //常に下方向に力をかける
-        rigidbody.AddForce(Vector3.down * DownForce, ForceMode.VelocityChange);
+        GetComponent<Rigidbody>().AddForce(Vector3.down * DownForce, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -496,7 +505,7 @@ public class BossController : MonoBehaviour {
     {
         //rigidbody.velocity = this.transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
         //rigidbody.velocity = this.transform.TransformDirection(Vector3.left).normalized * NormalSpeed;
-        rigidbody.AddForce((forward + left).normalized * NormalSpeed, ForceMode.VelocityChange);
+        GetComponent<Rigidbody>().AddForce((forward + left).normalized * NormalSpeed, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -506,7 +515,7 @@ public class BossController : MonoBehaviour {
     {
         //rigidbody.velocity = this.transform.TransformDirection(Vector3.forward).normalized * NormalSpeed;
         //rigidbody.velocity = this.transform.TransformDirection(Vector3.right).normalized * (NormalSpeed + 2);
-        rigidbody.AddForce((forward + right).normalized * NormalSpeed, ForceMode.VelocityChange);
+        GetComponent<Rigidbody>().AddForce((forward + right).normalized * NormalSpeed, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -516,7 +525,7 @@ public class BossController : MonoBehaviour {
     {
         //rigidbody.velocity = this.transform.TransformDirection(Vector3.back).normalized * NormalSpeed ;
         //rigidbody.velocity = this.transform.TransformDirection(Vector3.right).normalized * NormalSpeed;
-        rigidbody.AddForce((back + right).normalized * NormalSpeed, ForceMode.VelocityChange);
+        GetComponent<Rigidbody>().AddForce((back + right).normalized * NormalSpeed, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -526,7 +535,7 @@ public class BossController : MonoBehaviour {
     {
         //rigidbody.velocity = this.transform.TransformDirection(Vector3.back).normalized * NormalSpeed;
         //rigidbody.velocity = this.transform.TransformDirection(Vector3.left).normalized * (NormalSpeed + 2);
-        rigidbody.AddForce((back + left).normalized * NormalSpeed, ForceMode.VelocityChange);
+        GetComponent<Rigidbody>().AddForce((back + left).normalized * NormalSpeed, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -633,8 +642,9 @@ public class BossController : MonoBehaviour {
     {
         magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
         magicInstance.GetComponent<MagicController>().setTargetObject(TargetObject);
+        //magicInstance.layer = 1 << LayerMask.NameToLayer("Attack_Enemy");
         MagicController.PlayerDamage = this.status.Magic_Power;
-        audio.PlayOneShot(MagicSe);
+        GetComponent<AudioSource>().PlayOneShot(MagicSe);
     }
 
     /// <summary>
@@ -645,7 +655,7 @@ public class BossController : MonoBehaviour {
         arrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(TargetObject.transform.position - this.transform.position)) as GameObject;
         arrowInstance.GetComponent<BowController>().setTargetObject(TargetObject);
         BowController.PlayerDamage = this.status.BOW_POW;
-        audio.PlayOneShot(BowSe);
+        GetComponent<AudioSource>().PlayOneShot(BowSe);
     }
 
     /// <summary>

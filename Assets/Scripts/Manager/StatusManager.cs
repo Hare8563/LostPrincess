@@ -97,8 +97,10 @@ public class StatusManager : MonoBehaviour
         PlayerStatus.SWORD = prefs.GetInt("Sword"); //Debug.Log("SWORD = " + statusStruct.SWORD);
         PlayerStatus.BOW = prefs.GetInt("Bow"); //Debug.Log("BOW = " + statusStruct.BOW);
         PlayerStatus.MAGIC = prefs.GetInt("Magic"); //Debug.Log("MAGIC = " + statusStruct.MAGIC);
-        maxHp = PlayerStatus.HP;
-        maxMp = PlayerStatus.MP;
+        //maxHp = PlayerStatus.HP;
+        //maxMp = PlayerStatus.MP;
+        maxHp = 100;
+        maxMp = 100;
         //Debug.Log(maxHp);
     }
 
@@ -177,7 +179,7 @@ public class StatusManager : MonoBehaviour
     /// <param name="value"></param>
     public void setMaxHp(float value)
     {
-        //maxHp = value;
+        maxHp = value;
     }
     /// <summary>
     /// 最大MPを設定

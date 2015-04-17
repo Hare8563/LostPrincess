@@ -37,9 +37,9 @@ public class MagicScript : MonoBehaviour
     /// </summary>
     private MouseButtonStruct mouseButton;
     /// <summary>
-    /// カメラ目標座標オブジェクト
+    /// 下にレイを飛ばすオブジェクト
     /// </summary>
-    private GameObject CameraObject;
+    private GameObject DownRayObject;
     /// <summary>
     /// レイキャスト
     /// </summary>
@@ -56,11 +56,16 @@ public class MagicScript : MonoBehaviour
     /// カーソルインスタンスオブジェクト
     /// </summary>
     private GameObject CursorObjectInst;
+    /// <summary>
+    /// プレイヤーオブジェクト
+    /// </summary>
+    private GameObject PlayerObject;
 
     void Awake()
     {
-        CameraObject = this.transform.FindChild("Camera").gameObject;
+        DownRayObject = this.transform.FindChild("DownRay").gameObject;
         CursorObject = Resources.Load("Prefab/MagicCursor") as GameObject;
+        PlayerObject = GameObject.FindGameObjectWithTag("Player");
     }
 
 	// Use this for initialization
@@ -71,7 +76,7 @@ public class MagicScript : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
         MouseEvent();
-        CameraRay();
+        DownRay();
 	}
 
     void FixedUpdate()
@@ -102,20 +107,20 @@ public class MagicScript : MonoBehaviour
         float speed = 80;
         if (mouseX != 0)
         {
-            CameraObject.rigidbody.AddForce(CameraObject.transform.TransformDirection(Vector3.right) * mouseX * speed);
+            DownRayObject.GetComponent<Rigidbody>().AddForce(DownRayObject.transform.TransformDirection(Vector3.right) * mouseX * speed);
         }
         if (mouseY != 0)
         {
-            CameraObject.rigidbody.AddForce(CameraObject.transform.TransformDirection(Vector3.up) * mouseY * speed);
+            DownRayObject.GetComponent<Rigidbody>().AddForce(DownRayObject.transform.TransformDirection(Vector3.up) * mouseY * speed);
         }
     }
 
     /// <summary>
-    /// カメラから地面に飛ばすレイ
+    /// 地面に飛ばすレイ
     /// </summary>
-    void CameraRay()
+    void DownRay()
     {
-        if (Physics.Raycast(CameraObject.transform.position, Vector3.down, out hit, Mathf.Infinity))
+        if (Physics.Raycast(DownRayObject.transform.position, Vector3.down, out hit, Mathf.Infinity, 1<<LayerMask.NameToLayer("Stage")))
         {
             RayHitPoint = hit.point + new Vector3(0, 0.1f, 0);
         }

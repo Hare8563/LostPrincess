@@ -65,7 +65,7 @@ public class CameraController : MonoBehaviour {
     {
         distance = this.transform.position - target.transform.position;
         Screen.lockCursor = true;
-        Screen.showCursor = false;
+        UnityEngine.Cursor.visible = false;
 	}
 
     void Update()
@@ -116,7 +116,7 @@ public class CameraController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             Screen.lockCursor = !Screen.lockCursor;
-            Screen.showCursor = !Screen.showCursor;
+            UnityEngine.Cursor.visible = !UnityEngine.Cursor.visible;
         }
     }
 

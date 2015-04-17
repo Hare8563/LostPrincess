@@ -29,7 +29,7 @@ public class CageScript : MonoBehaviour {
 
     void CageOpenEvent()
     {
-        audio.PlayOneShot(se);
+        GetComponent<AudioSource>().PlayOneShot(se);
     }
 
     void CageOpenEndEvent()

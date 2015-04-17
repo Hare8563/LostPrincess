@@ -46,7 +46,7 @@ public class BossAfterEvent : MonoBehaviour {
         }
         if (toEndingFlag)
         {
-            eventController.GetComponent<EventController>().FadeOut("Ending", 0.7f);
+            eventController.GetComponent<EventController>().FadeOut("RastBossBefore", 0.7f);
         }
         else
         {

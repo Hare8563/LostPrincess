@@ -46,6 +46,11 @@ public class CameraFollowController : MonoBehaviour
     /// カメラが回転した方向
     /// </summary>
     private CameraMoveVec cameraMoveVec;
+    /// <summary>
+    /// ズーム距離制限
+    /// </summary>
+    [SerializeField]
+    private float maxDis;
 
     // Use this for initialization
     void Start()
@@ -119,8 +124,7 @@ public class CameraFollowController : MonoBehaviour
             if (mouseWheel != 0)
             {
                 mouseWheelValue += -mouseWheel;
-                //距離制限
-                float maxDis = 0.5f;
+                
                 if (mouseWheelValue < -maxDis) 
                 {
                     mouseWheelValue = -maxDis;

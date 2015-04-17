@@ -35,4 +35,39 @@ public class RotationObject : MonoBehaviour {
             this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y,rote);
         }
 	}
+
+    /// <summary>
+    /// 回転速度を指定
+    /// </summary>
+    /// <param name="speed"></param>
+    public void setSpeed(float speed)
+    {
+        Speed = speed;
+    }
+
+    /// <summary>
+    /// 回転軸を指定("x" , "y" , "z")
+    /// </summary>
+    /// <param name="axis"></param>
+    public void setAxis(string axis)
+    {
+        switch (axis)
+        {
+            case "x":
+                RoteX = true;
+                RoteY = false;
+                RoteZ = false;
+                break;
+            case "y":
+                RoteX = false;
+                RoteY = true;
+                RoteZ = false;
+                break;
+            case "z":
+                RoteX = false;
+                RoteY = false;
+                RoteZ = true;
+                break;
+        }
+    }
 }

@@ -73,7 +73,7 @@ public class MisileEmitter : MonoBehaviour {
             Instantiate(MisileObject, this.transform.position, InitrotTarget * Quaternion.Euler(new Vector3(calcRote, -calcRote, 0)));  //⑥
             Instantiate(MisileObject, this.transform.position, InitrotTarget * Quaternion.Euler(new Vector3(rote, 0, 0)));              //⑦
             Instantiate(MisileObject, this.transform.position, InitrotTarget * Quaternion.Euler(new Vector3(calcRote, calcRote, 0)));   //⑧
-            audio.PlayOneShot(SubEmitSe);
+            GetComponent<AudioSource>().PlayOneShot(SubEmitSe);
             Destroy(this.gameObject);
         }
         //Debug.Log(Distance);
@@ -96,7 +96,7 @@ public class MisileEmitter : MonoBehaviour {
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other != PlayerObject.collider)
+        if (other != PlayerObject.GetComponent<Collider>())
         {
             //Instantiate(ExprosionPrehub, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);

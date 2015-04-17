@@ -7,6 +7,11 @@ public class Ending : MonoBehaviour {
     /// イベントクラス
     /// </summary>
     private GameObject EventManager;
+    /// <summary>
+    /// 次の遷移先
+    /// </summary>
+    [SerializeField]
+    private string NextSccene;
 
     void Awake()
     {
@@ -22,9 +27,9 @@ public class Ending : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetMouseButton(0))
         {
-            LoadingController.NextScene("RastBoss");
+            LoadingController.NextScene(NextSccene);
         }
         //ホワイトイン
         EventManager.GetComponent<EventController>().FadeIn(0.2f);

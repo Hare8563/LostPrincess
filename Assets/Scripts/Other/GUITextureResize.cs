@@ -70,8 +70,8 @@ public class GUITextureResize : MonoBehaviour {
 	void Start () {
         GUIAngle = 0;
         size = new Vector2(Screen.width, Screen.height);
-        texture = this.guiTexture;
-        textureSize = textureInitSize = new Vector2(texture.guiTexture.pixelInset.width, texture.guiTexture.pixelInset.height);
+        texture = this.GetComponent<GUITexture>();
+        textureSize = textureInitSize = new Vector2(texture.GetComponent<GUITexture>().pixelInset.width, texture.GetComponent<GUITexture>().pixelInset.height);
         texturePos = textureInitPos = texture.pixelInset;
         //全てにチェックがされていなかったら、縦基準リサイズを適用
         if (!UpperdownResize && 
@@ -131,8 +131,8 @@ public class GUITextureResize : MonoBehaviour {
         if (debagFlag)
         {
             size = new Vector2(Screen.width, Screen.height);
-            texture = this.guiTexture;
-            textureSize = new Vector2(texture.guiTexture.pixelInset.width, texture.guiTexture.pixelInset.height);
+            texture = this.GetComponent<GUITexture>();
+            textureSize = new Vector2(texture.GetComponent<GUITexture>().pixelInset.width, texture.GetComponent<GUITexture>().pixelInset.height);
             //縦基準リサイズ
             if (UpperdownResize)
             {

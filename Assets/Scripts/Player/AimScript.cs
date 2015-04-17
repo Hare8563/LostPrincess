@@ -34,7 +34,21 @@ public class AimScript : MonoBehaviour
         if (Physics.Raycast(origin, direction, out hit, Mathf.Infinity, ~(1 << LayerMask.NameToLayer("Collider"))))
         {
             //Debug.Log(hit.collider.name);
+            if (hit.collider.tag == "Enemy" ||
+                hit.collider.tag == "Boss" ||
+                hit.collider.tag == "Hime")
+            {
+                AimCursorImage.color = Color.red;
+            }
+            else
+            {
+                AimCursorImage.color = Color.white;
+            }
             this.transform.LookAt(hit.point);
+        }
+        else
+        {
+            AimCursorImage.color = Color.white;
         }
     }
 }

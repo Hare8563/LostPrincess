@@ -90,18 +90,33 @@ public class DarkMatterController : MonoBehaviour {
     /// HPゲージオブジェクト
     /// </summary>
     private EnemyCanvasHPScript HPGaugeObject;
+    /// <summary>
+    /// 1フレーム前のHP
+    /// </summary>
+    private int oldHp;
+    /// <summary>
+    /// 今フレームのHP
+    /// </summary>
+    private int newHp;
+    /// <summary>
+    /// アイテムオブジェクト
+    /// </summary>
+    private GameObject ItemObject;
 
     void Awake()
     {
         BulletObject = Resources.Load("Prefab/Bullet") as GameObject;
         MisileObject = Resources.Load("Prefab/MisileEmitter") as GameObject;
         enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
+        ItemObject = Resources.Load("Prefab/Item") as GameObject;
     }
 
 	// Use this for initialization
 	void Start () {
         status = enemyStatusManager.getStatus();
-        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "分かつ輩");
+        oldHp = this.status.HP;
+        newHp = this.status.HP;
+        HPGaugeObject = this.GetComponent<EnemyCanvasCreateScript>().Add(this.status.HP, "トモガラ");
 	}
 	
 	// Update is called once per frame
@@ -113,6 +128,7 @@ public class DarkMatterController : MonoBehaviour {
         Vector3 right = this.transform.TransformDirection(Vector3.right).normalized;
         Vector3 left = this.transform.TransformDirection(Vector3.left).normalized;
         Vector3 down = this.transform.TransformDirection(Vector3.down).normalized;
+        oldHp = newHp;
 
         //プレイヤーとの距離
         float dis = Vector3.Distance(this.transform.position, PlayerObject.transform.position + new Vector3(0, 4, 0));
@@ -123,7 +139,7 @@ public class DarkMatterController : MonoBehaviour {
             this.transform.LookAt(PlayerObject.transform.position);
             this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
             //前進
-            this.rigidbody.AddForce(forward * Speed, ForceMode.VelocityChange);
+            this.GetComponent<Rigidbody>().AddForce(forward * Speed, ForceMode.VelocityChange);
         }
         //近づきすぎていたら
         else if (dis <= MinDistance)
@@ -132,7 +148,7 @@ public class DarkMatterController : MonoBehaviour {
             this.transform.LookAt(PlayerObject.transform.position);
             this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
             //後退
-            this.rigidbody.AddForce(back * Speed, ForceMode.VelocityChange);
+            this.GetComponent<Rigidbody>().AddForce(back * Speed, ForceMode.VelocityChange);
         }
 
         //攻撃可能距離に来たら
@@ -152,6 +168,17 @@ public class DarkMatterController : MonoBehaviour {
         if (this.status.HP <= 0)
         {
             Destroy(this.gameObject);
+        }
+        newHp = this.status.HP;
+
+        //ダメージを受けていたら
+        if (oldHp != newHp)
+        {
+            //アイテムを出すか出さないかを乱数で決定
+            if (Random.Range(0, 2) >= 1)
+            {
+                Instantiate(ItemObject, this.transform.position, ItemObject.transform.rotation);
+            }
         }
 	}
 
@@ -173,7 +200,7 @@ public class DarkMatterController : MonoBehaviour {
         ShotSecond += Method.GameTime();
         if ((int)ShotSecond % ShotInterval == 0)
         {
-            audio.PlayOneShot(GatlingShotSe, 0.5f);
+            GetComponent<AudioSource>().PlayOneShot(GatlingShotSe, 0.5f);
             GameObject bullet = Instantiate(BulletObject, this.transform.position + RandomPoint, toPlayer) as GameObject;
             bullet.GetComponent<BulletController>().setBulletSpeed(BulletSpeed);
         }
@@ -191,7 +218,7 @@ public class DarkMatterController : MonoBehaviour {
             GameObject misile = Instantiate(MisileObject, this.transform.position, this.transform.rotation) as GameObject;
             //真上に飛ばす
             misile.transform.localEulerAngles = new Vector3(270,0,0);
-            audio.PlayOneShot(MisileShotSe);
+            GetComponent<AudioSource>().PlayOneShot(MisileShotSe);
         }
     }
 }

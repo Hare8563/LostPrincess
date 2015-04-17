@@ -92,7 +92,7 @@ public class RejectScript : MonoBehaviour {
     {
         //playerController.getStatus().MP++;
         RejectTimingCount++;//Method.GameTime();
-        if ((int)RejectTimingCount % 45 == 0)
+        if ((int)RejectTimingCount % 10 == 0)
         {
             RejectTimingCount = 0;
             playerController.getStatus().MP++;

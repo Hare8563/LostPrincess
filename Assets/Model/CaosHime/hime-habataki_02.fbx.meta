@@ -1,0 +1,497 @@
+fileFormatVersion: 2
+guid: d3aa67b7f5ae93e49b0ec52a213a41a4
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: body
+    100002: dress
+    100004: face2
+    100006: group1
+    100008: hair
+    100010: hands
+    100012: head
+    100014: //RootNode
+    100016: joint1
+    100018: joint10
+    100020: joint11
+    100022: joint12
+    100024: joint13
+    100026: joint14
+    100028: joint15
+    100030: joint16
+    100032: joint17
+    100034: joint18
+    100036: joint19
+    100038: joint2
+    100040: joint20
+    100042: joint21
+    100044: joint22
+    100046: joint23
+    100048: joint3
+    100050: joint4
+    100052: joint5
+    100054: joint6
+    100056: joint7
+    100058: joint8
+    100060: joint9
+    100062: nurbsCircle1
+    100064: pCylinder1
+    100066: polySurface8
+    100068: princes
+    100070: pSphere1
+    100072: pSphere3
+    100074: pSphere4
+    100076: ribbon2
+    100078: royal_crown
+    100080: teil
+    400000: body
+    400002: dress
+    400004: face2
+    400006: group1
+    400008: hair
+    400010: hands
+    400012: head
+    400014: //RootNode
+    400016: joint1
+    400018: joint10
+    400020: joint11
+    400022: joint12
+    400024: joint13
+    400026: joint14
+    400028: joint15
+    400030: joint16
+    400032: joint17
+    400034: joint18
+    400036: joint19
+    400038: joint2
+    400040: joint20
+    400042: joint21
+    400044: joint22
+    400046: joint23
+    400048: joint3
+    400050: joint4
+    400052: joint5
+    400054: joint6
+    400056: joint7
+    400058: joint8
+    400060: joint9
+    400062: nurbsCircle1
+    400064: pCylinder1
+    400066: polySurface8
+    400068: princes
+    400070: pSphere1
+    400072: pSphere3
+    400074: pSphere4
+    400076: ribbon2
+    400078: royal_crown
+    400080: teil
+    2300000: face2
+    2300002: hair
+    2300004: pCylinder1
+    2300006: polySurface8
+    2300008: pSphere1
+    2300010: pSphere3
+    2300012: pSphere4
+    2300014: royal_crown
+    3300000: face2
+    3300002: hair
+    3300004: pCylinder1
+    3300006: polySurface8
+    3300008: pSphere1
+    3300010: pSphere3
+    3300012: pSphere4
+    3300014: royal_crown
+    4300000: polySurface8
+    4300002: pCylinder1
+    4300004: pSphere3
+    4300006: ribbon2
+    4300008: teil
+    4300010: royal_crown
+    4300012: hair
+    4300014: face2
+    4300016: pSphere1
+    4300018: pSphere4
+    7400000: Fly
+    7400002: Attack_01
+    7400004: Attack_02
+    9500000: //RootNode
+    13700000: ribbon2
+    13700002: teil
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Fly
+      takeName: Take 001
+      firstFrame: 30
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/joint1
+        weight: 1
+      - path: group1/joint1/joint2
+        weight: 1
+      - path: group1/joint1/joint2/joint3
+        weight: 1
+      - path: group1/joint1/joint4
+        weight: 1
+      - path: group1/joint1/joint4/joint5
+        weight: 1
+      - path: group1/joint6
+        weight: 1
+      - path: group1/joint6/joint7
+        weight: 1
+      - path: group1/joint6/joint7/joint8
+        weight: 1
+      - path: group1/joint6/joint7/joint8/joint9
+        weight: 1
+      - path: group1/joint6/joint10
+        weight: 1
+      - path: group1/joint6/joint10/joint11
+        weight: 1
+      - path: group1/joint6/joint10/joint11/joint12
+        weight: 1
+      - path: group1/joint6/joint13
+        weight: 1
+      - path: group1/joint6/joint13/joint14
+        weight: 1
+      - path: group1/joint6/joint13/joint14/joint15
+        weight: 1
+      - path: group1/joint6/joint16
+        weight: 1
+      - path: group1/joint6/joint16/joint17
+        weight: 1
+      - path: group1/joint6/joint16/joint17/joint18
+        weight: 1
+      - path: group1/joint19
+        weight: 1
+      - path: group1/joint19/joint20
+        weight: 1
+      - path: group1/joint19/joint20/joint21
+        weight: 1
+      - path: group1/joint19/joint20/joint21/joint22
+        weight: 1
+      - path: group1/joint19/joint20/joint21/joint22/joint23
+        weight: 1
+      - path: group1/princes
+        weight: 1
+      - path: group1/princes/body
+        weight: 1
+      - path: group1/princes/body/dress
+        weight: 1
+      - path: group1/princes/body/dress/pCylinder1
+        weight: 1
+      - path: group1/princes/body/dress/polySurface8
+        weight: 1
+      - path: group1/princes/body/dress/pSphere3
+        weight: 1
+      - path: group1/princes/hands
+        weight: 1
+      - path: group1/princes/hands/pSphere1
+        weight: 1
+      - path: group1/princes/hands/pSphere4
+        weight: 1
+      - path: group1/princes/head
+        weight: 1
+      - path: group1/princes/head/face2
+        weight: 1
+      - path: group1/princes/head/hair
+        weight: 1
+      - path: group1/princes/head/royal_crown
+        weight: 1
+      - path: group1/princes/ribbon2
+        weight: 1
+      - path: group1/princes/teil
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Attack_01
+      takeName: Take 001
+      firstFrame: 30
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/joint1
+        weight: 1
+      - path: group1/joint1/joint2
+        weight: 1
+      - path: group1/joint1/joint2/joint3
+        weight: 1
+      - path: group1/joint1/joint4
+        weight: 1
+      - path: group1/joint1/joint4/joint5
+        weight: 1
+      - path: group1/joint6
+        weight: 1
+      - path: group1/joint6/joint7
+        weight: 1
+      - path: group1/joint6/joint7/joint8
+        weight: 1
+      - path: group1/joint6/joint7/joint8/joint9
+        weight: 1
+      - path: group1/joint6/joint10
+        weight: 1
+      - path: group1/joint6/joint10/joint11
+        weight: 1
+      - path: group1/joint6/joint10/joint11/joint12
+        weight: 1
+      - path: group1/joint6/joint13
+        weight: 1
+      - path: group1/joint6/joint13/joint14
+        weight: 1
+      - path: group1/joint6/joint13/joint14/joint15
+        weight: 1
+      - path: group1/joint6/joint16
+        weight: 1
+      - path: group1/joint6/joint16/joint17
+        weight: 1
+      - path: group1/joint6/joint16/joint17/joint18
+        weight: 1
+      - path: group1/joint19
+        weight: 1
+      - path: group1/joint19/joint20
+        weight: 1
+      - path: group1/joint19/joint20/joint21
+        weight: 1
+      - path: group1/joint19/joint20/joint21/joint22
+        weight: 1
+      - path: group1/joint19/joint20/joint21/joint22/joint23
+        weight: 1
+      - path: group1/princes
+        weight: 1
+      - path: group1/princes/body
+        weight: 1
+      - path: group1/princes/body/dress
+        weight: 1
+      - path: group1/princes/body/dress/pCylinder1
+        weight: 1
+      - path: group1/princes/body/dress/polySurface8
+        weight: 1
+      - path: group1/princes/body/dress/pSphere3
+        weight: 1
+      - path: group1/princes/hands
+        weight: 1
+      - path: group1/princes/hands/pSphere1
+        weight: 1
+      - path: group1/princes/hands/pSphere4
+        weight: 1
+      - path: group1/princes/head
+        weight: 1
+      - path: group1/princes/head/face2
+        weight: 1
+      - path: group1/princes/head/hair
+        weight: 1
+      - path: group1/princes/head/royal_crown
+        weight: 1
+      - path: group1/princes/ribbon2
+        weight: 1
+      - path: group1/princes/teil
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Attack_02
+      takeName: Take 001
+      firstFrame: 51
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/joint1
+        weight: 1
+      - path: group1/joint1/joint2
+        weight: 1
+      - path: group1/joint1/joint2/joint3
+        weight: 1
+      - path: group1/joint1/joint4
+        weight: 1
+      - path: group1/joint1/joint4/joint5
+        weight: 1
+      - path: group1/joint6
+        weight: 1
+      - path: group1/joint6/joint7
+        weight: 1
+      - path: group1/joint6/joint7/joint8
+        weight: 1
+      - path: group1/joint6/joint7/joint8/joint9
+        weight: 1
+      - path: group1/joint6/joint10
+        weight: 1
+      - path: group1/joint6/joint10/joint11
+        weight: 1
+      - path: group1/joint6/joint10/joint11/joint12
+        weight: 1
+      - path: group1/joint6/joint13
+        weight: 1
+      - path: group1/joint6/joint13/joint14
+        weight: 1
+      - path: group1/joint6/joint13/joint14/joint15
+        weight: 1
+      - path: group1/joint6/joint16
+        weight: 1
+      - path: group1/joint6/joint16/joint17
+        weight: 1
+      - path: group1/joint6/joint16/joint17/joint18
+        weight: 1
+      - path: group1/joint19
+        weight: 1
+      - path: group1/joint19/joint20
+        weight: 1
+      - path: group1/joint19/joint20/joint21
+        weight: 1
+      - path: group1/joint19/joint20/joint21/joint22
+        weight: 1
+      - path: group1/joint19/joint20/joint21/joint22/joint23
+        weight: 1
+      - path: group1/princes
+        weight: 1
+      - path: group1/princes/body
+        weight: 1
+      - path: group1/princes/body/dress
+        weight: 1
+      - path: group1/princes/body/dress/pCylinder1
+        weight: 1
+      - path: group1/princes/body/dress/polySurface8
+        weight: 1
+      - path: group1/princes/body/dress/pSphere3
+        weight: 1
+      - path: group1/princes/hands
+        weight: 1
+      - path: group1/princes/hands/pSphere1
+        weight: 1
+      - path: group1/princes/hands/pSphere4
+        weight: 1
+      - path: group1/princes/head
+        weight: 1
+      - path: group1/princes/head/face2
+        weight: 1
+      - path: group1/princes/head/hair
+        weight: 1
+      - path: group1/princes/head/royal_crown
+        weight: 1
+      - path: group1/princes/ribbon2
+        weight: 1
+      - path: group1/princes/teil
+        weight: 1
+      - path: nurbsCircle1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

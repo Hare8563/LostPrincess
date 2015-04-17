@@ -744,14 +744,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: .742615998
+      - time: .581640422
         functionName: SwordAttack_StartEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: .989830494
+      - time: .921537817
         functionName: SwordAttack_EndEvent
         data: 
         objectReferenceParameter: {instanceID: 0}

@@ -47,6 +47,10 @@ public class BowController : MonoBehaviour {
     /// チャージした段階
     /// </summary>
     private int ChargeIndex = 0;
+    /// <summary>
+    /// チャージ中かどうか
+    /// </summary>
+    private bool isCharge = true;
 
     void Awake()
     {
@@ -78,7 +82,7 @@ public class BowController : MonoBehaviour {
             {
                 isSetRot = true;
                 Vector3 TargetCenter = new Vector3();
-                TargetCenter = Method.FutureDeviation(Target, Speed, this.transform.position) + new Vector3(0, 4.0f, 0);// Target.transform.position + new Vector3(0, 4.0f, 0);
+                TargetCenter = Method.FutureDeviation(Target, Speed + 3, this.transform.position) + new Vector3(0, 3.0f, 0);// Target.transform.position + new Vector3(0, 4.0f, 0);
                 this.transform.rotation = Quaternion.LookRotation(TargetCenter - this.transform.position);
                 // ターゲットとの距離
                 float Distance = Vector3.Distance(TargetCenter, this.transform.position);
@@ -115,7 +119,7 @@ public class BowController : MonoBehaviour {
         else
         {
             //チャージ中だったら
-            if (this.rigidbody.collider.enabled)
+            if (isCharge)
             {
                 ChargeTime += Method.GameTime();
                 if ((int)ChargeTime % 30 == 0 && ChargeIndex < 2)
@@ -125,12 +129,6 @@ public class BowController : MonoBehaviour {
                     arrowEffect.setColorNumber(ChargeIndex);
                 }
                 arrowEffect.setChargeEffectEmit(true);
-                arrowEffect.setShotEffectEmit(false);
-            }
-            //刺さっていたら
-            else
-            {
-                arrowEffect.setChargeEffectEmit(false);
                 arrowEffect.setShotEffectEmit(false);
             }
         }
@@ -163,23 +161,31 @@ public class BowController : MonoBehaviour {
         if (collider.tag == "Stage")
         {
             StopFlag = true;
-            this.rigidbody.collider.enabled = false;
+            this.GetComponent<ArrowEffectScript>().setChargeEffectEmit(false);
+            this.GetComponent<ArrowEffectScript>().setShotEffectEmit(false);
+            this.GetComponent<Rigidbody>().GetComponent<Collider>().enabled = false;
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject, 5.0f);
         }
         else if (Target == null && 
                 (collider.tag == "Boss" ||
                 collider.tag == "Enemy" ||
-                collider.tag == "Hime"))
+                collider.tag == "Hime") &&
+                !StopFlag)
         {
+            StopFlag = true;
+            //this.transform.parent = collider.gameObject.transform;
             collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage * (((ChargeIndex + 1) / 3) + 1));
             Instantiate(HitEffect, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
         }
-        if (Target != null && Target.tag == collider.tag)
+        if (Target != null && 
+            Target.tag == collider.tag)
         {
             if (Target.tag == "Player")
             {
+                StopFlag = true;
+                //this.transform.parent = collider.gameObject.transform;
                 Target.GetComponent<PlayerController>().Damage(PlayerDamage);
             }
             
@@ -190,6 +196,8 @@ public class BowController : MonoBehaviour {
         {
             if (collider.tag == "Enemy")
             {
+                StopFlag = true;
+                //this.transform.parent = collider.gameObject.transform;
                 collider.GetComponent<EnemyStatusManager>().Damage(EnemyDamage);
                 Instantiate(HitEffect, this.transform.position, this.transform.rotation);
                 Destroy(this.gameObject);
@@ -204,5 +212,13 @@ public class BowController : MonoBehaviour {
     public void setMoveStop(bool value)
     {
         StopFlag = value;
+    }
+
+    /// <summary>
+    /// チャージ中かどうか設定
+    /// </summary>
+    public void setIsCharge(bool value)
+    {
+        isCharge = value;
     }
 }

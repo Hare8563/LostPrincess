@@ -207,10 +207,10 @@ namespace HimeSkillClass
 		/// </summary>
 		public void HighRash()
 		{
-            float Speed = 30.0f;
+            float Speed = 20.0f;
             float maxDis = 600f;
             //前進
-            EmmitObject.rigidbody.AddForce(EmmitObject.transform.TransformDirection(Vector3.forward) * Speed, ForceMode.VelocityChange);
+            EmmitObject.GetComponent<Rigidbody>().AddForce(EmmitObject.transform.TransformDirection(Vector3.forward) * Speed, ForceMode.VelocityChange);
             //サイズが最小になったら
             if (EmmitObject.transform.localScale.x < 0 ||
                 EmmitObject.transform.localScale.y < 0 ||
@@ -234,7 +234,7 @@ namespace HimeSkillClass
                 {
                     //Debug.Log(BombTiming);
                     BombTiming += Method.GameTime();
-                    if (BombTiming > 10)
+                    if (BombTiming > 20)
                     {
                         BombTiming = 0;
                         GameObject bomb = (GameObject)Instantiate(BombObject, EmmitObject.transform.position + EmmitObject.transform.TransformDirection(Vector3.back * 10.0f), EmmitObject.transform.rotation);
@@ -319,7 +319,7 @@ namespace HimeSkillClass
                         if (child.name != "WindZone")
                         {
                             //パーティクル個数を変更
-                            child.particleSystem.emissionRate = Tornado_EmmitCount;
+                            child.GetComponent<ParticleSystem>().emissionRate = Tornado_EmmitCount;
                         }
                     }
                 }
@@ -340,7 +340,7 @@ namespace HimeSkillClass
                             if (child.name != "WindZone")
                             {
                                 //パーティクル個数を変更
-                                child.particleSystem.emissionRate = Tornado_EmmitCount;
+                                child.GetComponent<ParticleSystem>().emissionRate = Tornado_EmmitCount;
                             }
 						}
 					}
@@ -360,7 +360,7 @@ namespace HimeSkillClass
             if (Tornado_Speed > 10)
             {
                 Vector3 forceVec = (EmmitObject.transform.position - new Vector3(0, 20, 0)) - TargetObject.transform.position;
-                TargetObject.rigidbody.AddForce(forceVec * 0.14f, ForceMode.VelocityChange);
+                TargetObject.GetComponent<Rigidbody>().AddForce(forceVec * 0.14f, ForceMode.VelocityChange);
             }
             //回転角度反映
             EmmitObject.transform.eulerAngles = new Vector3(0, EmmitObject.transform.eulerAngles.y + Tornado_Speed, 0);

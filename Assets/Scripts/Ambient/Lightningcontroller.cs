@@ -15,8 +15,8 @@ public class Lightningcontroller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        audio.PlayOneShot(LightningSe[Random.Range(0, 3)], 0.3f);
-        this.light.intensity = 8;
+        GetComponent<AudioSource>().PlayOneShot(LightningSe[Random.Range(0, 3)], 0.3f);
+        this.GetComponent<Light>().intensity = 8;
     }
 
     // Update is called once per frame
@@ -27,14 +27,14 @@ public class Lightningcontroller : MonoBehaviour
         if (SecondTime >= 10)
         {
             SecondTime = 0;
-            audio.PlayOneShot(LightningSe[Random.Range(0, 3)], 0.3f);
-            this.light.intensity = 8;
+            GetComponent<AudioSource>().PlayOneShot(LightningSe[Random.Range(0, 3)], 0.3f);
+            this.GetComponent<Light>().intensity = 8;
             this.transform.eulerAngles = new Vector3(15, Random.Range(0, 360), 0);
         }
 
-        if (this.light.intensity > 0)
+        if (this.GetComponent<Light>().intensity > 0)
         {
-            this.light.intensity -= 0.3f;
+            this.GetComponent<Light>().intensity -= 0.3f;
         }
     }
 }

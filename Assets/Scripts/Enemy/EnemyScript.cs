@@ -6,6 +6,16 @@ using StatusClass;
 public class EnemyScript : MonoBehaviour
 {
     /// <summary>
+    /// base layerで使われる、アニメーターの現在の状態の参照
+    /// </summary>
+    private AnimatorStateInfo currentBaseState;
+    /// <summary>
+    /// アニメーションコントローラ
+    /// </summary>
+    private Animator animator;
+    int swordState = Animator.StringToHash("Base Layer.swordA");
+    int magicState = Animator.StringToHash("Base Layer.Magic");
+    /// <summary>
     /// ステータスクラス
     /// </summary>
     Status status;
@@ -13,10 +23,6 @@ public class EnemyScript : MonoBehaviour
     /// プレイヤーオブジェクト
     /// </summary>
     GameObject player;
-    /// <summary>
-    /// 攻撃フラグ
-    /// </summary>
-    bool AttackFlag = false;
     /// <summary>
     /// 二点間距離
     /// </summary>
@@ -26,7 +32,6 @@ public class EnemyScript : MonoBehaviour
     /// </summary>
     [SerializeField]
     private AudioClip expGetSe;
-
 
     /// <summary>
     /// 魔法効果音
@@ -71,13 +76,101 @@ public class EnemyScript : MonoBehaviour
     /// </summary>
     /// 
     private GameObject MagicBallObject;
-    private GameObject magicInstance;
 
+    private GameObject magicInstance;
+    /// <summary>
+    /// 死亡フラグ
+    /// </summary>
     private bool deadFlag = false;
+    /// <summary>
+    /// 初期HP
+    /// </summary>
+    private int InitHp;
+    /// <summary>
+    /// 敵対フラグ
+    /// </summary>
+    private bool HostilityFlag = false;
+    /// <summary>
+    /// プレイヤーオブジェクト
+    /// </summary>
+    private GameObject PlayerObject;
+    /// <summary>
+    /// 剣攻撃コライダを持つオブジェクト
+    /// </summary>
+    private GameObject SwordColliderObject;
+    /// <summary>
+    /// ナビメッシュ
+    /// </summary>
+    private NavMeshAgent agent;
+    /// <summary>
+    /// ナビメッシュ
+    /// </summary>
+    private NavMeshObstacle obstacle;
+    /// <summary>
+    /// 1フレーム前の座標
+    /// </summary>
+    private Vector3 oldPos;
+    /// <summary>
+    /// 今フレームの座標
+    /// </summary>
+    private Vector3 newPos;
+    /// <summary>
+    /// 移動できるかどうか
+    /// </summary>
+    private bool canMove = true;
+    /// <summary>
+    /// 感知範囲を持つオブジェクト
+    /// </summary>
+    private SensingScript sensingObject;
+    /// <summary>
+    /// 敵のHP
+    /// </summary>
+    [SerializeField]
+    private int HP;
+    /// <summary>
+    /// 敵の攻撃力
+    /// </summary>
+    [SerializeField]
+    private int Power;
+    /// <summary>
+    /// 移動スピード
+    /// </summary>
+    [SerializeField]
+    private float MoveSpeed;
+    /// <summary>
+    /// 攻撃頻度
+    /// </summary>
+    [SerializeField]
+    private float AttackFreqSecond;
+    /// <summary>
+    /// 攻撃するまでのカウント
+    /// </summary>
+    private float FreqCount;
+    /// <summary>
+    /// 落とすアイテムのインスタンス
+    /// </summary>
+    private GameObject ItemInst;
+    /// <summary>
+    /// HPバーのオブジェクト
+    /// </summary>
+    private GameObject HPBarObject;
+    /// <summary>
+    /// HPバーのインスタンス
+    /// </summary>
+    private GameObject HPBarInst;
+    /// <summary>
+    /// HPバークラス
+    /// </summary>
+    private EnemyHPBarScript enemyHPBar;
 
     void Awake()
     {
-        if (type == EnemyType.BowEnemy)
+        if (type == EnemyType.SwordEnemy)
+        {
+            SwordColliderObject = this.transform.FindChild("SwordCollider").gameObject;
+            SwordColliderObject.GetComponent<Collider>().enabled = false;
+        }
+        else if (type == EnemyType.BowEnemy)
         {
             ArrowObject = Resources.Load("Prefab/Arrow") as GameObject;
         }
@@ -86,6 +179,15 @@ public class EnemyScript : MonoBehaviour
             MagicBallObject = Resources.Load("Prefab/MagicBall") as GameObject;
         }
         enemyStatusManager = this.gameObject.GetComponent<EnemyStatusManager>();
+        PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        sensingObject = this.transform.FindChild("SensingObject").GetComponent<SensingScript>();
+        animator = this.gameObject.GetComponent<Animator>();
+        ItemInst = Resources.Load("Prefab/Item") as GameObject;
+        HPBarObject = Resources.Load("Prefab/EnemyHPBar") as GameObject;
+
+        //インスタンス生成
+        HPBarInst = (GameObject)Instantiate(HPBarObject, this.transform.position, HPBarObject.transform.rotation);
+        enemyHPBar = HPBarInst.GetComponent<EnemyHPBarScript>();
     }
 
     /// <summary>
@@ -94,8 +196,26 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find(@"HERO_MOTION07");
-
+        oldPos = this.transform.position;
+        this.gameObject.AddComponent<NavMeshAgent>();
+        agent = this.GetComponent<NavMeshAgent>();
+        agent.acceleration = 100;
+        agent.speed = MoveSpeed;
+        //NavMeshPath path = agent.path;
+        //Debug.Log(path.corners);
+        //this.gameObject.AddComponent<NavMeshObstacle>();
+        //obstacle = this.GetComponent<NavMeshObstacle>();
+        //obstacle.shape = NavMeshObstacleShape.Capsule;
+        //obstacle.carving = true;
         status = enemyStatusManager.getStatus();
+        status.Sword_Power = Power;
+        status.Magic_Power = Power;
+        status.BOW_POW = Power;
+        status.HP = HP;
+        //Debug.Log(status.HP);
+        InitHp = status.HP;
+        FreqCount = AttackFreqSecond * 60;
+        enemyHPBar.setMaxHp(InitHp);
     }
 
     /// <summary>
@@ -103,9 +223,14 @@ public class EnemyScript : MonoBehaviour
     /// </summary>
     void Update()
     {
+        newPos = this.transform.position - oldPos;
         //二点間の距離
         twoPointDistance = Vector3.Distance(this.transform.position, player.transform.position);
-
+        //HPが減っていたら敵対
+        if (InitHp > enemyStatusManager.getStatus().HP)
+        {
+            HostilityFlag = true;
+        }
         switch (type)
         {
             case EnemyType.SwordEnemy:
@@ -120,47 +245,68 @@ public class EnemyScript : MonoBehaviour
             default:
                 break;
         }
+        AnimationCheck();
+        enemyHPBar.setNowHPStatus(this.status.HP, this.transform.position);
+        oldPos = this.transform.position;
     }
 
-	IEnumerator Coroutine(){
-			
-			yield return null;
-	}
-
+    /// <summary>
+    /// 剣によるアクション
+    /// </summary>
     private void EnemySwordAction()
     {
         bool swordAttack = false;
         bool running = false;
-        float MaxDis = 30.0f;
         float MinDis = 8.0f;
-       
-        var distance = this.transform.position - player.transform.position;
 
-
-        //Debug.Log (Mathf.Sqrt(val));
+        //Debug.Log(canMove);
+        var distance = Vector3.Distance(this.transform.position, player.transform.position);
         //プレイヤーが近づいてきたら自分も近づく
-        if (twoPointDistance <= MaxDis && twoPointDistance > MinDis)
+        //Debug.Log(canMove);
+        bool tmp = sensingObject.getIsSensing();
+        Debug.Log(tmp);
+        if ((sensingObject.getIsSensing() ||
+            HostilityFlag) &&
+            distance > MinDis &&
+            canMove &&
+            !enemyStatusManager.getIsDead())
         {
-            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (player.transform.position - this.transform.position), 1.0f);
-            this.transform.rotation = new Quaternion (0, this.transform.rotation.y, 0, this.transform.rotation.w);
-
-            Vector3 enemyVector = distance.normalized;
-            this.rigidbody.AddForce (-5.0f*enemyVector, ForceMode.VelocityChange);
-            //transform.Translate (Vector3.forward* 0.2f);
+            if (newPos == Vector3.zero) newPos = this.transform.position + this.transform.TransformDirection(Vector3.forward);
+            this.transform.rotation = Quaternion.LookRotation(PlayerObject.transform.position);
+            Debug.Log(PlayerObject.transform.position);
+            agent.SetDestination(PlayerObject.transform.position);
+      
             running = true;
         }
+//        else
+//        {
+//            agent.Stop();
+//        }
         //目の前に来たら攻撃
         if (twoPointDistance <= MinDis)
         {
-            running = false;
-            swordAttack = true;
+            //agent.Stop();
+            if (!enemyStatusManager.getIsDead())
+            {
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(player.transform.position - this.transform.position), 1.0f);
+                this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
+            }
+            FreqCount += Method.GameTime();
+            if (FreqCount >= AttackFreqSecond * 60)
+            {
+                FreqCount = 0;
+                running = false;
+                swordAttack = true;
+            }
         }
+        
         //HPが0になったら経験値を取得
         if (enemyStatusManager.getIsDead())
         {
             //audio.PlayOneShot(expGetSe);
-			this.collider.enabled = false;
-			deadFlag = true;
+            canMove = false;
+            this.GetComponent<Collider>().enabled = false;
+            deadFlag = true;
         }
         GetComponent<Animator>().SetBool(@"IsAttack", swordAttack);
         GetComponent<Animator>().SetBool(@"IsRunning", running);
@@ -173,35 +319,36 @@ public class EnemyScript : MonoBehaviour
     {
         bool magicAttack = false;
         bool walking = false;
-        float MaxDis = 100.0f;
-        float MinDis = 70.0f;
 
         var distance = this.transform.position - player.transform.position;
 
-
         //Debug.Log (Mathf.Sqrt(val));
-        //プレイヤーが近づいてきたら自分も近づく
-        if (twoPointDistance <= MaxDis && twoPointDistance > MinDis)
-        {
-            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (player.transform.position - this.transform.position), 1.0f);
-            this.transform.rotation = new Quaternion (0, this.transform.rotation.y, 0, this.transform.rotation.w);
-
-            Vector3 enemyVector = distance.normalized;
-            this.rigidbody.AddForce (-5.0f*enemyVector, ForceMode.VelocityChange);
-            //transform.Translate (Vector3.forward* 0.2f);
-            walking = true;
-        }
         //目の前に来たら攻撃
-        if (twoPointDistance <= MinDis)
+        if ((sensingObject.getIsSensing() || HostilityFlag) && !enemyStatusManager.getIsDead())
         {
-            walking = false;
-            magicAttack = true;
+            FreqCount += Method.GameTime();
+            if (FreqCount >= AttackFreqSecond * 60)
+            {
+                FreqCount = 0;
+                //延長線上に障害物がなければ攻撃
+                RaycastHit hit;
+                Vector3 origin = this.transform.position + new Vector3(0, 2.0f, 0);
+                Vector3 toVec = (PlayerObject.transform.position + new Vector3(0, 2.0f, 0)) - origin;
+                float dis = Vector3.Distance(origin, PlayerObject.transform.position);
+                if (!Physics.Raycast(origin, toVec, out hit, dis, 1 << LayerMask.NameToLayer("Stage")))
+                {
+                    walking = false;
+                    magicAttack = true;
+                }
+            }
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(player.transform.position - this.transform.position), 1.0f);
+            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         }
-        //HPが0になったら経験値を取得
+        //HPが0になったら
         if (enemyStatusManager.getIsDead())
         {
             //audio.PlayOneShot(expGetSe);
-			this.collider.enabled = false;
+            this.GetComponent<Collider>().enabled = false;
             deadFlag = true;
         }
 
@@ -216,96 +363,105 @@ public class EnemyScript : MonoBehaviour
     private void EnemyBowAction()
     {
         bool bowAttack = false;
-        float MaxDis = 100.0f;
-
         var distance = this.transform.position - player.transform.position;
 
         //目の前に来たら攻撃
-        if (twoPointDistance <= MaxDis)
+        if ((sensingObject.getIsSensing() || HostilityFlag) && !enemyStatusManager.getIsDead())
         {
-            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (player.transform.position - this.transform.position), 1.0f);
-            this.transform.rotation = new Quaternion (0, this.transform.rotation.y, 0, this.transform.rotation.w);
-
-            bowAttack = true;
+            FreqCount += Method.GameTime();
+            if (FreqCount >= AttackFreqSecond * 60)
+            {
+                FreqCount = 0;
+                //延長線上に障害物がなければ攻撃
+                RaycastHit hit;
+                Vector3 origin = this.transform.position + new Vector3(0, 2.0f, 0);
+                Vector3 toVec = (PlayerObject.transform.position + new Vector3(0, 2.0f, 0)) - origin;
+                float dis = Vector3.Distance(origin, PlayerObject.transform.position);
+                if (!Physics.Raycast(origin, toVec, out hit, dis, 1 << LayerMask.NameToLayer("Stage")))
+                {
+                    bowAttack = true;
+                }
+            }
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(player.transform.position - this.transform.position), 1.0f);
+            this.transform.rotation = new Quaternion(0, this.transform.rotation.y, 0, this.transform.rotation.w);
         }
-        //HPが0になったら経験値を取得
+        //HPが0になったら
         if (enemyStatusManager.getIsDead())
         {
             //audio.PlayOneShot(expGetSe);
-            this.collider.enabled = false;
+            this.GetComponent<Collider>().enabled = false;
             deadFlag = true;
         }
         GetComponent<Animator>().SetBool(@"attack", bowAttack);
         GetComponent<Animator>().SetBool(@"deadFlag", deadFlag);
     }
 
-	public void AttackStartEvent()
+    /// <summary>
+    /// 剣攻撃開始イベント
+    /// </summary>
+    public void AttackStartEvent()
     {
-        AttackFlag = true;
-	}
-
-    public void AttackEndEvent()
-    {
-        AttackFlag = false;
+        SwordColliderObject.GetComponent<Collider>().enabled = true;
     }
 
+    /// <summary>
+    /// 剣攻撃終了イベント
+    /// </summary>
+    public void AttackEndEvent()
+    {
+        SwordColliderObject.GetComponent<Collider>().enabled = false;
+    }
+
+    /// <summary>
+    /// 魔法攻撃イベント
+    /// </summary>
     public void magicAttackEvent()
     {
         magicInstance = Instantiate(MagicBallObject, ShotPoint.transform.position, Quaternion.LookRotation(player.transform.position - this.transform.position)) as GameObject;
         magicInstance.GetComponent<MagicController>().setTargetObject(player);
+        magicInstance.layer = LayerMask.NameToLayer("Attack_Enemy");
         MagicController.PlayerDamage = this.status.Magic_Power;
-        audio.PlayOneShot(MagicSe);
+        GetComponent<AudioSource>().PlayOneShot(MagicSe);
     }
 
-	
-    public void DeadEvent()
-    {
-		//player.GetComponent<PlayerController> ().GetExp (3);
-        Destroy(this.gameObject);
-    }
-
+    /// <summary>
+    /// 弓攻撃イベント
+    /// </summary>
     public void bowAttackEvent()
     {
         ArrowInstance = Instantiate(ArrowObject, ShotPoint.transform.position, Quaternion.LookRotation(player.transform.position - this.transform.position)) as GameObject;
         ArrowInstance.GetComponent<BowController>().setTargetObject(player);
+        ArrowInstance.GetComponent<BowController>().setIsCharge(false);
+        ArrowInstance.layer = LayerMask.NameToLayer("Attack_Enemy");
         BowController.PlayerDamage = this.status.BOW_POW;
     }
-    ///// <summary>
-    ///// 外部参照ダメージ処理
-    ///// </summary>
-    ///// <param name="val"></param>
-    //public void Damage(int val)
-    //{
-    //    AudioSource audio = this.GetComponent<AudioSource>();
-    //    audio.Play();
-    //    this.status.HP -= val;
-    //}
 
     /// <summary>
-    /// 何かに触れたら
+    /// 死亡イベント
     /// </summary>
-    /// <param name="collider"></param>
-    public void OnTriggerStay(Collider col)
+    public void DeadEvent()
     {
-        if (col.gameObject.CompareTag(@"Player") && AttackFlag == true)
-        {
-            //Debug.Log (this.status.Sword_Power);
-            player.GetComponent<PlayerController>().Damage(this.status.Sword_Power);
-            Vector3 vector = player.transform.position - this.transform.position;
-
-            player.rigidbody.AddForce(vector.normalized * 2.0f, ForceMode.VelocityChange);
-            AttackFlag = false;
-        }
+        //player.GetComponent<PlayerController> ().GetExp (3);
+        Instantiate(ItemInst, this.transform.position, ItemInst.transform.rotation);
+        Destroy(this.gameObject);
     }
 
-    ///// <summary>
-    ///// GUI表示
-    ///// </summary>
-    //void OnGUI()
-    //{
-    //    if (twoPointDistance <= 30.0f)
-    //    {
-    //        GUI.Label(new Rect(100, 300, 200, 50), this.status.HP.ToString());
-    //    }
-    //}
+    /// <summary>
+    /// アニメーション管理
+    /// </summary>
+    void AnimationCheck()
+    {
+        // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
+        currentBaseState = this.animator.GetCurrentAnimatorStateInfo(0);
+        if (currentBaseState.nameHash == swordState ||
+            currentBaseState.nameHash == magicState)
+        {
+            canMove = false;
+        }
+        else if (!enemyStatusManager.getIsDead())
+        {
+            canMove = true;
+            //Debug.Log("Move");
+        }
+    }
 }

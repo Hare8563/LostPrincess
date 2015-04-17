@@ -10,7 +10,8 @@ public class BigMine : MonoBehaviour {
     /// <summary>
     /// 最大サイズ
     /// </summary>
-    private float MaxSize = 7;
+    [SerializeField]
+    private float MaxSize;
     /// <summary>
     /// 現在のサイズ
     /// </summary>
@@ -35,7 +36,7 @@ public class BigMine : MonoBehaviour {
         {
             if (child.name == "Particle")
             {
-                child.gameObject.particleSystem.startSize = 0;
+                child.gameObject.GetComponent<ParticleSystem>().startSize = 0;
             }
             else if (child.name == "Ball")
             {
@@ -43,7 +44,7 @@ public class BigMine : MonoBehaviour {
             }
             else if (child.name == "Point light")
             {
-                child.light.intensity = 0;
+                child.GetComponent<Light>().intensity = 0;
             }
         }
 	}
@@ -62,7 +63,7 @@ public class BigMine : MonoBehaviour {
             {
                 if (child.name == "Particle")
                 {
-                    child.gameObject.particleSystem.startSize = nowSize;
+                    child.gameObject.GetComponent<ParticleSystem>().startSize = nowSize;
                 }
                 else if (child.name == "Ball")
                 {
@@ -70,7 +71,7 @@ public class BigMine : MonoBehaviour {
                 }
                 else if (child.name == "Point light")
                 {
-                    child.light.intensity = nowSize * 8;
+                    child.GetComponent<Light>().intensity = nowSize * 8;
                 }
             }
         }
@@ -85,7 +86,7 @@ public class BigMine : MonoBehaviour {
             {
                 if (child.name == "Particle")
                 {
-                    child.gameObject.particleSystem.startSize = nowSize;
+                    child.gameObject.GetComponent<ParticleSystem>().startSize = nowSize;
                 }
                 else if (child.name == "Ball")
                 {
@@ -93,7 +94,7 @@ public class BigMine : MonoBehaviour {
                 }
                 else if (child.name == "Point light")
                 {
-                    child.light.intensity = nowSize * 8;
+                    child.GetComponent<Light>().intensity = nowSize * 8;
                 }
             }
         }

@@ -187,7 +187,7 @@ public class CatController : MonoBehaviour {
                 RunFlag = false;
                 MoveSpeed = WalkSpeed;
             }
-            rigidbody.AddForce(forward * MoveSpeed, ForceMode.VelocityChange);
+            GetComponent<Rigidbody>().AddForce(forward * MoveSpeed, ForceMode.VelocityChange);
             Step();
         }
     }
@@ -217,7 +217,7 @@ public class CatController : MonoBehaviour {
         {
             float dis = Vector3.Distance(this.transform.position, PlayerObject.transform.position);
             //敵に向かって突っ込む
-            rigidbody.AddForce(forward * RunSpeed, ForceMode.VelocityChange);
+            GetComponent<Rigidbody>().AddForce(forward * RunSpeed, ForceMode.VelocityChange);
             //攻撃可能距離まで来たら
             if (dis <= AttackDistance)
             {
@@ -229,14 +229,14 @@ public class CatController : MonoBehaviour {
             {   
                 float height = 8.0f;
                 //下向きに力を加える
-                rigidbody.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
+                GetComponent<Rigidbody>().AddForce(Vector3.down * 10, ForceMode.VelocityChange);
                 //地面との距離を測る
                 RaycastHit hit;
                 if (Physics.Raycast(this.transform.position, Vector3.down, out hit, Mathf.Infinity))
                 {
                     //Debug.Log(hit.distance);
                     //落下中で地面との接触距離になったら
-                    if (hit.distance <= height && this.rigidbody.velocity.y < 0)
+                    if (hit.distance <= height && this.GetComponent<Rigidbody>().velocity.y < 0)
                     {
                         Debug.Log("end");
                         CanAttack = false;
@@ -252,7 +252,7 @@ public class CatController : MonoBehaviour {
                 //何も当たらなかったら(多分埋まっていたら)
                 else
                 {
-                    rigidbody.AddForce(up * JumpPower, ForceMode.VelocityChange);
+                    GetComponent<Rigidbody>().AddForce(up * JumpPower, ForceMode.VelocityChange);
                 }
             }
         }
@@ -270,7 +270,7 @@ public class CatController : MonoBehaviour {
         {
             Debug.Log("avoid");
             //下向きに力を加える
-            rigidbody.AddForce(Vector3.down * 10, ForceMode.VelocityChange);
+            GetComponent<Rigidbody>().AddForce(Vector3.down * 10, ForceMode.VelocityChange);
             //Debug.Log("avoid");
             //地面との距離を測る
             RaycastHit hit;
@@ -278,7 +278,7 @@ public class CatController : MonoBehaviour {
             {
                 //Debug.Log(hit.distance);
                 //落下中で地面との接触距離になったら
-                if (hit.distance <= height && this.rigidbody.velocity.y < 0)
+                if (hit.distance <= height && this.GetComponent<Rigidbody>().velocity.y < 0)
                 {
                     AvoidFlag = false;
                     isGround = true;
@@ -293,7 +293,7 @@ public class CatController : MonoBehaviour {
             else
             {
                 Debug.Log("none");
-                rigidbody.AddForce(up * JumpPower, ForceMode.VelocityChange);
+                GetComponent<Rigidbody>().AddForce(up * JumpPower, ForceMode.VelocityChange);
             }
         }
     }
@@ -303,7 +303,7 @@ public class CatController : MonoBehaviour {
     /// </summary>
     void Step()
     {
-        float mag = this.rigidbody.velocity.magnitude;
+        float mag = this.GetComponent<Rigidbody>().velocity.magnitude;
         if (mag < 7)
         {
             AvoidFlag = true;
@@ -351,7 +351,7 @@ public class CatController : MonoBehaviour {
     void JumpAttackEvent()
     {
         Vector3 forwardVec = (forward * 5) + up/2;
-        rigidbody.AddForce(forwardVec * JumpPower, ForceMode.VelocityChange);
+        GetComponent<Rigidbody>().AddForce(forwardVec * JumpPower, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -368,13 +368,13 @@ public class CatController : MonoBehaviour {
         switch (rand)
         {
             case 0:
-                rigidbody.AddForce(backVec * JumpPower, ForceMode.VelocityChange);
+                GetComponent<Rigidbody>().AddForce(backVec * JumpPower, ForceMode.VelocityChange);
                 break;
             case 1:
-                rigidbody.AddForce(rightVec * JumpPower, ForceMode.VelocityChange);
+                GetComponent<Rigidbody>().AddForce(rightVec * JumpPower, ForceMode.VelocityChange);
                 break;
             case 2:
-                rigidbody.AddForce(leftVec * JumpPower, ForceMode.VelocityChange);
+                GetComponent<Rigidbody>().AddForce(leftVec * JumpPower, ForceMode.VelocityChange);
                 break;
         }
     }

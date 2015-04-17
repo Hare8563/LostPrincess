@@ -57,7 +57,7 @@ public class ShieldController : MonoBehaviour {
         toCollisionName = "";
         foreach (Transform child in this.transform)
         {
-            child.gameObject.gameObject.renderer.material.SetColor("_TintColor", new Color(1, 1, 1, 0));
+            child.gameObject.gameObject.GetComponent<Renderer>().material.SetColor("_TintColor", new Color(1, 1, 1, 0));
         }
         TowerAliveCount = Towers.Length;
 	}
@@ -75,7 +75,7 @@ public class ShieldController : MonoBehaviour {
         //色反映
         foreach (Transform child in this.transform)
         {
-            child.gameObject.gameObject.renderer.material.SetColor("_TintColor", new Color(a, a, a, a));
+            child.gameObject.gameObject.GetComponent<Renderer>().material.SetColor("_TintColor", new Color(a, a, a, a));
         }
         //値を初期化
         DestroyFlag = true;
@@ -136,7 +136,7 @@ public class ShieldController : MonoBehaviour {
         //{
             a = 1;
             this.transform.LookAt(collider.gameObject.transform.position);
-            audio.PlayOneShot(ShieldSe);
+            GetComponent<AudioSource>().PlayOneShot(ShieldSe);
             //Destroy(collider.gameObject);
         //}
     }

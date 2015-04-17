@@ -24,13 +24,18 @@ public class Bomb : MonoBehaviour {
     /// ターゲットオブジェクト
     /// </summary>
     private static GameObject TargetObject;
+    /// <summary>
+    /// 敵
+    /// </summary>
+    [SerializeField]
+    private GameObject[] Enemys;
      
     void Awake()
     {
         TargetObject = GameObject.FindGameObjectWithTag("Player");
         ExplosionEffect = Resources.Load("Prefab/Explosion") as GameObject;
-        float random = 100.0f;
-        this.rigidbody.AddForce(new Vector3(Random.Range(-random, random), 0, Random.Range(-random, random)), ForceMode.Impulse);
+        float random = 20.0f;
+        this.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-random, random), 0, Random.Range(-random, random)), ForceMode.Impulse);
     }
 
 	// Use this for initialization
@@ -44,7 +49,7 @@ public class Bomb : MonoBehaviour {
     {
         float dis = Vector3.Distance(TargetObject.transform.position, this.transform.position);
         toTargetVec = TargetObject.transform.position - this.transform.position;
-        this.rigidbody.AddForce(toTargetVec * 0.02f, ForceMode.Impulse);
+        this.GetComponent<Rigidbody>().AddForce(toTargetVec * 0.02f, ForceMode.Impulse);
         NowCount += Method.GameTime();
         if (NowCount >= ExploseFPSCount)
         {
@@ -52,7 +57,9 @@ public class Bomb : MonoBehaviour {
             {
                 TargetObject.GetComponent<PlayerController>().Damage(Random.Range(3, 7));
             }
+            int rand = Random.Range(0,3);
             Instantiate(ExplosionEffect, this.transform.position, this.transform.rotation);
+            Instantiate(Enemys[rand], this.transform.position, Enemys[rand].transform.rotation);
             Destroy(this.gameObject);
         }
 	}
@@ -61,8 +68,10 @@ public class Bomb : MonoBehaviour {
     {
         if (collision.collider.tag == "Player")
         {
+            int rand = Random.Range(0, 3);
             Instantiate(ExplosionEffect, this.transform.position, this.transform.rotation);
             TargetObject.GetComponent<PlayerController>().Damage(Random.Range(3, 7));
+            Instantiate(Enemys[rand], this.transform.position, Enemys[rand].transform.rotation);
             Destroy(this.gameObject);
         }
     }

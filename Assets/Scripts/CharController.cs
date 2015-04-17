@@ -97,7 +97,7 @@ public class CharController : MonoBehaviour {
 		}
 
 		//常に下へ力を加える
-		rigidbody.AddForce (downForce);
+		GetComponent<Rigidbody>().AddForce (downForce);
 
 		GetComponent<Animator>().SetBool (@"IsRunning", isRunning);
 		GetComponent<Animator>().SetBool (@"useSword", useSword);

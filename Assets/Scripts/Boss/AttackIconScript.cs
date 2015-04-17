@@ -20,7 +20,7 @@ public class AttackIconScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        this.renderer.enabled = false;
+        this.GetComponent<Renderer>().enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -35,20 +35,20 @@ public class AttackIconScript : MonoBehaviour {
     public void setAttackIcon(string name)
     {
         //Debug.Log(name);
-        this.renderer.enabled = true;
+        this.GetComponent<Renderer>().enabled = true;
         switch (name)
         {
             case "sword":
-                this.renderer.material = swordMaterial;
+                this.GetComponent<Renderer>().material = swordMaterial;
                 break;
             case "magic":
-                this.renderer.material = magicMaterial;
+                this.GetComponent<Renderer>().material = magicMaterial;
                 break;
             case "bow":
-                this.renderer.material = bowMaterial;
+                this.GetComponent<Renderer>().material = bowMaterial;
                 break;
             case "":
-                this.renderer.enabled = false;
+                this.GetComponent<Renderer>().enabled = false;
                 break;
         }
     }

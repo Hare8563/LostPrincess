@@ -63,7 +63,7 @@ public class BigMeteo : MonoBehaviour {
 	void OnTriggerEnter(Collider collider)
 	{
 		//Debug.Log (collider.tag);
-        if (collider.tag == "Weapon_Sword")
+        if (collider.tag == "SwordCollider")
         {
             isReflect = true;
             this.transform.LookAt(EnemyObject.transform.position);
